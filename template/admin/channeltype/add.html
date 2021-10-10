@@ -1,0 +1,58 @@
+{include file="public/header" /}
+<form class="layui-form" action="" lay-filter="list">
+    <div class="layui-row" style="padding: 15px;margin-bottom: 35px">
+          <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+              <input type="text" name="typename" lay-verify="title" autocomplete="off" placeholder="请输入名称" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">ID</label>
+              <div class="layui-input-inline">
+                    <input type="text" name="id" lay-verify="required" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">模型标识</label>
+              <div class="layui-input-inline">
+                <input type="text" name="nid" lay-verify="required" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+          </div>
+         <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">主表</label>
+              <div class="layui-input-inline">
+                    <input type="text" name="maintable" lay-verify="required" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">附表</label>
+              <div class="layui-input-inline">
+                <input type="text" name="addtable" lay-verify="required" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+          </div>
+         <div class="layui-form-item">
+            <label class="layui-form-label">字段</label>
+            <div class="layui-input-block">
+              <input type="text" name="listfields" lay-verify="title" autocomplete="off" placeholder="请输入字段" class="layui-input">
+            </div>
+          </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">字段设置</label>
+            <div class="layui-input-block">
+              <textarea placeholder="请输入字段设置" class="layui-textarea" name="fieldset"></textarea>
+            </div>
+          </div>
+        <div class="layui-form-item layui-flex layui-submit" style="">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" style="width:150px;margin: 0 auto;">提交保存</button>
+        </div>
+</div>
+</form>
+{include file="public/footer" /}
+<script>
+
+</script>

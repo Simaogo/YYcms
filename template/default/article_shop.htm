@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={Ylcms:global.cfg_soft_lang/}" />
+<title>{Ylcms:field.title/}_{Ylcms:global.cfg_webname/}</title>
+<meta name="keywords" content="{Ylcms:field.keywords/}" />
+<meta name="description" content="{Ylcms:field.description function='html2text(@me)'/}" />
+<link href="{Ylcms:global.cfg_templets_skin/}/style/Ylcmscms.css" rel="stylesheet" media="screen" type="text/css" />
+<meta http-equiv="mobile-agent" content="format=xhtml;url={Ylcms:global.cfg_mobileurl/}/view.php?aid={Ylcms:field.id/}">
+<script type="text/javascript">if(window.location.toString().indexOf('pref=padindex') != -1){}else{if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){if(window.location.href.indexOf("?mobile")<0){try{if(/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){window.location.href="{Ylcms:global.cfg_mobileurl/}/view.php?aid={Ylcms:field.id/}";}else if(/iPad/i.test(navigator.userAgent)){}else{}}catch(e){}}}}</script>
+<script language="javascript" type="text/javascript" src="{Ylcms:global.cfg_cmsurl/}/include/Ylcmsajax2.js"></script>
+<script language="javascript" type="text/javascript">
+<!--
+	function CheckLogin(){
+	  var taget_obj = document.getElementById('_ajax_feedback');
+	  myajax = new DedeAjax(taget_obj,false,false,'','','');
+	  myajax.SendGet2("{Ylcms:global.cfg_cmsurl/}/member/ajax_feedback.php");
+	  DedeXHTTP = null;
+	}
+	function postBadGood(ftype,fid)
+	{
+		var taget_obj = document.getElementById(ftype+fid);
+		var saveid = GetCookie('badgoodid');
+		if(saveid != null)
+		{
+			 var saveids = saveid.split(',');
+			 var hasid = false;
+			 saveid = '';
+			 j = 1;
+			 for(i=saveids.length-1;i>=0;i--)
+			 {
+			 	  if(saveids[i]==fid && hasid) continue;
+			 	  else {
+			 	  	if(saveids[i]==fid && !hasid) hasid = true;
+			 	  	saveid += (saveid=='' ? saveids[i] : ','+saveids[i]);
+			 	  	j++;
+			 	  	if(j==10 && hasid) break;
+			 	  	if(j==9 && !hasid) break;
+			 	  }
+			 }
+	     if(hasid) { alert('您刚才已表决过了喔！'); return false;}
+	     else saveid += ','+fid;
+			 SetCookie('badgoodid',saveid,1);
+		}
+		else
+		{
+			SetCookie('badgoodid',fid,1);
+		}
+		//document.write("feedback.php?action="+ftype+"&fid="+fid);
+		//return;
+	  myajax = new DedeAjax(taget_obj,false,false,'','','');
+	  myajax.SendGet2("{Ylcms:global.cfg_phpurl/}/feedback.php?aid="+fid+"&action="+ftype+"&fid="+fid);
+	  DedeXHTTP = null;
+	}
+-->
+</script>
+</head>
+<body class="productview">
+{Ylcms:include filename="head2.htm"/}
+<!-- /header -->
+<div class="w960 center clear mt1">
+	<div class="pleft">
+		<div class="place">
+			<strong>当前位置:</strong> {Ylcms:field name='position'/}
+		</div><!-- /place -->
+		<div class="viewbox">
+			<div class="title">
+				<h2>{Ylcms:field name='title'/}</h2>
+			</div><!-- /title -->
+			<div class="infolist">
+                <small>信息类型：</small><span>{Ylcms:field.infotype/}</span>
+                <small>测试：</small><span>{Ylcms:field.vocation/}</span>
+				<small>商品原价：</small><span>{Ylcms:field.price/}元</span>
+				<small>优惠价格：</small><span class="fc-f60">{Ylcms:field.trueprice/}元</span>
+				<small>品牌：</small><span>{Ylcms:field.brand/}</span>
+                <small>单位：</small><span>{Ylcms:field.units/}</span>
+				<small>上架日期：</small><span>{Ylcms:field.pubdate function="MyDate('y-m-d H:i',@me)"/}</span>
+				<small>人气：</small><span><script src="{Ylcms:field name='phpurl'/}/count.php?view=yes&aid={Ylcms:field name='id'/}&mid={Ylcms:field name='mid'/}" type='text/javascript' language="javascript"></script></span>
+                <form id="formcar" name="formcar" method="post" action="{Ylcms:field name='phpurl'/}/posttocar.php">
+                <input type="hidden" name="id" value="{Ylcms:field.id/}" />
+                <input type="hidden" name="title" value="{Ylcms:field.title/}" />
+                <input type="hidden" name="price" value="{Ylcms:field.trueprice/}" />
+                <input type="hidden" name="units" value="{Ylcms:field.units/}" />
+                <small>购物车：</small><span><a href="{Ylcms:field name='phpurl'/}/car.php" target="_blank">查看购物车</a></span>
+                <small>购买：</small><span><button type="submit" name="button" class="btn-2">放入购物车</button></span>
+                </form>
+
+			</div><!-- /info -->
+			<div class="picview">
+				<img src={Ylcms:field.litpic/}>
+			</div><!-- /info -->
+			<div class="labeltitle">
+				<strong>商品介绍</strong>
+			</div>
+			<div class="content">
+                 <div id="contentMidPicAD" style="float:right; clear:both; top:0; vertical-align:top;">{Ylcms:myad name='contentMidPicAD'/}</div>
+			　　{Ylcms:field.body/}
+			</div>
+			<div class="boxoff">
+				<strong>------分隔线----------------------------</strong>
+			</div>
+			<div class="handle">
+				<div class="context">
+					<ul>
+						<li>{Ylcms:prenext get='pre'/}</li>
+						<li>{Ylcms:prenext get='next'/}</li>
+					</ul>
+				</div><!-- /context -->
+				<div class="actbox">
+					<ul>
+						<li id="act-fav"><a href="{Ylcms:field name='phpurl'/}/stow.php?aid={Ylcms:field.id/}" target="_blank">收藏</a></li>
+						<li id="act-err"><a href="{Ylcms:field name='phpurl'/}/erraddsave.php?aid={Ylcms:field.id/}&title={Ylcms:field.title/}" target="_blank">挑错</a></li>
+						<li id="act-pus"><a href="{Ylcms:field name='phpurl'/}/recommend.php?aid={Ylcms:field.id/}" target="_blank">推荐</a></li>
+						<li id="act-pnt"><a href="#" target="_blank" onClick="window.print();">打印</a></li>
+					</ul>
+				</div><!-- /actbox -->
+			</div><!-- /handle -->
+		</div><!-- viewbox -->
+
+<!-- //AJAX评论区 -->
+{Ylcms:include file='ajaxfeedback.htm' /}
+
+	</div><!-- /pleft -->
+
+	<div class="pright">
+        <div>
+          <dl class="tbox">
+				<dt><strong>栏目列表</strong></dt>
+				<dd>
+					<ul class="d6">
+                      {Ylcms:channel type='son' currentstyle="<li><a href='~typelink~' class='thisclass'>~typename~</a></li>"}
+		<li><a href='{$field.typeurl}'>[field:typename/]</a></li>{/Ylcms:channel}
+					</ul>
+				</dd>
+			</dl>
+        </div>
+        <div id="contentRtPicAD" style="margin:10px auto">{Ylcms:mda name='250x250_SSP'/}</div>
+        	<div class="infos_userinfo">
+ 			{Ylcms:memberinfos}
+			<dl class="tbox">
+				<dt><strong>发布者资料</strong></dt>
+				<dd>
+					<a href="[field:spaceurl /]" class="userface"><img src="[field:face/]" width="52" height="52" /></a>
+					<a href='[field:spaceurl /]' class="username">[field:uname/]</a>
+					<span class="useract">
+						<a href="[field:spaceurl /]" class="useract-vi">查看详细资料</a>
+                        <a href="[field:spaceurl /]&action=guestbook" class="useract-pm">发送留言</a>
+						<a href="[field:spaceurl /]&action=newfriend" class="useract-af">加为好友</a>
+					</span>
+					<span class="userinfo-sp"><small>用户等级:</small>[field:rankname /]</span>
+					<span class="userinfo-sp"><small>注册时间:</small>[field:jointime function="MyDate('Y-m-d H:m',@me)"/]</span>
+					<span class="userinfo-sp"><small>最后登录:</small>[field:logintime function="MyDate('Y-m-d H:m',@me)"/]</span>
+				</dd>
+			</dl>
+			{/Ylcms:memberinfos}
+   	 	</div>
+         
+		<div class="productrange mt1">
+			<dl class="tbox">
+				<dt><strong>推荐商品</strong></dt>
+				<dd>
+					<ul class="f1">
+                    {Ylcms:arclist flag='c' titlelen=42 row=8}
+						<li>
+							<a href="{$field.arcurl}">{$field.title}</a>
+							<span><small>好评:</small>[field:scores/]</span>
+							<span><small>人气:</small>[field:click/]</span>
+						</li>
+                    {/Ylcms:arclist}
+					</ul>
+				</dd>
+			</dl>
+		</div>
+        
+		<div class="comment mt1">
+			<dl class="tbox">
+				<dt><strong>热门商品</strong></dt>
+				<dd>
+					<ul class="e3">
+                    {Ylcms:arclist row=10 orderby=click type='image.'}
+						<li>
+							<a href="{$field.arcurl}" class="preview"><img src="[field:litpic/]" alt="[field:title function='html2text(@me)'/]"/></a>
+							<a href="{$field.arcurl}" class="title">{$field.title}</a>
+							<span class="intro">人气:<span class="fc-f90">[field:click/]</span></span>
+						</li>
+                    {/Ylcms:arclist}
+
+					</ul>
+				</dd>
+			</dl>
+		</div>
+    <div id="contentRtPicAD2" style="margin:10px auto">{Ylcms:mda name='250x250'/}</div>
+
+	</div><!-- /pright -->
+</div>
+<div id="innerfooterAD2" style="margin:10px auto; width:726px">{Ylcms:mda name='728x90'/}</div>
+{Ylcms:include filename="footer.htm"/}
+<!-- /footer -->
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+{include file="public/header" /}
+<form class="layui-form" action="" lay-filter="list">
+    <div class="layui-row" style="padding: 15px;margin-bottom: 35px">
+        <div class="layui-tab">
+          <ul class="layui-tab-title">
+            <li class="layui-this">常规信息</li>
+            <li>高级参数</li>
+            <li>栏目内容</li>
+          </ul>
+          <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">上级栏目</label>
+                      <div class="layui-input-inline">
+                        <select name="reid" lay-verify="required">
+                          <option value="0">顶级栏目</option>
+                          {volist name="arctypeList" id="vo"}
+                           <option value="{$vo.id}"> {$vo.lefthtml} {$vo.typename}</option>
+                          {/volist}
+                        </select>
+                      </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                  <label class="layui-form-label">栏目名称</label>
+                  <div class="layui-input-block">
+                    <input type="text" name="typename" lay-verify="required" autocomplete="off" placeholder="请输入栏目名称" class="layui-input">
+                  </div>
+                </div>
+<!--                <div class="layui-form-item">
+                  <label class="layui-form-label">英文名称</label>
+                  <div class="layui-input-block">
+                    <input type="text" name="typenameen" autocomplete="off" placeholder="请输入栏目名称英文" class="layui-input">
+                  </div>
+                </div>-->
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">内容模型</label>
+                      <div class="layui-input-inline">
+                        <select name="channeltype" lay-verify="required">
+                         {volist name="channeltype" id="vo"}
+                           <option value="{$vo.id}">{$vo.typename}</option>
+                          {/volist}
+                        </select>
+                      </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">栏目属性</label>
+                    <div class="layui-input-block">
+                      <input type="radio" name="ispart" lay-skin="primary" title="列表"  value="0">
+                      <input type="radio" name="ispart" lay-skin="primary" title="封面" value="1">
+                      <input type="radio" name="ispart" lay-skin="primary" title="跳转" value="2">
+                    </div>
+                 </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">是否隐藏</label>
+                      <div class="layui-input-inline">
+                            <input type="radio" name="ishidden" lay-skin="primary" title="启用" value="0" checked>
+                            <input type="radio" name="ishidden" lay-skin="primary" title="隐藏" value="1">
+                      </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">浏览权限</label>
+                        <div class="layui-input-inline">
+                        <select name="corank" lay-verify="required" lay-search="">
+<!--                          <option value="">直接选择或搜索选择</option>
+                          <option value="1">layer</option>-->
+                        </select>
+                      </div>
+                    </div>
+                </div>
+                 <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">栏目图片</label>
+                    <div class="layui-upload-drag" id="typeimg">
+                        <i class="layui-icon"></i>
+                        <p>点击上传，或将文件拖拽到此处</p>
+                        <div class="layui-hide" id="uploadDemoView">
+                          <hr>
+                          <img src="" alt="上传成功后渲染" style="max-width: 196px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+              
+            <div class="layui-tab-item">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">封面模板</label>
+                      <div class="layui-input-block">
+                          <input type="text" name="tempindex" lay-verify="" autocomplete="off" class="layui-input" value="index_article.htm">
+                      </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">列表模板</label>
+                      <div class="layui-input-block">
+                        <input type="text" name="templist" lay-verify="" autocomplete="off" class="layui-input" value="list_article.htm">
+                      </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">文章模板</label>
+                      <div class="layui-input-block">
+                        <input type="text" name="temparticle" lay-verify="" autocomplete="off" class="layui-input" value="article_article.htm">
+                      </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">SEO标题</label>
+                    <div class="layui-input-block">
+                      <input type="text" name="seotitle" lay-verify="" autocomplete="off" placeholder="请输入SEO标题" class="layui-input">
+                    </div>
+                 </div>
+                 <div class="layui-form-item">
+                    <label class="layui-form-label">关键词</label>
+                    <div class="layui-input-block">
+                      <input type="text" name="keywords" lay-verify="" autocomplete="off" placeholder="请输入关键词" class="layui-input">
+                    </div>
+                 </div>
+                  <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-block">
+                      <textarea placeholder="请输入描述" class="layui-textarea" name="description"></textarea>
+                    </div>
+                  </div>
+
+             </div>
+             <div class="layui-tab-item">
+                 <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">栏目内容</label>
+                    <div class="layui-input-block">
+                      <script id="container" name="content" type="text/plain" style="width:1024px;height:500px;"></script>
+                    </div>
+                  </div>
+             </div>
+          </div>
+       </div>
+        <div class="layui-form-item layui-flex layui-submit" style="">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" style="width:150px;margin: 0 auto;">提交保存</button>
+        </div>
+</div>
+</form>
+{include file="public/footer" /}
+<script type="text/javascript" src="/static/plugins/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/static/plugins/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+    var ue = UE.getEditor('container');
+    ue.ready(function() {
+    //设置编辑器的内容
+    ue.setContent(formData.content);
+    //获取html内容，返回: <p>hello</p>
+    var html = ue.getContent();
+    //获取纯文本内容，返回: hello
+    var txt = ue.getContentTxt();
+});
+</script>
+<script>
+    layui.use(['form', 'layedit', 'laydate','upload'], function(){
+      var form = layui.form
+      ,layer = layui.layer
+      ,layedit = layui.layedit
+      ,upload = layui.upload
+      ,$ = layui.jquery
+      ,laydate = layui.laydate;
+
+      //创建一个编辑器
+      var editIndex = layedit.build('LAY_demo_editor');
+
+      //自定义验证规则
+      form.verify({
+        title: function(value){
+          if(value.length < 5){
+            return '标题至少得5个字符啊';
+          }
+        }
+        ,pass: [
+          /^[\S]{6,12}$/
+          ,'密码必须6到12位，且不能出现空格'
+        ]
+        ,content: function(value){
+          layedit.sync(editIndex);
+        }
+      });
+
+      //监听指定开关
+      form.on('switch(switchTest)', function(data){
+        layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+          offset: '6px'
+        });
+        layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+      });
+
+
+      
+      //表单取值
+        layui.$('#LAY-component-form-getval').on('click', function(){
+          var data = form.val('example');
+          alert(JSON.stringify(data));
+        });
+       laydate.render({
+            elem: '#pubdate'
+            ,type: 'datetime'
+       });
+       //拖拽上传
+        upload.render({
+          elem: '#litpic'
+          ,url: '{:url("common/upload/image")}' 
+          ,done: function(res){
+            layer.msg('上传成功');
+            layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', res.data.src);
+          }
+        });
+    });
+</script>

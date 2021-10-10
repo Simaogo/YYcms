@@ -1,0 +1,191 @@
+{include file="public/header" /}
+<form class="layui-form" action="" lay-filter="list">
+    <div class="layui-row" style="padding: 15px;margin-bottom: 35px">
+        <div class="layui-tab">
+          <ul class="layui-tab-title">
+            <li class="layui-this">常规信息</li>
+            <li>高级参数</li>
+          </ul>
+          <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">栏目选择</label>
+                      <div class="layui-input-inline">
+                        <select name="typeid" lay-verify="required">
+                          {volist name="arctypeList" id="vo"}
+                           <option value="{$vo.id}"> {$vo.lefthtml} {$vo.typename}</option>
+                          {/volist}
+                        </select>
+                      </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                  <label class="layui-form-label">标题</label>
+                  <div class="layui-input-block">
+                    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                  </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">自定义属性</label>
+                    <div class="layui-input-block">
+                      <input type="checkbox" name="flag[]" lay-skin="primary" title="头条" value="h">
+                      <input type="checkbox" name="flag[]" lay-skin="primary" title="推荐" value="c">
+                      <input type="checkbox" name="flag[]" lay-skin="primary" title="幻灯" value="f">
+                      <input type="checkbox" name="flag[]" lay-skin="primary" title="特荐" value="a">
+                      <input type="checkbox" name="flag[]" lay-skin="primary" title="滚动" value="s">
+                      <input type="checkbox" name="flag[]" lay-skin="primary" title="加粗" value="b">
+                      <input type="checkbox" name="flag[]" lay-skin="primary" title="图片" value="p">
+                      <input type="checkbox" name="flag[]" lay-skin="primary" title="跳转" value="j">
+                    </div>
+                 </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">TAG标签</label>
+                      <div class="layui-input-inline">
+                        <input type="tel" name="tags" lay-verify="" autocomplete="off" class="layui-input">
+                      </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">权重</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="weight" lay-verify="" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                 <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">缩略图</label>
+                    <div class="layui-upload-drag" id="litpic">
+                        <i class="layui-icon"></i>
+                        <p>点击上传，或将文件拖拽到此处</p>
+                        <div class="layui-hide" id="uploadDemoView">
+                          <hr>
+                          <img src="" alt="上传成功后渲染" style="max-width: 196px">
+                           <input type="hidden" name="litpic" >
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">文章来源</label>
+                      <div class="layui-input-inline">
+                        <input type="text" name="source" lay-verify="" autocomplete="off" class="layui-input">
+                      </div>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">作者</label>
+                      <div class="layui-input-inline">
+                        <input type="text" name="writer" lay-verify="" autocomplete="off" class="layui-input">
+                      </div>
+                    </div>
+                </div>
+                 <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">内容</label>
+                    <div class="layui-input-block">
+                      <script id="container" name="body" type="text/plain" style="width:1024px;height:500px;"></script>
+                    </div>
+                  </div>
+            </div>
+            <div class="layui-tab-item">
+            
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">预览次数</label>
+                      <div class="layui-input-inline">
+                        <input type="text" name="click"  autocomplete="off" class="layui-input">
+                      </div>
+                    </div>
+                    <div class="layui-inline">
+                    <label class="layui-form-label">阅读权限</label>
+                    <div class="layui-input-inline">
+                      <select name="arcrank" lay-verify="" lay-search="">
+                        <option value="">直接选择或搜索选择</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">更新时间：</label>
+                      <div class="layui-input-inline">
+                        <input type="text" name="pubdate" lay-verify="" autocomplete="off" class="layui-input" id="pubdate">
+                      </div>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">标题颜色</label>
+                      <div class="layui-input-inline">
+                        <input type="text" name="color" lay-verify="" autocomplete="off" class="layui-input">
+                      </div>
+                    </div>
+                 </div>
+                 <div class="layui-form-item">
+                    <label class="layui-form-label">关键词</label>
+                    <div class="layui-input-block">
+                      <input type="text" name="keywords" lay-verify="" autocomplete="off" placeholder="请输入关键词" class="layui-input">
+                    </div>
+                 </div>
+                  <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-block">
+                      <textarea placeholder="请输入描述" class="layui-textarea" name="description"></textarea>
+                    </div>
+                  </div>
+
+             </div>
+        </div>
+       </div>
+        <div class="layui-form-item layui-flex layui-submit" style="">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" style="width:150px;margin: 0 auto;">提交保存</button>
+        </div>
+</div>
+</form>
+{include file="public/footer" /}
+<script type="text/javascript" src="/static/plugins/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/static/plugins/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+    var ue = UE.getEditor('container');
+    ue.ready(function() {
+    //设置编辑器的内容
+    ue.setContent(formData.body);
+    //获取html内容，返回: <p>hello</p>
+    var html = ue.getContent();
+    //获取纯文本内容，返回: hello
+    var txt = ue.getContentTxt();
+});
+</script>
+<script>
+    layui.use(['form', 'laydate','upload'], function(){
+      var form = layui.form
+      ,layer = layui.layer
+      ,upload = layui.upload
+      ,$ = layui.jquery
+      ,laydate = layui.laydate;
+       laydate.render({
+            elem: '#pubdate'
+            ,type: 'datetime'
+       });
+       if(formData){
+            //flag 选中
+            $('input[name="flag[]"]').each(function(index){
+                var flag = formData.flag;
+                if(flag.includes($(this).val())){
+                    $(this).attr('checked','checked'); 
+                }
+                form.render();
+            })
+            layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src',formData.litpic);//缩略图
+       }
+       //拖拽上传
+        upload.render({
+          elem: '#litpic'
+          ,url: '{:url("common/upload/image")}'
+          ,done: function(res){
+            layer.msg('上传成功');
+            layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', res.data.src);
+             //console.log(layui.$('input[name="litpic"]'));
+            layui.$('input[name="litpic"]').val(res.data.src);
+          }
+        });
+    });
+</script>

@@ -1,0 +1,15 @@
+{include file="public/header" /}
+<pre class="layui-code" lay-skin="notepad">
+    {$filecont}
+</pre>
+<script>
+layui.use('code', function(){
+  
+  layui.code({
+      title: 'JavaScript'
+      ,encode: true
+      ,skin: 'notepad' 
+  });
+});
+</script>
+{include file="public/footer" /}

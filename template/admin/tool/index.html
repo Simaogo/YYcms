@@ -1,0 +1,73 @@
+{include file="public/header" /}
+<div style="padding: 15px;">
+    <table id="list" lay-filter="list"></table>
+</div>
+<div class="layui-row progress">
+   <div class="layui-progress" lay-showPercent="true" lay-filter="progress">
+        <div class="layui-progress-bar layui-bg-red" lay-percent="0/0"></div>
+    </div>
+ </div>
+<style>
+    .progress{
+        width: 100%;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        display: none;
+        z-index: 999;
+    }
+</style>
+ 
+{include file="public/footer" /}
+<script type="text/html" id="tool">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="replaceTag">一键换标签</button>
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+  </div>
+</script>
+<script type="text/html" id="operateTool">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+    layui.use(['table','element'], function(){
+      var table = layui.table
+      ,element = layui.element;
+        //第一个实例
+        table.render({
+          elem: '#list'
+          ,height: '800'
+          ,url: url //数据接口
+          ,page: false //开启分页
+           ,toolbar: '#tool' 
+           ,defaultToolbar: ['filter', 'exports', 'print', {
+              title: '提示'
+              ,layEvent: 'LAYTABLE_TIPS'
+              ,icon: 'layui-icon-tips'
+            }]
+          ,cols: [[ //表头
+            {type:'checkbox'}      
+            ,{field: 'id', title: '序号', width:80, sort: true}
+            ,{field: 'filename', title: '文件名称', width:200,sort: true,align:'center'}
+            ,{field: '', title: '操作', width:'35%',align:'center',templet:'#operateTool'}
+          ]]
+        });
+        table.on('tool(list)', function(obj){
+             var data = obj.data;
+            if(obj.event === 'edit'){
+                layer.open({
+                 type: 2,
+                 title: '编辑',
+                 shadeClose: true,
+                 shade: 0.2,
+                 maxmin: true, //开启最大化最小化按钮
+                 area: ['85%', '85%'],
+                 content: '{:url(request()->controller()."/addEdit")}?filename='+data.filename
+               });
+             }
+        })
+    });
+    
+</script>
