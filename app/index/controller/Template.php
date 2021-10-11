@@ -6,10 +6,13 @@ use think\facade\Db;
 use app\index\controller\Common;
 
 class Template extends Common{
-    
+    public $default;
+    public function __construct() {
+        $this->default ='template/default/';
+    }
     public function index(){
          $theme=$this->template('index');
-         return View::fetch('../template/default/test.htm');
+         return View::fetch('../template/default/index.htm');
     }
     public function list(){
          $typeid=input('tid')?input('tid'):input('typeid');
@@ -106,18 +109,19 @@ class Template extends Common{
     }
     public function view(){
         $aid=input('aid');
-        $ArchivesModel= new \addons\travel\common\model\Archives();
+        $ArchivesModel= new \app\common\model\Arclist();
         $Archives=$ArchivesModel->find($aid);
         //点击率++
         $Archives->click=($Archives->click)+1;
         $Archives->save();
         $view = cache('view+'.$aid);
         if(!$view){
-            $ArctypeModel=new \addons\travel\common\model\Arctype();
+            $ArctypeModel = new \app\common\model\Arctype();
             $Arctype=$ArctypeModel->find($Archives->typeid);
-            $channeltypeModel = new \addons\travel\common\model\Channeltype();
+            $channeltypeModel = new \app\common\model\Channeltype();
             $channeltype=$channeltypeModel->find($Arctype->channeltype);
-            $addinfo=Db::name($channeltype->addtable)->where('aid',$aid)->find();
+            $table = $this->getTable($channeltype->addtable);
+            $addinfo=Db::name($table)->where('aid',$aid)->find();
             $info= array_merge($addinfo,$Archives->toArray());
             foreach ($info as $key=>$val){
                 if(in_array($key, ['stay_address','repast_morning','repast_noon','repast_night','j_content','j_address'])){
@@ -129,7 +133,7 @@ class Template extends Common{
             }
             $template = $Arctype->temparticle;
             $view = [
-                'info' => $info,
+                'body' => $info,
                 'typename' =>  $Arctype->typename,
                 'template' => $Arctype->temparticle,
                 'keywords' => $Archives->keywords,
@@ -137,10 +141,11 @@ class Template extends Common{
             ];
             cache('view_'.$aid,$view); 
         }
-        $template=$view['template'];
+        $template= str_replace('{style}/','', $view['template']);
         View::assign($view);
-        $template=$this->template($template).$template;
-        return View($template);
+        $template=$this->default . $this->template($template);
+       // halt($template);
+        return View::fetch($template);
         
     }
     public function search(){
@@ -151,11 +156,9 @@ class Template extends Common{
     }
     public function template($template){
         if(isMobile()){
-            $theme=$template.'_m.htm'; 
-        } else {
-            $theme=$template.'.htm'; 
-        }
-      return $theme;
+            $template = $template.'_m'; 
+        } 
+      return $template;
     }
     public function retrieve_ids(&$ids, $record) {
         return $ids . ',' . $record['id'];
@@ -176,5 +179,15 @@ class Template extends Common{
             'destination' =>$list,
             'destname' =>$Destination->destination,
         ]);
+    }
+    /**
+     * 数据表名称
+     * @param type $table
+     * @return type string
+     */
+    public function getTable($table){
+        $prefix = config('database.connections.mysql.prefix'); //数据库前缀
+        $table = str_replace($prefix, '', $table);//替换表名称前缀
+        return $table;
     }
 }

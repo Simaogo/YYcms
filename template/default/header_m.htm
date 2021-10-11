@@ -1,8 +1,8 @@
 
 <header class="am-topbar">
-{Ylcms:mda name='468x60'/}
+{dede:mda name='468x60'/}
 	 <h1 class="am-topbar-brand">
-    <a href="index.php">{Ylcms:global.cfg_webname/}移动版</a>
+    <a href="index.php">{dede:global.cfg_webname/}移动版</a>
   </h1>
 
 	<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span>  <span class="am-icon-bars"></span>
@@ -11,13 +11,13 @@
 		<ul class="am-nav am-nav-pills am-topbar-nav">
 			<ul class="am-nav am-nav-pills am-topbar-nav">
 				<li><a href="index.php">首页</a>
-				</li>{Ylcms:channel type='top' row='10' currentstyle="
+				</li>{dede:channel type='top' row='10' currentstyle="
 				<li class='hover'><a href='list.php?tid=~id~' ~rel~><span>~typename~</span></a>
 				</li>"}
 				<li><a href='list.php?tid=[field:id/]' [field:rel/]><span>[field:typename/]</span></a>
-				</li>{/Ylcms:channel}</ul>
+				</li>{/dede:channel}</ul>
 		</ul>
-		<form class="am-topbar-form am-topbar-left am-form-inline am-topbar-right" role="search" action="{Ylcms:global.cfg_cmsurl/}/plus/search.php">
+		<form class="am-topbar-form am-topbar-left am-form-inline am-topbar-right" role="search" action="{dede:global.cfg_cmsurl/}/plus/search.php">
 		<input type="hidden" name="mobile" value="1" />
 		<input type="hidden" name="kwtype" value="0" />
       <div class="am-form-group">

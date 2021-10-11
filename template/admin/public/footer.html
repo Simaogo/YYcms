@@ -78,21 +78,7 @@
                   area: ['85%', '85%'],
                   content: '{:url(request()->controller()."/addEdit")}'
                });
-            break;
-            case 'replaceTag'://替换模板标签
-                var len = checkStatus.data.length,data;
-                $('.progress').show();
-                for(var i = 0;i<len;i++){
-                    data =checkStatus.data[i]
-                    ,data.page = i+1
-                    ,data.count = len;
-                    $.post('{:url("tool/replaceTag")}',data,function(res){
-                        if(res.code == 0){
-                            element.progress('progress',res.progress);
-                            element.init();
-                        }
-                    })
-                }   
+            break; 
             break;
             case 'getCheckLength':
               var data = checkStatus.data;

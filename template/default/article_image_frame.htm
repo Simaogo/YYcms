@@ -1,20 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset={Ylcms:global.cfg_soft_lang/}" />
-<title>{Ylcms:field.title/}_{Ylcms:global.cfg_webname/}</title>
-<meta name="keywords" content="{Ylcms:field.keywords/}" />
-<meta name="description" content="{Ylcms:field.description function='html2text(@me)'/}" />
-<link href="{Ylcms:global.cfg_templets_skin/}/style/Ylcmscms.css" rel="stylesheet" media="screen" type="text/css" />
-<link href="{Ylcms:global.cfg_templets_skin/}style/picture.css" rel="stylesheet" type="text/css" />
-<meta http-equiv="mobile-agent" content="format=xhtml;url={Ylcms:global.cfg_mobileurl/}/view.php?aid={Ylcms:field.id/}">
-<script type="text/javascript">if(window.location.toString().indexOf('pref=padindex') != -1){}else{if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){if(window.location.href.indexOf("?mobile")<0){try{if(/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){window.location.href="{Ylcms:global.cfg_mobileurl/}/view.php?aid={Ylcms:field.id/}";}else if(/iPad/i.test(navigator.userAgent)){}else{}}catch(e){}}}}</script>
+<meta http-equiv="Content-Type" content="text/html; charset={dede:global.cfg_soft_lang/}" />
+<title>{dede:field.title/}_{dede:global.cfg_webname/}</title>
+<meta name="keywords" content="{dede:field.keywords/}" />
+<meta name="description" content="{dede:field.description function='html2text(@me)'/}" />
+<link href="{dede:global.cfg_templets_skin/}/style/dedecms.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="{dede:global.cfg_templets_skin/}style/picture.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="mobile-agent" content="format=xhtml;url={dede:global.cfg_mobileurl/}/view.php?aid={dede:field.id/}">
+<script type="text/javascript">if(window.location.toString().indexOf('pref=padindex') != -1){}else{if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){if(window.location.href.indexOf("?mobile")<0){try{if(/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){window.location.href="{dede:global.cfg_mobileurl/}/view.php?aid={dede:field.id/}";}else if(/iPad/i.test(navigator.userAgent)){}else{}}catch(e){}}}}</script>
 <script language="javascript" type="text/javascript">
-var shortname = "{Ylcms:global.art_shortname/}";
-var npage = {Ylcms:field name='nowpage'/};
-var totalpage = {Ylcms:field name='totalpage'/};
-var namehand = '{Ylcms:field name='namehand'/}';
-var displaytype = '{Ylcms:field name='displaytype'/}';
+var shortname = "{dede:global.art_shortname/}";
+var npage = {dede:field name='nowpage'/};
+var totalpage = {dede:field name='totalpage'/};
+var namehand = '{dede:field name='namehand'/}';
+var displaytype = '{dede:field name='displaytype'/}';
 var gtimer = null;
 //大图
 function dPlayBig()
@@ -47,11 +47,11 @@ function dPlayPre(){
 	{
 		if(npage==2) {
 			if(namehand!='') location.href = namehand+shortname;
-			else location.href = "view.php?aid={Ylcms:field name='id'/}";
+			else location.href = "view.php?aid={dede:field name='id'/}";
 		} else if(displaytype=='st' && namehand!='') {
 			location.href = namehand+"_"+(npage-1)+shortname;
 		} else {
-			location.href = "view.php?aid={Ylcms:field name='id'/}&pageno="+(npage-1);
+			location.href = "view.php?aid={dede:field name='id'/}&pageno="+(npage-1);
 		}
 	}
 }
@@ -63,7 +63,7 @@ function dPlayNext()
 	else
 	{
 		if(displaytype=='st' && namehand!='') location.href = namehand+"_"+(npage+1)+shortname;
-		else location.href = "view.php?aid={Ylcms:field name='id'/}&pageno="+(npage+1);
+		else location.href = "view.php?aid={dede:field name='id'/}&pageno="+(npage+1);
 	}
 }
 -->
@@ -71,31 +71,31 @@ function dPlayNext()
 </head>
 <body class="picboxview">
 
-{Ylcms:include filename="head2.htm"/}
+{dede:include filename="head2.htm"/}
 <!-- /header -->
 
 <div class="channel-nav w960 center clear">
 	<div class='sonnav'>
-	{Ylcms:channel type='self' currentstyle="<span><a href='~typelink~' class='thisclass'>~typename~</a></span>"}
-		<span><a href='{$field.typeurl}'>[field:typename/]</a></span>{/Ylcms:channel}
+	{dede:channel type='self' currentstyle="<span><a href='~typelink~' class='thisclass'>~typename~</a></span>"}
+		<span><a href='[field:typeurl/]'>[field:typename/]</a></span>{/dede:channel}
 	</div>
 </div><!-- /channel-nav -->
 
 <div class="w960 center clear mt1">
 	<div class="pleft">
 		<div class="place">
-			<strong>当前位置:</strong> {Ylcms:field name='position'/}
+			<strong>当前位置:</strong> {dede:field name='position'/}
 		</div><!-- /place -->
 		<div class="viewbox">
 			<div class="title">
-				<h2>{Ylcms:field.title/}</h2>
+				<h2>{dede:field.title/}</h2>
 			</div><!-- /title -->
 			<div class="info">
-				<small>时间:</small>{Ylcms:field.pubdate function="MyDate('Y-m-d H:i',@me)"/}<small>来源:</small>{Ylcms:field.source/} <small>作者:</small>{Ylcms:field.writer/} <small>点击:</small><script src="{Ylcms:field name='phpurl'/}/count.php?view=yes&aid={Ylcms:field name='id'/}&mid={Ylcms:field name='mid'/}" type='text/javascript' language="javascript"></script>次
+				<small>时间:</small>{dede:field.pubdate function="MyDate('Y-m-d H:i',@me)"/}<small>来源:</small>{dede:field.source/} <small>作者:</small>{dede:field.writer/} <small>点击:</small><script src="{dede:field name='phpurl'/}/count.php?view=yes&aid={dede:field name='id'/}&mid={dede:field name='mid'/}" type='text/javascript' language="javascript"></script>次
 			</div><!-- /info -->
 			<div class="picbox">
 
-             {Ylcms:field name='pagestyle' alt='根据不同的页面风格输出不同的头信息' runphp='yes'}
+             {dede:field name='pagestyle' alt='根据不同的页面风格输出不同的头信息' runphp='yes'}
                 if(@me==3) {
                 	@me = '<ul class="e8">';
                 }
@@ -112,9 +112,9 @@ function dPlayNext()
                 else {
                 	@me = '';
                 }
-             {/Ylcms:field}
+             {/dede:field}
 
-             {Ylcms:field name='imgurls' alt='图片输出区'}
+             {dede:field name='imgurls' alt='图片输出区'}
                 [field:pagestyle runphp='yes'] @me= (@me==3 ? '<li>' : '');[/field:pagestyle]
                 <a href='[field:linkurl/]' target='_blank'  [field:pagestyle runphp='yes'] @me= (@me==3 ? 'class="pic"' : ''); [/field:pagestyle]>
                   <img src='[field:imgsrc/]' id='bigimg' [field:imgwidth /] alt='[field:alttext /]' border='0' />
@@ -124,9 +124,9 @@ function dPlayNext()
                 	[field:alttext /]
                 </a>
                 [field:pagestyle runphp='yes'] @me = (@me==3 ? '</li>' : ''); [/field:pagestyle]
-             {/Ylcms:field}
+             {/dede:field}
 
-             {Ylcms:field name='pagestyle' alt='根据不同的风格输出不同的结尾信息' runphp='yes'}
+             {dede:field name='pagestyle' alt='根据不同的风格输出不同的结尾信息' runphp='yes'}
                 if(@me==3) {
                 	@me = '</ul>';
                 }
@@ -136,39 +136,39 @@ function dPlayNext()
                	else {
                		@me = '';
                 }
-             {/Ylcms:field}
+             {/dede:field}
 			</div>
-            <div class="intro"><div id="contentMidPicAD" style="float:right; clear:both; top:0; vertical-align:top; display:block">{Ylcms:myad name='contentMidPicAD'/}</div>{Ylcms:field.body/}
+            <div class="intro"><div id="contentMidPicAD" style="float:right; clear:both; top:0; vertical-align:top; display:block">{dede:myad name='contentMidPicAD'/}</div>{dede:field.body/}
             <div style="clear:both"></div>
             </div>
-			<div class="Ylcms_pages">
+			<div class="dede_pages">
 				<ul class="pagelist">
-					{Ylcms:pagebreak/}
+					{dede:pagebreak/}
 				</ul>
 			</div><!-- /pages -->
-			<iframe src="{Ylcms:global.cfg_phpurl/}/digg_frame.php?id={Ylcms:field.id/}" width="98%" height="100" style="overflow:hidden;" frameborder="0"></iframe>
+			<iframe src="{dede:global.cfg_phpurl/}/digg_frame.php?id={dede:field.id/}" width="98%" height="100" style="overflow:hidden;" frameborder="0"></iframe>
 			<div class="boxoff">
 				<strong>------分隔线----------------------------</strong>
 			</div>
 			<div class="handle">
 				<div class="context">
 					<ul>
-						<li>{Ylcms:prenext get='pre'/}</li>
-						<li>{Ylcms:prenext get='next'/}</li>
+						<li>{dede:prenext get='pre'/}</li>
+						<li>{dede:prenext get='next'/}</li>
 					</ul>
 				</div><!-- /context -->
 				<div class="actbox">
 					<ul>
-						<li id="act-fav"><a href="{Ylcms:field name='phpurl'/}/stow.php?aid={Ylcms:field.id/}" target="_blank">收藏</a></li>
-						<li id="act-err"><a href="{Ylcms:field name='phpurl'/}/erraddsave.php?aid={Ylcms:field.id/}&title={Ylcms:field.title/}" target="_blank">挑错</a></li>
-						<li id="act-pus"><a href="{Ylcms:field name='phpurl'/}/recommend.php?aid={Ylcms:field.id/}" target="_blank">推荐</a></li>
+						<li id="act-fav"><a href="{dede:field name='phpurl'/}/stow.php?aid={dede:field.id/}" target="_blank">收藏</a></li>
+						<li id="act-err"><a href="{dede:field name='phpurl'/}/erraddsave.php?aid={dede:field.id/}&title={dede:field.title/}" target="_blank">挑错</a></li>
+						<li id="act-pus"><a href="{dede:field name='phpurl'/}/recommend.php?aid={dede:field.id/}" target="_blank">推荐</a></li>
 						<li id="act-pnt"><a href="#" onClick="window.print();">打印</a></li>
 					</ul>
 				</div><!-- /actbox -->
 			</div><!-- /handle -->
 		</div><!-- /viewbox -->
 
-<iframe id="frame_content" name="frame_content" src="{Ylcms:field name='phpurl'/}/comments_frame.php?id={Ylcms:field.id/}"
+<iframe id="frame_content" name="frame_content" src="{dede:field name='phpurl'/}/comments_frame.php?id={dede:field.id/}"
  width="100%" height="0" scrolling="auto" onload="resizeFrame()" frameborder="0"></iframe>
 
 <script language='javascript'>
@@ -204,7 +204,7 @@ function timeCall()
 
 	<div class="pright">
 	    <div class="infos_userinfo">
- 			{Ylcms:memberinfos}
+ 			{dede:memberinfos}
 			<dl class="tbox">
 				<dt><strong>发布者资料</strong></dt>
 				<dd>
@@ -220,7 +220,7 @@ function timeCall()
 					<span class="userinfo-sp"><small>最后登录:</small>[field:logintime function="MyDate('Y-m-d H:m',@me)"/]</span>
 				</dd>
 			</dl>
-			{/Ylcms:memberinfos}
+			{/dede:memberinfos}
    	 	</div>
 
     	<div class="mt1">
@@ -228,36 +228,36 @@ function timeCall()
 				<dt><strong>热点图集</strong></dt>
 				<dd>
 					<ul class="e3">
-                    {Ylcms:arclist row='5' type='image.' orderby=click}
+                    {dede:arclist row='5' type='image.' orderby=click}
 						<li>
-							<a href="{$field.arcurl}" class="preview"><img src="[field:litpic/]" alt="[field:title function='html2text(@me)'/]"/></a>
-							<a href="{$field.arcurl}" class="title">{$field.title}</a>
+							<a href="[field:arcurl/]" class="preview"><img src="[field:litpic/]" alt="[field:title function='html2text(@me)'/]"/></a>
+							<a href="[field:arcurl/]" class="title">[field:title/]</a>
 							<span class="intro">更新:[field:pubdate function="GetDateMK(@me)"/]</span>
 						</li>
-                     {/Ylcms:arclist}
+                     {/dede:arclist}
 
 					</ul>
 				</dd>
 			</dl>
 		</div>
-        <div id="contentRtPicAD" style="margin:10px auto">{Ylcms:mda name='250x250_SSP'/}</div>
+        <div id="contentRtPicAD" style="margin:10px auto">{dede:mda name='250x250_SSP'/}</div>
 		<div class="mt1">
 			<dl class="tbox">
 				<dt><strong>推荐图集</strong></dt>
 				<dd>
 					<ul class="e9">
-                    {Ylcms:arclist row='8' type='image.commend.'}
-						<li><a href="{$field.arcurl}"><img src="[field:litpic/]" alt="[field:title function='html2text(@me)'/]"/><span class="title">{$field.title}</span></a></li>
-                    {/Ylcms:arclist}
+                    {dede:arclist row='8' type='image.commend.'}
+						<li><a href="[field:arcurl/]"><img src="[field:litpic/]" alt="[field:title function='html2text(@me)'/]"/><span class="title">[field:title/]</span></a></li>
+                    {/dede:arclist}
 					</ul>
 				</dd>
 			</dl>
 		</div>
-        <div id="contentRtPicAD2" style="margin:10px auto">{Ylcms:mda name='250x250'/}</div>
+        <div id="contentRtPicAD2" style="margin:10px auto">{dede:mda name='250x250'/}</div>
 	</div><!-- /pright -->
 </div>
-<div id="innerfooterAD2" style="margin:10px auto; width:726px">{Ylcms:mda name='728x90'/}</div>
-{Ylcms:include filename="footer.htm"/}
+<div id="innerfooterAD2" style="margin:10px auto; width:726px">{dede:mda name='728x90'/}</div>
+{dede:include filename="footer.htm"/}
 <!-- /footer -->
 
 </body>

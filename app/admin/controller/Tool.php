@@ -41,11 +41,33 @@ class Tool {
         if(request()->isAjax()){
             $filename = $this->rootTempleta .input('filename');
             $str = file_get_contents($filename);
-            $str = str_replace("dede","Ylcms",$str);
+            $str = str_replace("dede","yycms",$str);
             $str = str_replace("[field:typeurl/]",'{$field.typeurl}',$str);
+            $str = str_replace("[field:typeurl /]",'{$field.typeurl}',$str);
+            
             $str = str_replace("[field:title/]",'{$field.title}',$str);
             $str = str_replace("[field:title /]",'{$field.title}',$str);
+            
             $str = str_replace("[field:arcurl/]",'{$field.arcurl}',$str);
+            $str = str_replace("[field:arcurl /]",'{$field.arcurl}',$str);
+            
+            $str = str_replace("[field:info/]",'{$field.info}',$str);
+            $str = str_replace("[field:info /]",'{$field.info}',$str);
+            
+            $fileHandle = fopen($filename, 'w');
+            fwrite($fileHandle, $str);
+            $str = file_get_contents($filename);
+            return json(['code'=>0,'msg'=>'success','data'=>$filename,'progress'=>input('page').'/'.input('count')]);
+        }
+    }
+    
+    public function replaceContent(){
+        if(request()->isAjax()){
+            $filename = $this->rootTempleta .input('filename');
+            $str = file_get_contents($filename);
+            $oldContent = input('oldContent');
+            $newsContent = input('newsContent');
+            $str = str_replace($oldContent,$newsContent,$str);
             $fileHandle = fopen($filename, 'w');
             fwrite($fileHandle, $str);
             $str = file_get_contents($filename);

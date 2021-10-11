@@ -1,4 +1,4 @@
-<!-- //主模板必须要引入{Ylcms:global.cfg_cmsurl/}/include/Ylcmsajax2.js -->
+<!-- //主模板必须要引入{dede:global.cfg_cmsurl/}/include/dedeajax2.js -->
 <a name='postform'></a>
 <div class="mt1">
 		<dl class="tbox">
@@ -7,32 +7,32 @@
 				<span class="more"></span>
 			</dt>
 			<dd>
-				<div class="Ylcms_comment_post">
+				<div class="dede_comment_post">
           <form action="#" method="post" name="feedback">
           <input type="hidden" name="dopost" value="send" />
           <input type="hidden" name="comtype" value="comments">
-          <input type="hidden" name="aid" value="{Ylcms:field name="id"/}" />
+          <input type="hidden" name="aid" value="{dede:field name="id"/}" />
           <input type="hidden" name="fid" id='feedbackfid' value="0" />
           <div class="dcmp-title">
 						<small>请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。</small>
 					</div><!-- /dcmp-title -->
 					<div class="dcmp-stand">
 						<strong>评价:</strong>
-							<input type="radio" name="feedbacktype" checked="1" value="feedback" id="dcmp-stand-neu" /><label for="dcmp-stand-neu"><img src="{Ylcms:global.cfg_templets_skin/}/images/cmt-neu.gif" />中立</label>
-							<input type="radio" name="feedbacktype" value="good" id="dcmp-stand-good" /><label for="dcmp-stand-good"><img src="{Ylcms:global.cfg_templets_skin/}/images/cmt-good.gif" />好评</label>
-							<input type="radio" name="feedbacktype" value="bad" id="dcmp-stand-bad" /><label for="dcmp-stand-bad"><img src="{Ylcms:global.cfg_templets_skin/}/images/cmt-bad.gif" />差评</label>
+							<input type="radio" name="feedbacktype" checked="1" value="feedback" id="dcmp-stand-neu" /><label for="dcmp-stand-neu"><img src="{dede:global.cfg_templets_skin/}/images/cmt-neu.gif" />中立</label>
+							<input type="radio" name="feedbacktype" value="good" id="dcmp-stand-good" /><label for="dcmp-stand-good"><img src="{dede:global.cfg_templets_skin/}/images/cmt-good.gif" />好评</label>
+							<input type="radio" name="feedbacktype" value="bad" id="dcmp-stand-bad" /><label for="dcmp-stand-bad"><img src="{dede:global.cfg_templets_skin/}/images/cmt-bad.gif" />差评</label>
 					</div><!-- /dcmp-stand -->
                     <div class="clr"></div>
                     <div class="dcmp-mood">
 						<strong>表情:</strong>
 						<ul>            
-								{Ylcms:php}
+								{dede:php}
 								for ($i = 1; $i < 12; $i++)
 								{
                                     $isecheck = ($i == 1) ? 'checked="1" ' : '';
 								    echo '<li><input type="radio" name="face" value="'.$i.'" '.$isecheck.'/><img src="'.$cfg_templets_skin.'/images/mood/ico-mood-'.$i.'.gif" /></li>';
 								}
-								{/Ylcms:php}                   
+								{/dede:php}                   
 						</ul>
 					</div><!-- /dcmp-mood -->
 					<div class="dcmp-content">
@@ -41,14 +41,14 @@
 					<div class="dcmp-post"><!--未登陆-->
 							<div class="dcmp-userinfo" id="_ajax_feedback">
 								用户名:<input type="text" name="username" size="16" class="ipt-txt" style="text-transform: uppercase;"/>
-                                验证码:<input type="text" name="validate" size="4" class="ipt-txt" style="text-transform:uppercase;"/><img src= "{Ylcms:global.cfg_cmspath/}/include/vdimgck.php" id="validateimg" style="cursor:pointer" onclick="this.src=this.src+\'?\'" title="点击我更换图片" alt="点击我更换图片" />
+                                验证码:<input type="text" name="validate" size="4" class="ipt-txt" style="text-transform:uppercase;"/><img src= "{dede:global.cfg_cmspath/}/include/vdimgck.php" id="validateimg" style="cursor:pointer" onclick="this.src=this.src+\'?\'" title="点击我更换图片" alt="点击我更换图片" />
                 <input type="checkbox" name="notuser" id="dcmp-submit-guest" /><label for="dcmp-submit-guest" />匿名? </label>
 							</div>
-              {Ylcms:php}
+              {dede:php}
 								if($cfg_mb_open=='Y') {
               		echo '<script language="javascript" type="text/javascript">CheckLogin();</script>';
               	}
-							{/Ylcms:php}
+							{/dede:php}
 							<div class="dcmp-submit">
 								<button type="button" onClick='PostComment()'>发表评论</button>
 							</div>
@@ -65,7 +65,7 @@
 			<dl class="tbox">
 				<dt>
 					<strong>最新评论</strong>
-					<span class="more"><a href="{Ylcms:field name='phpurl'/}/feedback.php?aid={Ylcms:field.id/}">进入详细评论页&gt;&gt;</a></span>
+					<span class="more"><a href="{dede:field name='phpurl'/}/feedback.php?aid={dede:field.id/}">进入详细评论页&gt;&gt;</a></span>
 				</dt>
 				<!-- //这两个ID的区块必须存在，否则JS会出错 -->
 				<dd id='commetcontentNew'></dd>
@@ -80,9 +80,9 @@
 function LoadCommets(page)
 {
 		var taget_obj = document.getElementById('commetcontent');
-		var waithtml = "<div style='line-height:50px'><img src='{Ylcms:global.cfg_cmsurl/}/images/loadinglit.gif' />评论加载中...</div>";
+		var waithtml = "<div style='line-height:50px'><img src='{dede:global.cfg_cmsurl/}/images/loadinglit.gif' />评论加载中...</div>";
 		var myajax = new DedeAjax(taget_obj, true, true, '', 'x', waithtml);
-		myajax.SendGet2("{Ylcms:global.cfg_phpurl /}/feedback_ajax.php?dopost=getlist&aid={Ylcms:field.id/}&page="+page);
+		myajax.SendGet2("{dede:global.cfg_phpurl /}/feedback_ajax.php?dopost=getlist&aid={dede:field.id/}&page="+page);
 		DedeXHTTP = null;
 }
 function PostComment()
@@ -95,7 +95,7 @@ function PostComment()
 		var nusername = '';
 		var npwd = '';
 		var taget_obj = $DE('commetcontentNew');
-		var waithtml = "<div style='line-height:30px'><img src='{Ylcms:global.cfg_cmsurl/}/images/loadinglit.gif' />正在发送中...</div>";
+		var waithtml = "<div style='line-height:30px'><img src='{dede:global.cfg_cmsurl/}/images/loadinglit.gif' />正在发送中...</div>";
 		if(f.msg.value=='')
 		{
 			alert("评论内容不能为空！");
@@ -129,9 +129,9 @@ function PostComment()
 		if(f.pwd) npwd = f.pwd.value;
 		
 		var myajax = new DedeAjax(taget_obj, false, true, '', '', waithtml);
-		myajax.sendlang = '{Ylcms:global.cfg_soft_lang/}';
+		myajax.sendlang = '{dede:global.cfg_soft_lang/}';
 		myajax.AddKeyN('dopost', 'send');
-		myajax.AddKeyN('aid', '{Ylcms:field.id/}');
+		myajax.AddKeyN('aid', '{dede:field.id/}');
 		myajax.AddKeyN('fid', f.fid.value);
 		myajax.AddKeyN('face', nface);
 		myajax.AddKeyN('feedbacktype', nfeedbacktype);
@@ -140,12 +140,12 @@ function PostComment()
 		myajax.AddKeyN('username', nusername);
 		myajax.AddKeyN('pwd', npwd);
 		myajax.AddKeyN('msg', f.msg.value);
-		myajax.SendPost2('{Ylcms:global.cfg_phpurl/}/feedback_ajax.php');
+		myajax.SendPost2('{dede:global.cfg_phpurl/}/feedback_ajax.php');
 		f.msg.value = '';
 		f.fid.value = 0;
 		if(f.validate)
 		{
-			if($DE('validateimg')) $DE('validateimg').src = "{Ylcms:global.cfg_cmsurl/}/include/vdimgck.php?"+f.validate.value;
+			if($DE('validateimg')) $DE('validateimg').src = "{dede:global.cfg_cmsurl/}/include/vdimgck.php?"+f.validate.value;
 			f.validate.value = '';
 		}
 }

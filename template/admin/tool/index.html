@@ -22,6 +22,7 @@
 <script type="text/html" id="tool">
   <div class="layui-btn-container">
     <button class="layui-btn layui-btn-sm" lay-event="replaceTag">一键换标签</button>
+    <button class="layui-btn layui-btn-sm" lay-event="replaceContent">一键换内容</button>
     <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
     <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
   </div>
@@ -32,9 +33,10 @@
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script>
-    layui.use(['table','element'], function(){
+    layui.use(['table','element','jquery'], function(){
       var table = layui.table
-      ,element = layui.element;
+      ,element = layui.element
+      ,$ = layui.jquery;
         //第一个实例
         table.render({
           elem: '#list'
@@ -68,6 +70,50 @@
                });
              }
         })
+         table.on('toolbar(list)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            if(checkStatus.data.length == 0){
+                layer.msg('没有选择任何文件!!!');
+                return false;
+            }
+            $('.progress').show();
+             if(obj.event === 'replaceContent'){
+                var len = checkStatus.data.length;
+                layer.prompt({title: '输入原来内容，并确认', formType: 2}, function(oldContent, index){
+                    layer.close(index);
+                    layer.prompt({title: '输入新的内容，并确认', formType: 2}, function(newsContent, index){
+                        layer.close(index);
+                        for(var i = 0;i<len;i++){
+                              data =checkStatus.data[i];
+                              data.oldContent = oldContent;
+                              data.newsContent= newsContent;
+                              data.page = i+1;
+                              data.count = len;
+                              $.post('{:url("tool/replaceContent")}',data,function(res){
+                                  if(res.code == 0){
+                                      element.progress('progress',res.progress);
+                                      element.init();
+                                      layer.msg(res.msg);
+                                  }
+                              })
+                         }
+                    });
+                });
+             }else if(obj.event === 'replaceTag'){
+                var len = checkStatus.data.length,data;
+                for(var i = 0;i<len;i++){
+                    data =checkStatus.data[i]
+                    ,data.page = i+1
+                    ,data.count = len;
+                    $.post('{:url("tool/replaceTag")}',data,function(res){
+                        if(res.code == 0){
+                            element.progress('progress',res.progress);
+                            element.init();
+                        }
+                    })
+                }
+             }
+         })
     });
     
 </script>

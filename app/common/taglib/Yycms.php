@@ -2,7 +2,7 @@
 namespace app\common\taglib;
 use think\template\TagLib;
 use think\facade\View;
-class Ylcms extends TagLib{
+class Yycms extends TagLib{
     /**
      * 定义标签列表
      */
@@ -91,7 +91,7 @@ class Ylcms extends TagLib{
         $currid=$ArctypeModel->artypeCurrId($tid);
         $currid[]=$tid;
             foreach($menuList as $index=>$field){
-                    $field["url"]=addons_url("template/list",["tid"=>$field["id"]]);
+                    $field["typeurl"]=url("template/list",["tid"=>$field["id"]]);
                     $field["currentstyle"]=in_array($field["id"],$currid)?"'.$currentstyle.'":"";//栏目显示高亮
                     $typeid=$field["id"];//嵌套标签typeid传值
             ';
@@ -114,7 +114,7 @@ class Ylcms extends TagLib{
         $parseStr = '<?php $currentstyle="";';
         $parseStr.='
             $where=["ismenu"=>1,"status"=>1,"topid"=>'.$typeid.'];
-            $ArctypeModel=new \addons\travel\backend\model\Arctype();
+            $ArctypeModel=new \app\common\model\Arctype();
             $menuList= $ArctypeModel->where($where)->order("'.$order.'")->limit('.$row.')->select()->toArray(); 
             $currid=[];
             if(input("tid")){
@@ -135,8 +135,12 @@ class Ylcms extends TagLib{
         return $parseStr;
     }
     public function tagArclist($tag, $content){
+        if(input('tid')) {
+            $typeid= empty($tag['typeid']) ? input('tid') : $tag['typeid'];//栏目ID
+        } else {
+            $typeid= empty($tag['typeid']) ?  $tag['typeid'] : 'all';//栏目ID
+        }
         
-        $typeid= empty($tag['typeid']) ? input('tid') : $tag['typeid'];//栏目ID
         $order= empty($tag['order']) ? "sortrank asc": $tag['order'];//排序
         $row= empty($tag['row']) ? 10: $tag['row'];//条数    
         $limit='0,'.$row;
@@ -163,15 +167,16 @@ class Ylcms extends TagLib{
                             ->where($where)
                             ->order("arc.'.$order.',arc.id asc")->limit('.$limit.')
                             ->select()
-                            ->toArray();             
+                            ->toArray();   
             foreach($list as $index=>$field){
-                foreach($field as $k=>$v){
-                    if(in_array($k,$serializefield)){
-                        //$field[$k] = \fun\Process::decode_item($v);//序列化字段
-                    }
-                }
+//                foreach($field as $k=>$v){
+//                    if(in_array($k,$serializefield)){
+//                        //$field[$k] = \fun\Process::decode_item($v);//序列化字段
+//                    }
+//                }
+                $field["info"]=$field["description"]; //缩略图
                 $field["litpic"]=explode(",",$field["litpic"]); //缩略图
-                $field["url"]=url("template/view",["aid"=>$field["aid"]])->build();
+                $field["arcurl"]=url("template/view",["aid"=>$field["aid"]])->build();
             ';
         $parseStr.='?>';
         $parseStr.=$content;
@@ -239,5 +244,8 @@ class Ylcms extends TagLib{
             ?>
         ';
         return $parseStr;   
+    }
+    public function tagFlinktype($tag,$content){
+       return ''; 
     }
 }
