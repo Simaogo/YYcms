@@ -14,20 +14,32 @@
 <div class="zc-aboutus">
   <div class="location"> 您现在的位置：{dede:field name='position'/}</div>
   <div class="zc-aboutus1">
-  {dede:include filename='left.htm'/}
-  <div class="aboutus-right">
-    <div class="aboutus-name"> {dede:field name="typename"/} </div>
-    <div class="aboutus-detail">
-      <div class="aboutus-text">
-        <h3>{dede:field.title/}</h3>
-        <div class="aboutus-text">
-          {dede:field.content/}
+   {dede:include filename='left.htm'/}
+    <div class="aboutus-right">
+      <div class="aboutus-name"> {dede:field name='typename'/} </div>
+      <div class="news-detail">
+        <div>
+          <div class="news-text">
+            <ul>
+			{dede:list row='8' pagesize='8' titlelen='60'}
+              <li><b><img src="[field:picname/]" width="125" height="90"></b>
+                <span><strong><a href="[field:arcurl/]">[field:title/]</a></strong>
+                <p style=" font-size:14px; ">　　[field:description function='cn_substr(@me,600)'/]</p>
+                <p style=" text-align:right; font-size:12px; color:#999">[field:click/]人浏览&nbsp;&nbsp;[field:pubdate function='strftime("%Y-%m-%d",@me)'/]</p>
+                </span>
+			  </li>
+			  {/dede:list}
+            </ul>
+          </div>
+          <div class="clear"></div>
+          <div class="numbox">
+			{dede:pagelist listitem='index,pre,next,pageno,end,info,' listsize='3' /}
+		  </div>
         </div>
+        <div class="clear"></div>
       </div>
-      
     </div>
   </div>
-</div>
 </div>
 <div class="clear"></div>
 {dede:include filename='tab.htm'/}

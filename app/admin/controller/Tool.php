@@ -23,7 +23,6 @@ class Tool {
     public function index(){
        if(request()->isAjax()){
            $data = [];
-           
            $d = scandir($this->rootTempleta);
            $i = 0;
            foreach ($d as $k=>$v){
@@ -41,7 +40,17 @@ class Tool {
         if(request()->isAjax()){
             $filename = $this->rootTempleta .input('filename');
             $str = file_get_contents($filename);
-            $str = str_replace("dede","yycms",$str);
+            $str = preg_replace("/typeid=(\d*)\s/i", 'typeid="$1" ', $str);
+            $str = preg_replace("/titlelen=(\d*)\s/i", 'titlelen="$1" ', $str);
+            $str = preg_replace("/channelid=(\d*)\s/i", 'channelid="$1" ', $str);
+            $str = preg_replace("/row=(\d*)\s/i", 'row="$1" ', $str);
+
+            $sysconfig = \app\common\model\Config::select();
+            foreach ($sysconfig as $key => $val){
+               $str = str_replace("{dede:global.".$val["varname"]."/}","{:syscfg('".$val["varname"]."')}",$str); 
+               $str = str_replace("{dede:global.".$val["varname"]." /}","{:syscfg('".$val["varname"]."')}",$str);
+            }
+            
             $str = str_replace("[field:typeurl/]",'{$field.typeurl}',$str);
             $str = str_replace("[field:typeurl /]",'{$field.typeurl}',$str);
             
@@ -53,7 +62,7 @@ class Tool {
             
             $str = str_replace("[field:info/]",'{$field.info}',$str);
             $str = str_replace("[field:info /]",'{$field.info}',$str);
-            
+            $str = str_replace("dede","yycms",$str);
             $fileHandle = fopen($filename, 'w');
             fwrite($fileHandle, $str);
             $str = file_get_contents($filename);

@@ -1,0 +1,18 @@
+<div class="aboutus-left">
+      <div class="zc-project-list">
+	    {dede:channelartlist typeid="1"}
+        <div class="zc-project-li">
+          <div class="zc-project-list-name"> {dede:field name="typename"/} </div>
+          <div class="zc-project-list1">
+            <ul>
+            {dede:arclist channelid=10 row=6 titlelen=18 orderby='pubdate'}
+			  <li class="pro1"> <a href="[field:arcurl/]">[field:title/]</a></li>
+			{/dede:arclist}
+            </ul>
+          </div>
+        </div>
+       {/dede:channelartlist}
+      </div>
+      <div class="clear"></div>
+      <div class="advert"> <img src="/static/images/20170717110758447.jpg" width="100%"> </div>
+    </div>

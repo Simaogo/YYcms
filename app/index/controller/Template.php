@@ -20,7 +20,7 @@ class Template extends Common{
          $view = cache('view_list_'.$typeid);
          if(!$view){
             $page=input('page');
-            $arctypeModel = new \addons\travel\common\model\Arctype();
+            $arctypeModel = new \app\common\model\Arctype();
             $Arctype = $arctypeModel->find($typeid);
             $where = [];
             if($Arctype->ispart==1){
@@ -29,37 +29,26 @@ class Template extends Common{
                 if(!$typeid) return '';
                 $pagesize=0;
                 if ($page) $pagesize=$page*$row-$row;
-                
-                $ChanneltypeModel = new \addons\travel\common\model\Channeltype();
+                $ChanneltypeModel = new \app\common\model\Channeltype();
                 $Channeltype = $ChanneltypeModel->find($Arctype->channeltype);
-                // 线路目的地
-                if($Channeltype->id==4){
-                    $dest = input('dest');
-                    if($dest!=null){ 
-                        $where[]=['add.destination','like','%'.$dest .'%'];
-                    }else{
-                        $dest=1;
-                    }
-                    $this->getdest($dest);
-                }
                 //标题搜索
                 $keywords=trim(input('keywords'),' ');
                 if($keywords){
                     $where[]=['arc.title','like','%'.$keywords .'%'];
                 }
                 //栏目下级ID
-                $chinldIds=$arctypeModel->where('topid',$typeid)->field('id')->select()->toArray();
+                $chinldIds=$arctypeModel->where('reid',$typeid)->field('id')->select()->toArray();
                 $typeids=trim(array_reduce($chinldIds,function($cid,$chi){
                     return $cid.','.$chi['id'];
                 }),',');
                 $typeids=$typeids?$typeid.','.$typeids:$typeid;
                 $where[]=['arc.typeid','in',$typeids];
-                $page = Db::name('addons_travel_archives')->alias('arc')
+                $page = Db::name('archives')->alias('arc')
                         ->where($where)
                         ->join($Channeltype->addtable.' add','arc.id=add.aid','left')
                         ->paginate(['list_rows'=>$row,'query' =>['tid'=>$typeid]]);
                 $page = $page->render();
-                $list = Db::name('addons_travel_archives')->alias('arc')
+                $list = Db::name('archives')->alias('arc')
                         ->where($where)
                         ->join($Channeltype->addtable.' add','arc.id=add.aid','left')
                         ->limit($pagesize,$row)
@@ -80,7 +69,7 @@ class Template extends Common{
                             if($v){
                                 $list[$key]['url']=$v;
                             } else {
-                                $url=addons_url('template/view', ['aid'=>$val['aid']]);
+                                $url=url('template/view', ['aid'=>$val['aid']]);
                                 $list[$key]['url']= $url->build();
                             }   
                         }
@@ -92,20 +81,23 @@ class Template extends Common{
             }
             if($Arctype->ispart==2){
                 $template=$Arctype->tempindex;
+            } else {
+                $template=$Arctype->templist;
             }
             $view['typename']=$Arctype->typename;
             $view['keywords']=$Arctype->keywords;
             $view['description']=$Arctype->description;
             $view["content"] = $Arctype->content;
-            //if(!$keywords)cache('view_list_'.$typeid,$view);
+            if(!$keywords)cache('view_list_'.$typeid,$view);
         }
         
-         if($this->request->isPost()){//ajax 加载
+         if(request()->isPost()){//ajax 加载
              return json(['list'=>$view['list'],'page'=>$pagesize/$row]);
          } 
+        $template= str_replace('{style}/','', $template);
         View::assign($view);
-        $template=$this->template($template).$template;
-        return View($template);
+        $template=$this->default . $this->template($template);
+        return View::fetch($template);
     }
     public function view(){
         $aid=input('aid');
@@ -144,7 +136,6 @@ class Template extends Common{
         $template= str_replace('{style}/','', $view['template']);
         View::assign($view);
         $template=$this->default . $this->template($template);
-       // halt($template);
         return View::fetch($template);
         
     }
@@ -156,8 +147,9 @@ class Template extends Common{
     }
     public function template($template){
         if(isMobile()){
-            $template = $template.'_m'; 
-        } 
+            $arr = explode('.',$template);
+            $template = $arr[0].'_m';
+        }
       return $template;
     }
     public function retrieve_ids(&$ids, $record) {

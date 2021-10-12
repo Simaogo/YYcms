@@ -14,20 +14,34 @@
 <div class="zc-aboutus">
   <div class="location"> 您现在的位置：{dede:field name='position'/}</div>
   <div class="zc-aboutus1">
-  {dede:include filename='left.htm'/}
-  <div class="aboutus-right">
-    <div class="aboutus-name"> {dede:field name="typename"/} </div>
-    <div class="aboutus-detail">
-      <div class="aboutus-text">
-        <h3>{dede:field.title/}</h3>
-        <div class="aboutus-text">
-          {dede:field.content/}
+    {dede:include filename='left2.htm'/}
+    <div class="aboutus-right">
+      <div class="aboutus-name"> {dede:field name='typename'/} </div>
+      <div class="case-detail">
+        <div>
+          <div class="case-list-1">
+            <ul>
+			{dede:list row='12' pagesize='12' titlelen='45'}
+              <li><a href="[field:arcurl/]">
+                <div class="case-list-1img"> <img src="[field:picname/]" width="239" height="140"> </div>
+                <div class="case-list-1text"> <span>[field:title/]<br>
+                  </span>
+                  <p style="text-align:left; padding:0 10px; margin:0">[field:description function='cn_substr(@me,80)'/]...</p>
+                </div>
+                </a>
+				</li>
+              {/dede:list}
+            </ul>
+          </div>
+          <div class="clear"></div>
+          <div class="numbox">
+            {dede:pagelist listitem='index,pre,next,pageno,end,info,' listsize='3' /}
+          </div>
         </div>
+        <div class="clear"></div>
       </div>
-      
     </div>
   </div>
-</div>
 </div>
 <div class="clear"></div>
 {dede:include filename='tab.htm'/}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<head>
+<title>{dede:field.title/}_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{dede:field.keywords/}" />
+<meta name="description" content="{dede:field.description function='html2text(@me)'/}" />
+<script type="text/javascript">if(window.location.toString().indexOf('pref=padindex') != -1){}else{if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){if(window.location.href.indexOf("?mobile")<0){try{if(/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){window.location.href="/m/view.php?aid={dede:field.id/}";}else if(/iPad/i.test(navigator.userAgent)){}else{}}catch(e){}}}}</script>
+<link rel="stylesheet" href="/static/css/style-3.css" />
+</head>
+<body>
+{dede:include filename='head.htm'/}
+<div class="zc-banner1"> 
+<img src="/static/images/20170215180740670.jpg" width="100%"> </div>
+<div class="zc-aboutus">
+<div class="location"> 您现在的位置：{dede:field name='position'/}</div>
+<div class="zc-aboutus1">
+  {dede:include filename='left.htm'/}
+  <div class="aboutus-right">
+    <div class="aboutus-name"> {dede:field name="typename"/} </div>
+    <div class="aboutus-detail">
+      <div class="aboutus-text">
+		<div class="ctitle">
+		<h3>{dede:field.title/}</h3>
+        <span>时间：{dede:field.pubdate function="MyDate('Y-m-d H:i',@me)"/}&nbsp;&nbsp;来源：{dede:field.source/} &nbsp;&nbsp;编辑：{dede:adminname/}</span>  </div>
+        <div class="aboutus-text">
+          {dede:field.body/}
+        </div>
+      </div>
+      <dl class="title_2">
+        <li>{dede:prenext get='pre'/}</li>
+        <li>{dede:prenext get='next'/} </li>
+      </dl>
+    </div>
+  </div>
+</div>
+</div>
+<div class="clear"></div>
+{dede:include filename='tab.htm'/}
+{dede:include filename='footer.htm'/}
+
+</body>
+</html>

@@ -16,23 +16,25 @@ if (!function_exists('syscfg')) {
      * @param null $code
      * @return array|mixed|object|App
      */
-    function syscfg($group, $code = null)
+    function syscfg($code = null,$group = null)
     {
-        $where = ['group' => $group];
+        if(!$group&&!$code) return '';
+        $where = $group?['groupid' => $group]:'';
+        $where = $code?['varname' => $code]:'';
         $value = empty($code) ? cache("syscfg_{$group}") : cache("syscfg_{$group}_{$code}");
         if (!empty($value)) {
             return $value;
         }
         if (!empty($code)) {
-            $where['code'] = $code;
+            $where['varname'] = $code;
             $value = \app\common\model\Config::where($where)->value('value');
             cache("syscfg_{$group}_{$code}", $value, 3600);
         } else {
-            $value = \app\common\model\Config::where($where)->column('value', 'code');
+            
+            $value = \app\common\model\Config::where($where)->column('varname,value')->select();
             cache("syscfg_{$group}", $value, 3600);
         }
         return $value;
-
     }
 }
 
@@ -254,6 +256,7 @@ if (!function_exists('timeAgo')) {
             return $posttime;
         }
     }
+}
     /**
      * 导入数据库
      */
@@ -298,52 +301,4 @@ if (!function_exists('timeAgo')) {
             $config = preg_replace("/'{$key}'.*?=>.*?'.*?'/", "'{$key}' => '{$value}'", $config);
             return file_put_contents($configFile, $config); // 写入配置文件
         }
-    }
-    
-    if (!function_exists('download')) {
-        function download($url, $savePath,$saveName, $method = 'GET', $params = '', $header = [], $cookies = [], $timeout = 3600)
-        {
-            if(!is_dir($savePath)){
-                FileHelper::mkdirs($savePath);
-            }
-            @touch($saveName);
-            $fp = fopen($savePath.$savePath, 'wb');
-            $protocol = substr($url, 0, 5);
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            if ('https' == $protocol) {
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-            }
-            curl_setopt($ch, CURLOPT_HEADER, true);
-            curl_setopt($ch, CURLOPT_NOBODY, FALSE); //需要response body
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $header ?: ['Expect:']);
-            curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_NOPROGRESS, 0);
-            curl_setopt($ch, CURLOPT_FILE, $fp);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-            curl_setopt($ch, CURLOPT_BUFFERSIZE, 64000);
-            if ($method == 'POST') {
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-            }
-            if (!empty($cookies)) {
-                curl_setopt($ch, CURLOPT_COOKIE, $cookies);
-                curl_setopt($ch, CURLOPT_COOKIEJAR, $cookies);
-            }
-            $res = curl_exec($ch);
-            $curlInfo = curl_getinfo($ch);
-            if (curl_errno($ch) || $curlInfo['http_code'] != 200) {
-                curl_error($ch);
-                @unlink($savePath.$savePath);
-                return false;
-            } else {
-                curl_close($ch);
-            }
-            fclose($fp);
-            return $savePath.$savePath;
-        }
-    }
-}
-
+    }   

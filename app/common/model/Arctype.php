@@ -45,4 +45,14 @@ class Arctype extends \think\Model{
         }
         return $arr;
     }
+    //栏目高亮id
+    public function artypeCurrId($id){
+        $arr = array();
+        $artype=self::find($id);
+        if($artype){
+             $arr[]=$artype->topid;
+             $arr=array_merge($arr,self::artypeCurrId($artype->topid));
+        }
+        return $arr;
+    }
 }

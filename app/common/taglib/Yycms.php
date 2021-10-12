@@ -8,17 +8,19 @@ class Yycms extends TagLib{
      */
     protected $tags   =  [
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
-        'close'               => ['attr' => 'time,format', 'close' => 1], //闭合标签，默认为不闭合
+        'close'               => ['attr' => 'time,format', 'close' => 0], //闭合标签，默认为不闭合
         'open'                => ['attr' => 'name,type', 'close' => 1], 
         'channel'             => ['typeid,type,order,row', 'alias' => 'iterate','close' => 1],   //typeid:栏目id|默认0,order:排序方式desc|asc|默认desc,row条数
         'channelartlist'      => ['typeid,order,row,pagesize', 'alias' => 'iterate','close' => 1],   //typeid:栏目id|默认0,order:排序方式desc|asc|默认desc,row条数
         'arclist'             => ['typeid,channelid,order,row,flag,titlelen', 'alias' => 'iterate','close' => 1],   //
         'list'                => ['order,row,flag,titlelen', 'alias' => 'iterate','close' => 1],   //
-        'advert'             => ['group_id,order,row,titlelen', 'alias' => 'ad','close' => 1],  //广告
+        'advert'              => ['group_id,order,row,titlelen', 'alias' => 'ad','close' => 1],  //广告
+
+        'include'            => ['attr' => 'filename', 'close' => 0],  //
     ];
 
     /**
-     * 这是一个闭合标签的简单演示
+     * 这是一个闭合标签的简单演示{demo:close time='$demo_time'/}
      */
     public function tagClose($tag)
     {
@@ -36,6 +38,17 @@ class Yycms extends TagLib{
         $parse = '<?php ';
         $parse .= 'echo date("' . $format . '",' . $time . ');';
         $parse .= ' ?>';
+        return $parse;
+    }
+    /**
+     * {include file="public/header" /}
+     * @param type $tag
+     * @return string
+     */
+    public function tagInclude($tag){
+        $filename = empty($tag['filename']) ? '' : $tag['filename'];
+        $templeta = '../templeta/' . syscfg(1,'cfg_df_style') .'/'. $filename;
+        $parse = '{include}';
         return $parse;
     }
     /**
@@ -72,15 +85,15 @@ class Yycms extends TagLib{
         $parseStr.='
         $where=[];
         $menuList=[];
-        $where[]=["status","=",1];
-        if("'.$type.'"=="top") $where[] =["topid","=",0];
+        $where[]=["ishidden","=",0];
+        if("'.$type.'"=="top") $where[] =["reid","=",0];
         if("'.$type.'"=="son"){
             if(empty("'.$typeid.'")) {
               $typeid =input("tid");
             }else{
               $typeid ="'.$typeid.'";
             }
-            $where[]=[\'topid\',\'in\', explode(",",$typeid)];
+            $where[]=[\'reid\',\'in\', explode(",",$typeid)];
         }
         if("'.$type.'"=="self") $where[] =["id","in", explode(",","'.$typeid.'")];
            
@@ -88,7 +101,7 @@ class Yycms extends TagLib{
         $menuList= $ArctypeModel->where($where)->order("'.$order.'")->limit('.$row.')->select()->toArray();
        
         $tid= request()->param("tid");
-        $currid=$ArctypeModel->artypeCurrId($tid);
+        $currid=$ArctypeModel->childrenIds($menuList,$tid);
         $currid[]=$tid;
             foreach($menuList as $index=>$field){
                     $field["typeurl"]=url("template/list",["tid"=>$field["id"]]);
@@ -108,20 +121,20 @@ class Yycms extends TagLib{
     public function tagChannelartlist($tag, $content){
        
         $typeid= empty($tag['typeid']) ? 0 : $tag['typeid'];//栏目ID
-        $order= empty($tag['order']) ? " sortrank desc": $tag['order'];//排序
+        $order= empty($tag['order']) ? "desc": $tag['order'];//排序
         $row= empty($tag['row']) ? 10: $tag['row'];//条数
-        
         $parseStr = '<?php $currentstyle="";';
         $parseStr.='
-            $where=["ismenu"=>1,"status"=>1,"topid"=>'.$typeid.'];
+            $where=["ishidden"=>0,"reid"=>'.$typeid.'];
             $ArctypeModel=new \app\common\model\Arctype();
-            $menuList= $ArctypeModel->where($where)->order("'.$order.'")->limit('.$row.')->select()->toArray(); 
+            $menuList= $ArctypeModel->where($where)->order("sortrank","'.$order.'")->limit(0,'.$row.')->select()->toArray(); 
             $currid=[];
             if(input("tid")){
                  $currid=$ArctypeModel->artypeCurrId(input("tid"));
                  $currid[]=input("tid");
             }
-            foreach($menuList as $index=>$field){ 
+            foreach($menuList as $index=>$field){
+                $field["typeurl"]=url("template/list",["tid"=>$field["id"]]);
                 $currentstyle=in_array($field["id"],$currid)?"cur":"";//栏目显示高亮
                 $typeid=$field["id"];//嵌套标签typeid传值
             ';
@@ -136,9 +149,10 @@ class Yycms extends TagLib{
     }
     public function tagArclist($tag, $content){
         if(input('tid')) {
-            $typeid= empty($tag['typeid']) ? input('tid') : $tag['typeid'];//栏目ID
+            $typeid = empty($tag['typeid']) ? input('tid') : $tag['typeid'];//栏目ID
         } else {
-            $typeid= empty($tag['typeid']) ?  $tag['typeid'] : 'all';//栏目ID
+            
+            $typeid = isset($tag['typeid'])&&empty($tag['typeid']) ?  $tag['typeid'] : 'all';//栏目ID
         }
         
         $order= empty($tag['order']) ? "sortrank asc": $tag['order'];//排序

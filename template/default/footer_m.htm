@@ -1,6 +1,80 @@
-{dede:mda name='468x60'/}
-<footer class="blog-footer">
-    <small>Powered by <a href="http://www.dedecms.com" title="织梦内容管理系统(DedeCms)--国内最专业的PHP网站管理系统，轻松建站的首选利器。" target="_blank"><strong>DedeCMS_{dede:global.cfg_version/}</strong></a><br/> &copy; 2004-2015 <a href="http://www.desdev.cn/" target="_blank">DesDev</a> Inc.<br />{dede:global.cfg_powerby/}&nbsp;&nbsp;{dede:global.cfg_beian/}      
-<!-- /powered --></small>
-  </p>
+  <div class="advert2" style="width:100%; float:left;color:#ffffff;text-align:center;font-size:18px;line-height:40px;font-family:'microsoft yahei';background-color:#ff7c00;padding-top:10px;">
+    <div class="advert2-2">
+      <p><strong><span style="font-size:20px;">《小吃培训+开店指导》一条龙</span></strong></p>
+      <p><span style="font-family:楷体, 楷体_gb2312, simkai;"><span style="font-family:楷体, 楷体_gb2312, simkai;"><span style="font-family:楷体, 楷体_gb2312, simkai;">大盛餐饮小吃培训，传授秘方，不保留，不控料</span></span></span></p>
+    </div>
+  </div>
+  <script type="text/javascript" src="static/js/jquery-1.7.2.min.js"></script> 
+  <script type="text/javascript" src="static/js/jquery.glide.min.js"></script> 
+  <script>
+
+$(document).ready(function() {
+
+var $cc=0;
+
+ $(".last").on("click", function(){
+
+ if($cc==0){
+
+	$(".fotnav").css("display","block");
+
+	$cc=1;
+
+	}
+
+	else
+
+	{
+
+	$(".fotnav").css("display","none");
+
+	$cc=0;
+
+	}
+
+  })
+
+   $("#footer").on("mouseleave", function(){
+
+	$(".fotnav").css("display","none");
+
+	
+
+  })
+  
+})
+
+ </script> 
+  
+ 
+  <div class="clear"></div>
+  
+  <div class="end">
+    <p class="mar"> 咨询：{dede:global.cfg_tel/} {dede:global.cfg_phone/}<br />
+      地址：{dede:global.cfg_address/} <br />
+      网址：{:syscfg('cfg_basehost')} <br />
+      备案：{:syscfg('cfg_beian')} <br />
+      {:syscfg('cfg_powerby')}<br />
+      <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode={dede:global.cfg_gongan/}"><img src="static/images/gongan.png" style="float:left;"/>{dede:global.cfg_gongan/}</a><br />
+    </p>
+  </div>
+</div>
+<footer id="footer"> <a href="/m/"><b><img src="static/images/index_70.png"></b>
+  <p>首页</p>
+  </a> <a href="{dede:global.cfg_kfurl/}" ><b><img src="static/images/index_73.png" /></b>
+  <p>在线咨询</p>
+  </a> <a href="tel:{dede:global.cfg_phone/}"><b><img src="static/images/index_76.png"></b>
+  <p>电话咨询</p>
+  </a> <a href="javascript:void();" style="height:40px;" class="last"><b><img src="static/images/ic.png" width="35"></b>
+  <p>更多</p>
+  </a>
+  <div class="fotnav" style="display:none">
+    <ul>
+      <li><a href="/m/">首页</a></li>
+      {dede:channel type='top' row='8'}
+      <li><a href="list.php?tid=>[field:id/]">>[field:typename/]</a></li>
+     {/dede:channel}
+    </ul>
+  </div>
 </footer>
+<div class="clear"></div>
