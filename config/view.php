@@ -29,5 +29,5 @@ return [
         '__PLUGINS__'     => '/static/plugins',
         '__CDN__'     => '',
     ],
-
+     'taglib_pre_load'     =>    '\app\common\taglib\Yycms',
 ];

@@ -24,6 +24,7 @@
                 </div>
             </form>
             <table class="layui-hide" id="list" lay-filter="list"></table>
+            <input type="hidden" name="typeid" value="0">
         </div>
       </div>
     </div>
@@ -44,14 +45,12 @@
               ,data: res.data
               ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
               ,click: function(obj){
-                var typeid   = obj.data.id;
-                arclist(typeid);
-                //layer.msg(JSON.stringify(obj.data));
+                    var typeid = obj.data.id;
+                    arclist(typeid);
+                    $('input[name="typeid"]').val(typeid);
               }
             });
         })
-        console.log(888);
-        
     var arclist =function(typeid){
         var url = '{:url("arclist/index")}?typeid='+typeid
         table.render({
@@ -82,30 +81,40 @@
         })
     }
     arclist(0);
-    //头工具栏事件
-  table.on('toolbar(arclist)', function(obj){
-    var checkStatus = table.checkStatus(obj.config.id);
-    switch(obj.event){
-      case 'getCheckData':
-        var data = checkStatus.data;
-        layer.alert(JSON.stringify(data));
-      break;
-      case 'getCheckLength':
-        var data = checkStatus.data;
-        layer.msg('选中了：'+ data.length + ' 个');
-      break;
-      case 'isAll':
-        layer.msg(checkStatus.isAll ? '全选': '未全选');
-      break;
-      
-      //自定义头工具栏右侧图标 - 提示
-      case 'LAYTABLE_TIPS':
-        layer.alert('这是工具栏右侧自定义的一个图标按钮');
-      break;
-    };
-  });
- 
+    table.on('toolbar(list)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id),
+            id = checkStatus.data.id||0,
+            typeid = $('input[name="typeid"]').val();
+            switch(obj.event){
+              case 'add':
+                layer.open({
+                    type: 2,
+                    title: '编辑',
+                    shadeClose: true,
+                    shade: 0.2,
+                    maxmin: true, //开启最大化最小化按钮
+                    area: ['85%', '85%'],
+                    content: '{:url(request()->controller()."/addEdit")}?id='+id+'&typeid='+typeid
+                });
+              break;
+              case 'getCheckData':
+                var data = checkStatus.data;
+                layer.alert(JSON.stringify(data));
+              break;
+              case 'getCheckLength':
+                var data = checkStatus.data;
+                layer.msg('选中了：'+ data.length + ' 个');
+              break;
+              case 'isAll':
+                layer.msg(checkStatus.isAll ? '全选': '未全选');
+              break;
 
+              //自定义头工具栏右侧图标 - 提示
+              case 'LAYTABLE_TIPS':
+                layer.alert('这是工具栏右侧自定义的一个图标按钮');
+              break;
+            };
+          });
   })
 </script>
 

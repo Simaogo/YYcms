@@ -84,6 +84,23 @@ class Arclist {
             $addinfo = Db::name($addtable)->where('aid',$id)->find();//附表信息
             $view['formData'] = array_merge($maininfo->toArray(),$addinfo);//合并
         }
+        $typeid =input('typeid');
+        if($typeid){
+           $Arctype = ArctypeModel::find($typeid);
+           $channel = ChanneltypeModel::find($Arctype->channeltype);//模型
+           $view['fieldset'] = $channel->fieldset;
+           if($view['fieldset']){
+               $str = $view['fieldset'];
+               $text = '$1,$2,$3,'. time().'$4,$5,$6';
+                $param ='/\<field:(\w+)\s+itemname="(\S+)"\s+autofield="(\d)"\s+notsend="(\d)"\s+type="(\w+)"\s+isnull="(\w+)"\s+islist="(\d)"\s+default=""\s+maxlength=""\s+page="(\w+)"/si';
+//                $str = preg_replace("/\<field:(\w+)\s+/si", $text, $view['fieldset']);
+                $str = preg_replace("/\<\/field:\w+>/si", '', $str);
+                ///\<field:(\w+)\s+itemname="详细介绍"\s+autofield="1"\s+notsend="0"\s+ type="htmltext"\s+isnull="true"\s+islist="0"\s+default=""\s+maxlength=""\s+page="split"\>/si	
+                $view['fieldset'] = preg_replace($param, $text, $str);
+                halt($view['fieldset']);
+           }
+        }
+
         $menu = ArctypeModel::select()->toArray();
         $view['arctypeList'] =ArctypeModel::cateTree($menu);
         View::assign($view);

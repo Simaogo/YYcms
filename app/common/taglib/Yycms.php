@@ -15,7 +15,7 @@ class Yycms extends TagLib{
         'arclist'             => ['typeid,channelid,order,row,flag,titlelen', 'alias' => 'iterate','close' => 1],   //
         'list'                => ['order,row,flag,titlelen', 'alias' => 'iterate','close' => 1],   //
         'advert'              => ['group_id,order,row,titlelen', 'alias' => 'ad','close' => 1],  //广告
-
+        'fieldset'            => ['itemname,autofield,notsend,type,isnull,islist,default,maxlength,page', 'alias' => 'iterate','close' => 1],  //自定义内容标签
         'include'            => ['attr' => 'filename', 'close' => 0],  //
     ];
 
@@ -259,7 +259,18 @@ class Yycms extends TagLib{
         ';
         return $parseStr;   
     }
-    public function tagFlinktype($tag,$content){
-       return ''; 
+    public function tagFieldset($tag,$content){
+        $name = $tag["name"];
+        $type = empty($tag['level']) ? 1 : $tag['level']; // 这个type目的是为了区分类型，一般来源是数据库
+        $parse = '<?php ';
+        $parse .= '$test_arr=[[1,3,5,7,9],[2,4,6,8,10]];'; // 这里是模拟数据
+        $parse .= '$__LIST__ = $test_arr[' . $type . '];';
+        $parse .= ' ?>';
+        $parse .= '{volist name="__LIST__" id="' . $name . '"}';
+        $parse .= $content;
+        $parse .= '{/volist}';
+        return $parse;
     }
+    
+
 }
