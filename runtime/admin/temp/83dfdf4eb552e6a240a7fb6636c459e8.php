@@ -1,4 +1,4 @@
-<?php /*a:3:{s:51:"E:\WWW\tp6dedecms\template\admin\arclist\index.html";i:1634008592;s:51:"E:\WWW\tp6dedecms\template\admin\public\header.html";i:1633268996;s:51:"E:\WWW\tp6dedecms\template\admin\public\footer.html";i:1633853083;}*/ ?>
+<?php /*a:3:{s:51:"E:\WWW\tp6dedecms\template\admin\arclist\index.html";i:1634138222;s:51:"E:\WWW\tp6dedecms\template\admin\public\header.html";i:1633268996;s:51:"E:\WWW\tp6dedecms\template\admin\public\footer.html";i:1633853083;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +15,7 @@
     <div class="layui-col-md2">
       <div class="layui-card">
         <div class="layui-card-header">栏目列表</div>
+        
         <div class="layui-card-body">
             <div id="arctype" class="arctype-tree">
                 
@@ -158,6 +159,7 @@
               elem: '#arctype'
               ,data: res.data
               ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
+              ,checked:true
               ,click: function(obj){
                     var typeid = obj.data.id;
                     arclist(typeid);
@@ -165,6 +167,7 @@
               }
             });
         })
+
     var arclist =function(typeid){
         var url = '<?php echo url("arclist/index"); ?>?typeid='+typeid
         table.render({

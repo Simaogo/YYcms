@@ -34,7 +34,10 @@ class Arclist {
         }
         return View::fetch();
     }
-    
+    /**
+     * 栏目列表
+     * @return type
+     */
     public function arctypeList(){
         if(request()->isAjax()){
            $ArctypeModel = new ArctypeModel();
@@ -43,13 +46,27 @@ class Arclist {
            return json(['code'=>0,'msg'=>'success','data'=>$menu]);
         }
     }
-    
+    /**
+     * 文章编辑
+     * @return type
+     */
     public function addEdit(){
         $id = input('id');
         if(request()->isAjax()){
             $post = input();
             $post['pubdate'] = $post['pubdate']?strtotime($post['pubdate']):time();
-            unset($post['tags']);
+            if(!$post['litpic']&&$post['body']){ //提取内容第一张为缩略图
+                $post['litpic'] = $this->get_html_first_imgurl ($post['body'])? $this->get_html_first_imgurl ($post['body']):'';
+            }
+            if($post['litpic']){
+                if(isset($post['flag'])&&$post['flag']){
+                    $post['flag'] = array_search('p',$post['flag']) == false ? array_push($post['flag'],'p'):$post['flag'];
+                } else {
+                    $post['flag'] =['p'];
+                }
+            }
+            $post['click'] = isset($post['click']) && empty($post['click']) ? rand(50, 500):$post['click'];
+            unset($post['tags']);////////////等完善!!!!
             unset($post['file']);
             //flag字段降维
             if(isset($post['flag'])&&$post['flag']){
@@ -59,13 +76,16 @@ class Arclist {
             }
             //分离主表、附表数据
             $Arctype = ArctypeModel::find($post['typeid']);
+            $post['channel'] =$Arctype->channeltype;
             $Channeltype = ChanneltypeModel::find($Arctype->channeltype);
             $table = $this->getTable($Channeltype->addtable);
             $data =$this->separation($post, $table);
+           // halt($data);
             if($id){
                 ArclistModel::update($data['mainData']);
                 Db::name($table)->update($data['addtableData']);
             } else {
+               $data['mainData']['description'] = isset($data['mainData']['description']) && empty($data['mainData']['description']) ? $this->getplaintextintrofromhtml($data['addtableData']['body']) :$data['mainData']['description'];
                //兼容id自增
                $last = ArclistModel::order('id desc')->limit(1)->select();
                $data['mainData']['id'] =($last[0]->id)+1;
@@ -82,31 +102,35 @@ class Arclist {
             $channel = ChanneltypeModel::find($maininfo['channel']);//模型
             $addtable = $this->getTable($channel->addtable);
             $addinfo = Db::name($addtable)->where('aid',$id)->find();//附表信息
-            $view['formData'] = array_merge($maininfo->toArray(),$addinfo);//合并
+            if($channel->nid=='image' && isset($addinfo['imgurls']) && $addinfo['imgurls']){
+                $pattern = "/ddimg='(.*)'\s+text/";
+                if(preg_match($pattern, $addinfo['imgurls'])){
+                    preg_match_all($pattern, $addinfo['imgurls'],$imgurls);//解析图集字段
+                    $addinfo['imgurls'] =$imgurls[1];
+                } else {
+                    $addinfo['imgurls'] = $addinfo['imgurls'];
+                }
+            }
+            $view['formData'] = $addinfo ? array_merge($maininfo->toArray(), $addinfo) : $maininfo;//合并
         }
-        $typeid =input('typeid');
-        if($typeid){
-           $Arctype = ArctypeModel::find($typeid);
+        $view['typeid'] =input('typeid');
+        if($view['typeid']){
+           $Arctype = ArctypeModel::find($view['typeid']);
            $channel = ChanneltypeModel::find($Arctype->channeltype);//模型
-           $view['fieldset'] = $channel->fieldset;
-           if($view['fieldset']){
-               $str = $view['fieldset'];
-               $text = '$1,$2,$3,'. time().'$4,$5,$6';
-                $param ='/\<field:(\w+)\s+itemname="(\S+)"\s+autofield="(\d)"\s+notsend="(\d)"\s+type="(\w+)"\s+isnull="(\w+)"\s+islist="(\d)"\s+default=""\s+maxlength=""\s+page="(\w+)"/si';
-//                $str = preg_replace("/\<field:(\w+)\s+/si", $text, $view['fieldset']);
-                $str = preg_replace("/\<\/field:\w+>/si", '', $str);
-                ///\<field:(\w+)\s+itemname="详细介绍"\s+autofield="1"\s+notsend="0"\s+ type="htmltext"\s+isnull="true"\s+islist="0"\s+default=""\s+maxlength=""\s+page="split"\>/si	
-                $view['fieldset'] = preg_replace($param, $text, $str);
-                halt($view['fieldset']);
-           }
+           $view['fieldset'] = $channel->fieldset;//自定义字段
+           $view['channeltype'] = $channel->id;//模型ID
+        } else {
+            $view['channeltype'] = 1;
         }
-
         $menu = ArctypeModel::select()->toArray();
         $view['arctypeList'] =ArctypeModel::cateTree($menu);
         View::assign($view);
         return View::fetch('add');
     }
-    
+    /**
+     * del
+     * @return type
+     */
     public function del(){
         if(request()->isAjax()){
             $id =input('id');
@@ -149,4 +173,40 @@ class Arclist {
         $table = str_replace($prefix, '', $table);//替换表名称前缀
         return $table;
     }
+    /**
+     * 提取内容第一张为缩略图
+     * @param type $html
+     * @return type string
+     */
+    function get_html_first_imgurl($html){
+        $pattern = '/<img.*?src=[\'|\"](.+?)[\'|\"].*?>/i';
+        preg_match_all($pattern, $html, $matches);//正则表达式把图片的整个都获取出来了
+        $img_arr = $matches[0];//全部图片数组
+        $first_img_url = "";
+        if (!empty($img_arr)) {
+          $first_img = $img_arr[0];
+          $p="#src=('|\")(.*)('|\")#isU";//正则表达式
+          preg_match_all ($p, $first_img, $img_val);
+
+          if(isset($img_val[2][0])){
+            $first_img_url = $img_val[2][0]; //获取第一张图片地址
+          }
+        }
+        return $first_img_url;
+     }
+    /**
+     *  从内容提取描述
+     * @param type $html
+     * @param type $len
+     * @return string
+     */
+    public function  getplaintextintrofromhtml($html,$len=150) {
+            if(!$html) return '';
+            $html = strip_tags($html);
+            $html = html_entity_decode($html, ENT_QUOTES, 'UTF-8');
+            $html_len = mb_strlen($html,'UTF-8');
+            $html = mb_substr($html, 0, $len, 'UTF-8');
+            return $html;
+    }
+    
 }

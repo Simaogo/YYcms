@@ -13,6 +13,6 @@ namespace app\index\controller;
  *
  * @author Administrator
  */
-class Common {
+class Common extends \app\BaseController{
     
 }

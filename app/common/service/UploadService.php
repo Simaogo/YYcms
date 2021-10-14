@@ -1,7 +1,7 @@
 <?php
 namespace app\common\service;
 
-use app\common\model\Attach as AttachModel;
+use app\common\model\Uploads as UploadsModel;
 use think\App;
 use think\Exception;
 use think\facade\Request;
@@ -44,9 +44,9 @@ class UploadService extends AbstractService
      */
     protected function initialize()
     {
-        $this->driver = syscfg('upload','upload_driver');
-        $this->fileExt = syscfg('upload','upload_file_type');
-        $this->fileMaxsize = syscfg('upload', 'upload_file_max') * 1024;
+        $this->driver = syscfg('upload','upload_driver')?syscfg('upload','upload_driver'):'local';
+        $this->fileExt = syscfg('cfg_imgtype')?syscfg('cfg_imgtype'):"*";
+        $this->fileMaxsize = 2 * 1024;
         return $this;
     }
 
@@ -65,28 +65,27 @@ class UploadService extends AbstractService
         $editor = Request::param('editor', '');
         $save = Request::param('save', '');
         $files = request()->file();
-        
-        
         $ossService = OssService::instance();
         foreach ($files as $k => $file) {
             $this->checkFile($file);
             $file_size = $file->getSize();
             $original_name = $file->getOriginalName();
-            $md5 = $file->md5();$sha1 = $file->sha1();;
+            $md5 = $file->md5();$sha1 = $file->sha1();
             $file_mime = $file->getMime();
-            $attach = AttachModel::where('md5', $md5)->find();
-            if (!$attach) {
+            //$Uploads = UploadsModel::where('md5', $md5)->find();
+            $Uploads = '';
+            if (!$Uploads) {
                 try {
                     $savename = \think\facade\Filesystem::disk('public')->putFile($path, $file);
-                    $path = DS . 'storage' . DS . $savename;
+                    $path = '/' . $savename;
                     $paths = trim($path, '/');
 //                    整合上传接口 获取视频音频长度
-                    $analyzeFileInfo = hook('getID3Hook',['path'=>'./'.$path]);
-                    $duration=0;
-                    if($analyzeFileInfo) {
-                        $analyzeFileInfo = json_decode($analyzeFileInfo,true);
-                        $duration = isset($analyzeFileInfo['playtime_seconds'])?$analyzeFileInfo['playtime_seconds']:0;
-                    }
+//                    $analyzeFileInfo = hook('getID3Hook',['path'=>'./'.$path]);
+//                    $duration=0;
+//                    if($analyzeFileInfo) {
+//                        $analyzeFileInfo = json_decode($analyzeFileInfo,true);
+//                        $duration = isset($analyzeFileInfo['playtime_seconds'])?$analyzeFileInfo['playtime_seconds']:0;
+//                    }
                     if ($this->driver != 'local') {
                         try {
                             $path = $ossService->uploads($this->driver,$paths, './' . $paths,$save);
@@ -111,26 +110,26 @@ class UploadService extends AbstractService
                 }
                 if (!empty($path)) {
                     $data = [
-                        'admin_id'      => $adminid,
-                        'member_id'     => $uid,
-                        'original_name' => $original_name,
-                        'name'          => $file_name,
-                        'path'          => $path,
-                        'thumb'         => $path,
-                        'url'           => $this->driver == 'local' ? Request::domain() . $path : $path,
-                        'ext'           => $file_ext,
+//                        'admin_id'      => $adminid,
+//                        'member_id'     => $uid,
+                        'title' => $original_name,
+                        //'name'          => $file_name,
+                        'url'          => $path,
+                       // 'thumb'         => $path,
+                        //'url'           => $this->driver == 'local' ? Request::domain() . $path : $path,
+                        //'ext'           => $file_ext,
                         'size'          => $file_size / 1024,
                         'width'         => $width,
                         'height'        => $height,
-                        'duration'      => $duration,
-                        'md5'           => $md5,
-                        'sha1'          => $sha1,
-                        'mime'          => $file_mime,
-                        'driver'        => $this->driver,
+//                        'duration'      => $duration,
+//                        'md5'           => $md5,
+//                        'sha1'          => $sha1,
+//                        'mime'          => $file_mime,
+                       // 'driver'        => $this->driver,
                     ];
-                    $attach = AttachModel::create($data);
-                    $result['data'][] = $attach->path; //兼容wangeditor
-                    $result['id'] = $attach->id;
+                    $Uploads = UploadsModel::create($data);
+                    $result['data'][] = $Uploads->url; //兼容wangeditor
+                    $result['id'] = $Uploads->id;
                     $result["url"] = $path;
                 } else {
                     //上传失败获取错误信息
@@ -147,19 +146,19 @@ class UploadService extends AbstractService
                     return ($result);
                 }
             } else {
-                $result['data'][] = $attach->path; //兼容wangeditor
+                $result['data'][] = $Uploads->path; //兼容wangeditor
                 $result['uploaded'] = true; //兼容ckeditorditor
                 $result['error '] = ["message"=> "ok"]; //兼容ckeditorditor
-                $result['id'] = $attach->id;
+                $result['id'] = $Uploads->id;
                 $result['fileType'] = $type;
-                $result["url"] = $attach->path;
+                $result["url"] = $Uploads->path;
             }
         }
         $result['state'] = 'SUCCESS'; //兼容百度
         $result['errno'] = 0; //兼容wangeditor
         $result['uploaded'] = true; //兼容ckeditorditor
         $result['error'] = ["message"=> "ok"]; //兼容ckeditorditor
-        $result['code'] = 1;//默认
+        $result['code'] = 0;//默认
         $result['msg'] = lang('upload success');
         if($editor=='layedit'){
             $result['code'] = 0;

@@ -56,7 +56,6 @@ class Template extends Common{
                         ->select()
                         ->toArray();
                 $serializefield= explode(',', $Channeltype->serializefield);
-
                 foreach ($list as $key=>$val){
                     foreach ($val as $k=>$v){
                         if(in_array($k,$serializefield)||$k=='flag'){

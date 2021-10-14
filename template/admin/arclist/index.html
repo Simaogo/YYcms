@@ -4,6 +4,7 @@
     <div class="layui-col-md2">
       <div class="layui-card">
         <div class="layui-card-header">栏目列表</div>
+        
         <div class="layui-card-body">
             <div id="arctype" class="arctype-tree">
                 
@@ -44,6 +45,7 @@
               elem: '#arctype'
               ,data: res.data
               ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
+              ,checked:true
               ,click: function(obj){
                     var typeid = obj.data.id;
                     arclist(typeid);
@@ -51,6 +53,7 @@
               }
             });
         })
+
     var arclist =function(typeid){
         var url = '{:url("arclist/index")}?typeid='+typeid
         table.render({

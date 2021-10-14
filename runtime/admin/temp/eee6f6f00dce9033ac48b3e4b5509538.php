@@ -1,4 +1,4 @@
-<?php /*a:3:{s:49:"E:\WWW\tp6dedecms\template\admin\arclist\add.html";i:1634036164;s:51:"E:\WWW\tp6dedecms\template\admin\public\header.html";i:1633268996;s:51:"E:\WWW\tp6dedecms\template\admin\public\footer.html";i:1633853083;}*/ ?>
+<?php /*a:3:{s:49:"E:\WWW\tp6dedecms\template\admin\arclist\add.html";i:1634137145;s:51:"E:\WWW\tp6dedecms\template\admin\public\header.html";i:1633268996;s:51:"E:\WWW\tp6dedecms\template\admin\public\footer.html";i:1633853083;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +27,8 @@
                         <select name="typeid" lay-verify="required">
                            <option value=""> 请选择</option> 
                           <?php if(is_array($arctypeList) || $arctypeList instanceof \think\Collection || $arctypeList instanceof \think\Paginator): $i = 0; $__LIST__ = $arctypeList;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
-                           <option value="<?php echo htmlentities($vo['id']); ?>"> <?php echo htmlentities($vo['lefthtml']); ?> <?php echo htmlentities($vo['typename']); ?></option>
+                           <option value="<?php echo htmlentities($vo['id']); ?>" <?php if($channeltype!==$vo['channeltype']): ?>  disabled="disabled" <?php endif; if($typeid==$vo['id']): ?> selected <?php endif; ?>> 
+                                   <?php echo htmlentities($vo['lefthtml']); ?> <?php echo htmlentities($vo['typename']); ?></option>
                           <?php endforeach; endif; else: echo "" ;endif; ?>
                         </select>
                       </div>
@@ -62,7 +63,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">权重</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="weight" lay-verify="" autocomplete="off" class="layui-input">
+                            <input type="text" name="weight" lay-verify="" autocomplete="off" class="layui-input" value="50">
                         </div>
                     </div>
                 </div>
@@ -78,6 +79,22 @@
                         </div>
                     </div>
                 </div>
+                <?php if($channeltype==2): ?>
+                 <div class="layui-form-item">
+                    <label class="layui-form-label">图集</label>
+                     <div class="layui-input-block">
+                        <input type="hidden" name="imgurls" class="multiple_show_img" value="">
+                        <button type="button" class="layui-btn layui-btn-sm" id="multiple_img_upload">图集上传</button>
+                        <div class="layui-upload" lay-filter="images">
+                            <div class="layui-upload-list" id="div-slide_show">
+                                <blockquote class="layui-elem-quote layui-quote-nm" style="height: 120px;">
+                                    <ul class="layui-flex"></ul>
+                                </blockquote>
+                            </div>   
+                         </div>
+                     </div>
+                </div>
+                <?php endif; ?>
                 <div class="layui-form-item">
                     <div class="layui-inline">
                       <label class="layui-form-label">文章来源</label>
@@ -100,7 +117,6 @@
                   </div>
             </div>
             <div class="layui-tab-item">
-            
                 <div class="layui-form-item">
                     <div class="layui-inline">
                       <label class="layui-form-label">预览次数</label>
@@ -145,12 +161,11 @@
                   </div>
 
              </div>
-            <div class="layui-tab-item">
-                
-                <?php if(isset($fieldset)): ?>
-                    <?php echo $fieldset; ?>
-                <?php endif; ?>
-            </div>
+            <?php if(isset($fieldset)): ?>
+              <div class="layui-tab-item">
+                <?php echo $fieldset; ?>
+             </div>
+            <?php endif; ?>
           </div>
        </div>
         <div class="layui-form-item layui-flex layui-submit" style="">
@@ -277,11 +292,12 @@
 });
 </script>
 <script>
-    layui.use(['form', 'laydate','upload'], function(){
+    layui.use(['form', 'laydate','upload','util'], function(){
       var form = layui.form
       ,layer = layui.layer
       ,upload = layui.upload
       ,$ = layui.jquery
+      ,util = layui.util
       ,laydate = layui.laydate;
        laydate.render({
             elem: '#pubdate'
@@ -296,18 +312,79 @@
                 }
                 form.render();
             })
-            layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src',formData.litpic);//缩略图
+            
+            //layui.$('#div-slide_show').attr('src',formData.litpic);//缩略图
        }
-       //拖拽上传
-        upload.render({
+       //缩略图
+       upload.render({
           elem: '#litpic'
-          ,url: '<?php echo url("common/upload/image"); ?>'
+          ,url: '<?php echo url("ajax/uploads"); ?>'
           ,done: function(res){
             layer.msg('上传成功');
-            layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', res.data.src);
-             //console.log(layui.$('input[name="litpic"]'));
-            layui.$('input[name="litpic"]').val(res.data.src);
+            layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', res.url);
+            layui.$('input[name="litpic"]').val(res.url);
           }
         });
+        
+       //图集上传
+        upload.render({
+          elem: '#multiple_img_upload'
+          ,url: '<?php echo url("ajax/uploads"); ?>'
+          ,multiple: true
+          ,before:function(imgs){
+              
+          }
+          ,done: function(res){
+                layer.msg('上传成功');
+                var imgurlsObj =$('input[name="imgurls"]');
+                var imgsUrl = imgurlsObj.val();
+                imgsUrl = imgsUrl?imgsUrl + ',' + res.url : res.url;
+                imgurlsObj.val(imgsUrl)
+                $('#div-slide_show ul').append('<li><img src="'+res.url+'" style="height:120px;"><i class="layui-icon layui-icon-close" lay-event="upfileDelete" data-fileurl="'+res.url+'"></i></li>');
+          }
+        });
+        $(document.body).on('click','.layui-upload li',function(){
+            $(this).addClass('thisClass').siblings().removeClass('thisClass');
+            $('input[name="litpic"]').val($(this).find('img').attr('src'));
+            layer.msg('设为缩略图')
+        })
+        $(document.body).on('click','.layui-upload li i',function(){
+             var that = $(this);
+             layer.confirm('真的删除么', function(index){
+                    that.parent('li').remove();
+                    var fileUrl =that.attr('data-fileurl'),
+                    imgurlsObj = $('input[name="imgurls"]'),
+                    imgurls = imgurlsObj.val(),
+                    urlStr='';
+                    if(imgurls && imgurls.match(RegExp(/,/i))){
+                        var imgsArr = imgurls.split(',');
+                        var len = imgsArr.length;
+                        for(var i = 0;i < len; i++){
+                            console.log(fileUrl,imgsArr[i]);
+                            if(imgsArr[i] != fileUrl){
+                               urlStr = urlStr + imgsArr[i] + ',';
+                            }
+                        }
+                        urlStr = urlStr.slice(0,urlStr.length-1);//删掉,
+                    }else{
+                        urlStr = '';
+                    }
+                    imgurlsObj.val(urlStr);
+                    layer.close(index);
+              })
+             return false;
+        })
+        //图集赋值
+        if(formData.imgurls){
+            var imgurls = formData.imgurls.split(','),
+            litpic = formData.litpic,
+            len =imgurls.length,
+            thisClass;
+            for(var i = 0; i < len; i++){
+                 thisClass = litpic == imgurls[i] ? 'class ="thisClass"' : '';
+                 $('#div-slide_show ul').append('<li '+thisClass+'><img src="'+imgurls[i]+'"><i class="layui-icon layui-icon-close"  data-fileurl="'+imgurls[i]+'"></i></li>');
+            }
+        }
+
     });
 </script>

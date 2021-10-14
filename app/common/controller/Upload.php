@@ -17,7 +17,7 @@ class Upload {
     public function index(){
        
     }
-    public function image(){
+    public function images(){
          $data = ['src'=>'/uploads/image/20211004/1633336916137110.jpg'];
          return json(['code'=>0,'data'=>$data,'msg'=>'success']);
     }
