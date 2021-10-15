@@ -16,9 +16,9 @@ namespace app\admin\model;
 class Arclist extends \think\Model{
     protected $name = 'archives';
     // 定义时间戳字段名
-    protected $autoWriteTimestamp = true;
-    protected $pubdate = 'pubdate';
-    protected $senddate = 'senddate';
+   // protected $autoWriteTimestamp = true;
+//    protected $pubdate = 'pubdate';
+//    protected $senddate = 'senddate';
     protected static function init()
     {
         

@@ -3,10 +3,10 @@ namespace app\admin\controller;
 
 use app\admin\model\Admin as AdminModel;
 use app\admin\model\Admintype as AdmintypeModel;
-use app\admin\controller\Common;
+use app\common\controller\Backend;
 use think\facade\View;
-
-class Admin extends common{
+use think\facade\Session;
+class Admin extends Backend{
     
     public function index(){
         if(request()->isAjax()){
@@ -15,7 +15,6 @@ class Admin extends common{
         }
         return View::fetch();
     }
-    
     public function addEdit(){
          $id = input('id');
          if(request()->isAjax()){
@@ -24,7 +23,7 @@ class Admin extends common{
                  if($post['pwd'] != $post['pwdreplace']){
                     return json(['code'=>1,'msg'=>'两次输入密码不一致!']);
                  }
-                 $post['pwd'] = md5($post['pwd']);
+                 $post['pwd'] = substr(md5($post['pwd']), 5, 20);
              } else {
                  unset($post['pwd']);
                  unset($post['pwdreplace']);
@@ -61,6 +60,10 @@ class Admin extends common{
             AdminModel::where('id',$id)->delete();
             return json(['code'=>0,'msg'=>'success']);
         }
+    }
+    public function loginOut(){
+        Session::delete('admin');
+        $this->success('退出登录成功', url());
     }
 }
 

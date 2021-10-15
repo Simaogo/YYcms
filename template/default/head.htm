@@ -12,7 +12,7 @@
       生热线 </div>
     <div class="tel-number">
       <ul>
-        <li> {dede:global.cfg_tel/} {dede:global.cfg_phone/}</li>
+        <li> {yycms:global.cfg_tel/} {yycms:global.cfg_phone/}</li>
       </ul>
     </div>
   </div>
@@ -25,98 +25,98 @@
       <li class="showdetail"> <a href="/pxxm/">培训项目</a>
         <div style="display: none" class="menuul project-list comewidthme">
           <div>
-			{dede:channelartlist typeid="11,0"}
+			{yycms:channelartlist typeid="11,0"}
             <div>
               <ul>
-                <li class="fli"> {dede:field name='typename'/}</li>
-				{dede:arclist channelid=10 row=6 titlelen=50 orderby='pubdate'}
+                <li class="fli"> {yycms:field name='typename'/}</li>
+				{yycms:arclist channelid="10" row="6" titlelen="50" orderby='pubdate'}
 
-				<li><a href="[field:arcurl/]">[field:title/]</a></li>
-				{/dede:arclist}
+				<li><a href="{$field.arcurl}">{$field.title}</a></li>
+				{/yycms:arclist}
               </ul>
             </div>
-            {/dede:channelartlist}
-			{dede:channelartlist typeid="12,0"}
+            {/yycms:channelartlist}
+			{yycms:channelartlist typeid="12,0"}
             <div>
               <ul>
-                <li class="fli"> {dede:field name='typename'/}</li>
-				{dede:arclist channelid=10 row=6 titlelen=50 orderby='pubdate'}
+                <li class="fli"> {yycms:field name='typename'/}</li>
+				{yycms:arclist channelid="10" row="6" titlelen="50" orderby='pubdate'}
 
-				<li><a href="[field:arcurl/]">[field:title/]</a></li>
-				{/dede:arclist}
+				<li><a href="{$field.arcurl}">{$field.title}</a></li>
+				{/yycms:arclist}
               </ul>
             </div>
-            {/dede:channelartlist}
-			{dede:channelartlist typeid="13,0"}
+            {/yycms:channelartlist}
+			{yycms:channelartlist typeid="13,0"}
             <div>
               <ul>
-                <li class="fli"> {dede:field name='typename'/}</li>
-				{dede:arclist channelid=10 row=6 titlelen=50 orderby='pubdate'}
+                <li class="fli"> {yycms:field name='typename'/}</li>
+				{yycms:arclist channelid="10" row="6" titlelen="50" orderby='pubdate'}
 
-				<li><a href="[field:arcurl/]">[field:title/]</a></li>
-				{/dede:arclist}
+				<li><a href="{$field.arcurl}">{$field.title}</a></li>
+				{/yycms:arclist}
               </ul>
             </div>
-            {/dede:channelartlist}
-			{dede:channelartlist typeid="14,0"}
+            {/yycms:channelartlist}
+			{yycms:channelartlist typeid="14,0"}
             <div>
               <ul>
-                <li class="fli"> {dede:field name='typename'/}</li>
-				{dede:arclist channelid=10 row=6 titlelen=50 orderby='pubdate'}
+                <li class="fli"> {yycms:field name='typename'/}</li>
+				{yycms:arclist channelid="10" row="6" titlelen="50" orderby='pubdate'}
 
-				<li><a href="[field:arcurl/]">[field:title/]</a></li>
-				{/dede:arclist}
+				<li><a href="{$field.arcurl}">{$field.title}</a></li>
+				{/yycms:arclist}
               </ul>
             </div>
-            {/dede:channelartlist}
-			{dede:channelartlist typeid="15,0"}
+            {/yycms:channelartlist}
+			{yycms:channelartlist typeid="15,0"}
             <div>
               <ul>
-                <li class="fli"> {dede:field name='typename'/}</li>
-				{dede:arclist channelid=10 row=6 titlelen=50 orderby='pubdate'}
+                <li class="fli"> {yycms:field name='typename'/}</li>
+				{yycms:arclist channelid="10" row="6" titlelen="50" orderby='pubdate'}
 
-				<li><a href="[field:arcurl/]">[field:title/]</a></li>
-				{/dede:arclist}
+				<li><a href="{$field.arcurl}">{$field.title}</a></li>
+				{/yycms:arclist}
               </ul>
             </div>
-            {/dede:channelartlist}
-			{dede:channelartlist typeid="16,0"}
+            {/yycms:channelartlist}
+			{yycms:channelartlist typeid="16,0"}
             <div>
               <ul>
-                <li class="fli"> {dede:field name='typename'/}</li>
-				{dede:arclist channelid=10 row=6 titlelen=50 orderby='pubdate'}
+                <li class="fli"> {yycms:field name='typename'/}</li>
+				{yycms:arclist channelid="10" row="6" titlelen="50" orderby='pubdate'}
 
-				<li><a href="[field:arcurl/]">[field:title/]</a></li>
-				{/dede:arclist}
+				<li><a href="{$field.arcurl}">{$field.title}</a></li>
+				{/yycms:arclist}
               </ul>
             </div>
-            {/dede:channelartlist}
+            {/yycms:channelartlist}
 		   
           </div>
           <div class="by"> 学餐饮技术&#160;就到盛世黔味餐饮 </div>
         </div>
       </li>
 	 
-	  {dede:channelartlist typeid="top" notypeid='1'}
-      <li class="showdetail"> <a href="{dede:field name="typeurl"/}">{dede:field name="typename"/}</a>
+	  {yycms:channelartlist typeid="top" notypeid='1'}
+      <li class="showdetail"> <a href="{yycms:field name="typeurl"/}">{yycms:field name="typename"/}</a>
         <ul style="display: none" class="menuul comewidthme">
           <div class="le">
-            {dede:channel type="son"}
-            <li><a href="[field:typeurl/]">[field:typename/]</a></li>
-			 {/dede:channel}
+            {yycms:channel type="son"}
+            <li><a href="{$field.typeurl}">[field:typename/]</a></li>
+			 {/yycms:channel}
           </div>
         </ul>
       </li>
-	{/dede:channelartlist}
+	{/yycms:channelartlist}
 
     </ul>
   </div>
 </div>
 <div class="special-pro">
   <div class="spe-pro"> 热门培训项目：
-  {dede:arclist row=10 orderby='pubdate' channelid=10 row=5}
-   <a href="[field:arcurl/]">[field:title/]</a>
-  {/dede:arclist}
+  {yycms:arclist row="10" orderby='pubdate' channelid="10" row=5}
+   <a href="{$field.arcurl}">{$field.title}</a>
+  {/yycms:arclist}
   </div>
   <div class="spe-img"> <img src="/static/images/case_03.png"> </div>
 </div>

@@ -6,7 +6,7 @@ use app\admin\model\Arctype as ArctypeModel;
 use app\admin\model\Channeltype as ChanneltypeModel;
 use think\facade\View;
 use think\facade\Db;
-class Arclist {
+class Arclist extends \app\common\controller\Backend{
     public function index(){
         if(request()->isAjax()){
             $ArclistModel = new ArclistModel();
@@ -80,7 +80,6 @@ class Arclist {
             $Channeltype = ChanneltypeModel::find($Arctype->channeltype);
             $table = $this->getTable($Channeltype->addtable);
             $data =$this->separation($post, $table);
-           // halt($data);
             if($id){
                 ArclistModel::update($data['mainData']);
                 Db::name($table)->update($data['addtableData']);
@@ -116,14 +115,16 @@ class Arclist {
         $view['typeid'] =input('typeid');
         if($view['typeid']){
            $Arctype = ArctypeModel::find($view['typeid']);
-           $channel = ChanneltypeModel::find($Arctype->channeltype);//模型
-           $view['fieldset'] = $channel->fieldset;//自定义字段
-           $view['channeltype'] = $channel->id;//模型ID
+           $channeltype = $Arctype->channeltype;
         } else {
-            $view['channeltype'] = 1;
+            $channeltype = 1;
         }
+        $Channel = ChanneltypeModel::find($channeltype);//模型
+        $view['fieldset'] = $Channel->fieldset ?$this->decodeFileset($Channel->fieldset):'';//自定义字段
+        //halt($view['fieldset']);
         $menu = ArctypeModel::select()->toArray();
         $view['arctypeList'] =ArctypeModel::cateTree($menu);
+        $view['channeltype'] = $channeltype;//模型ID
         View::assign($view);
         return View::fetch('add');
     }
@@ -187,7 +188,6 @@ class Arclist {
           $first_img = $img_arr[0];
           $p="#src=('|\")(.*)('|\")#isU";//正则表达式
           preg_match_all ($p, $first_img, $img_val);
-
           if(isset($img_val[2][0])){
             $first_img_url = $img_val[2][0]; //获取第一张图片地址
           }
@@ -207,6 +207,37 @@ class Arclist {
             $html_len = mb_strlen($html,'UTF-8');
             $html = mb_substr($html, 0, $len, 'UTF-8');
             return $html;
+    }
+    /**
+     * 解析自定义字段为数组
+     * @param type $fielsetstr
+     * @return array
+     */
+    public function decodeFileset($fielsetstr){
+        if (!$fielsetstr) return '';
+        $fielsetList = explode('<field:',$fielsetstr);
+        $fielset = [];
+        foreach ($fielsetList as $key => $val){
+                if($val){
+                    $val = preg_replace('/\/>/si', '', $val);
+                    $fieldsetArr = explode(' ', $val);
+                    $listarr = [];
+                    foreach ($fieldsetArr as $k => $v){
+                        if($v){
+                            if($k == 0) {
+                                $listarr['name'] = $v;
+                            } else {
+                                $arr = explode('=',$v);
+                                if(count($arr)>1) {
+                                    $listarr[$arr[0]] = trim($arr[1],'"');
+                                }
+                            }
+                        }
+                    }
+                    $fielset[] =$listarr;  
+                }
+        }
+        return $fielset;
     }
     
 }

@@ -1,130 +1,262 @@
-<?php /*a:1:{s:49:"E:\WWW\tp6dedecms\template\admin\index\index.html";i:1633774440;}*/ ?>
+<?php /*a:1:{s:49:"E:\WWW\tp6dedecms\template\admin\index\index.html";i:1634223484;}*/ ?>
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>后台管理系统</title>
-  <link rel="stylesheet" href="/static/layui/css/layui.css">
-  <link rel="stylesheet" href="/static/admin/css/common.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>YYadmin</title>
+    <!-- layui样式 -->
+    <link rel="stylesheet" href="/yyAdmin/layui/css/layui.css">
+    <!-- Y-Admin核心样式 -->
+    <link rel="stylesheet" href="/yyAdmin/css/yadmin.css">
+    <!-- 公共样式 -->
+    <link rel="stylesheet" href="/yyAdmin/css/common.css">
+    <!-- 图标 -->
+    <link rel="stylesheet" href="/yyAdmin/static/remixicon/fonts/remixicon.css">
+    <!-- 首页样式（只为此页面使用） -->
+    <link rel="stylesheet" href="/yyAdmin/css/index.css">
 </head>
-<body>
-<div class="layui-layout layui-layout-admin">
-  <div class="layui-header">
-    <div class="layui-logo layui-hide-xs layui-bg-black">layout demo</div>
-    <!-- 头部区域（可配合layui 已有的水平导航） -->
-    <ul class="layui-nav layui-layout-left">
-      <!-- 移动端显示 -->
-      <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
-        <i class="layui-icon layui-icon-spread-left"></i>
-      </li>
-      
-      <li class="layui-nav-item layui-hide-xs"><a href="">nav 1</a></li>
-      <li class="layui-nav-item layui-hide-xs"><a href="">nav 2</a></li>
-      <li class="layui-nav-item layui-hide-xs"><a href="">nav 3</a></li>
-      <li class="layui-nav-item">
-        <a href="javascript:;">nav groups</a>
-        <dl class="layui-nav-child">
-          <dd><a href="">menu 11</a></dd>
-          <dd><a href="">menu 22</a></dd>
-          <dd><a href="">menu 33</a></dd>
-        </dl>
-      </li>
-    </ul>
-    <ul class="layui-nav layui-layout-right">
-      <li class="layui-nav-item layui-hide layui-show-md-inline-block">
-        <a href="javascript:;">
-          <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
-          tester
-        </a>
-        <dl class="layui-nav-child">
-          <dd><a href="">Your Profile</a></dd>
-          <dd><a href="">Settings</a></dd>
-          <dd><a href="">Sign out</a></dd>
-        </dl>
-      </li>
-      <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
-        <a href="javascript:;">
-          <i class="layui-icon layui-icon-more-vertical"></i>
-        </a>
-      </li>
-    </ul>
-  </div>
-  
-  <div class="layui-side layui-bg-black">
-    <div class="layui-side-scroll">
-      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-      <ul class="layui-nav layui-nav-tree" lay-filter="test">
-        <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="javascript:;">内容管理</a>
-          <dl class="layui-nav-child">
-            <dd><a href="<?php echo url('arclist/index'); ?>">列表内容</a></dd>
-            <dd><a href="<?php echo url('arctype/index'); ?>">栏目管理</a></dd>
-            <dd><a href="<?php echo url('channeltype/index'); ?>">模型管理</a></dd>
-            <dd><a href="javascript:;">友情链接</a></dd>
 
-          </dl>
-        </li>
-        <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="javascript:;">权限管理</a>
-          <dl class="layui-nav-child">
-            <dd><a href="<?php echo url('admin/index'); ?>">用户列表</a></dd>
-            <dd><a href="<?php echo url('admintype/index'); ?>">角色管理</a></dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item"><a href="<?php echo url('config/index'); ?>">基本设置</a></li>
-        <li class="layui-nav-item"><a href="<?php echo url('tool/index'); ?>">工具管理</a></li>
-        
-      </ul>
+<body class="layui-layout-body">
+
+    <div class="layui-layout layui-layout-admin">
+
+        <div class="layui-header">
+            <!-- logo 区域 -->
+            <div class="layui-logo">
+                <a href="">
+                    <img src="/yyAdmin/images/security.png" alt="logo" style="margin-left: -5px;" />
+                    <cite style='color: #fff'>
+                        YY-Admin&emsp;
+                    </cite>
+                </a>
+            </div>
+
+            <!-- 头部区域 -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item" lay-unselect>
+                    <a lay-event="flexible" title="侧边伸缩">
+                        <i class="layui-icon layui-icon-shrink-right"></i>
+                    </a>
+                </li>
+                <!-- 面包屑 -->
+                <span class="layui-breadcrumb layui-anim layui-anim-up">
+                    <a><cite>首页</cite></a>
+                </span>
+            </ul>
+
+            <!-- 头像区域 -->
+            <ul class="layui-nav layui-layout-right">
+
+                <li class="layui-nav-item feature-items">
+                    <a lay-event="github" title="Github 地址">
+                        <i class="ri-github-fill"></i>
+                    </a>
+                </li>
+
+                <li class="layui-nav-item feature-items">
+                    <a lay-event="website" title="前台">
+                        <i class="ri-earth-line"></i>
+                    </a>
+                </li>
+
+                <li class="layui-nav-item feature-items">
+                    <a lay-event="clear" title="清理标签缓存"><i class="ri-brush-3-line"></i></a>
+                </li>
+
+                <li class="layui-nav-item feature-items">
+                    <a lay-event="tag" title="便签"><i class="ri-git-repository-line"></i></a>
+                </li>
+
+                <li class="layui-nav-item feature-items">
+                    <a lay-event="todo" title="待处理任务"><i class="ri-calendar-todo-line"></i></a>
+                </li>
+
+                <li class="layui-nav-item feature-items">
+                    <a id="screenFull" lay-event="screenFull" title="全屏">
+                        <i class="ri-fullscreen-line"></i>
+                    </a>
+                    <a id="screenRestore" lay-event="screenRestore" title="退出全屏" style="display: none;">
+                        <i class="ri-fullscreen-exit-line"></i>
+                    </a>
+                </li>
+
+                <li class="layui-nav-item user-selection">
+                    <a>
+                        <img src="/yyAdmin/images/avatar.png" class="layui-nav-img" alt="头像">
+                        <cite><?php echo htmlentities($admin['userid']); ?></cite>
+                        <span class="layui-nav-more"></span>
+                    </a>
+                    <dl class="layui-nav-child">
+<!--                        <dd lay-unselect>
+                            <a lay-event="userInfo">基本资料</a>
+                        </dd>-->
+                        <dd lay-unselect>
+                            <a lay-event="editPwd">修改密码</a>
+                        </dd>
+                        <hr>
+                        <dd lay-unselect>
+                            <a href="<?php echo url('admin/loginOut'); ?>">退出</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 左侧导航区域 -->
+        <div class="layui-side ">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="lay-nav" lay-accordion="true">
+                    <li class="layui-nav-item">
+                        <a lay-url="<?php echo url('index/home'); ?>" lay-id="<?php echo url('index/home'); ?>">
+                            <i class="ri-home-8-line"></i>&emsp;<cite>首页</cite>
+                        </a>
+                    </li>
+
+                    <li class="layui-nav-item">
+                        <a lay-id="javascript:;" lay-url="javascript:;">
+                            <i class="ri-shield-keyhole-line"></i>&emsp;<cite>权限管理</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a lay-id="<?php echo url('admin/index'); ?>" lay-url="<?php echo url('admin/index'); ?>">
+                                    <cite>用户管理</cite>
+                                </a>
+                            </dd>
+                            <dd>
+                                <a lay-id="<?php echo url('admintype/index'); ?>" lay-url="<?php echo url('admintype/index'); ?>">
+                                    <cite>角色管理</cite>
+                                </a>
+                            </dd>
+                            <dd>
+                                <a lay-id="<?php echo url('index/home'); ?>" lay-url="view/menu/menu-list.html">
+                                    <cite>菜单权限</cite>
+                                </a>
+                            </dd>
+                        </dl>
+                    </li>
+
+                    <li class="layui-nav-item">
+                        <a lay-id="javascript:;" lay-url="javascript:;">
+                            <i class="ri-menu-add-line"></i>&emsp;<cite>内容管理</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-id="<?php echo url('arclist/index'); ?>" lay-url="<?php echo url('arclist/index'); ?>"><cite>文档列表</cite></a></dd>
+                            <dd><a lay-id="<?php echo url('arctype/index'); ?>" lay-url="<?php echo url('arctype/index'); ?>"><cite>栏目管理</cite></a></dd>
+                            <dd><a lay-id="<?php echo url('channeltype/index'); ?>" lay-url="<?php echo url('channeltype/index'); ?>"><cite>模型管理</cite></a></dd>
+                            <dd><a lay-id="<?php echo url('flink/index'); ?>" lay-url="<?php echo url('flink/index'); ?>"><cite>友情链接</cite></a></dd>
+                        </dl>
+                    </li>
+
+                    <li class="layui-nav-item">
+                        <a lay-id="<?php echo url('tool/index'); ?>" lay-url="<?php echo url('tool/index'); ?>">
+                            <i class="ri-tools-fill"></i>&emsp;<cite>工具管理</cite>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a lay-id="<?php echo url('config/index'); ?>" lay-url="<?php echo url('config/index'); ?>">
+                            <i class="ri-settings-4-line"></i>&emsp;<cite>网站设置</cite>
+                        </a>
+                    </li>
+<!--                    <li class="layui-nav-item">
+                        <a lay-id="https://remixicon.com/" lay-url="https://remixicon.com/">
+                            <i class="ri-remixicon-line"></i>&emsp;<cite>图标</cite>
+                        </a>
+                    </li>-->
+                </ul>
+
+<!--                <div id="message">
+                    <div class="notification-box" lay-event="notification">
+                        <span class="notification-count">
+                             此处可写数字 
+                        </span>
+                        <div class="notification-bell">
+                            <span class="bell-top"></span>
+                            <span class="bell-middle"></span>
+                            <span class="bell-bottom"></span>
+                            <span class="bell-rad"></span>
+                        </div>
+                    </div>
+                    <h3>消息通知</h3>
+                    <p>春已至,花已开,一切美好都将到来!</p>
+                </div>-->
+
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <div class="layui-pagetabs">
+                <div class="layui-icon admin-tabs-control layui-icon-refresh-3" lay-event="refresh"></div>
+                <div class="layui-tab" lay-unauto lay-allowclose="true" lay-filter="lay-tab">
+                    <ul class="layui-tab-title">
+                        <li lay-id="<?php echo url('index/home'); ?>" lay-url="<?php echo url('index/home'); ?>" class="layui-this">
+                            <!-- <i class="ri-home-heart-line ri-xl"></i> -->
+                            <i class="ri-home-8-line ri-xl"></i>
+                        </li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <iframe src="<?php echo url('index/home'); ?>" class="layui-iframe"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部固定区域 -->
+        <div class="layui-footer">
+            copyright © 2020 Y-Admin all rights reserved.
+            <ul class="tabbar">
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                            d="M12.414 5H21a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h7.414l2 2zM15 13v-1a3 3 0 0 0-6 0v1H8v4h8v-4h-1zm-2 0h-2v-1a1 1 0 0 1 2 0v1z" />
+                    </svg>
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                            d="M21 5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h7.414l2 2H16v2h2V5h3zm-3 8h-2v2h-2v3h4v-5zm-2-2h-2v2h2v-2zm2-2h-2v2h2V9zm-2-2h-2v2h2V7z" />
+                    </svg>
+                </li>
+                <li>
+                    <div class="fileAdd">
+                        <ul>
+                            <li class="word"></li>
+                            <li class="powerpoint"></li>
+                            <li class="excel"></li>
+                        </ul>
+                        <div>
+                            <span></span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                            d="M12.414 5H21a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h7.414l2 2zM11 13.05a2.5 2.5 0 1 0 2 2.45V11h3V9h-5v4.05z" />
+                    </svg>
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                            d="M12.414 5H21a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h7.414l2 2zM12 13a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm-4 5h8a4 4 0 1 0-8 0z" />
+                    </svg>
+                </li>
+            </ul>
+
+        </div>
+
+        <!-- 移动端遮罩 -->
+        <div class="site-mobile-shade"></div>
     </div>
-  </div>
-  
-  <div class="layui-body">
-    <!-- 内容主体区域 -->
-    <div style="height:100%;background: #fff;" class="iframe-wrap">
-        <iframe src="<?php echo url('index/home'); ?>" frameborder="0" id="content-body" style="width:100%;height:100%"></iframe>
-    </div>
-  </div>
-  
-  <div class="layui-footer">
-    <!-- 底部固定区域 -->
-    底部固定区域
-  </div>
-</div>
-<script src="/static/layui/layui.js"></script>
-<script>
-//JS 
-layui.use(['element', 'layer', 'util'], function(){
-  var element = layui.element
-  ,layer = layui.layer
-  ,util = layui.util
-  ,$ = layui.$;
-  
-  $(document).ready(function(){
-        $('.layui-nav a').click(function (e) {
-            e.preventDefault();
-            $("#content-body").attr('src',$(this).attr('href'));
-        });
-    });
-  //头部事件
-  util.event('lay-header-event', {
-    //左侧菜单事件
-    menuLeft: function(othis){
-      layer.msg('展开左侧菜单的操作', {icon: 0});
-    }
-    ,menuRight: function(){
-      layer.open({
-        type: 1
-        ,content: '<div style="padding: 15px;">处理右侧面板的操作</div>'
-        ,area: ['260px', '100%']
-        ,offset: 'rt' //右上角
-        ,anim: 5
-        ,shadeClose: true
-      });
-    }
-  });
-  
-});
-</script>
+    <!-- layui JS -->
+    <script src="/yyAdmin/layui/layui.js"></script>
+    <!-- 公共JS -->
+    <script src="/yyAdmin/js/common.js"></script>
 </body>
 </html>

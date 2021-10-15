@@ -24,7 +24,7 @@ return [
     'taglib_end'    => '}',
     
    'tpl_replace_string' => [
-        '__STATIC__' => '/static/admin',
+        '__YYADMIN__' => '/yyAdmin',
         '__PUBLIC__'     => '/',
         '__PLUGINS__'     => '/static/plugins',
         '__CDN__'     => '',

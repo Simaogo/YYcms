@@ -10,7 +10,7 @@ namespace app\admin\controller;
 
 use think\facade\View;
 use app\common\model\Config as ConfigModel;
-class Config {
+class Config extends \app\common\controller\Backend{
     public function index(){
         if(request()->isAjax()){
             $post = input();

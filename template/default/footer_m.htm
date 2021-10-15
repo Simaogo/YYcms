@@ -50,20 +50,20 @@ var $cc=0;
   <div class="clear"></div>
   
   <div class="end">
-    <p class="mar"> 咨询：{dede:global.cfg_tel/} {dede:global.cfg_phone/}<br />
-      地址：{dede:global.cfg_address/} <br />
+    <p class="mar"> 咨询：{yycms:global.cfg_tel/} {yycms:global.cfg_phone/}<br />
+      地址：{yycms:global.cfg_address/} <br />
       网址：{:syscfg('cfg_basehost')} <br />
       备案：{:syscfg('cfg_beian')} <br />
       {:syscfg('cfg_powerby')}<br />
-      <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode={dede:global.cfg_gongan/}"><img src="static/images/gongan.png" style="float:left;"/>{dede:global.cfg_gongan/}</a><br />
+      <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode={yycms:global.cfg_gongan/}"><img src="static/images/gongan.png" style="float:left;"/>{yycms:global.cfg_gongan/}</a><br />
     </p>
   </div>
 </div>
 <footer id="footer"> <a href="/m/"><b><img src="static/images/index_70.png"></b>
   <p>首页</p>
-  </a> <a href="{dede:global.cfg_kfurl/}" ><b><img src="static/images/index_73.png" /></b>
+  </a> <a href="{yycms:global.cfg_kfurl/}" ><b><img src="static/images/index_73.png" /></b>
   <p>在线咨询</p>
-  </a> <a href="tel:{dede:global.cfg_phone/}"><b><img src="static/images/index_76.png"></b>
+  </a> <a href="tel:{yycms:global.cfg_phone/}"><b><img src="static/images/index_76.png"></b>
   <p>电话咨询</p>
   </a> <a href="javascript:void();" style="height:40px;" class="last"><b><img src="static/images/ic.png" width="35"></b>
   <p>更多</p>
@@ -71,9 +71,9 @@ var $cc=0;
   <div class="fotnav" style="display:none">
     <ul>
       <li><a href="/m/">首页</a></li>
-      {dede:channel type='top' row='8'}
+      {yycms:channel type='top' row='8'}
       <li><a href="list.php?tid=>[field:id/]">>[field:typename/]</a></li>
-     {/dede:channel}
+     {/yycms:channel}
     </ul>
   </div>
 </footer>

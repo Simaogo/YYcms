@@ -4,7 +4,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Channeltype as ChanneltypeModel;
 use think\facade\View;
-class Channeltype {
+class Channeltype extends \app\common\controller\Backend{
     public function index(){
         if(request()->isAjax()){
             $list = ChanneltypeModel::select();

@@ -8,7 +8,6 @@ use app\admin\model\Admin as AdminModel;
 use think\facade\Session;
 use think\facade\Db;
 class Login extends \app\BaseController{
-
     public function index(){
         if(request()->isPost()){
             $post = input();
@@ -16,16 +15,17 @@ class Login extends \app\BaseController{
             if(!captcha_check($verify)){
                 return json(['code'=>0,'msg'=>'验证码不正确']);
             }
-            $post['pwd'] = md5($post['pwd']);
-//            \think\facade\Db::connect('tp6cms')
-//                    ->table('dede_admin')
-//                ->find();die;
+            $post['userid'] = preg_replace("/[^0-9a-zA-Z_@!\.-]/", '', $post['userid']);
+            $post['pwd'] = preg_replace("/[^0-9a-zA-Z_@!\.-]/", '', $post['pwd']);
+            $pwd = substr(md5($post['pwd']), 5, 20);
             unset( $post['verify']);
-            $Admin = AdminModel::where(['userid'=>'admin'])->find();
+            $Admin = AdminModel::where(['userid'=>$post['userid']])->find();
             if($Admin){
-                 return json(['code'=>1,'msg'=>'登录成功']);
+                if($Admin->pwd !== $pwd)  return json(['code'=>0,'msg'=>'密码错误']);
+                 Session::set('admin',$Admin);
+                 return json(['code'=>1,'msg'=>'登录成功','url'=>'/admin/index/index']);
             } else {
-                 return json(['code'=>0,'msg'=>'登录失败']);
+                 return json(['code'=>0,'msg'=>'用户不存在']);
             }
         }
         return View::fetch();

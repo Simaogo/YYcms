@@ -66,7 +66,7 @@
         <div class="zc-message-sign"> 试吃预约 </div>
         <dl>
           <dd>免费试吃，先品尝，味道满意再报名！</dd>
-          <a href="{dede:global.cfg_kfurl/}" class="more" target="_blank">免费试吃预约 >></a>
+          <a href="{yycms:global.cfg_kfurl/}" class="more" target="_blank">免费试吃预约 >></a>
         </dl>
       </div>
     </div>
@@ -78,7 +78,7 @@
         <dd>立店选址诀窍、菜谱、店面结构……</dd>
         <dt>3.后期服务：</dt>
         <dd>技术升级、店员培训、促销策划……</dd>
-        <a href="{dede:global.cfg_kfurl/}" class="more" target="_blank">在线咨询不花钱 >></a>
+        <a href="{yycms:global.cfg_kfurl/}" class="more" target="_blank">在线咨询不花钱 >></a>
       </dl>
     </div>
   </div>
@@ -92,20 +92,20 @@
 <div class="zc-menu2">
   <ul>
     <li> <a href="/"> 首页 </a> </li>
-    {dede:channel type='top'}
-	<li><a href='[field:typeurl/]'>[field:typename/]</a> </li>
-	{/dede:channel}
+    {yycms:channel type='top'}
+	<li><a href='{$field.typeurl}'>[field:typename/]</a> </li>
+	{/yycms:channel}
   </ul>
 </div>
 <div class="zc-footer">
   <div class="zc-footer-text">
     <div class="zc-footer-text1"> 贵{:syscfg('cfg_webname')} <br/>
-      公司地址：{dede:global.cfg_address/}  &#160; &#160; &#160; <br/>
-      网址：{:syscfg('cfg_basehost')} &#160; &#160; &#160;E-mali：{dede:global.cfg_email/}<br/>
-      电话：{dede:global.cfg_tel/}&#160;&#160; {dede:global.cfg_phone/} <br/>
+      公司地址：{yycms:global.cfg_address/}  &#160; &#160; &#160; <br/>
+      网址：{:syscfg('cfg_basehost')} &#160; &#160; &#160;E-mali：{yycms:global.cfg_email/}<br/>
+      电话：{yycms:global.cfg_tel/}&#160;&#160; {yycms:global.cfg_phone/} <br/>
       {:syscfg('cfg_powerby')}  {:syscfg('cfg_beian')} <br/>
       <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=52011502000442" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="/static/images/gongan.png" style="float:left;"/>
-      <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">{dede:global.cfg_gongan/}</p>
+      <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">{yycms:global.cfg_gongan/}</p>
       </a><br/>
     </div>
     <div class="QRcode">

@@ -4,16 +4,24 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 use think\facade\View;
 use think\facade\Config;
-class Index extends \app\BaseController
+use app\common\controller\Backend;
+
+class Index extends \app\common\controller\Backend
 {
-    public function index()
-    {
+    
+    public function index(){
         View::layout(false); 
+        $view = [
+            'admin' => session('admin')
+        ];
+        View::assign($view);
         return View::fetch('index'); 
+    }
+    public function console(){
+        return View::fetch(); 
     }
     public function home()
     {
-        
         $version = \think\facade\Db::query('SELECT VERSION() AS ver');
         $view = [
             'url' => $_SERVER['HTTP_HOST'],
@@ -76,5 +84,10 @@ class Index extends \app\BaseController
             }   
         }
     }
-    
+    public function clear(){
+        if(request()->isAjax()){
+            \fun\helper\FileHelper::delDir(root_path().'runtime');
+             return json(['code'=>0,'msg'=>'success']);
+        }
+    } 
 }

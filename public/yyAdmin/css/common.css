@@ -1,0 +1,25 @@
+*{
+    font-size:14px;
+}
+body{background: #fff}
+.layui-flex{
+    display: flex;
+    align-items: center;
+}
+.layui-input, .layui-select, .layui-textarea{
+    height: 32px;line-height: 32px;
+}
+.layui-submit{
+    position: fixed;bottom: 30px;left:0;width:100%;background: #ffffff;z-index:9999;
+}
+.iframe{
+    overflow-x: hidden; overflow-y: scroll;
+}
+layui-form {padding-bottom: 50px;}
+.layui-input, .layui-select, .layui-textarea{
+    background: #f9f9f9
+}
+.layui-upload-list li {position: relative;margin-right: 15px;border: 2px solid #fff}
+.layui-upload-list li.thisClass{border: 2px solid #009688 }
+.layui-upload-list li i{background:none;cursor:pointer;position: absolute;top:0;right:0}
+.layui-upload-list li img{float: left;height: 120px;}

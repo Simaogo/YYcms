@@ -5,8 +5,7 @@ use think\facade\View;
 use app\admin\model\Arctype as ArctypeModel;
 use app\admin\model\Channeltype as ChanneltypeModel;
 
-class Arctype {
-    
+class Arctype extends \app\common\controller\Backend{
     public function index(){
         if(request()->isAjax()){
            $ArctypeModel = new ArctypeModel();

@@ -1,12 +1,14 @@
-<?php /*a:3:{s:49:"E:\WWW\tp6dedecms\template\admin\arctype\add.html";i:1633418766;s:51:"E:\WWW\tp6dedecms\template\admin\public\header.html";i:1633268996;s:51:"E:\WWW\tp6dedecms\template\admin\public\footer.html";i:1633853083;}*/ ?>
+<?php /*a:3:{s:49:"E:\WWW\tp6dedecms\template\admin\arctype\add.html";i:1634203021;s:51:"E:\WWW\tp6dedecms\template\admin\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\template\admin\public\footer.html";i:1634222788;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>栏目管理</title>
-  <link rel="stylesheet" href="/static/layui/css/layui.css">
-  <link rel="stylesheet" href="/static/admin/css/common.css">
+  <title>页面管理</title>
+      <!-- layui样式 -->
+    <link rel="stylesheet" href="/yyAdmin/layui/css/layui.css">
+    <!-- 公共样式 -->
+    <link rel="stylesheet" href="/yyAdmin/css/common.css">
 </head>
 <body>
 
@@ -156,7 +158,8 @@
         </div>
 </div>
 </form>
-<script src="/static/layui/layui.js"></script>
+ <script src="/yyAdmin/layui/layui.js"></script>
+<!-- jQuery JS -->
 <script type="text/html" id="toolbar">
   <div class="layui-btn-container">
     <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
@@ -173,20 +176,18 @@
     window.formData = <?php echo isset($formData)?(json_encode($formData)):'""'; ?>,
     window.addEditUrl = window.location.href,
     window.url = window.location.href,         
-    window.STATIC ='/static/admin'
+    window.STATIC ='__STATIC__'
     window.ADDONS = '__ADDONS__'
     window.PLUGINS = '/static/plugins';
-    if(formData){
-        layui.form.val('list',formData);//赋值
-    }
-    console.log(formData);
     //form公共提交
     layui.use(['form', 'jquery','table','element'], function(){
       var form = layui.form
       ,layer = layui.layer
       ,table = layui.table
-      ,element = layui.element
       ,$ = layui.jquery;
+       if(formData){
+            layui.form.val('list',formData);//赋值
+       }
       //监听提交
       form.on('submit(submit)', function(obj){
         var data =obj.field;
@@ -254,14 +255,35 @@
         });
 
     });
+    //上传
+    var $ =layui.$;
+    var uploadList = document.querySelectorAll("[lay-filter=\"upload\"]");
+    if (uploadList.length > 0) {
+        $.each(uploadList, function(i, v) {
+            var _parent = $(this).parents('.layui-upload')
+            var input = _parent.find('input[type="text"]');
+            var uploadInst = layui.upload.render({
+                elem: this //绑定元素
+                ,url: '<?php echo url("ajax/uploads"); ?>' //上传接口
+                ,done: function(res){
+                  input.val(res.url);
+                  layer.msg(res.msg)
+                }
+                ,error: function(){
+                  //请求异常回调
+               }
+            })
+        })
+    }
+    
     layui.config({
-        base: '../../static/layui/model/' //目录
-      })
+        base: "/yyAdmin/layui/lay/modules/"
+    })
 </script>
 </body>
 </html>
-<script type="text/javascript" src="/static/plugins/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" src="/static/plugins/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="/yyAdmin/plugins/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/yyAdmin/plugins/ueditor/ueditor.all.js"></script>
 <script type="text/javascript">
     var ue = UE.getEditor('container');
     ue.ready(function() {

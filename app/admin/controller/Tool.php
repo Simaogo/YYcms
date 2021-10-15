@@ -1,20 +1,10 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace app\admin\controller;
 use think\facade\View;
 use think\facade\app;
-/**
- * Description of Tool
- *
- * @author Administrator
- */
-class Tool {
+
+class Tool extends \app\common\controller\Backend{
     private $rootTempleta;
     
     public function __construct() {

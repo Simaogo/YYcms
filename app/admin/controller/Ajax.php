@@ -19,7 +19,7 @@ use think\facade\Cache;
 use think\facade\Cookie;
 use think\facade\Lang;
 
-class Ajax extends common
+class Ajax extends \app\common\controller\Backend
 {
     public function __construct(App $app)
     {

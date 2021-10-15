@@ -15,7 +15,7 @@
 <script type="text/javascript" src="static/js/jquery.glide.min.js"></script>
 </head>
 <body>
-{dede:include filename='header_m.htm'/}
+{yycms:include filename='header_m.htm'/}
 <div class="clear"></div>
 <div id="wrapper">
   <div class="swipe">
@@ -60,11 +60,11 @@
   <div class="qb-banner">
     <div class="slider">
       <ul class="slides">
-	  {dede:arclist typeid=10 row=5 orderby='pubdate'}
+	  {yycms:arclist typeid="10" row="5" orderby='pubdate'}
         <li class="slide">
           <div class="bannerbox" style="background:url([field:picname/]) no-repeat; background-position:50% 50%; background-size:cover;"></div>
         </li>
-        {/dede:arclist}
+        {/yycms:arclist}
       </ul>
     </div>
   </div>
@@ -130,11 +130,11 @@
   <div class="title1"><strong>热门项目培训</strong><a href="list.php?tid=1">更多 ></a></div>
   <div class="zc-proje-list">
     <ul>
-	{dede:arclist typeid=1 row=12 orderby='pubdate' titlelen=20}
+	{yycms:arclist typeid="1" row="12" orderby='pubdate' titlelen=20}
       <li>
         <div class="zc-proje1">
           <div class="zc-proje-list-img"> <a href="/m/view.php?aid=[field:id/]"><img src="[field:picname/]" width="100%"></a> </div>
-          <div class="zc-proje-list-text"> <span> <a href="/m/view.php?aid=[field:id/]">[field:title/]</a></span><br>
+          <div class="zc-proje-list-text"> <span> <a href="/m/view.php?aid=[field:id/]">{$field.title}</a></span><br>
             <p style="text-align:left">[field:description function='cn_substr(@me,40)'/]...</p>
           </div>
           <div class="zc-proje-list-button"> <a href="/m/view.php?aid=2">
@@ -144,7 +144,7 @@
             </a> </div>
         </div>
       </li>
-      {/dede:arclist}
+      {/yycms:arclist}
     </ul>
   </div>
   <div class="clear"></div>
@@ -201,7 +201,7 @@
           </p>
         </li>
         <li>
-          <p><a href="{dede:global.cfg_kfurl/}"><img src="static/images/27931462771240.png" /></a></p>
+          <p><a href="{yycms:global.cfg_kfurl/}"><img src="static/images/27931462771240.png" /></a></p>
         </li>
       </ul>
       <p><br />

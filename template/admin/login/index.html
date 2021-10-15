@@ -2,11 +2,12 @@
 <html lang="zh">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="/static/layui/css/layui.css">
-        <link rel="stylesheet" href="__STATIC__/css/common.css">
+        <title>后台登录-YYADMIN</title>
+        <link rel="stylesheet" href="__YYADMIN__/layui/css/layui.css">
+        <link rel="stylesheet" href="__YYADMIN__/css/common.css">
         <style type="text/css">
                 body {
-                    background: url(__STATIC__/images/admin-bg.jpg) 0% 0% / cover no-repeat;
+                    background: url(__YYADMIN__/images/admin-bg.jpg) 0% 0% / cover no-repeat;
                 }
               .container{
                   width: 420px;
@@ -73,7 +74,7 @@
         <form class="layui-form" action="" method="post">
             <div class="container">
                 <div class="layui-form-item" style="text-align:center">
-                    后台登录              
+                    <h2 style='paddding:15px;font-size: 20px;'>后台登录</h2>       
                 </div>
               <div class="layui-form-item">
                 <label class="layui-form-label">用户名</label>
@@ -105,18 +106,19 @@
               </div>
             </div>
         </form>
-        <script type="text/javascript" src="/static//layui/layui.js"></script>
+        <script type="text/javascript" src="__YYADMIN__/layui/layui.js"></script>
         <script>
             layui.use(['form', 'layedit', 'laydate'], function(){
               var form = layui.form
               ,layer = layui.layer
-              ,$ = layui.jquery
-              ,laydate = layui.laydate;
+              ,$ = layui.jquery;
               //监听提交
               form.on('submit(login)', function(data){
                 var data =data.field;
                 $.post('{:url("login/index")}',data,function(res){
-                    layer.msg(res.msg)
+                    layer.msg(res.msg,{time:500},function(){
+                        if(res.url) window.location.href = res.url;
+                    })
                 })
                 return false;
               });
