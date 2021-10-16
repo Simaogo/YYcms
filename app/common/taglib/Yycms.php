@@ -8,67 +8,19 @@ class Yycms extends TagLib{
      */
     protected $tags   =  [
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
-        'close'               => ['attr' => 'time,format', 'close' => 0], //闭合标签，默认为不闭合
-        'open'                => ['attr' => 'name,type', 'close' => 1], 
         'channel'             => ['typeid,type,order,row', 'alias' => 'iterate','close' => 1],   //typeid:栏目id|默认0,order:排序方式desc|asc|默认desc,row条数
-        'channelartlist'      => ['typeid,order,row,pagesize', 'alias' => 'iterate','close' => 1],   //typeid:栏目id|默认0,order:排序方式desc|asc|默认desc,row条数
+        'channelartlist'      => ['typeid,order,row,pagesize', 'alias' => 'iterate','close' => 1,'level'=>3],   //typeid:栏目id|默认0,order:排序方式desc|asc|默认desc,row条数
         'arclist'             => ['typeid,channelid,order,row,flag,titlelen', 'alias' => 'iterate','close' => 1],   //
-        'list'                => ['order,row,flag,titlelen', 'alias' => 'iterate','close' => 1],   //
-        'advert'              => ['group_id,order,row,titlelen', 'alias' => 'ad','close' => 1],  //广告
-        'fieldset'            => ['itemname,autofield,notsend,type,isnull,islist,default,maxlength,page', 'alias' => 'iterate','close' => 1],  //自定义内容标签
-        'include'            => ['attr' => 'filename', 'close' => 0],  //
+        'list'                => ['order,row,flag,titlelen', 'alias' => 'iterate','close' => 1],   //列表页
+        'field'               => ['name,row,flag,titlelen', 'alias' => 'iterate','close' => 1],   //field
+        'sql'                 => ['sql', 'alias' => 'sql','close' => 1],   //sql查询
+        'type'                => ['typeid', 'alias' => 'sql','close' => 1],   //type查询栏目
+        'advert'              => ['group_id,order,row,titlelen', 'alias' => 'ad','close' => 1],  //广告管理
+        'flink'              => ['row,type,name', 'alias' => 'flink', 'close' => 1],  //友情链接
+        'prenext'            => ['attr' => 'get','close' => 0],  //上一篇、下一篇
     ];
-
     /**
-     * 这是一个闭合标签的简单演示{demo:close time='$demo_time'/}
-     */
-    public function tagClose($tag)
-    {
-        $format = empty($tag['format']) ? 'Y-m-d H:i:s' : $tag['format'];
-        $time = empty($tag['time']) ? time() : $tag['time'];
-        $parse = '<?php ';
-        $parse .= 'echo date("' . $format . '",' . $time . ');';
-        $parse .= ' ?>';
-        return $parse;
-    }
-    public function tagWebname($tag)
-    {
-        $format = empty($tag['webname']) ? '' : $tag[''];
-        $time = empty($tag['time']) ? time() : $tag['time'];
-        $parse = '<?php ';
-        $parse .= 'echo date("' . $format . '",' . $time . ');';
-        $parse .= ' ?>';
-        return $parse;
-    }
-    /**
-     * {include file="public/header" /}
-     * @param type $tag
-     * @return string
-     */
-    public function tagInclude($tag){
-        $filename = empty($tag['filename']) ? '' : $tag['filename'];
-        $templeta = '../templeta/' . syscfg(1,'cfg_df_style') .'/'. $filename;
-        $parse = '{include}';
-        return $parse;
-    }
-    /**
-     * 这是一个非闭合标签的简单演示
-     */
-    public function tagOpen($tag, $content)
-    {
-        $type = empty($tag['level']) ? 1 : $tag['level']; // 这个type目的是为了区分类型，一般来源是数据库
-
-        $parse = '<?php ';
-        $parse .= '$test_arr=[[1,3,5,7,9],[2,4,6,8,10]];'; // 这里是模拟数据
-        $parse .= '$__LIST__ = $test_arr[' . $type . '];';
-        $parse .= ' ?>';
-        $parse .= '{volist name="__LIST__" id="' . $name . '"}';
-        $parse .= $content;
-        $parse .= '{/volist}';
-        return $parse;
-    }
-    /**
-     * channel 标签
+     * 栏目channel 标签
      * @param type $tag
      * @param type $content
      * @return string
@@ -77,10 +29,9 @@ class Yycms extends TagLib{
         
         if(!isset($typeid)) {$typeid= empty($tag['typeid']) ? 0 : $tag['typeid'];};//栏目ID
         $type= empty($tag['type']) ? 'top' : $tag['type'];//类型
-        $order= empty($tag['order']) ? "sortrank desc": $tag['order'];//排序
+        $order= empty($tag['order']) ? "sortrank asc": $tag['order'];//排序
         $row= empty($tag['row']) ? 10: $tag['row'];//条数
         $currentstyle= empty($tag['cur']) ? 'on': $tag['currentstyle'];//条数
-       
         $parseStr = '<?php ';
         $parseStr.='
         $where=[];
@@ -110,14 +61,15 @@ class Yycms extends TagLib{
             ';
         $parseStr.='?>';
         $parseStr.=$content;
-        $parseStr.='
-                <?php 
-            }
-            ?>
-        ';
+        $parseStr.='<?php }  ?>';
         return $parseStr;
     }
-    
+    /**
+     * 栏目三级嵌套
+     * @param type $tag
+     * @param type $content
+     * @return string
+     */
     public function tagChannelartlist($tag, $content){
        
         $typeid= empty($tag['typeid']) ? 0 : $tag['typeid'];//栏目ID
@@ -133,7 +85,7 @@ class Yycms extends TagLib{
                  $currid=$ArctypeModel->artypeCurrId(input("tid"));
                  $currid[]=input("tid");
             }
-            foreach($menuList as $index=>$field){
+            foreach($menuList as $key=>$field){
                 $field["typeurl"]=url("template/list",["tid"=>$field["id"]]);
                 $currentstyle=in_array($field["id"],$currid)?"cur":"";//栏目显示高亮
                 $typeid=$field["id"];//嵌套标签typeid传值
@@ -145,23 +97,21 @@ class Yycms extends TagLib{
             }
             ?>
         ';
+
         return $parseStr;
     }
     public function tagArclist($tag, $content){
         if(input('tid')) {
             $typeid = empty($tag['typeid']) ? input('tid') : $tag['typeid'];//栏目ID
-        } else {
-            
+        } else { 
             $typeid = isset($tag['typeid'])&&empty($tag['typeid']) ?  $tag['typeid'] : 'all';//栏目ID
         }
-        
         $order= empty($tag['order']) ? "sortrank asc": $tag['order'];//排序
         $row= empty($tag['row']) ? 10: $tag['row'];//条数    
         $limit='0,'.$row;
         $flag= !empty($tag['flag'])?$tag['flag']:'0';
         $pagesize= empty($tag['pagesize']) ? 10: $tag['pagesize'];//条数    
         $channelid= empty($tag['channelid']) ? 1: $tag['channelid'];//模型ID   
-        //处理typeid
         $parseStr = '<?php ';
         $parseStr.='
             $where=[];
@@ -181,16 +131,17 @@ class Yycms extends TagLib{
                             ->where($where)
                             ->order("arc.'.$order.',arc.id asc")->limit('.$limit.')
                             ->select()
-                            ->toArray();   
+                            ->toArray();
             foreach($list as $index=>$field){
 //                foreach($field as $k=>$v){
 //                    if(in_array($k,$serializefield)){
 //                        //$field[$k] = \fun\Process::decode_item($v);//序列化字段
 //                    }
 //                }
-                $field["info"]=$field["description"]; //缩略图
-                $field["litpic"]=explode(",",$field["litpic"]); //缩略图
-                $field["arcurl"]=url("template/view",["aid"=>$field["aid"]])->build();
+                $field["info"]=$field["description"]; 
+                $field["picname"] = $field["litpic"];//缩略图
+                $field["imgurls"] = isset($field["imgurls"])&&isset($field["imgurls"]) ? explode(",",$field["imgurls"]) :""; //图集
+                $field["arcurl"] = in_array("j",explode(",",$field["flag"])) && !empty($field["redirecturl"])?$field["redirecturl"] : url("template/view",["aid"=>$field["aid"]])->build();
             ';
         $parseStr.='?>';
         $parseStr.=$content;
@@ -218,16 +169,14 @@ class Yycms extends TagLib{
             }
             $where=["status"=>1];
             $where["typeid"] ='.$typeid.';
-            $ArchivesModel=new \addons\travel\common\model\Archives();
-            $arctList= $ArchivesModel->where($where) 
+            $ArclistModel=new \app\common\model\Arclist();
+            $arctList= $ArclistModel->where($where) 
                                      ->order("sortrank '.$order.'")
                                      ->limit($pagesize,'.$row.')
                                      ->select();
-  
             foreach($arctList as $index=>$field){
-                
                 $field["litpic"]=explode(",",$field["litpic"]); //缩略图
-                $field["url"]=addons_url("template/view",["aid"=>$field["id"]]);
+                $field["arcurl"]="view/aid/".$field["id"];
             ';
         $parseStr.='?>';
         $parseStr.=$content;
@@ -238,6 +187,12 @@ class Yycms extends TagLib{
         ';
         return $parseStr;
     }
+    /**
+     * 广告管理
+     * @param type $tag
+     * @param type $content
+     * @return string
+     */
     public function tagAdvert($tag,$content){
         $group_id= empty($tag['group_id']) ? 1 : $tag['group_id'];//组ID
         $order= empty($tag['order']) ? "sortrank asc": $tag['order'];//排序
@@ -248,8 +203,7 @@ class Yycms extends TagLib{
             $where[] = ["group_id","=",'.$group_id.'];
             $AdvertModel = new \app\common\model\Advert();
             $list=$AdvertModel->where($where)->select()->toArray();
-                    foreach($list as $index => $field){
-                ';    
+                    foreach($list as $key => $field){';
         $parseStr.='?>';
         $parseStr.=$content;
         $parseStr.='
@@ -259,18 +213,64 @@ class Yycms extends TagLib{
         ';
         return $parseStr;   
     }
-    public function tagFieldset($tag,$content){
-        $name = $tag["name"];
-        $type = empty($tag['level']) ? 1 : $tag['level']; // 这个type目的是为了区分类型，一般来源是数据库
+    /**
+     * 上一篇、下一篇
+     * @param type $tag
+     * @param type $content
+     * @return string
+     */
+     public function tagPrenext ($tag,$content){
+        $getparam = $tag["get"];
+        if(!$getparam) return '';
         $parse = '<?php ';
-        $parse .= '$test_arr=[[1,3,5,7,9],[2,4,6,8,10]];'; // 这里是模拟数据
-        $parse .= '$__LIST__ = $test_arr[' . $type . '];';
-        $parse .= ' ?>';
-        $parse .= '{volist name="__LIST__" id="' . $name . '"}';
+        $parse .= '$aid = input("aid");
+            if($aid){
+                $Arclist = \app\common\model\Arclist::find($aid);
+                $where = [];
+                $where[] = ["typeid","=",$Arclist->typeid];
+                if("'.$getparam.'"=="pre"){
+                    $where[] = ["id","<",$aid];
+                    $text ="上一篇";
+                 }else{
+                    $where[] = ["id",">",$aid];
+                    $text ="下一篇";
+                }
+                $info = \app\common\model\Arclist::where($where)->limit(1)->find();
+                if($info){
+                    $url = "/view/aid/".$info->id;
+                    echo "<a href =\'".$url."\'><span>".$text."</span><b>：</b><span>".$info->title."</span></a>";
+                }else{
+                    echo "<a href=\'javascript:;\'><span>".$text."</span><b>：</b><span>没有了</span></a>";
+                }
+            }?>'; // 
+        return $parse;
+    }
+    /**
+     * 友情链接标签
+     * @param type $tag
+     * @param type $content
+     * @return string
+     */
+    public function tagFlink($tag,$content){
+        $row = isset($tag['row']) && empty($tag['row']) ? $tag['row'] : 10;
+        $name = isset($tag['field']) && empty($tag['field']) ? $tag['field'] :'field';
+        $parse = '<?php ';
+        $parse .= '$flink = \think\facade\Cache::get("flink");
+                if (!$flink){
+                    $flink = \app\common\model\Flink::limit(0,'.$row.')->order("sortrank desc")->select();
+                    \think\facade\Cache::set("flink", $flink, 3600);
+                }
+                foreach($flink as $key=>$field){ 
+                ?>';
         $parse .= $content;
-        $parse .= '{/volist}';
+        $parse .= '<?php }?>';
         return $parse;
     }
     
-
+    public function tagField($tag,$content){
+        return '';
+    }
+    public function tagSql($tag,$content){
+        return '';
+    }
 }

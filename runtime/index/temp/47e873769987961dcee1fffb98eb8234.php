@@ -1,3 +1,4 @@
+<?php /*a:1:{s:33:"template/default/list_article.htm";i:1629365525;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -20,13 +21,23 @@
 <div class="container">
     {dede:include filename="position.htm"/}
     <div class="center">
-        <div class="wrap clearfix"> {dede:include filename="left.htm"/}
+        <div class="wrap clearfix">
+            {dede:include filename="left.htm"/}
             <div class="main_r fr">
-                <div class="page_content">
-                    <div class="page_tit">
-                        <h3>{dede:field.typename/}</h3>
-                    </div>
-                    <div class="content"> {dede:field.content/} </div>
+                <div class="art_list">
+                    <ul>
+					    {dede:list pagesize=6}
+                        <li>
+                            <div class="fl"> <a href="[field:arcurl/]"> <img src="[field:litpic/]" alt="[field:fulltitle/]" /> </a> </div>
+                            <div class="fr"> <a href="[field:arcurl/]">[field:title/]</a> <span>[field:pubdate function="MyDate('Y-m-d',@me)"/]</span>
+                                <p>[field:description/]...</p>
+                            </div>
+                        </li>
+						{/dede:list}
+                    </ul>
+                </div>
+                <div class="pages">
+                    <div class="pagination"><ul>{dede:pagelist listitem="index,end,pre,next,pageno" listsize="5"/}</ul></div>
                 </div>
             </div>
         </div>

@@ -1,3 +1,4 @@
+<?php /*a:1:{s:31:"template/default/list_image.htm";i:1629365539;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -18,15 +19,25 @@
 {dede:include filename="head.htm"/}
 {dede:include filename="banner.htm"/}
 <div class="container">
-    {dede:include filename="position.htm"/}
+    {dede:include filename="position2.htm"/}
     <div class="center">
-        <div class="wrap clearfix"> {dede:include filename="left.htm"/}
+        <div class="wrap clearfix">
+            {dede:include filename="left2.htm"/}
             <div class="main_r fr">
-                <div class="page_content">
-                    <div class="page_tit">
-                        <h3>{dede:field.typename/}</h3>
-                    </div>
-                    <div class="content"> {dede:field.content/} </div>
+                <div class="pro_list">
+                    <ul>
+					    {dede:list pagesize=6}
+                        <li>
+                            <div class="pic"> <a href="[field:arcurl/]">
+                                <div class="imgauto"> <img src="[field:litpic/]" alt="[field:fulltitle/]" /> </div>
+                                <span>[field:title/]</span> </a> </div>
+                            <div class="text"> <a href="[field:arcurl/]"> <img src="/skin/images/probg.png" alt="[field:fulltitle/]"> </a> </div>
+                        </li>
+						{/dede:list}
+                    </ul>
+                </div>
+                <div class="pages">
+                    <div class="pagination"><ul>{dede:pagelist listitem="index,end,pre,next,pageno" listsize="5"/}</ul></div>
                 </div>
             </div>
         </div>

@@ -23,7 +23,7 @@ class Template extends Common{
             $arctypeModel = new \app\common\model\Arctype();
             $Arctype = $arctypeModel->find($typeid);
             $where = [];
-            if($Arctype->ispart==1){
+            if($Arctype->ispart==0){ //列表模板
                 $template=$Arctype->templist;
                 $row=10;
                 if(!$typeid) return '';
@@ -52,15 +52,15 @@ class Template extends Common{
                         ->where($where)
                         ->join($Channeltype->addtable.' add','arc.id=add.aid','left')
                         ->limit($pagesize,$row)
-                        ->order('update_time desc ,sortrank desc')
+                        ->order('pubdate desc ,sortrank desc')
                         ->select()
                         ->toArray();
                 $serializefield= explode(',', $Channeltype->serializefield);
                 foreach ($list as $key=>$val){
                     foreach ($val as $k=>$v){
-                        if(in_array($k,$serializefield)||$k=='flag'){
-                            if($v) $list[$key][$k] = Process::decode_item($v);
-                        }
+//                        if(in_array($k,$serializefield)||$k=='flag'){
+//                            if($v) $list[$key][$k] = Process::decode_item($v);
+//                        }
                         if($k=='litpic'){
                             $list[$key][$k]= explode(',', $v);
                         }
@@ -78,24 +78,26 @@ class Template extends Common{
                 $view['list'] = $list;
                 $view['page'] = $page;
             }
-            if($Arctype->ispart==2){
-                $template=$Arctype->tempindex;
+            if($Arctype->ispart==1){ //封面模板
+                $view["template"]=$Arctype->tempindex;
             } else {
-                $template=$Arctype->templist;
+                $view["template"]=$Arctype->templist;
             }
             $view['typename']=$Arctype->typename;
             $view['keywords']=$Arctype->keywords;
             $view['description']=$Arctype->description;
             $view["content"] = $Arctype->content;
-            if(!$keywords)cache('view_list_'.$typeid,$view);
+            cache('view_list_'.$typeid,$view);
         }
         
-         if(request()->isPost()){//ajax 加载
+        if(request()->isPost()){//ajax 加载
              return json(['list'=>$view['list'],'page'=>$pagesize/$row]);
-         } 
-        $template= str_replace('{style}/','', $template);
-        View::assign($view);
+        }
+        //模板
+        $template = !isset($view["template"]) ?cache('template'):$view["template"];  
+        $template  = str_replace('{style}/','', $template);
         $template=$this->default . $this->template($template);
+        View::assign($view);
         return View::fetch($template);
     }
     public function view(){

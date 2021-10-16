@@ -1,18 +1,29 @@
-<div class="aboutus-left">
-      <div class="zc-project-list">
-	    {yycms:channelartlist typeid="1"}
-        <div class="zc-project-li">
-          <div class="zc-project-list-name"> {yycms:field name="typename"/} </div>
-          <div class="zc-project-list1">
-            <ul>
-            {yycms:arclist channelid="10" row="6" titlelen="18" orderby='pubdate'}
-			  <li class="pro1"> <a href="{$field.arcurl}">{$field.title}</a></li>
-			{/yycms:arclist}
-            </ul>
-          </div>
-        </div>
-       {/yycms:channelartlist}
-      </div>
-      <div class="clear"></div>
-      <div class="advert"> <img src="/static/images/20170717110758447.jpg" width="100%"> </div>
-    </div>
+<div class="main_l fl">
+                <h3>{dede:field name='typenameen'/}</h3>
+                <i></i> <span>{dede:field name='typename'/}</span>
+                <div class="pro_menu">
+                    <ul>
+					    {dede:channelartlist typeid=2 type=son}
+                        <li>
+                            <div class="yia"><a href="{dede:field name=typeurl/}">{dede:field name=typename/}</a></div>
+                            <div class="era">  {dede:sql sql='Select * from dede_arctype where reid=~id~ ORDER BY id limit 0,10'}
+                            <a href="[field:typedir function='str_replace("{cmspath}","",@me)'/]">[field:typename/]</a> 
+                              {/dede:sql}
+                            </div>
+                        </li>
+						{/dede:channelartlist}
+                    </ul>
+                </div>
+                <div class="fl_search">
+                    <div class="search">
+                        <div class="text clearfix">
+                            <div class="fr">
+                                <form action="/plus/search.php" method="post">
+                                    <input class="btn1" type="text" name="q" placeholder="请输入关键词">
+                                    <input class="btn2" type="submit" name="" value="搜索">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>

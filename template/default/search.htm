@@ -5,7 +5,7 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-<title>{dede:field.typename/}_{dede:global.cfg_webname/}</title>
+<title>搜索结果_{dede:global.cfg_webname/}</title>
 <meta name="keywords" content="{dede:field name='keywords'/}" />
 <meta name="description" content="{dede:field name='description' function='html2text(@me)'/}" />
 <script type="text/javascript" src="/skin/js/jquery-1.12.4.min.js"></script>
@@ -18,15 +18,25 @@
 {dede:include filename="head.htm"/}
 {dede:include filename="banner.htm"/}
 <div class="container">
-    {dede:include filename="position.htm"/}
+    {dede:include filename="position3.htm"/}
     <div class="center">
-        <div class="wrap clearfix"> {dede:include filename="left.htm"/}
+        <div class="wrap clearfix">
+            {dede:include filename="left2.htm"/}
             <div class="main_r fr">
-                <div class="page_content">
-                    <div class="page_tit">
-                        <h3>{dede:field.typename/}</h3>
-                    </div>
-                    <div class="content"> {dede:field.content/} </div>
+                <div class="art_list">
+                    <ul>
+					    {dede:list pagesize=6 titlelen=100}
+                        <li>
+                            <div class="fl"> <a href="[field:arcurl/]"> <img src="[field:litpic/]" alt="[field:fulltitle/]" /> </a> </div>
+                            <div class="fr"> <a href="[field:arcurl/]">[field:title/]</a> <span>[field:pubdate function="MyDate('Y-m-d',@me)"/]</span>
+                                <p>[field:description/]...</p>
+                            </div>
+                        </li>
+						{/dede:list}
+                    </ul>
+                </div>
+                <div class="pages">
+                    <div class="pagination">{dede:pagelist listitem="index,end,pre,next,pageno" listsize="5"/}</div>
                 </div>
             </div>
         </div>

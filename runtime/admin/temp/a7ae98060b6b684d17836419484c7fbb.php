@@ -1,4 +1,4 @@
-<?php /*a:3:{s:49:"E:\WWW\tp6dedecms\template\admin\arctype\add.html";i:1634203021;s:51:"E:\WWW\tp6dedecms\template\admin\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\template\admin\public\footer.html";i:1634222788;}*/ ?>
+<?php /*a:3:{s:49:"E:\WWW\tp6dedecms\template\admin\arctype\add.html";i:1634312987;s:51:"E:\WWW\tp6dedecms\template\admin\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\template\admin\public\footer.html";i:1634222788;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,15 +75,12 @@
                             <input type="radio" name="ishidden" lay-skin="primary" title="隐藏" value="1">
                       </div>
                     </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">浏览权限</label>
-                        <div class="layui-input-inline">
-                        <select name="corank" lay-verify="required" lay-search="">
-<!--                          <option value="">直接选择或搜索选择</option>
-                          <option value="1">layer</option>-->
-                        </select>
-                      </div>
-                    </div>
+                    <div class="layui-form-item">
+                  <label class="layui-form-label">栏目名称</label>
+                  <div class="layui-input-block">
+                    <input type="text" name="sortrank" lay-verify="" autocomplete="off" placeholder="请输入栏目排序" class="layui-input">
+                  </div>
+                </div>
                 </div>
                  <div class="layui-form-item" pane="">
                     <label class="layui-form-label">栏目图片</label>

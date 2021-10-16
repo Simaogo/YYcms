@@ -1,4 +1,4 @@
-<?php /*a:3:{s:48:"E:\WWW\tp6dedecms\template\admin\tool\index.html";i:1633854397;s:51:"E:\WWW\tp6dedecms\template\admin\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\template\admin\public\footer.html";i:1634222788;}*/ ?>
+<?php /*a:3:{s:48:"E:\WWW\tp6dedecms\template\admin\tool\index.html";i:1634310823;s:51:"E:\WWW\tp6dedecms\template\admin\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\template\admin\public\footer.html";i:1634222788;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +25,7 @@
         width: 100%;
         position: fixed;
         left: 0;
-        bottom: 0;
+        bottom: 44px;
         display: none;
         z-index: 999;
     }

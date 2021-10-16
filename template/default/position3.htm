@@ -1,0 +1,34 @@
+<div class="curson">
+        <div class="center">
+            <p> <a href="/">{dede:global.cfg_indexname/}</a> > 搜索结果 </p>
+            <span>搜索结果</span> </div>
+    </div>
+    <div class="m_promenu">
+        <div class="mpromenu clearfix">
+		    {dede:channelartlist typeid=2 type=son}
+            <h3 class=""><a href="{dede:field name=typeurl/}">{dede:field name=typename/}</a><em>>></em></h3>
+            <ul>
+			    {dede:channel type=son nosefl=yes}
+                <li><a href="[field:typeurl/]">[field:typename/]</a></li>
+				{/dede:channel}
+            </ul>
+			{/dede:channelartlist}
+        </div>
+        <script type="text/javascript">
+                jQuery(".mpromenu").slide({titCell:"h3 em", targetCell:"ul",defaultIndex:1,effect:"slideDown",delayTime:300,trigger:"click",defaultPlay:false});
+            </script>
+        <div class="m_prosearch">
+            <div class="fl_search">
+                <div class="search">
+                    <div class="text clearfix">
+                        <div class="fr">
+                            <form action="/plus/search.php" method="post">
+                                <input class="btn1" type="text" name="q" placeholder="请输入关键词">
+                                <input class="btn2" type="submit" name="" value="搜索">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

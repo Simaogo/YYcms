@@ -1,3 +1,4 @@
+<?php /*a:1:{s:34:"template/default/index_article.htm";i:1629962797;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>

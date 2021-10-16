@@ -41,8 +41,9 @@
                       <input type="checkbox" name="flag[]" lay-skin="primary" title="滚动" value="s">
                       <input type="checkbox" name="flag[]" lay-skin="primary" title="加粗" value="b">
                       <input type="checkbox" name="flag[]" lay-skin="primary" title="图片" value="p">
-                      <input type="checkbox" name="flag[]" lay-skin="primary" title="跳转" value="j">
+                      <input type="checkbox" name="flag[]" lay-skin="primary" title="跳转" value="j" lay-filter="redirecturl">
                     </div>
+                    <div class="redirecturl layui-hide layui-col-md5"><input type="text" name="redirecturl" lay-skin="primary"  value="" placeholder="请输入跳转网址,必须带上(http://或者https:// )"class="layui-input"></div>
                  </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
@@ -52,7 +53,7 @@
                       </div>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label">权重</label>
+                        <label class="layui-form-label">排序</label>
                         <div class="layui-input-inline">
                             <input type="text" name="weight" lay-verify="" autocomplete="off" class="layui-input" value="50">
                         </div>
@@ -119,7 +120,8 @@
                     <label class="layui-form-label">阅读权限</label>
                     <div class="layui-input-inline">
                       <select name="arcrank" lay-verify="" lay-search="">
-                        <option value="">直接选择或搜索选择</option>
+                        <option value="0" selected>开启</option>
+                        <option value="1">关闭</option>
                       </select>
                     </div>
                   </div>
@@ -235,10 +237,14 @@
        });
        if(formData){
             //flag 选中
+            var flag = formData.flag;
             $('input[name="flag[]"]').each(function(index){
-                var flag = formData.flag;
-                if(flag.includes($(this).val())){
-                    $(this).attr('checked','checked'); 
+               var flagVal = $(this).val();
+                if(flag.includes(flagVal)){
+                    if(flagVal == 'j'&& formData.redirecturl){
+                        $('.redirecturl').removeClass('layui-hide');
+                    }
+                    $(this).attr('checked','checked');
                 }
                 form.render();
             })
@@ -253,7 +259,10 @@
             layui.$('input[name="litpic"]').val(res.url);
           }
         });
-        
+        //缩略图赋值
+        if(formData.litpic){
+            layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', formData.litpic);
+        }
        //图集上传
         upload.render({
           elem: '#multiple_img_upload'
@@ -311,5 +320,15 @@
                  $('#div-slide_show ul').append('<li '+thisClass+'><img src="'+imgurls[i]+'"><i class="layui-icon layui-icon-close"  data-fileurl="'+imgurls[i]+'"></i></li>');
             }
         }
+        //跳转网址
+         form.on('checkbox(redirecturl)', function(obj){
+            if(obj.elem.checked){　　　　　　//判断当前多选框是选中还是取消选中
+                $('.redirecturl').removeClass('layui-hide');
+            }else{
+                $('.redirecturl').addClass('layui-hide');
+            }
+            return false;
+          });
+
     });
 </script>
