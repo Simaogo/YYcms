@@ -10,14 +10,14 @@ class Yycms extends TagLib{
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
         'channel'             => ['typeid,type,order,row', 'alias' => 'iterate','close' => 1],   //typeid:栏目id|默认0,order:排序方式desc|asc|默认desc,row条数
         'channelartlist'      => ['typeid,order,row,pagesize', 'alias' => 'iterate','close' => 1,'level'=>3],   //typeid:栏目id|默认0,order:排序方式desc|asc|默认desc,row条数
-        'arclist'             => ['typeid,channelid,order,row,flag,titlelen', 'alias' => 'iterate','close' => 1],   //
-        'list'                => ['order,row,flag,titlelen', 'alias' => 'iterate','close' => 1],   //列表页
-        'field'               => ['name,row,flag,titlelen', 'alias' => 'iterate','close' => 1],   //field
+        'arclist'             => ['typeid,channelid,order,row,flag,titlelen,limit', 'alias' => 'arclist','close' => 1],   //
+        'list'                => ['order,row,flag,titlelen', 'alias' => 'list','close' => 1],   //列表页
+        'field'               => ['name,row,flag,titlelen', 'alias' => 'field','close' => 1],   //field
         'sql'                 => ['sql', 'alias' => 'sql','close' => 1],   //sql查询
         'type'                => ['typeid', 'alias' => 'sql','close' => 1],   //type查询栏目
         'advert'              => ['group_id,order,row,titlelen', 'alias' => 'ad','close' => 1],  //广告管理
-        'flink'              => ['row,type,name', 'alias' => 'flink', 'close' => 1],  //友情链接
-        'prenext'            => ['attr' => 'get','close' => 0],  //上一篇、下一篇
+        'flink'               => ['row,type,name', 'alias' => 'flink', 'close' => 1],  //友情链接
+        'prenext'             => ['attr' => 'get','close' => 0],  //上一篇、下一篇
     ];
     /**
      * 栏目channel 标签
@@ -55,7 +55,7 @@ class Yycms extends TagLib{
         $currid=$ArctypeModel->childrenIds($menuList,$tid);
         $currid[]=$tid;
             foreach($menuList as $index=>$field){
-                    $field["typeurl"]=url("template/list",["tid"=>$field["id"]]);
+                    $field["typeurl"] ="/list/tid/".$field["id"];
                     $field["currentstyle"]=in_array($field["id"],$currid)?"'.$currentstyle.'":"";//栏目显示高亮
                     $typeid=$field["id"];//嵌套标签typeid传值
             ';
@@ -86,7 +86,7 @@ class Yycms extends TagLib{
                  $currid[]=input("tid");
             }
             foreach($menuList as $key=>$field){
-                $field["typeurl"]=url("template/list",["tid"=>$field["id"]]);
+                $field["typeurl"] = "/list/tid/$field["id"]]";
                 $currentstyle=in_array($field["id"],$currid)?"cur":"";//栏目显示高亮
                 $typeid=$field["id"];//嵌套标签typeid传值
             ';
@@ -101,91 +101,117 @@ class Yycms extends TagLib{
         return $parseStr;
     }
     public function tagArclist($tag, $content){
-        if(input('tid')) {
-            $typeid = empty($tag['typeid']) ? input('tid') : $tag['typeid'];//栏目ID
-        } else { 
-            $typeid = isset($tag['typeid'])&&empty($tag['typeid']) ?  $tag['typeid'] : 'all';//栏目ID
+        $list_key = '';
+        foreach ($tag as $key =>$value){
+            $list_key .= $key.$value;
         }
-        $order= empty($tag['order']) ? "sortrank asc": $tag['order'];//排序
-        $row= empty($tag['row']) ? 10: $tag['row'];//条数    
-        $limit='0,'.$row;
-        $flag= !empty($tag['flag'])?$tag['flag']:'0';
-        $pagesize= empty($tag['pagesize']) ? 10: $tag['pagesize'];//条数    
-        $channelid= empty($tag['channelid']) ? 1: $tag['channelid'];//模型ID   
-        $parseStr = '<?php ';
-        $parseStr.='
+        $list_key = md5($list_key);
+        if(!\think\facade\Cache::get($list_key)) {
+            $typeid = isset($tag['typeid'])&& !empty($tag['typeid']) ?  explode(',',$tag['typeid']) : '';//栏目ID
+            //查找下级栏目
+            $typeList = \app\common\model\Arctype::select();
+            $typeidArr =[];
+            if($typeList && $typeid){
+                foreach ($typeid as  $val){
+                    $typeidArr = array_merge($typeidArr, \app\common\model\Arctype::childrenIds($typeList, $val));
+                }
+                $typeid = trim(array_reduce($typeidArr, function($carry, $item){
+                        return $carry . ','.$item;
+                    }), ',');
+            } 
+            $order= empty($tag['order']) ? "sortrank asc": $tag['order'];//排序
+            $limit = empty($tag['row']) ? 10: $tag['row'];//条数
+            $titlelen = empty($tag['titlelen']) ? 120: intval($tag['titlelen'])*2;//标题长度
+            $page = 0;
+            if(isset($tag['limit']) && !empty($tag['limit'])){
+                $limitArr = explode(',', $tag['limit']);
+                $page = $limitArr[0];
+                $limit =  $limitArr[1];
+            }
+            $flag= !empty($tag['flag'])?$tag['flag']:''; //flag
+            $whereRaw = '';
+            if($flag){
+                $whereRaw = "FIND_IN_SET('$flag', flag)";
+            }
+            $channelid = isset($tag['channelid']) && !empty($tag['channelid']) ? $tag['channelid'] : 1;//模型ID
             $where=[];
             $where[]=["arc.arcrank","=",0];
-            if("'.$typeid.'"!="all"){
+            if($typeid){
                $where[]=["arc.typeid","in","'.$typeid.'"];
             }
-            if(in_array("'.$flag.'",["c","f","h","p","j"])){
-                $where[]=["arc.flag","like","%'.$flag.'%"]; 
-            }
-            $ChanneltypeModel=new \app\common\model\Channeltype();
-            $Channeltype=$ChanneltypeModel->find('.$channelid.');
-            $serializefield =explode(",",$Channeltype->serializefield);
-            $list=\think\facade\Db::name("archives")
+            $ChanneltypeModel = new \app\common\model\Channeltype();
+            $Channeltype=$ChanneltypeModel->find($channelid);
+            $arclist=\think\facade\Db::name("archives")
+                                ->alias("arc")
+                                ->join($Channeltype->addtable." add"," arc.id=add.aid","left")
+                                ->where($where)
+                                ->where($whereRaw)
+                                ->order("arc.".$order)
+                                ->limit($page,$limit)
+                                ->select()
+                                ->toArray(); 
+            \think\facade\Cache::set($list_key,$arclist);
+        }
+        $parseStr = '<?php ';
+        $parseStr .= '$arclist = \think\facade\Cache::get("'.$list_key.'");';
+        $parseStr.='
+            foreach($arclist as $key=>$field){
+                $field["info"]=$field["description"];
+                $field["title"] = substr($field["title"],0,'.$titlelen.');
+                $field["picname"] = $field["litpic"];//缩略图
+                $field["imgurls"] = isset($field["imgurls"])&&isset($field["imgurls"]) ? explode(",",$field["imgurls"]) :""; //图集
+                $field["arcurl"] = in_array("j",explode(",",$field["flag"])) && !empty($field["redirecturl"])?$field["redirecturl"] : "/view/aid/".$field["id"];
+            ';
+        $parseStr.='?>';
+        $parseStr.=$content;
+        $parseStr.=' <?php } ?>';
+        return $parseStr;
+    }
+   public function tagList($tag, $content){
+        $typeid=input("tid");
+        if(!input("tid")) return '';
+        $pagesize = empty($tag['pagesize']) ? 15: $tag['pagesize'];//分页
+        $titlelen = empty($tag['tilelen']) ? 120: intval($tag['tilelen'])*2;//标题长度
+        $page = empty(input('page')) ? 0 :input('page');
+        $list_key = 'list_tid_'.$typeid.'_page_'.$page;
+        dump($list_key);
+        $where=[];
+        $where[]=["arc.arcrank","=",0];
+        $where[]=["arc.typeid","=",$typeid];
+        $ArctypeModel = new \app\common\model\Arctype();
+        $Arctype = $ArctypeModel::find($typeid);
+        $ChanneltypeModel = new \app\common\model\Channeltype();
+        $Channeltype = $ChanneltypeModel->find($Arctype->channeltype);
+        $Channeltype=$ChanneltypeModel->find($Channeltype->id);
+        $list=\think\facade\Db::name("archives")
                             ->alias("arc")
                             ->join($Channeltype->addtable." add"," arc.id=add.aid","left")
                             ->where($where)
-                            ->order("arc.'.$order.',arc.id asc")->limit('.$limit.')
+                            ->order("sortrank asc,pubdate asc")
+                            ->limit($page,$pagesize)
                             ->select()
                             ->toArray();
-            foreach($list as $index=>$field){
-//                foreach($field as $k=>$v){
-//                    if(in_array($k,$serializefield)){
-//                        //$field[$k] = \fun\Process::decode_item($v);//序列化字段
-//                    }
-//                }
-                $field["info"]=$field["description"]; 
-                $field["picname"] = $field["litpic"];//缩略图
-                $field["imgurls"] = isset($field["imgurls"])&&isset($field["imgurls"]) ? explode(",",$field["imgurls"]) :""; //图集
-                $field["arcurl"] = in_array("j",explode(",",$field["flag"])) && !empty($field["redirecturl"])?$field["redirecturl"] : url("template/view",["aid"=>$field["aid"]])->build();
-            ';
+        \think\facade\Cache::set($list_key,$list);
+        $parseStr = '<?php ';
+        $parseStr .= '$list = \think\facade\Cache::get("'.$list_key.'");';
+        $parseStr.=' foreach($list as $key =>$field) { 
+                        $field["title"] = substr($field["title"],0,'.$titlelen.');
+                        $field["arcurl"] = "/view/aid/".$field["id"];
+                        $field["picname"] = $field["litpic"];//缩略图
+                        $field["imgurls"] = isset($field["imgurls"])&&isset($field["imgurls"]) ? explode(",",$field["imgurls"]) :""; //图集
+                   ';
+        
         $parseStr.='?>';
-        $parseStr.=$content;
-        $parseStr.='
-                <?php 
-            }
-            ?>
-        ';
+        $parseStr .= $content;
+        $parseStr.=' <?php } ?>';
         return $parseStr;
     }
-    public function tagList($tag, $content){
-        
-        $order= empty($tag['order']) ? " desc": $tag['order'];//排序
-        $row= empty($tag['row']) ? 10: $tag['row'];//条数    
-        
-        //$pagesize= empty($tag['pagesize']) ? 1: $tag['pagesize'];//条数    
-        
+    
+    public function pagelist($tag,$content){
         $typeid=input("tid");
-        $parseStr = '<?php ';
-        $parseStr.='
-            if(input("page")){
-                $pagesize=(input("page")*'.$row.')-'.$row.';
-            }else{
-                $pagesize=0;
-            }
-            $where=["status"=>1];
-            $where["typeid"] ='.$typeid.';
-            $ArclistModel=new \app\common\model\Arclist();
-            $arctList= $ArclistModel->where($where) 
-                                     ->order("sortrank '.$order.'")
-                                     ->limit($pagesize,'.$row.')
-                                     ->select();
-            foreach($arctList as $index=>$field){
-                $field["litpic"]=explode(",",$field["litpic"]); //缩略图
-                $field["arcurl"]="view/aid/".$field["id"];
-            ';
-        $parseStr.='?>';
-        $parseStr.=$content;
-        $parseStr.='
-                <?php 
-            }
-            ?>
-        ';
-        return $parseStr;
+        if(!input("tid")) return '';
+        $list = \think\facade\Cache::get("list_tid_".$typeid);
+        
     }
     /**
      * 广告管理

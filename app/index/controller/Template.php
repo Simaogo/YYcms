@@ -8,11 +8,7 @@ use app\index\controller\Common;
 class Template extends Common{
     public $default;
     public function __construct() {
-        $this->default ='template/default/';
-    }
-    public function index(){
-         $theme=$this->template('index');
-         return View::fetch('../template/default/index.htm');
+        $this->default ='template/'. syscfg("cfg_df_style").'/';
     }
     public function list(){
          $typeid=input('tid')?input('tid'):input('typeid');
@@ -52,7 +48,7 @@ class Template extends Common{
                         ->where($where)
                         ->join($Channeltype->addtable.' add','arc.id=add.aid','left')
                         ->limit($pagesize,$row)
-                        ->order('pubdate desc ,sortrank desc')
+                        ->order('sortrank desc,pubdate desc')
                         ->select()
                         ->toArray();
                 $serializefield= explode(',', $Channeltype->serializefield);
@@ -96,9 +92,9 @@ class Template extends Common{
         //模板
         $template = !isset($view["template"]) ?cache('template'):$view["template"];  
         $template  = str_replace('{style}/','', $template);
-        $template=$this->default . $this->template($template);
-        View::assign($view);
-        return View::fetch($template);
+
+        View::assign(['field'=>$view]);
+        return View::fetch('../template/'. syscfg("cfg_df_style").'/'.$template);
     }
     public function view(){
         $aid=input('aid');
@@ -135,10 +131,9 @@ class Template extends Common{
             cache('view_'.$aid,$view); 
         }
         $template= str_replace('{style}/','', $view['template']);
-        View::assign($view);
-        $template=$this->default . $this->template($template);
-        return View::fetch($template);
+        View::assign(['field'=>$view]);
         
+        return View::fetch('../template/'. syscfg("cfg_df_style").'/'.$template);
     }
     public function search(){
         $getdata=input();

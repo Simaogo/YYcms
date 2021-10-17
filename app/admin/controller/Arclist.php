@@ -102,13 +102,7 @@ class Arclist extends \app\common\controller\Backend{
             $addtable = $this->getTable($channel->addtable);
             $addinfo = Db::name($addtable)->where('aid',$id)->find();//附表信息
             if($channel->nid=='image' && isset($addinfo['imgurls']) && $addinfo['imgurls']){
-                $pattern = "/ddimg='(.*)'\s+text/";
-                if(preg_match($pattern, $addinfo['imgurls'])){
-                    preg_match_all($pattern, $addinfo['imgurls'],$imgurls);//解析图集字段
-                    $addinfo['imgurls'] =$imgurls[1];
-                } else {
-                    $addinfo['imgurls'] = $addinfo['imgurls'];
-                }
+                $addinfo['imgurls'] = \fun\Process::decode_imgurls($addinfo['imgurls']);//解析图集字段
             }
             $view['formData'] = $addinfo ? array_merge($maininfo->toArray(), $addinfo) : $maininfo;//合并
         }

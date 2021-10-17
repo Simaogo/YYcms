@@ -1,47 +1,6 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-<title>{$field.typename}_{:syscfg('cfg_webname')}</title>
-<meta name="keywords" content="{$field.name='keywords'}" />
-<meta name="description" content="{$field.name='description' }" />
-<script type="text/javascript" src="/skin/js/jquery-1.12.4.min.js"></script>
-<link rel="stylesheet" href="/skin/css/style.css">
-<link rel="stylesheet" href="/skin/css/font-awesome.min.css">
-<script type="text/javascript" src="/skin/js/js.js"></script>
-<script type="text/javascript" src="/skin/js/superslide.js"></script>
-</head>
-<body>
-{include file="../template/default/head.htm"/}
-{include file="../template/default/banner.htm"/}
-<div class="container">
-    {include file="../template/default/position.htm"/}
-    <div class="center">
-        <div class="wrap clearfix">
-            {include file="../template/default/left.htm"/}
-            <div class="main_r fr">
-                <div class="art_list">
-                    <ul>
-					    {yycms:list pagesize=6}
-                        <li>
-                            <div class="fl"> <a href="{$field.arcurl}"> <img src="{$field.litpic}" alt="{$field.fulltitle}" /> </a> </div>
-                            <div class="fr"> <a href="{$field.arcurl}">{$field.title}</a> <span>[field:pubdate /]</span>
-                                <p>{$field.description}...</p>
-                            </div>
-                        </li>
-						{/yycms:list}
-                    </ul>
-                </div>
-                <div class="pages">
-                    <div class="pagination"><ul>{yycms:pagelist listitem="index,end,pre,next,pageno" listsize="5"/}</ul></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{include file="../template/default/footer.htm"/}
-</body>
-</html>
+
+ {yycms:list row='15' pagesize='1' titlelen='60'}
+
+	{$key} => {$field.title} - <HR>{$field.arcurl}
+	{/yycms:list}
+{dede:pagelist listitem='end,' /}

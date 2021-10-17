@@ -14,5 +14,7 @@ Route::get('think', function () {
     return 'hello,ThinkPHP6!';
 });
 
-Route::get('@index/template/list:tid', 'idnex/list');
-Route::get('hello/:name', 'index/hello');
+
+//Route::get('view', '\app\index\controller\Template@view');
+//Route::get('list', '\app\index\controller\Template@list');
+
