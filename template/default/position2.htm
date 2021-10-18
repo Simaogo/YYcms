@@ -1,18 +1,18 @@
 <div class="curson">
         <div class="center">
-            <p> {dede:field name=position/} </p>
-            <span>{dede:field.typename/}</span> </div>
+            <p> {$field.position} </p>
+            <span>{$field.typename}</span> </div>
     </div>
     <div class="m_promenu">
         <div class="mpromenu clearfix">
-		    {dede:channelartlist typeid=2 type=son}
-            <h3 class=""><a href="{dede:field name=typeurl/}">{dede:field name=typename/}</a><em>>></em></h3>
+		    {yycms:channelartlist typeid="2" type=son}
+            <h3 class=""><a href="{$field.typeurl}">{$field.typename}</a><em>>></em></h3>
             <ul>
-			    {dede:channel type=son nosefl=yes}
-                <li><a href="[field:typeurl/]">[field:typename/]</a></li>
-				{/dede:channel}
+			    {yycms:channel type=son nosefl=yes}
+                <li><a href="{$field.typeurl}">{$field.typename}</a></li>
+				{/yycms:channel}
             </ul>
-			{/dede:channelartlist}
+			{/yycms:channelartlist}
         </div>
         <script type="text/javascript">
                 jQuery(".mpromenu").slide({titCell:"h3 em", targetCell:"ul",defaultIndex:1,effect:"slideDown",delayTime:300,trigger:"click",defaultPlay:false});

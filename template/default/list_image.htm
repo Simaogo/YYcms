@@ -5,9 +5,9 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-<title>{dede:field.typename/}_{dede:global.cfg_webname/}</title>
-<meta name="keywords" content="{dede:field name='keywords'/}" />
-<meta name="description" content="{dede:field name='description' function='html2text(@me)'/}" />
+<title>{$field.typename}_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$field.keywords}" />
+<meta name="description" content="{$field.name='description' }" />
 <script type="text/javascript" src="/skin/js/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="/skin/css/style.css">
 <link rel="stylesheet" href="/skin/css/font-awesome.min.css">
@@ -15,33 +15,33 @@
 <script type="text/javascript" src="/skin/js/superslide.js"></script>
 </head>
 <body>
-{dede:include filename="head.htm"/}
-{dede:include filename="banner.htm"/}
+{include file="head"/}
+{include file="banner"/}
 <div class="container">
-    {dede:include filename="position2.htm"/}
+    {include file="position2"/}
     <div class="center">
         <div class="wrap clearfix">
-            {dede:include filename="left2.htm"/}
+            {include file="left2"/}
             <div class="main_r fr">
                 <div class="pro_list">
                     <ul>
-					    {dede:list pagesize=6}
+					    {yycms:list pagesize=6}
                         <li>
-                            <div class="pic"> <a href="[field:arcurl/]">
-                                <div class="imgauto"> <img src="[field:litpic/]" alt="[field:fulltitle/]" /> </div>
-                                <span>[field:title/]</span> </a> </div>
-                            <div class="text"> <a href="[field:arcurl/]"> <img src="/skin/images/probg.png" alt="[field:fulltitle/]"> </a> </div>
+                            <div class="pic"> <a href="{$field.arcurl}">
+                                <div class="imgauto"> <img src="{$field.litpic}" alt="{$field.fulltitle}" /> </div>
+                                <span>{$field.title}</span> </a> </div>
+                            <div class="text"> <a href="{$field.arcurl}"> <img src="/skin/images/probg.png" alt="{$field.fulltitle}"> </a> </div>
                         </li>
-						{/dede:list}
+						{/yycms:list}
                     </ul>
                 </div>
                 <div class="pages">
-                    <div class="pagination"><ul>{dede:pagelist listitem="index,end,pre,next,pageno" listsize="5"/}</ul></div>
+                    <div class="pagination"><ul>{yycms:pagelist listitem="index,end,pre,next,pageno" listsize="5"/}</ul></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{dede:include filename="footer.htm"/}
+{include file="footer"/}
 </body>
 </html>

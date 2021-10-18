@@ -1,18 +1,15 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace app\index\controller;
+use think\facade\View;
 
-/**
- * Description of Common
- *
- * @author Administrator
- */
 class Common extends \app\BaseController{
-    
+    private $postition;
+    public function __construct() {
+       $this->initialize();
+    }
+    public function initialize() {
+      $view = [];
+      $view['position'] = '';
+       View::assign('field',$view);
+    }
 }

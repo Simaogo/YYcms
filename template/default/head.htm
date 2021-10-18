@@ -24,8 +24,8 @@
             </div>
             <div class="fr"> <img src="/skin/images/yw4.gif" alt="图片名">
                 <p>全国订购热线：<br/>
-                    <span>{dede:global.cfg_tel/}</span>
-                    <span>{dede:global.cfg_phone/}</span>
+                    <span>{:syscfg('cfg_tel')}</span>
+                    <span>{:syscfg('cfg_phone')}</span>
                     </p>
             </div>
         </div>
@@ -33,10 +33,10 @@
     <div class="nav" id="nav">
         <div class="center">
             <ul id="pc_nav">
-                <li><a {dede:field name='typeid' runphp='yes'}if(@me == "") @me = "class='active'";else @me = "";{/dede:field} href="/">网站首页</a></li>
-				{dede:channel type=top currentstyle="<li><a class='active' href='~typelink~' >~typename~</a></li>"}
-                <li><a href='[field:typeurl/]' >[field:typename/]</a></li>
-				{/dede:channel}
+                <li><a {yycms:field name='typeid' runphp='yes'}if(@me == "") @me = "class='active'";else @me = "";{/yycms:field} href="/">网站首页</a></li>
+				{yycms:channel type=top currentstyle="<li><a class='active' href='~typelink~' >~typename~</a></li>"}
+                <li><a href='{$field.typeurl}' >{$field.typename}</a></li>
+				{/yycms:channel}
             </ul>
         </div>
     </div>
@@ -77,9 +77,9 @@
     <div class="app_menu" id="app_menu">
         <ul>
             <li><a href="/"><span>网站首页</span></a></li>
-			{dede:channel type=top currentstyle="<li><a class='active' href='~typelink~' ><span>~typename~</span></a></li>"}
-            <li><a href='[field:typeurl/]' ><span>[field:typename/]</span></a></li>
-			{/dede:channel}        </ul>
+			{yycms:channel type=top currentstyle="<li><a class='active' href='~typelink~' ><span>~typename~</span></a></li>"}
+            <li><a href='{$field.typeurl}' ><span>{$field.typename}</span></a></li>
+			{/yycms:channel}        </ul>
         <script type="text/javascript">
                 $("#menu").on('click', function (event) {
                     if($("#app_menu").css("display")=="none"){

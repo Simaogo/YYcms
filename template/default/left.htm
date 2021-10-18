@@ -1,9 +1,9 @@
 <div class="main_l fl">
-    <h3>{dede:field name='typenameen'/}</h3>
-    <i></i> <span>{dede:field name='typename'/}</span>
+    <h3>{$field.typenameen}</h3>
+    <i></i> <span>{$field.typename}</span>
     <ul class="page_menu">
-	    {dede:channel type=son currentstyle="<li class='active'><a class='active' href='~typelink~'>~typename~</a></li>"}
-        <li><a href='[field:typeurl/]'>[field:typename/]</a></li>
-        {/dede:channel}
+	    {yycms:channel type=son currentstyle="<li class='active'><a class='active' href='~typelink~'>~typename~</a></li>"}
+        <li><a href='{$field.typeurl}'>{$field.typename}</a></li>
+        {/yycms:channel}
     </ul>
 </div>

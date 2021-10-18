@@ -3,12 +3,12 @@
         <div class="foot clearfix">
             <div class="foot_contact fl">
                 <h3>联系我们</h3>
-                <span><strong>{dede:global.cfg_tel/}</strong>Sale Hotline</span>
-                <p>{dede:global.cfg_add/}</p>
-                <p>邮箱：{dede:global.cfg_email/}</p>
-                <p>电话：{dede:global.cfg_phone/}</p>
-                <p>传真：{dede:global.cfg_fax/}</p>
-                <a href="{dede:type typeid=7}[field:typeurl/]{/dede:type}">了解更多</a> </div>
+                <span><strong>{:syscfg('cfg_tel')}</strong>Sale Hotline</span>
+                <p>{:syscfg('cfg_add')}</p>
+                <p>邮箱：{:syscfg('cfg_email')}</p>
+                <p>电话：{:syscfg('cfg_phone')}</p>
+                <p>传真：{:syscfg('cfg_fax')}</p>
+                <a href="{yycms:type typeid=7}{$field.typeurl}{/yycms:type}">了解更多</a> </div>
             <div class="foot_ewm fl">
                 <p>"精益求精，诚信为本"</p>
                 <div class="ewm_text"> <img src="/skin/images/weixin.jpg" /> <span>微信公众号</span> </div>
@@ -17,9 +17,9 @@
             <div class="foot_nav fl">
                 <ul>
                     <h3>网站导航</h3>
-					{dede:channel type=top}
-                    <li><a href="[field:typeurl/]">[field:typename/]</a></li>
-					{/dede:channel}
+					{yycms:channel type=top}
+                    <li><a href="{$field.typeurl}">{$field.typename}</a></li>
+					{/yycms:channel}
                 </ul>
             </div>
         </div>
@@ -28,14 +28,14 @@
 <div class="copyright">
     <div class="center">
         <p>
-        <p>{dede:global.cfg_powerby/} 备案号：<a href="http://beian.miit.gov.cn/"  target="_blank" rel="nofollow">{dede:global.cfg_beian/}</a> <a href="/sitemap.html">网站地图</a></p>
+        <p>{:syscfg('cfg_powerby')} 备案号：<a href="http://beian.miit.gov.cn/"  target="_blank" rel="nofollow">{:syscfg('cfg_beian')}</a> <a href="/sitemap.html">网站地图</a></p>
         </p>
     </div>
 </div>
 <div class="kefu" id="kefu">
     <p> <img src="/skin/images/ff.png" alt="图片名"> <span>客服</span> </p>
     <div class="float_img">
-        <div class="qq" id="qq"> <span>在线客服</span> <a href="http://wpa.qq.com/msgrd?v=3&uin={dede:global.cfg_qq/}&site=qq&menu=yes;">客服一号</a> <a href="http://wpa.qq.com/msgrd?v=3&uin={dede:global.cfg_qq/}&site=qq&menu=yes">客服二号</a> <a href="http://wpa.qq.com/msgrd?v=3&uin={dede:global.cfg_qq/}&site=qq&menu=yes">客服三号</a> </div>
+        <div class="qq" id="qq"> <span>在线客服</span> <a href="http://wpa.qq.com/msgrd?v=3&uin={:syscfg('cfg_qq')}&site=qq&menu=yes;">客服一号</a> <a href="http://wpa.qq.com/msgrd?v=3&uin={:syscfg('cfg_qq')}&site=qq&menu=yes">客服二号</a> <a href="http://wpa.qq.com/msgrd?v=3&uin={:syscfg('cfg_qq')}&site=qq&menu=yes">客服三号</a> </div>
     </div>
 </div>
 <script type="text/javascript">

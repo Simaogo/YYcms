@@ -4,11 +4,13 @@ namespace app\index\controller;
 use think\facade\View;
 use think\facade\Db;
 use app\index\controller\Common;
-
+use think\facade\Config;
 class Template extends Common{
     public $default;
+    public $view_dir_name ;
     public function __construct() {
-        $this->default ='template/'. syscfg("cfg_df_style").'/';
+        parent::__construct();
+        $this->view_dir_name = '../template/'. syscfg("cfg_df_style").'/';
     }
     public function list(){
          $typeid=input('tid')?input('tid'):input('typeid');
@@ -74,27 +76,31 @@ class Template extends Common{
                 $view['list'] = $list;
                 $view['page'] = $page;
             }
-            if($Arctype->ispart==1){ //封面模板
+            if($Arctype->ispart == 1){ //封面模板
                 $view["template"]=$Arctype->tempindex;
             } else {
                 $view["template"]=$Arctype->templist;
             }
-            $view['typename']=$Arctype->typename;
-            $view['keywords']=$Arctype->keywords;
-            $view['description']=$Arctype->description;
+            $view['typename'] = $Arctype->typename;
+            $view['keywords'] = $Arctype->keywords;
+            $view['description'] =$Arctype->description;
+            $view['position'] = '<a href="/">首页</a>' . syscfg('cfg_list_symbol') .$Arctype->typename;
+            $view["ispart"]=$Arctype->ispart;
             $view["content"] = $Arctype->content;
-            cache('view_list_'.$typeid,$view);
+           // cache('view_list_'.$typeid,$view);
         }
-        
         if(request()->isPost()){//ajax 加载
              return json(['list'=>$view['list'],'page'=>$pagesize/$row]);
         }
         //模板
-        $template = !isset($view["template"]) ?cache('template'):$view["template"];  
+        $template = !isset($view["template"]) ? cache('template'):$view["template"];  
+        $ispart = !isset($view["ispart"]) ? cache('ispart'):$view["ispart"];  
         $template  = str_replace('{style}/','', $template);
-
+        $template = $this->isMobleTemplate($template);
+        $template = $this->templateDefault($template,$ispart,$this->view_dir_name);
+        
         View::assign(['field'=>$view]);
-        return View::fetch('../template/'. syscfg("cfg_df_style").'/'.$template);
+        return View::fetch($this->view_dir_name .''.$template);
     }
     public function view(){
         $aid=input('aid');
@@ -123,51 +129,67 @@ class Template extends Common{
             $template = $Arctype->temparticle;
             $view = [
                 'body' => $info,
-                'typename' =>  $Arctype->typename,
-                'template' => $Arctype->temparticle,
-                'keywords' => $Archives->keywords,
+                'typename'    =>  $Arctype->typename,
+                'template'    => $Arctype->temparticle,
+                'keywords'    => $Archives->keywords,
                 'description' => $Archives->description,
+                'position'    => '<a href="/">首页</a>'.$Arctype->typename
             ];
             cache('view_'.$aid,$view); 
         }
         $template= str_replace('{style}/','', $view['template']);
+        $template = $this->isMobleTemplate($template);
         View::assign(['field'=>$view]);
-        
         return View::fetch('../template/'. syscfg("cfg_df_style").'/'.$template);
     }
     public function search(){
-        $getdata=input();
-        $typeid=$getdata['typeid'];
-        $arctypeModel = new \addons\travel\common\model\Arctype();
-        $Arctype = $arctypeModel->find($typeid);
+        $template = $this->isMobleTemplate($template);
+         return View::fetch($this->view_dir_name .''.$template);
     }
-    public function template($template){
+    
+    /**
+     * 手机模板加 _m 结尾
+     * @param string $templateName
+     * @return string
+     */
+    public function isMobleTemplate($templateName){
         if(isMobile()){
-            $arr = explode('.',$template);
-            $template = $arr[0].'_m';
+            $view_suffix = Config::get('view.view_suffix');
+            $arr = explode('.',$templateName);
+            $templateName = $arr[0].'_m.'.$view_suffix;
+            if(file_exists($templateName)){
+                return $templateName;
+            }
         }
-      return $template;
+      return $templateName;
     }
-    public function retrieve_ids(&$ids, $record) {
-        return $ids . ',' . $record['id'];
-    }
-    public function getdest($pid=0){
-        $DestinationModel = new \app\common\model\Destination();
-        $list= $DestinationModel->where('pid',$pid)
-                ->select()
-                ->toArray();
-        $destination=$DestinationModel->destinationOrder($list);
-        $Destination=$DestinationModel->find($pid);
-        if(!$list){
-             $list= $DestinationModel->where('pid',$Destination->pid) //没有则等于同级
-                ->select()
-                ->toArray();
+    
+    /**
+     * 默认模板
+     * @param type $templateName
+     * @param type $ispart
+     * @return string
+     */
+    public function templateDefault($templateName,$ispart = 2,$view_dir_name){
+
+       $view_suffix = Config::get('view.view_suffix');
+        if(!file_exists($view_dir_name.''.$templateName)){
+            $arr = explode('.', $templateName);
+            if(isMobile()) $view_suffix = '_m.' .$templateName;
+            
+            if($ispart == 1){
+                $template = 'index_default' . $view_suffix;
+            } else if($ispart == 0){
+                $template  = 'list_default' . $view_suffix;
+            } else {
+                $template  = 'article_default' . $view_suffix;
+            }
+           // $templateName = file_exists($view_dir_name . '' .$template) ? $template : $templateName;
+
         }
-         View::assign([
-            'destination' =>$list,
-            'destname' =>$Destination->destination,
-        ]);
+        return $templateName;
     }
+   
     /**
      * 数据表名称
      * @param type $table

@@ -1,17 +1,17 @@
 <div class="main_l fl">
-                <h3>{dede:field name='typenameen'/}</h3>
-                <i></i> <span>{dede:field name='typename'/}</span>
+                <h3>{$field.typenameen}</h3>
+                <i></i> <span>{$field.typename}</span>
                 <div class="pro_menu">
                     <ul>
-					    {dede:channelartlist typeid=2 type=son}
+					    {yycms:channelartlist typeid="2" type=son}
                         <li>
-                            <div class="yia"><a href="{dede:field name=typeurl/}">{dede:field name=typename/}</a></div>
-                            <div class="era">  {dede:sql sql='Select * from dede_arctype where reid=~id~ ORDER BY id limit 0,10'}
-                            <a href="[field:typedir function='str_replace("{cmspath}","",@me)'/]">[field:typename/]</a> 
-                              {/dede:sql}
+                            <div class="yia"><a href="{$field.typeurl}">{$field.typename}</a></div>
+                            <div class="era">  {yycms:sql sql='Select * from dede_arctype where reid=~id~ ORDER BY id limit 0,10'}
+                            <a href="{$field.typedir}">{$field.typename}</a> 
+                              {/yycms:sql}
                             </div>
                         </li>
-						{/dede:channelartlist}
+						{/yycms:channelartlist}
                     </ul>
                 </div>
                 <div class="fl_search">

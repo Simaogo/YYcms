@@ -5,11 +5,33 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-<title>{dede:field.typename/}_{dede:global.cfg_webname/}</title>
-
+<title>{$field.typename}_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$field.keywords}" />
+<meta name="description" content="{$field.name='description' }" />
+<script type="text/javascript" src="/skin/js/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="/skin/css/style.css">
+<link rel="stylesheet" href="/skin/css/font-awesome.min.css">
+<script type="text/javascript" src="/skin/js/js.js"></script>
+<script type="text/javascript" src="/skin/js/superslide.js"></script>
 </head>
 <body>
-list
- 
+{include file="head"/}
+{include file="banner"/}
+<div class="container">
+    {include file="position"/}
+    <div class="center">
+        <div class="wrap clearfix"> {include file="left"/}
+            <div class="main_r fr">
+                <div class="page_content">
+                    <div class="page_tit">
+                        <h3>{$field.typename}</h3>
+                    </div>
+                    <div class="content"> {$field.content} </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="footer"/}
 </body>
 </html>

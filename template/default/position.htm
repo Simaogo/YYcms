@@ -1,11 +1,11 @@
 <div class="curson">
         <div class="center">
-            <p> {dede:field name=position/} </p>
-            <span>{dede:field.typename/}</span> 
+            <p> </p>
+            <span>{$field.typename}</span> 
 		</div>
     </div>
     <div class="m_pagemenu"> 
-	    {dede:channel type=son currentstyle="<a class='active' href='~typelink~'>~typename~</a> "}
-		<a href="[field:typeurl/]">[field:typename/]</a> 
-		{/dede:channel}
+	    {yycms:channel type=son currentstyle="<a class='active' href='~typelink~'>~typename~</a> "}
+		<a href="{$field.typeurl}">{$field.typename}</a> 
+		{/yycms:channel}
 	</div>
