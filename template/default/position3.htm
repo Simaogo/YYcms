@@ -6,9 +6,9 @@
     <div class="m_promenu">
         <div class="mpromenu clearfix">
 		    {yycms:channelartlist typeid="2" type=son}
-            <h3 class=""><a href="{$field.typeurl}">{$field.typename}</a><em>>></em></h3>
+            <h3 class=""><a href="{$info.typeurl}">{$info.typename}</a><em>>></em></h3>
             <ul>
-			    {yycms:channel type=son nosefl=yes}
+			    {yycms:channel type="son" nosefl=yes}
                 <li><a href="{$field.typeurl}">{$field.typename}</a></li>
 				{/yycms:channel}
             </ul>

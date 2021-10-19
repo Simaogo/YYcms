@@ -5,9 +5,9 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-<title>{$field.title}_{:syscfg('cfg_webname')}</title>
-<meta name="keywords" content="{$field.keywords}" />
-<meta name="description" content="{$field.description }" />
+<title>{$info.title}_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$info.keywords}" />
+<meta name="description" content="{$info.description}" />
 <script type="text/javascript" src="/skin/js/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="/skin/css/style.css">
 <link rel="stylesheet" href="/skin/css/font-awesome.min.css">
@@ -25,17 +25,17 @@
             <div class="main_r fr">
                 <div class="page_content">
                     <div class="art_tit">
-                        <h3>{$field.title}</h3>
-                        <p> <span>来源：{$field.source/}</span> <span>作者：{yycms:field.writer/}</span> <span>发布时间：{yycms:field.pubdate }</span> <span>
-                            <script src="{$field.phpurl'/}/count.php?view=yes&aid={$field.name='id'}&mid={yycms:field name='mid}" type='text/javascript' language="javascript"></script>次浏览</span> </p>
+                        <h3>{$info.title}</h3>
+                        <p> <span>来源：{$info.source}</span> <span>作者：{$info.writer}</span> <span>发布时间：{$info.pubdate}</span> <span>
+                            {$info.click}次浏览</span> </p>
                     </div>
                     <div class="art_desc">
                         <p>
-                        <p>{$field.description}...</p>
+                        <p>{$info.description}...</p>
                         </p>
                     </div>
                     <div class="content">
-                        {$field.body}
+                        {$info.body|raw}
                     </div>
                     <div class="show_pages">
                         <p>{yycms:prenext get='pre'/}</p>

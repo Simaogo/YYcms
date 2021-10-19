@@ -33,9 +33,9 @@
     <div class="nav" id="nav">
         <div class="center">
             <ul id="pc_nav">
-                <li><a {yycms:field name='typeid' runphp='yes'}if(@me == "") @me = "class='active'";else @me = "";{/yycms:field} href="/">网站首页</a></li>
-				{yycms:channel type=top currentstyle="<li><a class='active' href='~typelink~' >~typename~</a></li>"}
-                <li><a href='{$field.typeurl}' >{$field.typename}</a></li>
+                <li><a href="/">网站首页</a></li>
+				{yycms:channel type="top" currentstyle="active"}
+                <li ><a href='{$field.typeurl}' class="{$field.currentstyle}">{$field.typename}</a></li>
 				{/yycms:channel}
             </ul>
         </div>
@@ -77,7 +77,7 @@
     <div class="app_menu" id="app_menu">
         <ul>
             <li><a href="/"><span>网站首页</span></a></li>
-			{yycms:channel type=top currentstyle="<li><a class='active' href='~typelink~' ><span>~typename~</span></a></li>"}
+			{yycms:channel type="top" currentstyle="active"}
             <li><a href='{$field.typeurl}' ><span>{$field.typename}</span></a></li>
 			{/yycms:channel}        </ul>
         <script type="text/javascript">

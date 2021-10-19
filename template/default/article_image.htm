@@ -5,9 +5,9 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-<title>{$field.title}_{:syscfg('cfg_webname')}</title>
-<meta name="keywords" content="{$field.keywords}" />
-<meta name="description" content="{$field.description }" />
+<title>{$info.title}_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$info.keywords}" />
+<meta name="description" content="{$info.description}" />
 <script type="text/javascript" src="/skin/js/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="/skin/css/style.css">
 <link rel="stylesheet" href="/skin/css/font-awesome.min.css">
@@ -27,7 +27,7 @@
                 <div class="yunu-showcase clearfix">
                     <div class="yunupor">
                         <div class="yunu-showcase-pic">
-                            <div class="cover img-center" style="background:url({$field.litpic}); background-size:405px 360px; " > {yycms:field name='imgurls' row='1'}  <img  class="jqzoom" src="{$field.imgsrc}" rel="{$field.imgsrc}" alt="">{/yycms:field} </div>
+                            <div class="cover img-center" style="background:url({$info.litpic}); background-size:405px 360px; " > {yycms:field name='imgurls' row='1'}  <img  class="jqzoom" src="{$field.imgsrc}" rel="{$field.imgsrc}" alt="">{/yycms:field} </div>
                             <div class="showpropic">
                                 <div class="bd"> <a href="javascript:;" class="prev"></a> <a href="javascript:;" class="next"></a>
                                     <ul class="picList">
@@ -40,9 +40,9 @@
                         </div>
                     </div>
                     <div class="pro_desc">
-                        <h3>{$field.title}</h3>
+                        <h3>{$info.title}</h3>
                         <p>
-                        <p>{$field.description}...</p>
+                        <p>{$info.description}...</p>
                         </p>
                     </div>
                 </div>
@@ -58,23 +58,23 @@
                             </ul>
                         </div>
                         <div class="border_tit">
-                            <p>{$field.title}</p>
+                            <p>{$info.title}</p>
                         </div>
                         <div class="bd">
                             <ul>
-                                <div class="text"> {$field.body} </div>
+                                <div class="text"> {$info.body|raw} </div>
                             </ul>
                             <ul>
-                                <div class="text"> {$field.cs} </div>
+                                <div class="text"> {$info.cs} </div>
                             </ul>
                             <ul>
-                                <div class="text"> {$field.sp} </div>
+                                <div class="text"> {$info.sp} </div>
                             </ul>
                             <ul>
-                                <div class="text"> {$field.al} </div>
+                                <div class="text"> {$info.al} </div>
                             </ul>
                             <ul>
-                                <div class="text"> {$field.xz} </div>
+                                <div class="text"> {$info.xz} </div>
                             </ul>
                         </div>
                     </div>

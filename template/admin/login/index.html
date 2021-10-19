@@ -93,8 +93,8 @@
                 <label class="layui-form-label">验证码</label>
                 <div class="layui-input-inline">
                     <div class ="layui-flex">
-                        <input type="text" name="verify" required  lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input verity" value="bsfut">
-                        <img  style="height: 38px;margin-left:5px;cursor: pointer" onclick="this.src='{:captcha_src()}?'+Math.random()" src="{:captcha_src()}" alt="captcha">
+                        <input type="text" name="verify" required  lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input verity" value="">
+                        <img  style="height: 38px;margin-left:5px;cursor: pointer" onclick="this.src='{:captcha_src()}?'+Math.random()" src="{:captcha_src()}" alt="captcha" id="captcha">
                     </div>
                 </div>
                   
@@ -117,7 +117,11 @@
                 var data =data.field;
                 $.post('{:url("login/index")}',data,function(res){
                     layer.msg(res.msg,{time:500},function(){
-                        if(res.url) window.location.href = res.url;
+                        if(res.url){ 
+                            window.location.href = res.url;
+                        }else{
+                            $('#captcha').attr('src','{:captcha_src()}'+Math.random());
+                        }
                     })
                 })
                 return false;

@@ -1,4 +1,4 @@
-<?php /*a:7:{s:37:"../template/default/index_article.htm";i:1634477543;s:5:"param";s:24:"a:1:{s:3:"tid";s:1:"1";}";s:28:"../template/default/head.htm";i:1634470654;s:30:"../template/default/banner.htm";i:1634470654;s:32:"../template/default/position.htm";i:1634472238;s:28:"../template/default/left.htm";i:1634470655;s:30:"../template/default/footer.htm";i:1634470654;}*/ ?>
+<?php /*a:7:{s:37:"../template/default/index_article.htm";i:1634557795;s:5:"param";s:25:"a:1:{s:3:"tid";s:2:"12";}";s:28:"../template/default/head.htm";i:1634559396;s:30:"../template/default/banner.htm";i:1634557794;s:32:"../template/default/position.htm";i:1634558479;s:28:"../template/default/left.htm";i:1634558558;s:30:"../template/default/footer.htm";i:1634557794;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -6,9 +6,9 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-<title><?php echo htmlentities($field['typename']); ?>_<?php echo syscfg('cfg_webname'); ?></title>
-<meta name="keywords" content="<?php echo htmlentities($field['keywords']); ?>" />
-<meta name="description" content="<?php echo htmlentities($field['name']='description'); ?>" />
+<title><?php echo htmlentities($info['typename']); ?>_<?php echo syscfg('cfg_webname'); ?></title>
+<meta name="keywords" content="<?php echo htmlentities($info['keywords']); ?>" />
+<meta name="description" content="{yycms:field name='description' /}" />
 <script type="text/javascript" src="/skin/js/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="/skin/css/style.css">
 <link rel="stylesheet" href="/skin/css/font-awesome.min.css">
@@ -51,35 +51,24 @@
     <div class="nav" id="nav">
         <div class="center">
             <ul id="pc_nav">
-                <li><a {yycms:field name='typeid' runphp='yes'}if(@me == "") @me = "class='active'";else @me = "";{/yycms:field} href="/">网站首页</a></li>
+                <li><a href="/">网站首页</a></li>
 				<?php 
-        $where=[];
-        $menuList=[];
-        $where[]=["ishidden","=",0];
-        if("top"=="top") $where[] =["reid","=",0];
-        if("top"=="son"){
-            if(empty("0")) {
-              $typeid =input("tid");
+            if(isset($typeid)){
+                $where = [];
+                $where[] = ["ishidden","=",0];
+                $where[] = ["reid","=",$typeid];
+                $menuList =\app\common\model\Arctype::where($where)->select();
+                $menuList = $menuList ? $menuList->toArray():\think\facade\Cache::get("49af58c6ca3e3d89dd61e76d16517f2c"); 
             }else{
-              $typeid ="0";
+                $menuList = \think\facade\Cache::get("49af58c6ca3e3d89dd61e76d16517f2c");
             }
-            $where[]=['reid','in', explode(",",$typeid)];
-        }
-        if("top"=="self") $where[] =["id","in", explode(",","0")];
-           
-        $ArctypeModel=new \app\common\model\Arctype();
-        $menuList= $ArctypeModel->where($where)->order("sortrank asc")->limit(10)->select()->toArray();
-       
-        $tid= request()->param("tid");
-        $currid=$ArctypeModel->childrenIds($menuList,$tid);
-        $currid[]=$tid;
+            $currid   = \think\facade\Cache::get("currid_49af58c6ca3e3d89dd61e76d16517f2c");
             foreach($menuList as $index=>$field){
-                    $field["typeurl"] = "/list/tid/".$field["id"];
-                    $field["currentstyle"]=in_array($field["id"],$currid)?"on":"";//栏目显示高亮
-                    $typeid=$field["id"];//嵌套标签typeid传值
+                    $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
+                    $field["currentstyle"] = in_array($field["id"],$currid)?"active":"";//栏目显示高亮
             ?>
-                <li><a href='<?php echo htmlentities($field['typeurl']); ?>' ><?php echo htmlentities($field['typename']); ?></a></li>
-				<?php }  ?>
+                <li ><a href='<?php echo htmlentities($field['typeurl']); ?>' class="<?php echo htmlentities($field['currentstyle']); ?>"><?php echo htmlentities($field['typename']); ?></a></li>
+				<?php } ?>
             </ul>
         </div>
     </div>
@@ -121,33 +110,22 @@
         <ul>
             <li><a href="/"><span>网站首页</span></a></li>
 			<?php 
-        $where=[];
-        $menuList=[];
-        $where[]=["ishidden","=",0];
-        if("top"=="top") $where[] =["reid","=",0];
-        if("top"=="son"){
-            if(empty("0")) {
-              $typeid =input("tid");
+            if(isset($typeid)){
+                $where = [];
+                $where[] = ["ishidden","=",0];
+                $where[] = ["reid","=",$typeid];
+                $menuList =\app\common\model\Arctype::where($where)->select();
+                $menuList = $menuList ? $menuList->toArray():\think\facade\Cache::get("49af58c6ca3e3d89dd61e76d16517f2c"); 
             }else{
-              $typeid ="0";
+                $menuList = \think\facade\Cache::get("49af58c6ca3e3d89dd61e76d16517f2c");
             }
-            $where[]=['reid','in', explode(",",$typeid)];
-        }
-        if("top"=="self") $where[] =["id","in", explode(",","0")];
-           
-        $ArctypeModel=new \app\common\model\Arctype();
-        $menuList= $ArctypeModel->where($where)->order("sortrank asc")->limit(10)->select()->toArray();
-       
-        $tid= request()->param("tid");
-        $currid=$ArctypeModel->childrenIds($menuList,$tid);
-        $currid[]=$tid;
+            $currid   = \think\facade\Cache::get("currid_49af58c6ca3e3d89dd61e76d16517f2c");
             foreach($menuList as $index=>$field){
-                    $field["typeurl"] = "/list/tid/".$field["id"];
-                    $field["currentstyle"]=in_array($field["id"],$currid)?"on":"";//栏目显示高亮
-                    $typeid=$field["id"];//嵌套标签typeid传值
+                    $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
+                    $field["currentstyle"] = in_array($field["id"],$currid)?"active":"";//栏目显示高亮
             ?>
             <li><a href='<?php echo htmlentities($field['typeurl']); ?>' ><span><?php echo htmlentities($field['typename']); ?></span></a></li>
-			<?php }  ?>        </ul>
+			<?php } ?>        </ul>
         <script type="text/javascript">
                 $("#menu").on('click', function (event) {
                     if($("#app_menu").css("display")=="none"){
@@ -181,82 +159,60 @@
 <div class="container">
     <div class="curson">
         <div class="center">
-            <p> </p>
-            <span><?php echo htmlentities($field['typename']); ?></span> 
+            <p> <?php echo $info['position']; ?> </p>
+            <span><?php echo htmlentities($info['typename']); ?></span> 
 		</div>
     </div>
     <div class="m_pagemenu"> 
 	    <?php 
-        $where=[];
-        $menuList=[];
-        $where[]=["ishidden","=",0];
-        if("top"=="top") $where[] =["reid","=",0];
-        if("top"=="son"){
-            if(empty("0")) {
-              $typeid =input("tid");
+            if(isset($typeid)){
+                $where = [];
+                $where[] = ["ishidden","=",0];
+                $where[] = ["reid","=",$typeid];
+                $menuList =\app\common\model\Arctype::where($where)->select();
+                $menuList = $menuList ? $menuList->toArray():\think\facade\Cache::get("16f0dbb828f6225fe62ada259e64bf20"); 
             }else{
-              $typeid ="0";
+                $menuList = \think\facade\Cache::get("16f0dbb828f6225fe62ada259e64bf20");
             }
-            $where[]=['reid','in', explode(",",$typeid)];
-        }
-        if("top"=="self") $where[] =["id","in", explode(",","0")];
-           
-        $ArctypeModel=new \app\common\model\Arctype();
-        $menuList= $ArctypeModel->where($where)->order("sortrank asc")->limit(10)->select()->toArray();
-       
-        $tid= request()->param("tid");
-        $currid=$ArctypeModel->childrenIds($menuList,$tid);
-        $currid[]=$tid;
+            $currid   = \think\facade\Cache::get("currid_16f0dbb828f6225fe62ada259e64bf20");
             foreach($menuList as $index=>$field){
-                    $field["typeurl"] = "/list/tid/".$field["id"];
-                    $field["currentstyle"]=in_array($field["id"],$currid)?"on":"";//栏目显示高亮
-                    $typeid=$field["id"];//嵌套标签typeid传值
+                    $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
+                    $field["currentstyle"] = in_array($field["id"],$currid)?"active":"";//栏目显示高亮
             ?>
-		<a href="<?php echo htmlentities($field['typeurl']); ?>"><?php echo htmlentities($field['typename']); ?></a> 
-		<?php }  ?>
+		<a href="<?php echo htmlentities($field['typeurl']); ?>" class="<?php echo htmlentities($field['currentstyle']); ?>"><?php echo htmlentities($field['typename']); ?></a> 
+		<?php } ?>
 	</div>
     <div class="center">
         <div class="wrap clearfix"> <div class="main_l fl">
-    <h3><?php echo htmlentities($field['typenameen']); ?></h3>
-    <i></i> <span><?php echo htmlentities($field['typename']); ?></span>
+    <h3><?php echo htmlentities($info['typenameen']); ?></h3>
+    <i></i> <span><?php echo htmlentities($info['typename']); ?></span>
     <ul class="page_menu">
 	    <?php 
-        $where=[];
-        $menuList=[];
-        $where[]=["ishidden","=",0];
-        if("top"=="top") $where[] =["reid","=",0];
-        if("top"=="son"){
-            if(empty("0")) {
-              $typeid =input("tid");
+            if(isset($typeid)){
+                $where = [];
+                $where[] = ["ishidden","=",0];
+                $where[] = ["reid","=",$typeid];
+                $menuList =\app\common\model\Arctype::where($where)->select();
+                $menuList = $menuList ? $menuList->toArray():\think\facade\Cache::get("16f0dbb828f6225fe62ada259e64bf20"); 
             }else{
-              $typeid ="0";
+                $menuList = \think\facade\Cache::get("16f0dbb828f6225fe62ada259e64bf20");
             }
-            $where[]=['reid','in', explode(",",$typeid)];
-        }
-        if("top"=="self") $where[] =["id","in", explode(",","0")];
-           
-        $ArctypeModel=new \app\common\model\Arctype();
-        $menuList= $ArctypeModel->where($where)->order("sortrank asc")->limit(10)->select()->toArray();
-       
-        $tid= request()->param("tid");
-        $currid=$ArctypeModel->childrenIds($menuList,$tid);
-        $currid[]=$tid;
+            $currid   = \think\facade\Cache::get("currid_16f0dbb828f6225fe62ada259e64bf20");
             foreach($menuList as $index=>$field){
-                    $field["typeurl"] = "/list/tid/".$field["id"];
-                    $field["currentstyle"]=in_array($field["id"],$currid)?"on":"";//栏目显示高亮
-                    $typeid=$field["id"];//嵌套标签typeid传值
+                    $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
+                    $field["currentstyle"] = in_array($field["id"],$currid)?"active":"";//栏目显示高亮
             ?>
-        <li><a href='<?php echo htmlentities($field['typeurl']); ?>'><?php echo htmlentities($field['typename']); ?></a></li>
-        <?php }  ?>
+        <li ><a href='<?php echo htmlentities($field['typeurl']); ?>' class="<?php echo htmlentities($field['currentstyle']); ?>"><?php echo htmlentities($field['typename']); ?></a></li>
+        <?php } ?>
     </ul>
 </div>
 
             <div class="main_r fr">
                 <div class="page_content">
                     <div class="page_tit">
-                        <h3><?php echo htmlentities($field['typename']); ?></h3>
+                        <h3><?php echo htmlentities($info['typename']); ?></h3>
                     </div>
-                    <div class="content"> <?php echo htmlentities($field['content']); ?> </div>
+                    <div class="content"> <?php echo $info['content']; ?> </div>
                 </div>
             </div>
         </div>
@@ -272,7 +228,7 @@
                 <p>邮箱：<?php echo syscfg('cfg_email'); ?></p>
                 <p>电话：<?php echo syscfg('cfg_phone'); ?></p>
                 <p>传真：<?php echo syscfg('cfg_fax'); ?></p>
-                <a href="<?php $__LIST__ = \think\facade\Cache::get("typeinfo_0"); if(is_array($__LIST__) || $__LIST__ instanceof \think\Collection || $__LIST__ instanceof \think\Paginator): $i = 0; $__LIST__ = $__LIST__;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$field): $mod = ($i % 2 );++$i;?><?php echo htmlentities($field['typeurl']); ?><?php endforeach; endif; else: echo "" ;endif; ?>">了解更多</a> </div>
+                <a href="<?php $field= \think\facade\Cache::get("typeinfo_1");$field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);$field["typeurl"] = \think\facade\Config::get("app.list_url") ."". $field["id"]; ?><?php echo htmlentities($field['typeurl']); ?>">了解更多</a> </div>
             <div class="foot_ewm fl">
                 <p>"精益求精，诚信为本"</p>
                 <div class="ewm_text"> <img src="/skin/images/weixin.jpg" /> <span>微信公众号</span> </div>
@@ -282,33 +238,22 @@
                 <ul>
                     <h3>网站导航</h3>
 					<?php 
-        $where=[];
-        $menuList=[];
-        $where[]=["ishidden","=",0];
-        if("top"=="top") $where[] =["reid","=",0];
-        if("top"=="son"){
-            if(empty("0")) {
-              $typeid =input("tid");
+            if(isset($typeid)){
+                $where = [];
+                $where[] = ["ishidden","=",0];
+                $where[] = ["reid","=",$typeid];
+                $menuList =\app\common\model\Arctype::where($where)->select();
+                $menuList = $menuList ? $menuList->toArray():\think\facade\Cache::get("cfcd208495d565ef66e7dff9f98764da"); 
             }else{
-              $typeid ="0";
+                $menuList = \think\facade\Cache::get("cfcd208495d565ef66e7dff9f98764da");
             }
-            $where[]=['reid','in', explode(",",$typeid)];
-        }
-        if("top"=="self") $where[] =["id","in", explode(",","0")];
-           
-        $ArctypeModel=new \app\common\model\Arctype();
-        $menuList= $ArctypeModel->where($where)->order("sortrank asc")->limit(10)->select()->toArray();
-       
-        $tid= request()->param("tid");
-        $currid=$ArctypeModel->childrenIds($menuList,$tid);
-        $currid[]=$tid;
+            $currid   = \think\facade\Cache::get("currid_cfcd208495d565ef66e7dff9f98764da");
             foreach($menuList as $index=>$field){
-                    $field["typeurl"] = "/list/tid/".$field["id"];
-                    $field["currentstyle"]=in_array($field["id"],$currid)?"on":"";//栏目显示高亮
-                    $typeid=$field["id"];//嵌套标签typeid传值
+                    $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
+                    $field["currentstyle"] = in_array($field["id"],$currid)?"on":"";//栏目显示高亮
             ?>
                     <li><a href="<?php echo htmlentities($field['typeurl']); ?>"><?php echo htmlentities($field['typename']); ?></a></li>
-					<?php }  ?>
+					<?php } ?>
                 </ul>
             </div>
         </div>

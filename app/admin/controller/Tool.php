@@ -45,18 +45,39 @@ class Tool extends \app\common\controller\Backend{
             $str = preg_replace("/{dede:field name=\"(.*)\"\/}/i",'{$field.$1}',$str);
             $str = preg_replace("/{dede:field\s+name=(\w+)\/}/i",'{$field.$1}',$str);
             
+            $str = preg_replace('/{dede:field.(\w+)\s+\/}/i','{$info.$1}',$str);
+    
+            
+            //内容页字段
+            $str = preg_replace('/{dede:field.(\w+)\s+\/}/i','{$info.$1}',$str);
+            $str = preg_replace('/{dede:field.(\w+)\\/}/i','{$info.$1}',$str);
+            //$str = str_replace('<script src="{$field.phpurl\'/}/count.php?view=yes&aid={dede:field name=\'id\'/}&mid={dede:field name=\'mid}" type=\'text/javascript\' language="javascript"></script>','{$info.click}',$str);
             //字段处理
             $str = preg_replace("/\[field:(\w+)\/]/i", '{$field.$1}', $str);
             $str = preg_replace("/\[field:(\w+)\s+\/]/i", '{$field.$1}', $str);
-            //内容页字段
-            $str = preg_replace('/{dede:field.(.*)\/}/i','{$field.$1}',$str);
-    
+            $str = preg_replace("/currentstyle=\".*\"/i", 'currentstyle="active"', $str);
             $str = str_replace("dede:","yycms:",$str);
+            
+            //搜索
+            $list_url = config('app.list_url');
+            $str = preg_replace("/\/plus\/search.php/i", $list_url.'/search', $str);
             //特殊字符串
-            $str = preg_replace("/typeid=(\d*)\s/i", 'typeid="$1" ', $str);
+            $str = preg_replace("/typeid=(\d+)\s+/i", 'typeid="$1" ', $str);
+            $str = preg_replace("/typeid=(\d+)/i", 'typeid="$1" ', $str);
             $str = preg_replace("/titlelen=(\d*)\s/i", 'titlelen="$1" ', $str);
             $str = preg_replace("/channelid=(\d*)\s/i", 'channelid="$1" ', $str);
             $str = preg_replace("/row=(\d*)\s/i", 'row="$1" ', $str);
+            $str = preg_replace("/info.content}/i", 'info.content|raw}', $str);
+            $str = preg_replace("/info.body}/i", 'info.body|raw}', $str);
+            $str = preg_replace("/info.position}/i", 'info.position|raw}', $str);
+            $str = preg_replace("/channel\s+type=(\w+)\s+/i", 'channel type="$1" ', $str);
+            
+            
+            $str = preg_replace("/field.pic}/i", 'field.picname}', $str);
+            $str = preg_replace("/field.fulltitle}/i", 'field.title}', $str);
+            $str = preg_replace("/field.infos}/i", 'field.info}', $str);
+            
+           
             $fileHandle = fopen($filename, 'w');
             
             fwrite($fileHandle, $str);

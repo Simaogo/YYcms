@@ -34,5 +34,7 @@ return [
     'app_trace' =>  true,
     
     'version' => '1.0.1',
+    'list_url' => '/index/template/list',
+    'view_url' => '/index/template/view',
     
 ];

@@ -23,7 +23,7 @@ class Arctype extends \think\Model{
     }
     public static function childrenIds($list,$id){
         $ids= [];
-        $ids[] = $id;
+        $ids[] = intval($id);
         foreach ($list as $v){
             if ($v['reid'] == $id) {
                 $ids[] = $v['id'];
@@ -31,6 +31,22 @@ class Arctype extends \think\Model{
             }
         }
         return $ids;
+    }
+    /**
+     * 高亮显示栏目
+     * @param type $list
+     * @param type $id
+     * @return type
+     */
+    public static function currIds($list,$id){
+        $arr = array();
+        foreach ($list as $v){
+            if ($v['id'] == $id) {
+                $arr[] = $v['id'];
+                $arr = array_merge($arr, self::currIds($list,$v['reid']));
+            }
+        }
+        return $arr;
     }
     public static function cateTree($cate ,$name='typename', $lefthtml = '|---- ' , $reid = 0 , $level = 0 ){
         $arr = array();

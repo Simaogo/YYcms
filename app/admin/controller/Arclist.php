@@ -84,7 +84,7 @@ class Arclist extends \app\common\controller\Backend{
                 ArclistModel::update($data['mainData']);
                 Db::name($table)->update($data['addtableData']);
             } else {
-               $data['mainData']['description'] = isset($data['mainData']['description']) && empty($data['mainData']['description']) ? $this->getplaintextintrofromhtml($data['addtableData']['body']) :$data['mainData']['description'];
+               $data['mainData']['description'] = isset($data['mainData']['description']) && empty($data['mainData']['description']) ? \fun\Process::getplaintextintrofromhtml($data['addtableData']['body']) :$data['mainData']['description'];
                //兼容id自增
                $last = ArclistModel::order('id desc')->limit(1)->select();
                $data['mainData']['id'] =($last[0]->id)+1;
@@ -188,20 +188,7 @@ class Arclist extends \app\common\controller\Backend{
         }
         return $first_img_url;
      }
-    /**
-     *  从内容提取描述
-     * @param type $html
-     * @param type $len
-     * @return string
-     */
-    public function  getplaintextintrofromhtml($html,$len=150) {
-            if(!$html) return '';
-            $html = strip_tags($html);
-            $html = html_entity_decode($html, ENT_QUOTES, 'UTF-8');
-            $html_len = mb_strlen($html,'UTF-8');
-            $html = mb_substr($html, 0, $len, 'UTF-8');
-            return $html;
-    }
+    
     /**
      * 解析自定义字段为数组
      * @param type $fielsetstr

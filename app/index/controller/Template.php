@@ -6,10 +6,10 @@ use think\facade\Db;
 use app\index\controller\Common;
 use think\facade\Config;
 class Template extends Common{
+    use \app\common\controller\Jump;
     public $default;
     public $view_dir_name ;
     public function __construct() {
-        parent::__construct();
         $this->view_dir_name = '../template/'. syscfg("cfg_df_style").'/';
     }
     public function list(){
@@ -20,6 +20,8 @@ class Template extends Common{
             $page=input('page');
             $arctypeModel = new \app\common\model\Arctype();
             $Arctype = $arctypeModel->find($typeid);
+            if(!$Arctype) $this->error('栏目不存在!','/');
+            $typeinfo = $Arctype ? $Arctype->toArray():array();
             $where = [];
             if($Arctype->ispart==0){ //列表模板
                 $template=$Arctype->templist;
@@ -66,28 +68,26 @@ class Template extends Common{
                             if($v){
                                 $list[$key]['url']=$v;
                             } else {
-                                $url=url('template/view', ['aid'=>$val['aid']]);
+                                $url = url('template/view', ['aid'=>$val['aid']]);
                                 $list[$key]['url']= $url->build();
                             }   
                         }
                         if($k == 'title'&&$keywords) $list[$key]['title'] = preg_replace("/($keywords)/i", "<b style='color:#50b400'>".$keywords."</b>",  $list[$key]['title']);//搜索标题高亮  
                     }
                 }
-                $view['list'] = $list;
-                $view['page'] = $page;
+                //$view['list'] = $list;
+               // $view['page'] = $page;
             }
             if($Arctype->ispart == 1){ //封面模板
                 $view["template"]=$Arctype->tempindex;
             } else {
                 $view["template"]=$Arctype->templist;
             }
-            $view['typename'] = $Arctype->typename;
-            $view['keywords'] = $Arctype->keywords;
-            $view['description'] =$Arctype->description;
+            $view['typeurl'] = Config::get('app.list_url') . '/tid/' . $Arctype->id;
             $view['position'] = '<a href="/">首页</a>' . syscfg('cfg_list_symbol') .$Arctype->typename;
-            $view["ispart"]=$Arctype->ispart;
-            $view["content"] = $Arctype->content;
-           // cache('view_list_'.$typeid,$view);
+            $view = array_merge($typeinfo,$view);
+           // halt($view);
+            //cache('view_list_'.$typeid,$view);
         }
         if(request()->isPost()){//ajax 加载
              return json(['list'=>$view['list'],'page'=>$pagesize/$row]);
@@ -98,8 +98,8 @@ class Template extends Common{
         $template  = str_replace('{style}/','', $template);
         $template = $this->isMobleTemplate($template);
         $template = $this->templateDefault($template,$ispart,$this->view_dir_name);
-        
-        View::assign(['field'=>$view]);
+       //  halt($view);
+        View::assign(['info'=>$view]);
         return View::fetch($this->view_dir_name .''.$template);
     }
     public function view(){
@@ -112,41 +112,37 @@ class Template extends Common{
         $view = cache('view+'.$aid);
         if(!$view){
             $ArctypeModel = new \app\common\model\Arctype();
-            $Arctype=$ArctypeModel->find($Archives->typeid);
+            $Arctype = $ArctypeModel->find($Archives->typeid);
+            $typeinfo = $Arctype->toArray();
             $channeltypeModel = new \app\common\model\Channeltype();
             $channeltype=$channeltypeModel->find($Arctype->channeltype);
             $table = $this->getTable($channeltype->addtable);
             $addinfo=Db::name($table)->where('aid',$aid)->find();
             $info= array_merge($addinfo,$Archives->toArray());
             foreach ($info as $key=>$val){
-                if(in_array($key, ['stay_address','repast_morning','repast_noon','repast_night','j_content','j_address'])){
-                    $info[$key]=Process::decode_item($val);
-                }
                 if($key=='litpic'){
                      $info[$key]= explode(',', $val);
                 }
             }
             $template = $Arctype->temparticle;
             $view = [
-                'body' => $info,
-                'typename'    =>  $Arctype->typename,
-                'template'    => $Arctype->temparticle,
-                'keywords'    => $Archives->keywords,
-                'description' => $Archives->description,
-                'position'    => '<a href="/">首页</a>'.$Arctype->typename
+                'typeurl'     =>Config::get('app.list_url') . '/tid/' . $Arctype->id,
+                'position'    => '<a href="/">首页</a> '. syscfg('cfg_list_symbol') .''. $Arctype->typename
             ];
+            $view = array_merge($typeinfo,$view);
+            $view = array_merge($view,$info);
             cache('view_'.$aid,$view); 
         }
-        $template= str_replace('{style}/','', $view['template']);
+        $template= str_replace('{style}/','', $view['temparticle']);
         $template = $this->isMobleTemplate($template);
-        View::assign(['field'=>$view]);
-        return View::fetch('../template/'. syscfg("cfg_df_style").'/'.$template);
+        $template = $this->templateDefault($template,2,$this->view_dir_name);
+        View::assign(['info'=>$view]);
+        return View::fetch($this->view_dir_name .''. $template);
     }
     public function search(){
         $template = $this->isMobleTemplate($template);
          return View::fetch($this->view_dir_name .''.$template);
     }
-    
     /**
      * 手机模板加 _m 结尾
      * @param string $templateName
@@ -163,7 +159,6 @@ class Template extends Common{
         }
       return $templateName;
     }
-    
     /**
      * 默认模板
      * @param type $templateName
@@ -171,12 +166,11 @@ class Template extends Common{
      * @return string
      */
     public function templateDefault($templateName,$ispart = 2,$view_dir_name){
-
        $view_suffix = Config::get('view.view_suffix');
-        if(!file_exists($view_dir_name.''.$templateName)){
+       $isTemplate = file_exists($view_dir_name.''.$templateName);
+        if(!$isTemplate){
             $arr = explode('.', $templateName);
-            if(isMobile()) $view_suffix = '_m.' .$templateName;
-            
+            if(isMobile()) $view_suffix = '_m.' .$view_suffix;
             if($ispart == 1){
                 $template = 'index_default' . $view_suffix;
             } else if($ispart == 0){
@@ -184,8 +178,7 @@ class Template extends Common{
             } else {
                 $template  = 'article_default' . $view_suffix;
             }
-           // $templateName = file_exists($view_dir_name . '' .$template) ? $template : $templateName;
-
+            if(isMobile()) $templateName = file_exists($view_dir_name . '' .$template) ? $template : str_replace ('_m', '', $templateName);
         }
         return $templateName;
     }

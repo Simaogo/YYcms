@@ -1,11 +1,11 @@
 <div class="main_l fl">
-                <h3>{$field.typenameen}</h3>
-                <i></i> <span>{$field.typename}</span>
+                <h3>{$info.typenameen}</h3>
+                <i></i> <span>{$info.typename}</span>
                 <div class="pro_menu">
                     <ul>
 					    {yycms:channelartlist typeid="2" type=son}
                         <li>
-                            <div class="yia"><a href="{$field.typeurl}">{$field.typename}</a></div>
+                            <div class="yia"><a href="{$info.typeurl}">{$info.typename}</a></div>
                             <div class="era">  {yycms:sql sql='Select * from dede_arctype where reid=~id~ ORDER BY id limit 0,10'}
                             <a href="{$field.typedir}">{$field.typename}</a> 
                               {/yycms:sql}
