@@ -14,7 +14,7 @@ class Arctype extends \think\Model{
         foreach ($list as $v){
             if ($v['reid'] == $reid) {
                 $v['level']      = $level + 1;
-                $v['title']      = $v['typename'];
+                $v['title']      = $v['typename'] .' [ID:'.$v['id'].']';
                 $v['spread']      = true;
                 $v['children']   = self::arctypeTree($list, $v['id'], $level+1);
                 $arr[] = $v;

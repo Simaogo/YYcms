@@ -1,14 +1,15 @@
 <div class="main_l fl">
-                <h3>{$info.typenameen}</h3>
-                <i></i> <span>{$info.typename}</span>
+                <h3>{$field.typenameen}</h3>
+                <i></i> <span>{$field.typename}</span>
                 <div class="pro_menu">
                     <ul>
 					    {yycms:channelartlist typeid="2" type=son}
                         <li>
-                            <div class="yia"><a href="{$info.typeurl}">{$info.typename}</a></div>
-                            <div class="era">  {yycms:sql sql='Select * from dede_arctype where reid=~id~ ORDER BY id limit 0,10'}
-                            <a href="{$field.typedir}">{$field.typename}</a> 
-                              {/yycms:sql}
+                            <div class="yia"><a href="{$field.typeurl}">{$field.typename}</a></div>
+                            <div class="era">    
+							{yycms:channel}
+								<a href="{$field.typeurl}">{$field.typename}</a> 
+							 {/yycms:channel}
                             </div>
                         </li>
 						{/yycms:channelartlist}
@@ -18,7 +19,7 @@
                     <div class="search">
                         <div class="text clearfix">
                             <div class="fr">
-                                <form action="/plus/search.php" method="post">
+                                <form action="/index/template/search" method="post">
                                     <input class="btn1" type="text" name="q" placeholder="请输入关键词">
                                     <input class="btn2" type="submit" name="" value="搜索">
                                 </form>

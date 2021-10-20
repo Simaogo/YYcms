@@ -6,88 +6,53 @@ use think\facade\Db;
 use app\index\controller\Common;
 use think\facade\Config;
 class Template extends Common{
+    
     use \app\common\controller\Jump;
     public $default;
     public $view_dir_name ;
+    
     public function __construct() {
-        $this->view_dir_name = '../template/'. syscfg("cfg_df_style").'/';
+        $this->view_dir_name = Config::get('view.view_path');
     }
+    /**
+     * 首页
+     * @return type
+     */
+//    public function index(){
+//        $template = 'index.htm';
+//        return View::fetch($this->view_dir_name .''.$template);
+//    }
+    /**
+     * 列表页
+     * @return string
+     */
     public function list(){
          $typeid=input('tid')?input('tid'):input('typeid');
          if(!$typeid)$this->error('栏目不存在');//全部
          $view = cache('view_list_'.$typeid);
          if(!$view){
-            $page=input('page');
+            $page = input('page');
             $arctypeModel = new \app\common\model\Arctype();
             $Arctype = $arctypeModel->find($typeid);
             if(!$Arctype) $this->error('栏目不存在!','/');
             $typeinfo = $Arctype ? $Arctype->toArray():array();
             $where = [];
-            if($Arctype->ispart==0){ //列表模板
+            if($Arctype->ispart == 0){ //列表模板
                 $template=$Arctype->templist;
-                $row=10;
                 if(!$typeid) return '';
-                $pagesize=0;
-                if ($page) $pagesize=$page*$row-$row;
                 $ChanneltypeModel = new \app\common\model\Channeltype();
                 $Channeltype = $ChanneltypeModel->find($Arctype->channeltype);
-                //标题搜索
-                $keywords=trim(input('keywords'),' ');
-                if($keywords){
-                    $where[]=['arc.title','like','%'.$keywords .'%'];
-                }
-                //栏目下级ID
-                $chinldIds=$arctypeModel->where('reid',$typeid)->field('id')->select()->toArray();
-                $typeids=trim(array_reduce($chinldIds,function($cid,$chi){
-                    return $cid.','.$chi['id'];
-                }),',');
-                $typeids=$typeids?$typeid.','.$typeids:$typeid;
-                $where[]=['arc.typeid','in',$typeids];
-                $page = Db::name('archives')->alias('arc')
-                        ->where($where)
-                        ->join($Channeltype->addtable.' add','arc.id=add.aid','left')
-                        ->paginate(['list_rows'=>$row,'query' =>['tid'=>$typeid]]);
-                $page = $page->render();
-                $list = Db::name('archives')->alias('arc')
-                        ->where($where)
-                        ->join($Channeltype->addtable.' add','arc.id=add.aid','left')
-                        ->limit($pagesize,$row)
-                        ->order('sortrank desc,pubdate desc')
-                        ->select()
-                        ->toArray();
-                $serializefield= explode(',', $Channeltype->serializefield);
-                foreach ($list as $key=>$val){
-                    foreach ($val as $k=>$v){
-//                        if(in_array($k,$serializefield)||$k=='flag'){
-//                            if($v) $list[$key][$k] = Process::decode_item($v);
-//                        }
-                        if($k=='litpic'){
-                            $list[$key][$k]= explode(',', $v);
-                        }
-                        if($k=='redirecturl'){
-                            if($v){
-                                $list[$key]['url']=$v;
-                            } else {
-                                $url = url('template/view', ['aid'=>$val['aid']]);
-                                $list[$key]['url']= $url->build();
-                            }   
-                        }
-                        if($k == 'title'&&$keywords) $list[$key]['title'] = preg_replace("/($keywords)/i", "<b style='color:#50b400'>".$keywords."</b>",  $list[$key]['title']);//搜索标题高亮  
-                    }
-                }
-                //$view['list'] = $list;
-               // $view['page'] = $page;
             }
             if($Arctype->ispart == 1){ //封面模板
                 $view["template"]=$Arctype->tempindex;
             } else {
                 $view["template"]=$Arctype->templist;
             }
+            $view = array_merge($typeinfo,$view);
+            $view['title']  = $Arctype->typename;
             $view['typeurl'] = Config::get('app.list_url') . '/tid/' . $Arctype->id;
             $view['position'] = '<a href="/">首页</a>' . syscfg('cfg_list_symbol') .$Arctype->typename;
-            $view = array_merge($typeinfo,$view);
-           // halt($view);
-            //cache('view_list_'.$typeid,$view);
+            cache('view_list_'.$typeid,$view);
         }
         if(request()->isPost()){//ajax 加载
              return json(['list'=>$view['list'],'page'=>$pagesize/$row]);
@@ -98,10 +63,16 @@ class Template extends Common{
         $template  = str_replace('{style}/','', $template);
         $template = $this->isMobleTemplate($template);
         $template = $this->templateDefault($template,$ispart,$this->view_dir_name);
-       //  halt($view);
-        View::assign(['info'=>$view]);
+
+        $yy = [ 'field' => $view];
+        View::assign(['yy'=>$yy]);
         return View::fetch($this->view_dir_name .''.$template);
     }
+   
+    /**
+     * 内容页
+     * @return type
+     */
     public function view(){
         $aid=input('aid');
         $ArchivesModel= new \app\common\model\Arclist();
@@ -126,7 +97,7 @@ class Template extends Common{
             }
             $template = $Arctype->temparticle;
             $view = [
-                'typeurl'     =>Config::get('app.list_url') . '/tid/' . $Arctype->id,
+                'typeurl'     => Config::get('app.list_url') . '/tid/' . $Arctype->id,
                 'position'    => '<a href="/">首页</a> '. syscfg('cfg_list_symbol') .''. $Arctype->typename
             ];
             $view = array_merge($typeinfo,$view);
@@ -136,12 +107,41 @@ class Template extends Common{
         $template= str_replace('{style}/','', $view['temparticle']);
         $template = $this->isMobleTemplate($template);
         $template = $this->templateDefault($template,2,$this->view_dir_name);
-        View::assign(['info'=>$view]);
+        $yy = [ 'field' => $view];
+        View::assign(['yy'=>$yy]);
         return View::fetch($this->view_dir_name .''. $template);
     }
     public function search(){
+        if(!input('q')) $this->error ("没有关键词");
+        $view['title'] = '搜索结果';
+        $view['typename'] = '搜索结果';
+        $view['keywords'] = '搜索结果';
+        $view['description'] = '搜索结果';
+        $view['position'] = '搜索结果';
+        $template = 'search.htm';
         $template = $this->isMobleTemplate($template);
+        $yy = [ 'field' => $view];
+        View::assign(['yy'=>$yy]);
          return View::fetch($this->view_dir_name .''.$template);
+    }
+    public function message(){
+        if(request()->isPost()){
+            $post = input();
+            $diyid = $post['diyid'];
+            if(!$diyid) $this->error ('error');
+            $Diyforms = \app\common\model\Diyforms::find($diyid);
+            $table = $Diyforms->table;
+            unset($post['action']);
+            unset($post['diyid']);
+            unset($post['do']);
+            unset($post['dede_fields']);
+            unset($post['d30beffc3ed963d35f239cb5eb6ef409']);
+            if(Db::name($table)->create($post)){
+                $this->success('提交成功');
+            } else {
+                $this->success('提交失败');
+            }
+        }
     }
     /**
      * 手机模板加 _m 结尾

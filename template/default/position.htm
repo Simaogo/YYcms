@@ -1,11 +1,11 @@
 <div class="curson">
         <div class="center">
-            <p> {$info.position|raw} </p>
-            <span>{$info.typename}</span> 
+            <p> {$yy.field.position|raw} </p>
+            <span>{$yy.field.typename}</span> 
 		</div>
     </div>
     <div class="m_pagemenu"> 
 	    {yycms:channel type="son" currentstyle="active"}
-		<a href="{$field.typeurl}" class="{$field.currentstyle}">{$field.typename}</a> 
+		<a href="{$field.typeurl}">{$field.typename}</a> 
 		{/yycms:channel}
 	</div>

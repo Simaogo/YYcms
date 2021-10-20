@@ -25,7 +25,7 @@ class Arctype extends \think\Model{
         $ids= [];
         $ids[] = intval($id);
         foreach ($list as $v){
-            if ($v['reid'] == $id) {
+            if ($v['reid'] == $id && $v['id']) {
                 $ids[] = $v['id'];
                 self::childrenIds($list, $v['id']);
             }

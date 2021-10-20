@@ -5,9 +5,9 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-<title>{$info.typename}_{:syscfg('cfg_webname')}</title>
-<meta name="keywords" content="{$info.keywords}" />
-<meta name="description" content="{yycms:field name='description' /}" />
+<title>{$yy.field.typename}_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{dede:field name='description' /}" />
 <script type="text/javascript" src="/skin/js/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="/skin/css/style.css">
 <link rel="stylesheet" href="/skin/css/font-awesome.min.css">
@@ -25,7 +25,7 @@
             <div class="main_r fr">
                 <div class="art_list">
                     <ul>
-					    {yycms:list pagesize=6}
+					    {yycms:list pagesize="6"}
                         <li>
                             <div class="fl"> <a href="{$field.arcurl}"> <img src="{$field.litpic}" alt="{$field.title}" /> </a> </div>
                             <div class="fr"> <a href="{$field.arcurl}">{$field.title}</a> <span>{$field.pubdate}</span>

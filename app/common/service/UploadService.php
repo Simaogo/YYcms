@@ -46,7 +46,7 @@ class UploadService extends AbstractService
     {
         $this->driver = syscfg('upload','upload_driver')?syscfg('upload','upload_driver'):'local';
         $this->fileExt = syscfg('cfg_imgtype')?syscfg('cfg_imgtype'):"*";
-        $this->fileMaxsize = 2 * 1024;
+        $this->fileMaxsize = 5 * 1024*1024;
         return $this;
     }
 
@@ -182,12 +182,13 @@ class UploadService extends AbstractService
                 ['php', 'html', 'htm','xml','ssh','bat','jar','java'])) {
             throw new Exception(lang('File format is limited'));
         }
+       
         //文件大小限制
-        if (($file->getSize() > $this->fileMaxsize*1024)) {
+        if ($file->getSize() > $this->fileMaxsize) {
             throw new Exception(lang('File size is limited'));
         }
         //文件类型限制
-        if ($this->fileExt !='*' && !in_array($file->extension(),explode(',',$this->fileExt))) {
+        if ($this->fileExt !='*' && !in_array($file->extension(),explode('|',$this->fileExt))) {
             throw new Exception(lang('File type is limited'));
         }
         return true;

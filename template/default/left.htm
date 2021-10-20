@@ -1,9 +1,9 @@
 <div class="main_l fl">
-    <h3>{$info.typenameen}</h3>
-    <i></i> <span>{$info.typename}</span>
+    <h3>{$field.typenameen}</h3>
+    <i></i> <span>{$field.typename}</span>
     <ul class="page_menu">
 	    {yycms:channel type="son" currentstyle="active"}
-        <li ><a href='{$field.typeurl}' class="{$field.currentstyle}">{$field.typename}</a></li>
+        <li><a href='{$field.typeurl}'>{$field.typename}</a></li>
         {/yycms:channel}
     </ul>
 </div>

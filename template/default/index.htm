@@ -1,4 +1,351 @@
-{yycms:channelartlist typeid="4" }
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<title>{:syscfg('cfg_webname')}</title>
+<meta name="description" content="{:syscfg('cfg_description')}" />
+<meta name="keywords" content="{:syscfg('cfg_keywords')}" />
+<script type="text/javascript" src="/skin/js/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="/skin/css/style.css">
+<link rel="stylesheet" href="/skin/css/font-awesome.min.css">
+<script type="text/javascript" src="/skin/js/js.js"></script>
+<script type="text/javascript" src="/skin/js/superslide.js"></script>
+</head>
+<body>
+{include file="head"/}
+<div class="pc_banner mtbanner">
+    <div class="banner" id="pcbanner">
+        <ul>
+		    {yycms:arclist row="10" typeid="37" }
+            <li><img src="{$field.picname}"></li>
+			{/yycms:arclist}
+        </ul>
+    </div>
+    <script type="text/javascript">
+            $(function () {
+                $('#pcbanner').roll({
+                    banner: true,
+                    btn: true
+                });
+            });
+        </script>
+</div>
+<div class="m_banner mtbanner">
+    <div class="mbanner" id="mbanner">
+        <ul>
+		    {yycms:arclist row="10" typeid="10" }
+            <li><img src="{$field.picname}"></li>
+			{/yycms:arclist}
+        </ul>
+    </div>
+    <script type="text/javascript">
+            $(function () {
+                $('#mbanner').roll({
+                    banner: true,
+                    btn: true
+                });
+            });
+        </script>
+</div>
+<div class="main">
+    <div class="search">
+        <div class="center">
+            <div class="text clearfix">
+                <div class="fl">
+                    <p>热门搜索关键词：</p>
+                    {yycms:channel type="son" typeid="2" row=5} <a href="{$field.typeurl}">{$field.typename}</a> {/yycms:channel} 
+				</div>
+                <div class="fr">
+                    <form action="/index/template/search" method="get">
+                        <input class="btn1" type="text" name="q" placeholder="请输入关键词">
+                        <input class="btn2" type="submit" name="" value="搜索">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="i_box1 clearfix">
+        <div class="center">
+            <div class="box1_pro_tit">
+                <ul>
+				    {yycms:channel type="son" typeid="2" }
+                    <li><a href="{$field.typeurl}">{$field.typename}</a></li>
+					{/yycms:channel}
+                </ul>
+            </div>
+            <div class="i_box1_content clearfix">
+                <div class="fl">
+                    <h3>{yycms:type typeid="2" }{$field.typename}{/yycms:type}</h3>
+                    <div class="pro_menu">
+                        <ul>
+						    {yycms:channelartlist typeid="2" type=son}
+                            <li>
+                                <div class="yia"><a href="{$field.typeurl}">{$field.typename}</a></div>
+                                <div class="era"> {yycms:channel type='son'}
+                                <a href="{$field.typeurl}">{$field.typename}</a> 
+                                 {/yycms:channel}</div>
+                            </li>
+							{/yycms:channelartlist}
+                        </ul>
+                    </div>
+                    <form id="myform1" method="post" action="/myform/">
+                        <input type="hidden" name="__token__" value="6abeb3d58d145de9f51a1534422ddbf2" >
+                        <input type="hidden" name="__formid__" value="1" >
+                        <input type="hidden" name="__returntype__" value="default" >
+                        <input class="btn1" type="text" name="phone" placeholder="您的手机">
+                        <input class="btn2" type="submit" name="" value="我要咨询">
+                    </form>
+                </div>
+                <div class="fr">
+                    <div class="list">
+                        <ul>
+						    {yycms:arclist row="9" titlelen="100" typeid="2" flag='c'}
+                            <li>
+                                <div class="pic"> <a href="{$field.arcurl}">
+                                    <div class="imgauto"> <img src="{$field.litpic}" alt="{$field.title}" /> </div>
+                                    <span>{$field.title}</span> </a> </div>
+                                <div class="text"> <a href="{$field.arcurl}"> <img src="/skin/images/probg.png" alt="{$field.title}"> </a> </div>
+                            </li>
+							{/yycms:arclist}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="i_box2" id="ibox2">
+        <div class="center">
+            <div class="text">
+                <p>认证咨询专家 · 24小时在线服务 · 安心售后 · 选择类型</p>
+                <strong>为您提供专业的认证解决方案</strong>
+                <p>To provide you with professional certification solutions</p>
+                <p>全国服务热线：<span>{:syscfg('cfg_tel')}</span> <a href="{yycms:type typeid="7" }{$field.typeurl}{/yycms:type}">联系我们</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="i_box3" id="ibox3">
+        <div class="center">
+            <div class="box3_pic"> <img src="/skin/images/xia.png" alt="图片名"> </div>
+            <div class="i_box3_content clearfix" id="ibox3cont">
+                <div class="box3_tit">
+                    <p><i>多年</i>专注于认证管理<span>-诚纬企</span></p>
+                    <small>MANUFACTURE</small> <em>“在各个行业累积了足够的经验，能满足各个行业的认证咨询”</em> </div>
+                <div class="box3_list clearfix">
+                    <div class="item">
+                        <div class="pic fl"> <img src="/skin/images/b1.jpg" alt="图片名" style='width:450px;'> </div>
+                        <div class="text fr">
+                            <div class="text_tit"> <em>01</em>
+                                <p> <strong>拥有ISO系列标准认证丰富经验</strong> <i>服务于国内各行业企业等</i> </p>
+                            </div>
+                            <div class="text_text">
+                                 <span>熟知各个认证规则，一手办理效率高，赢在起跑线</span> 
+                                 <span>专业ISO系列标准认证顾问快速定制解决方案。</span>
+                                <p>全国服务热线：<i>{:syscfg('cfg_tel')}</i></p>
+                            </div>
+                        </div>
+                        <div class="mpic"> <img src="/skin/images/b1.jpg" alt="图片名"> </div>
+                    </div>
+                    <div class="item item2">
+                        <div class="text fl">
+                            <div class="text_tit"> <em>02</em>
+                                <p> <strong>全程服务保障，价格统一透明</strong> <i>多次审核1次搞定，节省费用和时间，体系结合程度高</i> </p>
+                            </div>
+                            <div class="text_text"> <span>多年经验积累，严格风险把控肩负使命，脚踏实地。</span> 
+                            <span>价格规范管理，无隐形费用以合理价格享品质服务</span>
+                                <p>全国服务热线：<i>{:syscfg('cfg_tel')}</i></p>
+                            </div>
+                        </div>
+                        <div class="mpic">
+                            <img src="/skin/images/b5.jpg" alt="图片名">
+                            <!--<div class="mbox3pic" id="mbox3pic">-->
+                            <!--    <div class="bd">-->
+                            <!--        <ul>-->
+                            <!--            <li><img src="/skin/images/b5.jpg" /></li>-->
+                            <!--            <li><img src="/skin/images/2.png" /></li>-->
+                            <!--            <li><img src="/skin/images/3.png" /></li>-->
+                            <!--            <li><img src="/skin/images/4.png" /></li>-->
+                            <!--            <li><img src="/skin/images/5.png" /></li>-->
+                            <!--        </ul>-->
+                            <!--    </div>-->
+                            <!--    <a class="prev" href="javascript:void(0)"></a> <a class="next" href="javascript:void(0)"></a> </div>-->
+                        </div>
+                        <script type="text/javascript">
+                               // jQuery(".mbox3pic").slide({mainCell:".bd ul",effect:"leftLoop",autoPlay:true,delayTime:700});
+                            </script>
+                        <div class="pic fr">
+                            <img src="/skin/images/b5.jpg" alt="图片名"  style='width:450px;'>
+                            <!--<div id="certify">-->
+                            <!--    <div class="swiper-container">-->
+                            <!--        <div class="swiper-wrapper">-->
+                            <!--            <div class="swiper-slide"><img src="/skin/images/1.png" /></div>-->
+                            <!--            <div class="swiper-slide"><img src="/skin/images/2.png" /></div>-->
+                            <!--            <div class="swiper-slide"><img src="/skin/images/3.png" /></div>-->
+                            <!--            <div class="swiper-slide"><img src="/skin/images/4.png" /></div>-->
+                            <!--            <div class="swiper-slide"><img src="/skin/images/5.png" /></div>-->
+                            <!--        </div>-->
+                            <!--    </div>-->
+                            <!--    <div class="swiper-pagination"></div>-->
+                            <!--    <div class="swiper-button-prev"></div>-->
+                            <!--    <div class="swiper-button-next"></div>-->
+                            <!--</div>-->
+                            <!--<link rel="stylesheet" href="/skin/css/swiper.min.css">-->
+                            <!--<link rel="stylesheet" href="/skin/css/certify.css">-->
+                            <!--<script src="/skin/js/swiper.min.js"></script>-->
+                            <!--<script>-->
+                            <!--    certifySwiper = new Swiper('#certify .swiper-container', {-->
+                            <!--        watchSlidesProgress: true,-->
+                            <!--        slidesPerView: 'auto',-->
+                            <!--        centeredSlides: true,-->
+                            <!--        loop: true,-->
+                            <!--        loopedSlides: 5,-->
+                            <!--        autoplay: true,-->
+                            <!--        navigation: {-->
+                            <!--            nextEl: '.swiper-button-next',-->
+                            <!--            prevEl: '.swiper-button-prev',-->
+
+                            <!--        },-->
+                            <!--        on: {-->
+                            <!--            progress: function(progress) {-->
+                            <!--                for (i = 0; i < this.slides.length; i++) {-->
+                            <!--                    var slide = this.slides.eq(i);-->
+                            <!--                    var slideProgress = this.slides[i].progress;-->
+                            <!--                    if (Math.abs(slideProgress) > 1) {-->
+                            <!--                        modify = (Math.abs(slideProgress) - 1) * 0.4 + 1;-->
+                            <!--                    }-->
+                            <!--                    translate = slideProgress * modify * 218 + 'px';-->
+                            <!--                    scale = 1 - Math.abs(slideProgress) / 5;-->
+                            <!--                    zIndex = 999 - Math.abs(Math.round(10 * slideProgress));-->
+                            <!--                    slide.transform('translateX(' + translate + ') scale(' + scale + ')');-->
+                            <!--                    slide.css('zIndex', zIndex);-->
+                            <!--                    slide.css('opacity', 1);-->
+                            <!--                    if (Math.abs(slideProgress) > 3) {-->
+                            <!--                        slide.css('opacity', 0);-->
+                            <!--                    }-->
+                            <!--                }-->
+                            <!--            },-->
+                            <!--            setTransition: function(transition) {-->
+                            <!--                for (var i = 0; i < this.slides.length; i++) {-->
+                            <!--                    var slide = this.slides.eq(i)-->
+                            <!--                    slide.transition(transition);-->
+                            <!--                }-->
+                            <!--            }-->
+                            <!--        }-->
+                            <!--    })-->
+                            <!--    </script>-->
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="pic fl"> <img src="/skin/images/ys3.png" alt="图片名"> </div>
+                        <div class="text fr">
+                            <div class="text_tit"> <em>03</em>
+                                <p> <strong>优质的产品质量和售后服务</strong> <i>客户至上、细心服务、快速保障、恪守承诺，满足国内外客户的需要</i> </p>
+                            </div>
+                            <div class="text_text"> <span>公司严格信守以“客户至上、细心服务、快速保障、恪守承诺”为产品服务宗旨，建有完善的产品售前、售中和售后服务网络和体系，以优质的产品和细心的服务，保障公司产品质量的稳定可靠，以满足国内外客户的需要。</span>
+                                <p>全国服务热线：<i>{:syscfg('cfg_tel')}</i></p>
+                            </div>
+                        </div>
+                        <div class="mpic"> <img src="/skin/images/ys3.png" alt="图片名"> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="i_box4 clearfix" id="ibox4">
+        <div class="center">
+            <div class="i_box4_content">
+                <div class="box4_tit">
+                    <p>专业ISO系列标准认证，<i>各行业认证解决方案</i></p>
+                    <span>Fitness exercise · Provide you with a large number of customer cooperation cases</span> </div>
+                <div class="pic">
+                    <div id="box4pic" class="box4pic">
+                        <div class="bd">
+                            <ul>
+							    {yycms:arclist row="5" typeid="3" titlelen=100}
+                                <li><a href="{$field.arcurl}"><img src="{$field.litpic}" alt="{$field.title}" /><span>{$field.title}</span></a></li>
+								{/yycms:arclist}
+                            </ul>
+                        </div>
+                        <a class="prev" href="javascript:void(0)"></a> <a class="next" href="javascript:void(0)"></a> </div>
+                    <script type="text/javascript">
+                            jQuery(".box4pic").slide({mainCell:".bd ul",effect:"fold",autoPlay:true,delayTime:700});
+                        </script>
+                    <div class="mbox4_list">
+                        <ul>
+						    {yycms:arclist row="5" typeid="3" titlelen=100}
+                            <li><a href="{$field.arcurl}"><img src="{$field.litpic}" alt="{$field.title}" /></a></li>
+							{/yycms:arclist}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="i_box5 clearfix">
+        <div class="center">
+            <div class="i_box5_content">
+                <div class="fl">
+                    <div class="mbox5pic" id="mbox5pic">
+                        <div class="hd">
+                            <ul>
+                                <li class="on">1</li>
+                                <li>2</li>
+                                <li>3</li>
+                                <li>4</li>
+                                <li>5</li>
+                            </ul>
+                        </div>
+                        <div class="bd">
+                            <ul>
+                                <li><img src="/skin/images/b1.jpg" /></li>
+                                <li><img src="/skin/images/b2.jpg" /></li>
+                                <li><img src="/skin/images/b3.jpg" /></li>
+                                <li><img src="/skin/images/b4.jpg" /></li>
+                                <li><img src="/skin/images/b5.jpg" /></li>
+                            </ul>
+                        </div>
+                        <a class="prev" href="javascript:void(0)"></a> <a class="next" href="javascript:void(0)"></a> </div>
+                    <script type="text/javascript">
+                        jQuery(".mbox5pic").slide({mainCell:".bd ul",effect:"leftLoop",autoPlay:true,delayTime:700});
+                    </script>
+                </div>
+                <div class="fr">
+                    <h3>关于我们</h3>
+                    {yycms:type typeid="1"}{$field.content|raw}...{/yycms:type}
+                    <ul>
+                        <li> <img class="img1" src="/skin/images/t1.png" alt="图片名"> <img class="img2" src="/skin/images/t11.png" alt="图片名"> </li>
+                        <li> <img class="img1" src="/skin/images/t1.png" alt="图片名"> <img class="img2" src="/skin/images/t22.png" alt="图片名"> </li>
+                        <li> <img class="img1" src="/skin/images/t1.png" alt="图片名"> <img class="img2" src="/skin/images/t33.png" alt="图片名"> </li>
+                        <li> <img class="img1" src="/skin/images/t1.png" alt="图片名"> <img class="img2" src="/skin/images/t44.png" alt="图片名"> </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="i_box6 clearfix">
+        <div class="center">
+            <div class="i_box6_content clearfix">
+                <ul>
+                    <li> <span><i>7</i>年</span>
+                        <p>在企业认证行业拥有7年的经验，是行业开拓者</p>
+                    </li>
+                    <li> <span><i>1200</i>客户</span>
+                        <p>服务1200多个企业,覆盖各个行业领域</p>
+                    </li>
+                    <li> <span><i>50</i>服务点</span>
+                        <p>在全国拥有多个服务点，为线下顾客提供下线沟通渠道</p>
+                    </li>
+                    <li> <span><i>21</i>人服务团队</span>
+                        <p>分布在广东、湖南、江西、云南、广西、贵州等省市</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+	{yycms:channelartlist typeid="4,0"}
     <div class="i_box7 clearfix">
         <div class="center">
             <div class="box4_tit">
@@ -30,3 +377,97 @@
         </div>
     </div>
 	{/yycms:channelartlist}
+    <div class="i_box8 clearfix">
+        <div class="center">
+            <div class="i_box8_content clearfix">
+                <div class="box8left">
+                    <div class="bd">
+                        <ul class="picList">
+						    {yycms:arclist row="8" titlelen="100" typeid="3" }
+                            <li><img src="{$field.litpic}" alt="{$field.title}" /></li>
+							{/yycms:arclist}
+                        </ul>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                        jQuery(".box8left").slide({mainCell:".bd ul",autoPlay:true,effect:"leftMarquee",vis:6,interTime:25,trigger:"click"});
+                    </script>
+            </div>
+        </div>
+    </div>
+    <div class="i_box9 clearfix">
+        <div class="center">
+            <div class="i_box9_content clearfix">
+                <div class="box9tit">
+                    <h3>行业新闻信息，了解权威的业内信息，<i>“信息”</i>让工作变得更效率！</h3>
+                </div>
+				{yycms:channelartlist typeid="6" row="2"}
+                <div class="list">
+                    <div class="tit clearfix">
+                        <p> <span>{$field.typename}</span> <a href="{$field.typeurl}">+更多</a> </p>
+                        <img src="{$field.typeimg}" alt="{$field.typename}"> </div>
+                    <div class="text">
+                        <ul>
+						    {yycms:arclist row="5" titlelen=100}
+                            <li><a href="{$field.arcurl}">{$field.title}</a><span>{$field.pubdate}</span></li>
+							{/yycms:arclist}
+                        </ul>
+                    </div>
+                </div>
+				{/yycms:channelartlist}
+				{yycms:channelartlist typeid="17,0"}
+                <div class="list">
+                    <div class="tit clearfix">
+                        <p> <span>常见问题</span> <a href="/news/changjianwenti/">+更多</a> </p>
+                    </div>
+                    <div class="text2">
+                        <ul>
+						    {yycms:arclist row="4" titlelen="100" infolen=130}
+                            <li> <a href="{$field.arcurl}">{$field.title}</a>
+                                <p>{$field.info}...</p>
+                            </li>
+							{/yycms:arclist}
+                        </ul>
+                    </div>
+                </div>
+				{/yycms:channelartlist}
+                <div class="m_list">
+                    <div class="m_tit clearfix">{yycms:channel type="son" typeid="6" } <a href="{$field.typeurl}">{$field.typename}</a> {/yycms:channel}</div>
+                    <div class="m_text clearfix">
+                        <ul>
+						    {yycms:arclist row="4" titlelen="100" typeid="6" }
+                            <li> <a href="{$field.arcurl}">{$field.title}</a> <span>{$field.pubdate}</span>
+                                <p>{$field.info}...</p>
+                            </li>
+							{/yycms:arclist}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="flink">
+    <div class="center">
+        <div class="flink_tit">
+            <p><span>友情链接 LINKS</span></p>
+        </div>
+        <div class="flink_list">
+            <ul>
+                {yycms:flink linktype='2' row='120'}<li><a href="{$field.url}" target="_blank">{$field.webname}</a></li>{/yycms:flink} 
+            </ul>
+        </div>
+        <!--<div class="flink_tit">-->
+        <!--    <p><span>TAG标签 tags</span></p>-->
+        <!--</div>-->
+        <!--<div class="flink_list mb10">-->
+        <!--    <ul>-->
+        <!--        <li><a href="/tags.php?/认证咨询">企业认证咨询 </a></li>-->
+        <!--        <li><a href="/tags.php?/%E5%81%A5%E8%BA%AB%E6%88%BF/">IOS认证</a></li>-->
+        <!--    </ul>-->
+        <!--</div>-->
+    </div>
+</div>
+{include file="footer"/}
+</body>
+</html>

@@ -41,7 +41,7 @@ class Arclist extends \app\common\controller\Backend{
     public function arctypeList(){
         if(request()->isAjax()){
            $ArctypeModel = new ArctypeModel();
-           $data = $ArctypeModel->where('ishidden',0)->field('id,reid,typename')->select()->toArray();
+           $data = $ArctypeModel->field('id,reid,typename')->select()->toArray();
            $menu = $ArctypeModel->arctypeTree($data);
            return json(['code'=>0,'msg'=>'success','data'=>$menu]);
         }
