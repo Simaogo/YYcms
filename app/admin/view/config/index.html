@@ -1,0 +1,83 @@
+{include file="public/header" /}
+<form class="layui-form" action="" lay-filter="list">
+<div class="layui-row" style="padding: 15px 0 50px 0">
+    <div class="layui-col-md12">
+        <div class="layui-tab" lay-filter="config">
+          <ul class="layui-tab-title">
+            {volist name="groupList" id="vo"}  
+            <li {if condition="$key==0"}class="layui-this"{/if} lay-id="{$key}">{$vo}</li>
+           {/volist}
+          </ul>
+          <div class="layui-tab-content"> 
+            {volist name="list" id="group"}
+            <div class="layui-tab-item {if condition='$key==0'} layui-show {/if}">
+               {volist name="group" id="vo"}
+               {switch name="$vo.type" }
+                    {case value="string" }
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">{$vo.info}</label>
+                            <div class="layui-input-block">
+                              <input type="text" name="{$vo.varname}"  autocomplete="off" placeholder="请输入{$vo.info}" class="layui-input" value="{$vo.value}">
+                            </div>
+                        </div>
+                    {/case}
+                    {case value="number" }
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">{$vo.info}</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="{$vo.varname}"  autocomplete="off" placeholder="请输入{$vo.info}" class="layui-input" value="{$vo.value}">
+                            </div>
+                        </div>
+                    {/case}
+                    {case value="bool" }
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">{$vo.info}</label>
+                            <div class="layui-input-block">
+                               <input type="radio" name="{$vo.varname}" value="Y" title="是" {if condition ="$vo.value=='Y'"}checked=""{/if}>
+                               <input type="radio" name="{$vo.varname}" value="N" title="否" {if condition ="$vo.value=='N'"}checked=""{/if}>
+                            </div>
+                        </div>
+                    {/case}
+                    {case value="bstring" }
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">{$vo.info}</label>
+                            <div class="layui-input-block">
+                              <textarea placeholder="请输入{$vo.info}" class="layui-textarea" name="{$vo.varname}">{$vo.value}</textarea>
+                            </div>
+                        </div>
+                    {/case}
+                    {default /}
+               {/switch}
+                {/volist}
+            </div>
+            
+             {/volist}
+          </div>
+        </div>
+    </div>
+</div> 
+  <div class="layui-form-item layui-flex layui-submit" style="">
+    <button class="layui-btn" lay-submit="" lay-filter="submit" style="width:150px;margin: 0 auto;">提交保存</button>
+</div>   
+</form>
+{include file="public/footer" /}
+<script>
+layui.use('element', function(){
+  var $ = layui.jquery
+  ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+  
+  $('.site-demo-active').on('click', function(){
+    var othis = $(this), type = othis.data('type');
+    active[type] ? active[type].call(this, othis) : '';
+  });
+
+  //Hash地址的定位
+  var layid = location.hash.replace(/^?gid=0#id=/, '');
+  element.tabChange('config', layid);
+  
+  element.on('tab(config)', function(elem){
+    location.hash = '?id='+ $(this).attr('lay-id');
+  });
+  
+});
+</script>

@@ -9,8 +9,9 @@ class Arctype extends \app\common\controller\Backend{
     public function index(){
         if(request()->isAjax()){
            $ArctypeModel = new ArctypeModel();
-           $page = input('page')-1;
-           $limit = input('limit');
+           $limit = input('limit') ? input('limit'):15;
+           $page = input('page');
+           $page = ($page -1) * $limit;
            $data = $ArctypeModel->where('ishidden',0)->field('id,reid,typename')->limit($page,$limit)->select()->toArray();
            $menu = $ArctypeModel->arctypeTree($data);
            $count = $ArctypeModel->where('ishidden',0)->count();
@@ -18,7 +19,6 @@ class Arctype extends \app\common\controller\Backend{
         }
         return View::fetch();
     }
-    
     public function addEdit(){
         $id = input('id');
         if(request()->isAjax()){

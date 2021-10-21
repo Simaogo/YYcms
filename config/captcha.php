@@ -17,11 +17,11 @@ return [
     // 是否使用背景图
     'useImgBg' => false,
     //验证码字符大小
-    'fontSize' => 25,
+    'fontSize' => 30,
     // 是否使用混淆曲线
     'useCurve' => true,
     //是否添加杂点
-    'useNoise' => true,
+    'useNoise' => false,
     // 验证码字体 不设置则随机
     'fontttf'  => '',
     //背景颜色
@@ -30,7 +30,7 @@ return [
     'imageH'   => 0,
     // 验证码图片宽度
     'imageW'   => 0,
-
+    'length'  =>  4,
     // 添加额外的验证码设置
     // verify => [
     //     'length'=>4,

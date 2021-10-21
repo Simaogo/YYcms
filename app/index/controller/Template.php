@@ -127,19 +127,21 @@ class Template extends Common{
     public function message(){
         if(request()->isPost()){
             $post = input();
+            
             $diyid = $post['diyid'];
             if(!$diyid) $this->error ('error');
-            $Diyforms = \app\common\model\Diyforms::find($diyid);
-            $table = $Diyforms->table;
+            
+            $Diyforms = \app\common\model\Diyforms::where(['diyid'=>$diyid])->find();
+            $table = str_replace('dede_','' ,$Diyforms->table);
             unset($post['action']);
             unset($post['diyid']);
             unset($post['do']);
             unset($post['dede_fields']);
-            unset($post['d30beffc3ed963d35f239cb5eb6ef409']);
-            if(Db::name($table)->create($post)){
+            unset($post['dede_fieldshash']);
+            if(Db::name($table)->save($post)){
                 $this->success('提交成功');
             } else {
-                $this->success('提交失败');
+                $this->error('提交失败');
             }
         }
     }

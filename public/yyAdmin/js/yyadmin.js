@@ -73,7 +73,7 @@ layui.define(["element", "layer"], function (exports) {
         },
         //GitHub
         github: function () {
-            //window.open('https://github.com/');
+            window.open('https://github.com/Simaogo/YYcms');
         },
         //前台
         website: function () {
@@ -84,7 +84,7 @@ layui.define(["element", "layer"], function (exports) {
             layer.confirm("确认清空标签缓存吗?", { icon: 3, title: "提示" }, function (index) {
                 sessionStorage.setItem("tabs", null);
                 sessionStorage.setItem("currentTabId", "admin/index/home");
-                $.post('/admin/index/clear',{},function(){
+                $.post(clearTuntimeUrl,{},function(){
                     layer.close(index);
                     layer.msg("清理成功");
                 })

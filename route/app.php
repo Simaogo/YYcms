@@ -10,11 +10,10 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
-Route::get('think', function () {
+Route::get('/admin', function () {
     return 'hello,ThinkPHP6!';
 });
-
-
+Route::rule('list', 'index/template/list','*');
 //Route::get('view', '\app\index\controller\Template@view');
-//Route::get('list', '\app\index\controller\Template@list');
+//Route::rule('list','index/Template/list','*');
 

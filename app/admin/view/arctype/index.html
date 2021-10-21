@@ -1,0 +1,131 @@
+{include file="public/header" /}
+<div class="layui-row" style="margin-bottom: 50px;">
+  <div class="layui-col-md12">
+    <div class="layui-card">
+      <div class="layui-card-header">栏目管理</div>
+      <div class="layui-card-body">
+          <table class="layui-table layui-form" id="list" lay-filter="list"></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{include file="public/footer" /}
+
+<script>
+    
+   layui.use(['tableTreeDj','table'], function() {
+        let tableTree = layui.tableTreeDj
+            ,table    = layui.table
+            ,$ = layui.$;
+
+        // 分页配置
+        const page = {
+            elem: 'page'
+            , layout: ['prev', 'page', 'next', 'last','skip'] //自定义分页布局
+            , groups: 5 //只显示 5 个连续页码
+            , prev: '上一页'
+            , next: '下一页'
+            , first: 1 //不显示首页
+        };
+
+        // 字段配置
+        const cols = [[
+            {field:'id', title:'ID',width:80}
+            ,{field:'typename', title:'名称',sort:true,width:'20%'}
+            ,{field:'reid', title:'上级ID',width:100}
+            ,{field:'', width:"20%", title: '操作',templet:'#operate'}
+           
+        ]];
+        // 表格配置
+        const objTable = {
+            elem: '#list'
+            ,toolbar: '#toolbar' 
+            ,defaultToolbar: ['filter', 'exports', 'print', { 
+              title: '提示'
+              ,layEvent: 'LAYTABLE_TIPS'
+              ,icon: 'layui-icon-tips'
+            }]
+            ,url: url
+            ,page:true
+            ,limit: 30
+            ,cols: cols
+            ,id: 'list'
+            ,done:function(res, curr, count) {
+
+            }
+            ,parseData:function(res) {
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            }
+            ,loading:true
+        }
+
+        const config = {
+            showCache: true // 开启展开缓存
+            , sort: 'asc'
+            , title: 'typename'
+           , keyPid: "reid" // 上级ID
+            , defaultShow: true
+            , showByPidCallback: (idArr) => {
+                //console.log('idArr', idArr);
+            }
+            , hideByPidCallback: (idArr) => {
+                //console.log('idArr', idArr);
+            }
+        }
+        // tableTree 渲染表格
+        tableTree.render(objTable, config);
+         //监听行工具事件
+
+        $('#show').click(() => {
+            tableTree.showAll(config);
+        });
+        $('#hide').click(() => {
+            tableTree.hideAll(config);
+        });
+
+        $('#showSn').click(() => {
+            const run = tableTree.getRun();
+            const dataIndex = run.dataIndex;
+            for(let id in dataIndex) {
+                let has = true;
+                let sn = id;
+                let idNow = id;
+                while(has) {
+                    if(!!run.childParent[idNow]) {
+                        let pid = run.childParent[idNow];
+                        sn = pid + " - " + sn;
+                        idNow = pid
+                    } else {
+                        break;
+                    }
+                }
+                $("[lay-id='"+ objTable.id +"'] table tr[data-index='"+ dataIndex[id] +"'] td[data-field="+ "sn" +"]").children("div").html(sn);
+            }
+        });
+        $('#getData').click(() => {
+            const data = tableTree.getDataOri();
+            console.log(data);
+        });
+        $('#reload').click(() => {
+            /*
+            if(objTable.url === './getData0.json') {
+                objTable.url = './getData.json';
+            } else {
+                objTable.url = './getData0.json';
+            }
+
+             */
+            objTable.where = {key:"val"}
+            tableTree.reload(objTable, 'list');
+        });
+
+    });
+    
+</script>
+

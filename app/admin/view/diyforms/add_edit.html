@@ -1,0 +1,35 @@
+{include file="public/header" /}
+<form class="layui-form" action="" lay-filter="list">
+    <div class="layui-row" style="padding: 15px;margin-bottom: 35px">
+           <div class="layui-form-item">
+                <div class="layui-inline">
+                  <label class="layui-form-label">名称</label>
+                  <div class="layui-input-inline">
+                        <input type="text" name="userid" lay-verify="" autocomplete="off" class="layui-input">
+                  </div>
+                </div>
+          </div>
+           <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">表名</label>
+              <div class="layui-input-inline">
+                    <input type="password" name="pwd" lay-verify="" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">是否公开</label>
+              <div class="layui-input-inline">
+                <input type="password" name="pwdreplace"  autocomplete="off" class="layui-input">
+              </div>
+            </div>
+          </div>
+
+        <div class="layui-form-item layui-flex layui-submit" style="">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" style="width:150px;margin: 0 auto;">提交保存</button>
+        </div>
+</div>
+</form>
+{include file="public/footer" /}
+<script>
+    
+</script>

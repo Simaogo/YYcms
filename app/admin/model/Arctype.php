@@ -10,12 +10,14 @@ class Arctype extends \think\Model{
     }
     
     public static function arctypeTree($list ,$reid = 0 , $level = 0 ){
+
         $arr = array();
         foreach ($list as $v){
             if ($v['reid'] == $reid) {
                 $v['level']      = $level + 1;
-                $v['title']      = $v['typename'] .' [ID:'.$v['id'].']';
-                $v['spread']      = true;
+               // $ishidden        = $v['ishidden'] ? '<span style="font-size:12px;" class="doc-icon-name">隐藏</span>':' ';
+                $v['title']      = $v['typename'] .' <span style="font-size:12px;">[ID:'.$v['id'].']</span> ';
+                $v['spread']     = true;
                 $v['children']   = self::arctypeTree($list, $v['id'], $level+1);
                 $arr[] = $v;
             }

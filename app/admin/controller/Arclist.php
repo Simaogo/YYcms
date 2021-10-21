@@ -10,10 +10,15 @@ class Arclist extends \app\common\controller\Backend{
     public function index(){
         if(request()->isAjax()){
             $ArclistModel = new ArclistModel();
-            $page = input('page')-1;
-            $limit = input('limit');
+            $limit = input('limit') ? input('limit'):15;
+            $page = input('page') ? input('page'):1;
+            $page = ($page -1) * $limit;
             $typeid = input('typeid');
             $where = [];
+            if(input('title')){
+                $title = input('title');
+                $where[]= ['title','like','%'. $title .'%'];
+            }
             if($typeid){
                 $menu = ArctypeModel::select()->toArray();
                 $ids = ArctypeModel::childrenIds($menu, $typeid);
@@ -23,6 +28,7 @@ class Arclist extends \app\common\controller\Backend{
                 }), ',');
                 $where[]= ['typeid','in',$typeids];
             }
+            //halt($where);
             $list = ArclistModel::withJoin('arctype')
                     ->where($where)
                     ->limit($page,$limit)
@@ -41,7 +47,7 @@ class Arclist extends \app\common\controller\Backend{
     public function arctypeList(){
         if(request()->isAjax()){
            $ArctypeModel = new ArctypeModel();
-           $data = $ArctypeModel->field('id,reid,typename')->select()->toArray();
+           $data = $ArctypeModel->field('id,reid,typename,ishidden')->select()->toArray();
            $menu = $ArctypeModel->arctypeTree($data);
            return json(['code'=>0,'msg'=>'success','data'=>$menu]);
         }
@@ -115,7 +121,6 @@ class Arclist extends \app\common\controller\Backend{
         }
         $Channel = ChanneltypeModel::find($channeltype);//模型
         $view['fieldset'] = $Channel->fieldset ?$this->decodeFileset($Channel->fieldset):'';//自定义字段
-        //halt($view['fieldset']);
         $menu = ArctypeModel::select()->toArray();
         $view['arctypeList'] =ArctypeModel::cateTree($menu);
         $view['channeltype'] = $channeltype;//模型ID
@@ -204,8 +209,9 @@ class Arclist extends \app\common\controller\Backend{
                     $fieldsetArr = explode(' ', $val);
                     $listarr = [];
                     foreach ($fieldsetArr as $k => $v){
+                        
                         if($v){
-                            if($k == 0) {
+                            if($k == 0) { //排除body字段
                                 $listarr['name'] = $v;
                             } else {
                                 $arr = explode('=',$v);

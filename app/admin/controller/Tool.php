@@ -94,6 +94,7 @@ class Tool extends \app\common\controller\Backend{
             //搜索
             $list_url = config('app.list_url');
             $str = preg_replace("/\/plus\/search.php/i", '{:url("template/list",["serach"=>1])}', $str);
+            $str = preg_replace("/\/plus\/diy.php/i", '{:url("template/message")}', $str);
             //特殊字符串
             $str = preg_replace("/typeid=(\d+)\s+/i", 'typeid="$1" ', $str);
             $str = preg_replace("/typeid=(\d+)/i", 'typeid="$1" ', $str);
@@ -101,9 +102,10 @@ class Tool extends \app\common\controller\Backend{
             $str = preg_replace("/channelid=(\d*)\s/i", 'channelid="$1" ', $str);
             $str = preg_replace("/row=(\d*)\s/i", 'row="$1" ', $str);
             $str = preg_replace("/pagesize=(\d+)/i", 'pagesize="$1" ', $str);
-            $str = preg_replace("/field.content}/i", 'field.content|raw}', $str);
-            $str = preg_replace("/field.body}/i", 'field.body|raw}', $str);
+            $str = preg_replace("/field.content}/i", 'yy.field.content|raw}', $str);
+            $str = preg_replace("/field.body}/i", 'yy.field.body|raw}', $str);
             $str = preg_replace("/field.position}/i", 'yy.field.position|raw}', $str);
+            
             $str = preg_replace("/channel\s+type=(\w+)\s+/i", 'channel type="$1" ', $str);
           
             $str = preg_replace("/field.pic}/i", 'field.picname}', $str);
