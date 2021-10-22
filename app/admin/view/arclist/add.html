@@ -313,14 +313,14 @@
         })
         //图集赋值
         if(formData.imgurls){
-            var imgurls = formData.imgurls.split(','),
-            litpic = formData.litpic,
-            len =imgurls.length,
-            thisClass;
-            for(var i = 0; i < len; i++){
-                 thisClass = litpic == imgurls[i] ? 'class ="thisClass"' : '';
-                 $('#div-slide_show ul').append('<li '+thisClass+'><img src="'+imgurls[i]+'"><i class="layui-icon layui-icon-close"  data-fileurl="'+imgurls[i]+'"></i></li>');
-            }
+            console.log(formData);
+            var imgurls = (typeof formData.imgurls) =='object' ? formData.imgurls : formData.imgurls.split(',');
+            var litpic = formData.litpic,thisClass;
+            var len =imgurls.length,thisClass;
+                for(var i = 0; i < len; i++){
+                     thisClass = litpic == imgurls[i] ? 'class ="thisClass"' : '';
+                     $('#div-slide_show ul').append('<li '+thisClass+'><img src="'+imgurls[i]+'"><i class="layui-icon layui-icon-close"  data-fileurl="'+imgurls[i]+'"></i></li>');
+                }
         }
         //跳转网址
          form.on('checkbox(redirecturl)', function(obj){

@@ -34,5 +34,11 @@
 	   
 	    
   {yycms:arclist titlelen="80" orderby ='pubdate' typeid='37'}
-      <li><a href="">{$field.arcurl} : {$field.title}</a></li>
+      <li><a href="{$field.arcurl}">{$field.arcurl} : {$field.title}</a></li>
       {/yycms:arclist}
+	  
+	 
+                    <li class="sf_footer_uldiv_h5_ul_li">{yycms:type  typeid='4'}{$field.typeurl}{/yycms:type}</li>
+                    <li class="sf_footer_uldiv_h5_ul_li">{yycms:type  typeid='5'}<a href='{$field.typeurl}'>{$field.typename}</a>{/yycms:type}</li>
+                    <li class="sf_footer_uldiv_h5_ul_li">{yycms:type  typeid='6'}<a href='{$field.typeurl}'>{$field.typename}</a>{/yycms:type}</li>
+                    <li class="sf_footer_uldiv_h5_ul_li">{yycms:type  typeid='19'}<a href='{$field.typeurl}'>{$field.typename}</a>{/yycms:type}</li>

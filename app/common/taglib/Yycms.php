@@ -20,6 +20,7 @@ class Yycms extends TagLib{
         'advert'              => ['group_id,order,row,titlelen', 'alias' => 'ad','close' => 1],  //广告管理
         'flink'               => ['row,type,name', 'alias' => 'flink', 'close' => 1],  //友情链接
         'prenext'             => ['attr' => 'get','close' => 0],  //上一篇、下一篇
+        'productimagelist'    => ['name,row', 'alias' => 'imagelist','close' => 1],  //解析图集
     ];
     /**
      * 栏目channel 标签
@@ -72,7 +73,7 @@ class Yycms extends TagLib{
         \think\facade\Cache::set('currid_'.$list_key,$currid);
         $parseStr = '<?php ';
         $parseStr.='
-            if(isset($typeid)){
+            if(isset($typeid) && "'.$type.'" !="top"){
                 $where = [];
                 $where[] = ["ishidden","=",0];
                 $where[] = ["reid","=",$typeid];
@@ -153,7 +154,7 @@ class Yycms extends TagLib{
             ';
         $parseStr.= '?>';
         $parseStr.= $content;
-        $parseStr.='<?php unset($typeid); } ;
+        $parseStr.='<?php  } ;
         ?>';
         
         return $parseStr;
@@ -216,6 +217,7 @@ class Yycms extends TagLib{
                     $arclist = \think\facade\Cache::get("'.$list_key.'",$arclist);  
                  } ';
         $parseStr.='
+			$paranField = isset($field) ? $field :"";
             foreach($arclist as $key=>$field){
                 $field["info"]=$field["description"];
                 $field["title"] = substr($field["title"],0,'.$titlelen.');
@@ -226,7 +228,7 @@ class Yycms extends TagLib{
         $parseStr.='?>';
         $parseStr.=$content;
         $parseStr.=' <?php }  
-                    
+                   $field = isset($paranField) ? $paranField :""; 
                 ?>';
         return $parseStr;
     }
@@ -431,8 +433,9 @@ class Yycms extends TagLib{
     }
     public function tagType($tag,$content){
         $typeid = empty($tag['typeid']) ? 0 : $tag['typeid'];
-        $typeinfo = \app\common\model\Arctype::find($typeid)->toArray();
+        $typeinfo = \app\common\model\Arctype::find($typeid);
         if(!$typeinfo) return '';
+        $typeinfo = $typeinfo->toArray();
         $typeKey = 'typeinfo_'.$typeid;
         \think\facade\Cache::set($typeKey,$typeinfo);
         $parse = '<?php ';
@@ -457,6 +460,22 @@ class Yycms extends TagLib{
         $parse .= '{volist name="__LIST__" id="field"}';
         $parse .= $content;
        $parse .= '{/volist}';
+        return $parse;
+    }
+    public function tagProductimagelist($tag, $content)
+    {
+        $type = empty($tag['type']) ? 0 : 1; // 
+        $name = empty($tag['name']) ? 'field' :$tag['name']; 
+        $parse = '<?php 
+                if(isset($yy["field"]["imgurls"]) && is_array($yy["field"]["imgurls"])){
+                    $field = [];
+                    foreach($yy["field"]["imgurls"] as $key => $val){
+                    $field["imgsrc"] = $val;
+                    $field["text"] = $yy["field"]["title"];
+                ?>';
+        $parse .= $content;
+        $parse .= '<?php } } ?>';
+
         return $parse;
     }
     /**

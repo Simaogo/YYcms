@@ -17,7 +17,7 @@ class Arctype extends \think\Model{
                 $v['level']      = $level + 1;
                // $ishidden        = $v['ishidden'] ? '<span style="font-size:12px;" class="doc-icon-name">隐藏</span>':' ';
                 $v['title']      = $v['typename'] .' <span style="font-size:12px;">[ID:'.$v['id'].']</span> ';
-                $v['spread']     = true;
+               
                 $v['children']   = self::arctypeTree($list, $v['id'], $level+1);
                 $arr[] = $v;
             }
@@ -26,11 +26,10 @@ class Arctype extends \think\Model{
     }
     public static function childrenIds($list,$id){
         $ids= [];
-        $ids[] = $id;
         foreach ($list as $v){
             if ($v['reid'] == $id) {
                 $ids[] = $v['id'];
-                self::childrenIds($list, $v['id']);
+                $ids = array_merge($ids,self::childrenIds($list, $v['id']));
             }
         }
         return $ids;

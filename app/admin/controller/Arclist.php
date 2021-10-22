@@ -1,9 +1,9 @@
 <?php
 
 namespace app\admin\controller;
-use app\admin\model\Arclist as ArclistModel;
-use app\admin\model\Arctype as ArctypeModel;
-use app\admin\model\Channeltype as ChanneltypeModel;
+use app\common\model\Arclist as ArclistModel;
+use app\common\model\Arctype as ArctypeModel;
+use app\common\model\Channeltype as ChanneltypeModel;
 use think\facade\View;
 use think\facade\Db;
 class Arclist extends \app\common\controller\Backend{
@@ -26,6 +26,7 @@ class Arclist extends \app\common\controller\Backend{
                 $typeids = trim(array_reduce($ids, function($carry, $item){
                     return $carry . ','.$item;
                 }), ',');
+                //halt($typeids);
                 $where[]= ['typeid','in',$typeids];
             }
             //halt($where);
@@ -112,13 +113,16 @@ class Arclist extends \app\common\controller\Backend{
             }
             $view['formData'] = $addinfo ? array_merge($maininfo->toArray(), $addinfo) : $maininfo;//合并
         }
-        $view['typeid'] =input('typeid');
-        if($view['typeid']){
-           $Arctype = ArctypeModel::find($view['typeid']);
-           $channeltype = $Arctype->channeltype;
-        } else {
+        $view['typeid'] = input('typeid');
+        if(input('typeid')) { //添加
+            $Arctype = ArctypeModel::find($view['typeid']);
+            $channeltype = $Arctype->channeltype;
+        }else if(isset($maininfo)){ //编辑
+            $channeltype = $maininfo['channel'];
+            $view['typeid'] = $maininfo['typeid'];
+        }else{
             $channeltype = 1;
-        }
+	}
         $Channel = ChanneltypeModel::find($channeltype);//模型
         $view['fieldset'] = $Channel->fieldset ?$this->decodeFileset($Channel->fieldset):'';//自定义字段
         $menu = ArctypeModel::select()->toArray();

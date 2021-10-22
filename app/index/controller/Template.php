@@ -63,7 +63,7 @@ class Template extends Common{
         $template  = str_replace('{style}/','', $template);
         $template = $this->isMobleTemplate($template);
         $template = $this->templateDefault($template,$ispart,$this->view_dir_name);
-
+        
         $yy = [ 'field' => $view];
         View::assign(['yy'=>$yy]);
         return View::fetch($this->view_dir_name .''.$template);
@@ -107,7 +107,10 @@ class Template extends Common{
         $template= str_replace('{style}/','', $view['temparticle']);
         $template = $this->isMobleTemplate($template);
         $template = $this->templateDefault($template,2,$this->view_dir_name);
+        $view['imgurls'] = isset($view['imgurls']) && $view['imgurls'] ? \fun\Process::decode_imgurls($addinfo['imgurls']) :'';//解析图集字段
+       // $view['imgurls'] = ['images/dfsdfsdf.jpg','fdafsjlfjsado/iiumagea.jgp'];//解析图集字段
         $yy = [ 'field' => $view];
+
         View::assign(['yy'=>$yy]);
         return View::fetch($this->view_dir_name .''. $template);
     }

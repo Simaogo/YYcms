@@ -1,4 +1,4 @@
-<?php /*a:2:{s:29:"../template/default/index.htm";i:1634718797;s:5:"param";i:0;}*/ ?>
+<?php /*a:2:{s:29:"../template/default/index.htm";i:1634797582;s:5:"param";i:0;}*/ ?>
 
 
  <?php 
@@ -14,7 +14,7 @@
           <dl>
             <dt><a href="<?php echo htmlentities($field['typeurl']); ?>"><?php echo htmlentities($field['typename']); ?></a></dt>
             <?php 
-            if(isset($typeid)){
+            if(isset($typeid) && "son" !="top"){
                 $where = [];
                 $where[] = ["ishidden","=",0];
                 $where[] = ["reid","=",$typeid];
@@ -74,6 +74,7 @@
                         ->toArray();
                     $arclist = \think\facade\Cache::get("0ccc728b051b06ff0d28f9f582da6577",$arclist);  
                  } 
+			$paranField = isset($field) ? $field :"";
             foreach($arclist as $key=>$field){
                 $field["info"]=$field["description"];
                 $field["title"] = substr($field["title"],0,120);
@@ -85,8 +86,8 @@
 		<li><a href=""><?php echo htmlentities($field['arcurl']); ?> : <?php echo htmlentities($field['title']); ?></a></li>
 
 		 <?php }  
-                    
-                unset($typeid); } ;
+                   $field = isset($paranField) ? $paranField :""; 
+                 } ;
         
             $menuList = \think\facade\Cache::get("d4c532af62eee071c8ca1067ff5b7275");
             $currid   = \think\facade\Cache::get("currid_d4c532af62eee071c8ca1067ff5b7275");
@@ -100,7 +101,7 @@
           <dl>
             <dt><a href="<?php echo htmlentities($field['typeurl']); ?>"><?php echo htmlentities($field['typename']); ?></a></dt>
             <?php 
-            if(isset($typeid)){
+            if(isset($typeid) && "son" !="top"){
                 $where = [];
                 $where[] = ["ishidden","=",0];
                 $where[] = ["reid","=",$typeid];
@@ -160,6 +161,7 @@
                         ->toArray();
                     $arclist = \think\facade\Cache::get("0ccc728b051b06ff0d28f9f582da6577",$arclist);  
                  } 
+			$paranField = isset($field) ? $field :"";
             foreach($arclist as $key=>$field){
                 $field["info"]=$field["description"];
                 $field["title"] = substr($field["title"],0,120);
@@ -171,8 +173,8 @@
 		<li><a href=""><?php echo htmlentities($field['arcurl']); ?> : <?php echo htmlentities($field['title']); ?></a></li>
 
 		 <?php }  
-                    
-                unset($typeid); } ;
+                   $field = isset($paranField) ? $paranField :""; 
+                 } ;
         $arclist = \think\facade\Cache::get("ac8b9c012832f8796a8f0f539e1ed9a8");
                 if(!$arclist){
                     $where=[];
@@ -212,6 +214,7 @@
                         ->toArray();
                     $arclist = \think\facade\Cache::get("ac8b9c012832f8796a8f0f539e1ed9a8",$arclist);  
                  } 
+			$paranField = isset($field) ? $field :"";
             foreach($arclist as $key=>$field){
                 $field["info"]=$field["description"];
                 $field["title"] = substr($field["title"],0,160);
@@ -219,7 +222,13 @@
                 $field["imgurls"] = isset($field["imgurls"])&&isset($field["imgurls"]) ? explode(",",$field["imgurls"]) :""; //图集
                 $field["arcurl"] = in_array("j",explode(",",$field["flag"])) && !empty($field["redirecturl"])?$field["redirecturl"] : \think\facade\Config::get("app.view_url")."/aid/".$field["id"];
             ?>
-      <li><a href=""><?php echo htmlentities($field['arcurl']); ?> : <?php echo htmlentities($field['title']); ?></a></li>
+      <li><a href="<?php echo htmlentities($field['arcurl']); ?>"><?php echo htmlentities($field['arcurl']); ?> : <?php echo htmlentities($field['title']); ?></a></li>
        <?php }  
-                    
+                   $field = isset($paranField) ? $paranField :""; 
                 ?>
+	  
+	 
+                    <li class="sf_footer_uldiv_h5_ul_li"><?php $field = \think\facade\Cache::get("typeinfo_4");$field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);$field["typeurl"] = \think\facade\Config::get("app.list_url") ."/tid/". $field["id"]; ?><?php echo htmlentities($field['typeurl']); ?></li>
+                    <li class="sf_footer_uldiv_h5_ul_li"><?php $field = \think\facade\Cache::get("typeinfo_5");$field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);$field["typeurl"] = \think\facade\Config::get("app.list_url") ."/tid/". $field["id"]; ?><a href='<?php echo htmlentities($field['typeurl']); ?>'><?php echo htmlentities($field['typename']); ?></a><?php ?></li>
+                    <li class="sf_footer_uldiv_h5_ul_li"><?php $field = \think\facade\Cache::get("typeinfo_6");$field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);$field["typeurl"] = \think\facade\Config::get("app.list_url") ."/tid/". $field["id"]; ?><a href='<?php echo htmlentities($field['typeurl']); ?>'><?php echo htmlentities($field['typename']); ?></a><?php ?></li>
+                    <li class="sf_footer_uldiv_h5_ul_li"><?php $field = \think\facade\Cache::get("typeinfo_19");$field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);$field["typeurl"] = \think\facade\Config::get("app.list_url") ."/tid/". $field["id"]; ?><a href='<?php echo htmlentities($field['typeurl']); ?>'><?php echo htmlentities($field['typename']); ?></a><?php ?></li>

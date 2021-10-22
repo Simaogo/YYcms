@@ -15,6 +15,7 @@ class Arctype extends \think\Model{
             if ($v['reid'] == $reid) {
                 $v['level']      = $level + 1;
                 $v['title']      = $v['typename'];
+                 $v['spread']     = true;
                 $v['children']   = self::arctypeTree($list, $v['id'], $level+1);
                 $arr[] = $v;
             }
@@ -23,14 +24,14 @@ class Arctype extends \think\Model{
     }
     public static function childrenIds($list,$id){
         $ids= [];
-        $ids[] = intval($id);
         foreach ($list as $v){
-            if ($v['reid'] == $id && $v['id']) {
+            if ($v['reid'] == $id) {
                 $ids[] = $v['id'];
-                self::childrenIds($list, $v['id']);
+                $ids = array_merge($ids,self::childrenIds($list, $v['id']));
             }
         }
-        return $ids;
+        $ids[] = intval($id);
+        return array_unique($ids);
     }
     /**
      * 高亮显示栏目

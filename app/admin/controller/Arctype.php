@@ -2,18 +2,19 @@
 
 namespace app\admin\controller;
 use think\facade\View;
-use app\admin\model\Arctype as ArctypeModel;
-use app\admin\model\Channeltype as ChanneltypeModel;
+use app\common\model\Arctype as ArctypeModel;
+use app\common\model\Channeltype as ChanneltypeModel;
 
 class Arctype extends \app\common\controller\Backend{
     public function index(){
         if(request()->isAjax()){
            $ArctypeModel = new ArctypeModel();
-           $limit = input('limit') ? input('limit'):15;
+           $limit = input('limit') ? input('limit'):1500;
            $page = input('page');
            $page = ($page -1) * $limit;
-           $data = $ArctypeModel->where('ishidden',0)->field('id,reid,typename')->limit($page,$limit)->select()->toArray();
+           $data = $ArctypeModel->field('id,reid,typename')->select();
            $menu = $ArctypeModel->arctypeTree($data);
+
            $count = $ArctypeModel->where('ishidden',0)->count();
            return json(['code'=>0,'msg'=>'success','data'=>$data,'count'=>$count]);
         }

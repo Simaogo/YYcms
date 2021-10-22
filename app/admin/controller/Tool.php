@@ -46,6 +46,7 @@ class Tool extends \app\common\controller\Backend{
             $str = preg_replace("/\[field:link\s+\/\]/i",'<a href="{$field.url}" target="_blank">{$field.webname}</a>',$str);
             //替换包含文件
             $str = preg_replace('/{dede:include\s+filename="(.*).htm"\/}/i','{include file="$1"/}',$str);
+            $str = preg_replace('/{dede:include\s+filename=\'(.*).htm\'\/}/i','{include file="$1"/}',$str);
             //关键词、描述、标题
             $str = preg_replace("/{dede:field.title\/}/i",'{$yy.field.title}',$str);
             $str = preg_replace("/{dede:field.title\s+\/}/i",'{$yy.field.title}',$str);
@@ -84,6 +85,7 @@ class Tool extends \app\common\controller\Backend{
             
            // $str = str_replace("dede:","yycms:",$str);
             $str = str_replace("dede:channel","yycms:channel",$str);
+            $str = str_replace("dede:sql","yycms:channel",$str);
             $str = str_replace("dede:channelartlist","yycms:list",$str);
             $str = str_replace("dede:list","yycms:list",$str);
             $str = str_replace("dede:arclist","yycms:arclist",$str);
@@ -108,6 +110,7 @@ class Tool extends \app\common\controller\Backend{
             
             $str = preg_replace("/channel\s+type=(\w+)\s+/i", 'channel type="$1" ', $str);
           
+            $str = preg_replace("/field.typedir}/i", 'field.typedir}', $str);
             $str = preg_replace("/field.pic}/i", 'field.picname}', $str);
             $str = preg_replace("/field.fulltitle}/i", 'field.title}', $str);
            
