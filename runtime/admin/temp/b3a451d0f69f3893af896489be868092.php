@@ -1,4 +1,4 @@
-<?php /*a:2:{s:48:"E:\WWW\tp6dedecms\app\admin\view\index\home.html";i:1634207430;s:5:"param";i:0;}*/ ?>
+<?php /*a:2:{s:48:"E:\WWW\tp6dedecms\app\admin\view\index\home.html";i:1634967591;s:5:"param";i:0;}*/ ?>
 <html lang="en"><head>
     <meta charset="utf-8">
     <title>后台首页</title>
@@ -78,6 +78,11 @@
     <tr>
         <td>当前版本：YYcms <?php echo htmlentities($now_version); ?>&nbsp;&nbsp;
             <button id="upgrade" class="layui-btn layui-btn-sm layui-btn-warm" >点此检测版本</button>
+        </td>
+    </tr>
+    <tr>
+        <td>github地址：<a href ="https://github.com/Simaogo/YYcms" target="_blank">https://github.com/Simaogo/YYcms</a>
+
         </td>
     </tr>
     <tr>

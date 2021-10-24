@@ -105,7 +105,7 @@ class Tool extends \app\common\controller\Backend{
             $str = preg_replace("/row=(\d*)\s/i", 'row="$1" ', $str);
             $str = preg_replace("/pagesize=(\d+)/i", 'pagesize="$1" ', $str);
             $str = preg_replace("/field.content}/i", 'yy.field.content|raw}', $str);
-            $str = preg_replace("/field.body}/i", 'yy.field.body|raw}', $str);
+            $str = preg_replace("/field.body}/i", 'field.body|raw}', $str);
             $str = preg_replace("/field.position}/i", 'yy.field.position|raw}', $str);
             
             $str = preg_replace("/channel\s+type=(\w+)\s+/i", 'channel type="$1" ', $str);

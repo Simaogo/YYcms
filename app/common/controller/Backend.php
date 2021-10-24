@@ -20,4 +20,23 @@ class Backend extends \app\BaseController{
             $this->error('登录超时!', url('login/index'));
         }
     }
+    /**
+     * 隐藏显示开关
+     * @return type
+     */
+    public function rowEdit(){
+        if(request()->isAjax()){
+            $post = input();
+            $name = $post['name'];
+            $data = [
+                 $name  => $post['value'],
+            ];
+            $where = ['id'=>$post['id']];
+            if(ArctypeModel::where($where)->save($data)){
+                return json(['code'=>0,'msg'=>'success']);   
+            } else {
+                return json(['code'=>0,'msg'=>'error']);   
+            }
+        }
+    }
 }

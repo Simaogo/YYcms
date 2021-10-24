@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="baidu-site-verification" content="jbfkgME9T0" />
+<title>{$yy.field.title}-{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{$yy.field.description}" />
+<link rel="stylesheet" href=" /static/css/style.css">
+<script src=" /static/js/jshandler.js" type="text/javascript"></script>
+</head>
+<body>
+{include file="head"/}
+<!--banner end-->
+<div class="submian w clearfix">
+  <div class="ne_left"></div>
+  <div class="ne_right"></div>
+  <!--left-->
+ {include file="left"/}
+  <!--left end--> 
+  <!--right-->
+  <div class="subright fr">
+    <div class="sobtitle">
+      <p class="fl">{$yy.field.typename}</p>
+      <div class="sitepath fr">当前位置：{$yy.field.position|raw} </div>
+      <i></i> </div>
+    <div class="content" id="content">
+      <div class="product-content">
+        <div class="original2"> <img src="{$yy.field.litpic}" title="{$yy.field.title}" alt="{$yy.field.title}" /> </div>
+        <div class="product-info2">
+          <h1>{$yy.field.title}</h1>
+          <div class="clear"></div>
+          <dl class="telx">
+            <dt>全国咨询热线：</dt>
+            <dd ig-phone>{:syscfg('cfg_tel')}</dd>
+          </dl>
+        </div>
+        <div class="clear"></div>
+        <div class="article-container">
+          <div class="article-head">
+            <h2>详情介绍:</h2>
+          </div>
+          <div class="article" id="article"> {$yy.field.body|raw} </div>
+          <div class="bdshare">
+            <div class="bdsharebuttonbox bdshare-button-style0-24" data-bd-bind="1460094611815"> 
+              <!--a href="#" class="bds_more" data-cmd="more"></a--> 
+              <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a> <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a> <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a> <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="relink">
+      <p>{yycms:prenext get='pre'/}</p>
+      <p>{yycms:prenext get='next'/}</p>
+    </div>
+    <div class="recommend-pro">
+      <div class="head">
+        <h2>相关推荐</h2>
+        {yycms:type  typeid='2'}<a href='{$field.typeurl}' class="mo">更多>></a>{/yycms:type} </div>
+      <div class="main">
+        <ul class="list">
+		{yycms:arclist typeid="2" row="4" orderby='pubdate'}
+          <li class="item">
+            <div class="img"><a href="{$field.arcurl}" title="{$field.title}" alt="{$field.title}" ><img src="{$field.picname}" title="{$field.title}" alt="{$field.title}" /></a></div>
+            <h3><a href="{$field.arcurl}" title="{$field.title}">{$field.title}</a></h3>
+          </li>
+         {/yycms:arclist}
+        </ul>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="recommend-form" id="recommendForm">
+      <div class="head">
+        <h2>在线留言</h2>
+      </div>
+     <form action="{:url("template/message")}" enctype="multipart/form-data" method="post" name='formPost' id='formPost'>
+		<input type="hidden" name="action" value="post" />
+		<input type="hidden" name="diyid" value="1" />
+		<input type="hidden" name="do" value="2" />
+		<input type="hidden" name="dede_fields" value="name,text;phone,text;email,text;address,text;content,multitext;subtime,text" />
+		<input type="hidden" name="dede_fieldshash" value="1bc744423ac994aa94324130c39313d0" />
+        <div class="main">
+          <div class="row-1 ico-name required">
+            <input type="text" class="txt" name="name" value="订购人" placeholder="订购人" empty="请输入您的的称呼" maxlength="5" />
+            <i class="tip">*</i> </div>
+          <div class="row-1 ico-phone required">
+            <input type="text" class="txt" name="phone" value="联系电话" placeholder="联系电话" empty="请输入您的联系电话" error="请输入正确的联系电话" maxlength="15" />
+            <i class="tip">*</i> </div>
+          <div class="row-1 ico-email">
+            <input type="text" class="txt" name="email" value="电子邮箱" placeholder="电子邮箱" error="请输入正确的电子邮箱" maxlength="30" />
+          </div>
+          <div class="row-2">
+            <textarea class="text" placeholder="请填写您的需求信息..." name="content">请填写您的需求信息...</textarea>
+          </div>
+          <!-- <div class="row-3">
+            <input type="text" class="code" name="txtImageCode" value="验证码" placeholder="验证码" empty="请输入验证码" maxlength="4" />
+            <img src=" /static/images/imageverification.aspx" onclick="ChangeImageVerificationImageUrl(this);" class="code" /> </div> -->
+          <div class="row-3">
+            <input type="submit" class="submit" value="提交" />
+            <input type="reset" class="reset" value="重置" />
+          </div>
+          <div class="clear"></div>
+        </div>
+        <input type="hidden" id="NavigateUrl" name="NavigateUrl" value="" />
+      </form>
+      <script type='text/javascript'> JsReady(function(){ fillFormValue(); });  </script> 
+    </div>
+  </div>
+</div>
+<!--right-->
+
+<div class="clear"></div>
+{include file="footer"/}
+</body>
+</html>

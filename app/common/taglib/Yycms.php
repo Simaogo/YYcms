@@ -10,7 +10,7 @@ class Yycms extends TagLib{
     protected $tags   =  [
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
         'channel'             => ['typeid,type,order,row', 'alias' => 'iterate','close' => 1],   //typeid:栏目id|默认0,order:排序方式desc|asc|默认desc,row条数
-        'channelartlist'      => ['typeid,order,row,pagesize', 'alias' => 'iterate','close' => 1,'level'=>3],   //typeid:栏目id|默认0,order:排序方式desc|asc|默认desc,row条数
+        'channelartlist'      => ['typeid,order,row,pagesize,ishidden', 'alias' => 'iterate','close' => 1,'level'=>3],   //typeid:栏目id|默认0,order:排序方式desc|asc|默认desc,row条数
         'arclist'             => ['typeid,channelid,order,row,flag,titlelen,limit', 'alias' => 'arclist','close' => 1],   //
         'list'                => ['order,row,flag,titlelen', 'alias' => 'list','close' => 1],   //列表页
         'pagelist'            => ['listitem,listsize', 'alias' => 'list','close' => 0],   //分页标签
@@ -30,6 +30,8 @@ class Yycms extends TagLib{
      */
     public function tagChannel($tag, $content){
         $list_key = '';
+        $where = [];
+        $where[] = ["ishidden","=",0];
         foreach ($tag as $key =>$value){
             $list_key .= $key.$value;
         }
@@ -42,29 +44,51 @@ class Yycms extends TagLib{
                 $tid = $Arclist->typeid;
              }
         }
-        $reid   = empty($tid) && empty($aid) ? 0 : $tid;//栏目ID
-        $type   = empty($tag['type']) ? 'top' : $tag['type'];//类型
-        if($type =='top'){
-            $typeid = 0;
+        $reid   = empty($tid) && empty($aid) ? 0 : $tid;//内页栏目ID
+        $type   = empty($tag['type']) ? 'son' : $tag['type'];//类型
+        $typeid   = empty($tag['typeid']) ? "0" : $tag['typeid'];//栏目ID
+        if($typeid){
+             $typeid = strval($typeid);
+            switch ($type) {
+                case "top"://调顶级
+                     $where[] = ["reid","=",0];
+                break;
+                case "self"://调自己
+                     $where[] = ["id","in",$typeid];
+                break;
+                case "son": //调下级
+                    $where[] = ["reid","in",$typeid];
+                break;
+                default :
+                    $where[] = ["reid","in",$typeid];
+            }
         } else {
-             $typeid = empty($tag['typeid']) ? $reid : $tag['typeid'];//栏目ID
+            switch ($type) {
+                case "son":
+                    if($reid){ 
+                        $where[] = ["reid","in",strval($reid)];     
+                    } else {
+                        $where[] = ["reid","in",$typeid];
+                    }
+                break;
+                default :
+                    $where[] = ["reid","=",$typeid];
+            }
         }
         $order  = empty($tag['order']) ? "sortrank asc": $tag['order'];//排序
         $row    = empty($tag['row']) ? 10: $tag['row'];//条数
         $currentstyle= empty($tag['currentstyle']) ? 'on': $tag['currentstyle'];//条数
         $list_key = md5($list_key.''.$typeid);
-        $where = [];
-        $where[] = ["ishidden","=",0];
-        $where[] = ["reid","=",$typeid];
+ 
         $ArctypeModel=new \app\common\model\Arctype();
         $list = $ArctypeModel::select()->toArray();
         $menuList = $ArctypeModel->where($where)->order($order)->limit(0,$row)->select()->toArray();
         //没有下级则等同级
         if(!$menuList){
             $where = [];
-            $ArctypeSelf = $ArctypeModel::find($typeid);
-            $where[] = ["reid","=",$ArctypeSelf->reid];
             $where[] = ["ishidden","=",0];
+            $ArctypeSelf = $ArctypeModel::find($reid);
+            $where[] = ["reid","=",$ArctypeSelf->reid];
             $menuList = $ArctypeModel->where($where)->order($order)->select()->toArray();
         }
         //高亮栏目
@@ -73,7 +97,8 @@ class Yycms extends TagLib{
         \think\facade\Cache::set('currid_'.$list_key,$currid);
         $parseStr = '<?php ';
         $parseStr.='
-            if(isset($typeid) && "'.$type.'" !="top"){
+           
+            if(isset($typeid) && empty("'.$typeid.'")){
                 $where = [];
                 $where[] = ["ishidden","=",0];
                 $where[] = ["reid","=",$typeid];
@@ -106,6 +131,7 @@ class Yycms extends TagLib{
        $order  = empty($tag['order']) ? "sortrank asc": $tag['order'];//排序
        $row    = empty($tag['row']) ? 10: $tag['row'];//条数 
        $type = empty($tag['type']) ? 'top' : $tag['type'];//类型
+       $ishidden = empty($tag['ishidden']) ? '0' : $tag['ishidden'];//是否显示隐藏栏目
        $list_key = '';
        $selftypeid = 0;//判断是否是调用当前栏目,0否,>0则是调用当前栏目
         foreach ($tag as $key =>$value){
@@ -121,25 +147,45 @@ class Yycms extends TagLib{
         }
         //高亮栏目ID
         $currentstyle = empty($tag['currentstyle']) ? 'on': $tag['currentstyle'];//条数
+        
         $ArctypeModel=new \app\common\model\Arctype();
         $currid = isset($tid) ? $ArctypeModel->currIds($ArctypeModel::select(),$tid):array();
-        
-        if(isset($tag['typeid']) ){
+        $where = [];
+        $type   = empty($tag['type']) ? 'son' : $tag['type'];//类型
+        $typeid   = empty($tag['typeid']) ? "0" : $tag['typeid'];//栏目ID
+        if($typeid){
+           if($tag['typeid']=='top'){
+               $typeid = '0';
+               $type =  'top';
+           }
+            switch ($type) {
+                case "top"://调顶级
+                     $where[] = ["reid","=",$typeid];
+                break;
+                case "self"://调自己
+                     $where[] = ["id","in",$typeid];
+                break;
+                case "son": //调下级
+                    $where[] = ["id","in",$typeid];
+                break;
+                default :
+                    $where[] = ["reid","in",$typeid];
+            }
+        } else {
+            $where[] = ["reid","=",0];
+        }
+        if(isset($tag['typeid']) && $tag['typeid']!='top'){
             $typeAarr = explode(',', $tag['typeid']);
             if(count($typeAarr) == 2 && $typeAarr[1]==0 ){
                 $tag['typeid'] = !empty($tag['typeid']) && $typeAarr[1] == 0 ? $typeAarr[0] : $tag['typeid'];//栏目ID
                 $selftypeid = $typeAarr[0];
                 $row = 1;
-                $typeidKey = 'id';
+                $where[] = ["id","in",$selftypeid];
             }
         }
-        $typeid= ($type =='top' && empty($tag['typeid'])) || $tag['typeid'] == 'top'? '0' : $tag['typeid'];
-        $typeidKey = $typeid ? 'id':'reid';
-        $list_key = md5($list_key);
-        $where = [];
-        $where[] = ["ishidden","=",0];
-        $where[] = [$typeidKey,"in",$typeid];
+        $where[] = ["ishidden","in",$ishidden];
         $menuList = $ArctypeModel->where($where)->order($order)->limit(0,$row)->select()->toArray();
+        $list_key = md5($list_key);
         \think\facade\Cache::set($list_key,$menuList);
         \think\facade\Cache::set('currid_'.$list_key,$currid);
         $parseStr = '<?php ';
@@ -217,7 +263,7 @@ class Yycms extends TagLib{
                     $arclist = \think\facade\Cache::get("'.$list_key.'",$arclist);  
                  } ';
         $parseStr.='
-			$paranField = isset($field) ? $field :"";
+            $paranField = isset($field) ? $field :"";
             foreach($arclist as $key=>$field){
                 $field["info"]=$field["description"];
                 $field["title"] = substr($field["title"],0,'.$titlelen.');

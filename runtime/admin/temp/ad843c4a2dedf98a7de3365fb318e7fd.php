@@ -1,4 +1,4 @@
-<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\arctype\add.html";i:1634312987;s:5:"param";s:24:"a:1:{s:2:"id";s:2:"61";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1634222788;}*/ ?>
+<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\arctype\add.html";i:1634989907;s:5:"param";s:23:"a:1:{s:2:"id";s:1:"1";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1634992668;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,22 +75,24 @@
                             <input type="radio" name="ishidden" lay-skin="primary" title="隐藏" value="1">
                       </div>
                     </div>
-                    <div class="layui-form-item">
-                  <label class="layui-form-label">栏目名称</label>
-                  <div class="layui-input-block">
-                    <input type="text" name="sortrank" lay-verify="" autocomplete="off" placeholder="请输入栏目排序" class="layui-input">
-                  </div>
                 </div>
-                </div>
-                 <div class="layui-form-item" pane="">
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="sortrank" required=""  lay-vertype="tips" placeholder="请输入排序" autocomplete="off" class="layui-input" value="50">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">请输入排序</div>
+                  </div>  
+
+                 <div class="layui-form-item layui-upload">
                     <label class="layui-form-label">栏目图片</label>
-                    <div class="layui-upload-drag" id="typeimg">
-                        <i class="layui-icon"></i>
-                        <p>点击上传，或将文件拖拽到此处</p>
-                        <div class="layui-hide" id="uploadDemoView">
-                          <hr>
-                          <img src="" alt="上传成功后渲染" style="max-width: 196px">
-                        </div>
+                    <div class="layui-input-inline">
+                        <input type="text" name="typeimg"  placeholder="请输入栏目图片" autocomplete="off" class="layui-input" value="">
+                    </div>
+                    <div class="layui-word-aux ">
+                        <button type="button" class="layui-btn layui-btn-sm" id="typeimg" lay-filter="upload">
+                            <i class="layui-icon">&#xe67c;</i>上传
+                       </button>
                     </div>
                 </div>
             </div>
@@ -171,110 +173,14 @@
 </script>
 <script>
     window.formData = <?php echo isset($formData)?(json_encode($formData)):'""'; ?>,
-    window.addEditUrl = window.location.href,
-    window.url = window.location.href,         
-    window.STATIC ='__STATIC__'
-    window.ADDONS = '__ADDONS__'
-    window.PLUGINS = '/static/plugins';
-    //form公共提交
-    layui.use(['form', 'jquery','table','element'], function(){
-      var form = layui.form
-      ,layer = layui.layer
-      ,table = layui.table
-      ,$ = layui.jquery;
-       if(formData){
-            layui.form.val('list',formData);//赋值
-       }
-      //监听提交
-      form.on('submit(submit)', function(obj){
-        var data =obj.field;
-        $.post(url,data,function(res){
-            layer.msg(res.msg,{time:600},function(){
-                  parent.layui.table.reload('list');
-                  var index = parent.layer.getFrameIndex(window.name);  
-                  parent.layer.close(index);
-            })
-        })
-        return false;
-      });
-        //监听行工具事件
-       table.on('tool(list)', function(obj){
-             var data = obj.data;
-             if(obj.event === 'del'){
-                layer.confirm('真的删除么', function(index){
-                     $.post("<?php echo url(request()->controller().'/del'); ?>",data,function(res,index){
-                         if(res.code==0) layer.msg(res.msg)
-                     })
-                     obj.del();
-                     layer.close(index);
-               })
-             } else if(obj.event === 'edit'){
-                layer.open({
-                 type: 2,
-                 title: '编辑',
-                 shadeClose: true,
-                 shade: 0.2,
-                 maxmin: true, //开启最大化最小化按钮
-                 area: ['85%', '85%'],
-                 content: '<?php echo url(request()->controller()."/addEdit"); ?>?id='+data.id
-               });
-             }
-         });
-        //头工具栏事件
-        table.on('toolbar(list)', function(obj){
-          var checkStatus = table.checkStatus(obj.config.id);
-          switch(obj.event){
-            case 'add':
-              layer.open({
-                  type: 2,
-                  title: '添加',
-                  shadeClose: true,
-                  shade: 0.2,
-                  maxmin: true, //开启最大化最小化按钮
-                  area: ['85%', '85%'],
-                  content: '<?php echo url(request()->controller()."/addEdit"); ?>'
-               });
-            break; 
-            break;
-            case 'getCheckLength':
-              var data = checkStatus.data;
-              layer.msg('选中了：'+ data.length + ' 个');
-            break;
-            case 'isAll':
-              layer.msg(checkStatus.isAll ? '全选': '未全选');
-            break;
-
-            //自定义头工具栏右侧图标 - 提示
-            case 'LAYTABLE_TIPS':
-              layer.alert('这是工具栏右侧自定义的一个图标按钮');
-            break;
-          };
-        });
-
-    });
-    //上传
-    var $ =layui.$;
-    var uploadList = document.querySelectorAll("[lay-filter=\"upload\"]");
-    if (uploadList.length > 0) {
-        $.each(uploadList, function(i, v) {
-            var _parent = $(this).parents('.layui-upload')
-            var input = _parent.find('input[type="text"]');
-            var uploadInst = layui.upload.render({
-                elem: this //绑定元素
-                ,url: '<?php echo url("ajax/uploads"); ?>' //上传接口
-                ,done: function(res){
-                  input.val(res.url);
-                  layer.msg(res.msg)
-                }
-                ,error: function(){
-                  //请求异常回调
-               }
-            })
-        })
-    }
-    
+    window.url = window.location.href,//当前URL
+    window.yyadminPath ='/yyAdmin'; 
+    window.addEditUrl = '<?php echo url(request()->controller()."/addEdit"); ?>',
+    window.rowEditUrl = '<?php echo url(request()->controller()."/rowEdit"); ?>',
+    window.uploadUrl = '<?php echo url("ajax/uploads"); ?>',
+    window.delUrl = '<?php echo url(request()->controller()."/del"); ?>';
     layui.config({
-        base: "/yyAdmin/layui/lay/modules/"
+        base: yyadminPath + "/js/"
     })
 </script>
 </body>
@@ -293,60 +199,17 @@
 });
 </script>
 <script>
-    layui.use(['form', 'layedit', 'laydate','upload'], function(){
+    layui.use(['form','formTool'], function(){
       var form = layui.form
-      ,layer = layui.layer
-      ,layedit = layui.layedit
-      ,upload = layui.upload
+      ,formTool = layui.formTool
       ,$ = layui.jquery
       ,laydate = layui.laydate;
-
-      //创建一个编辑器
-      var editIndex = layedit.build('LAY_demo_editor');
-
-      //自定义验证规则
-      form.verify({
-        title: function(value){
-          if(value.length < 5){
-            return '标题至少得5个字符啊';
-          }
-        }
-        ,pass: [
-          /^[\S]{6,12}$/
-          ,'密码必须6到12位，且不能出现空格'
-        ]
-        ,content: function(value){
-          layedit.sync(editIndex);
-        }
-      });
-
-      //监听指定开关
-      form.on('switch(switchTest)', function(data){
-        layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-          offset: '6px'
-        });
-        layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-      });
-
-
-      
-      //表单取值
-        layui.$('#LAY-component-form-getval').on('click', function(){
-          var data = form.val('example');
-          alert(JSON.stringify(data));
-        });
        laydate.render({
             elem: '#pubdate'
             ,type: 'datetime'
        });
-       //拖拽上传
-        upload.render({
-          elem: '#litpic'
-          ,url: '<?php echo url("common/upload/image"); ?>' 
-          ,done: function(res){
-            layer.msg('上传成功');
-            layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', res.data.src);
-          }
-        });
+       formTool.events.submit();//form提交
+       formTool.setValue();
+       formTool.uploads();
     });
 </script>

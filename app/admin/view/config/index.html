@@ -62,22 +62,8 @@
 </form>
 {include file="public/footer" /}
 <script>
-layui.use('element', function(){
-  var $ = layui.jquery
-  ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
-  
-  $('.site-demo-active').on('click', function(){
-    var othis = $(this), type = othis.data('type');
-    active[type] ? active[type].call(this, othis) : '';
-  });
-
-  //Hash地址的定位
-  var layid = location.hash.replace(/^?gid=0#id=/, '');
-  element.tabChange('config', layid);
-  
-  element.on('tab(config)', function(elem){
-    location.hash = '?id='+ $(this).attr('lay-id');
-  });
-  
-});
+    layui.use('formTool', function(){
+      var formTool = layui.formTool;
+      formTool.events.submit();
+    });
 </script>

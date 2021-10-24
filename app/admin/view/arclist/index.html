@@ -32,14 +32,14 @@
   </div>
 </div>         
 {include file="public/footer" /}
-
 <script>
-    layui.use(['table'], function(){
+    layui.use(['table','tableTool'], function(){
         var tree = layui.tree
         ,layer = layui.layer
         ,util = layui.util
         ,table = layui.table
-        ,$ = layui.jquery,typeid;
+        ,tableTool = layui.tableTool
+        ,$ = layui.jquery;
         $.post('{:url("arclist/arctypeList")}',{},function(res){
             tree.render({
               elem: '#arctype'
@@ -68,22 +68,18 @@
             ,cols: [[
               {type:'checkbox'}
               ,{field:'id', width:80, title: 'ID', sort: true}
-              ,{field:'title', width:'20%', title: '标题'}
+              ,{field:'title', width:'30%', title: '标题'}
               ,{field:'', width:120, title: '栏目', sort: true,templet:function(d){return d.arctype.typename}}
-              ,{field:'litpic', width:120, title: '缩略图', sort: true,templet:function(d){
-                  return '<img src="'+d.litpic+'" style="height:45px;"class="image">'; 
-               }}
-              ,{field:'arcrank', width:120, title: '预览权限', sort: true}
-              ,{field:'weight', width:80, title: '排序', sort: true}
-//              ,{field:'senddate', width:180, title: '创建时间'}
+              ,{field:'litpic', width:120, title: '缩略图', sort: true,templet:tableTool.templet.images}
+              ,{field:'weight', width:80, title: '排序', sort: true,edit:true}
               ,{field:'pubdate', width:180,title: '更新时间'}
-              ,{field:'', width:"20%", title: '操作',templet:'#operate'}
+              ,{field:'arcrank', width:120, title: '预览权限', sort: true,templet:tableTool.templet.switch}
+              ,{field:'', width:180, title: '操作',templet:tableTool.templet.operate}
             ]]
             ,limit:20
             ,page: true
        }
        table.render(tableConfig);
-       //if(title) table.reload(); 
     }
      arclist(0); //默认
      layui.form.on('submit(search)', function(obj){ //搜索标题
@@ -104,7 +100,7 @@
                     shade: 0.2,
                     maxmin: true, //开启最大化最小化按钮
                     area: ['85%', '85%'],
-                    content: '{:url(request()->controller()."/addEdit")}?id='+id+'&typeid='+typeid
+                    content: '{:url(request()->controller()."/addEdit")}?id='+id+'&typeid='+ typeid
                 });
               break;
               case 'getCheckData':
@@ -125,7 +121,10 @@
               break;
             };
           });
-         
+        tableTool.events.switch ();//开关点击事件
+        tableTool.events.rowEdit ();//编辑排序     
+        tableTool.events.operate();//操作
+     
   })
 </script>
 

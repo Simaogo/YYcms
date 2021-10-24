@@ -75,7 +75,7 @@ $langSet == 'en' && $lang = array_combine(array_keys($lang), array_keys($lang));
 <body class="error-page-wrapper">
 <div class="content-container">
     <div class="head-line">
-        <img src="/yyadmin/images/error.svg" alt="" width="150" />
+        <img src=")__YYADMIN__/images/error.svg" alt="" width="150" />
     </div>
     <div class="subheader">
         <?=$debug?$message:$lang['The page is unavailable']?>

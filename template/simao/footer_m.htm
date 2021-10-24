@@ -1,0 +1,36 @@
+<nav class="nav1">
+  <ul class="list clearfix">
+    <li><a href="/">网站首页</a></li>
+    {yycms:channel typeid='2'}
+	<li><a href='{$field.typeurl}'>{$field.typename}</a> </li>
+	{/yycms:channel}
+    {yycms:channel type='top'}
+	<li><a href='{$field.typeurl}'>{$field.typename}</a> </li>
+	{/yycms:channel}
+  </ul>
+</nav>
+<footer class="footer">
+  <div class="copyright"> {:syscfg('cfg_powerby')}</div>
+  <div class="goTop" id="goTop"><a href="javascript:;">返回顶部</a></div>
+</footer>
+<commend class="toolbar">
+  <dl class="list clearfix">
+    <dd><a href="/" class="too-home iconbef">首页</a></dd>
+    <dd><a href="tel:{:syscfg('cfg_tel')}" class="too-tel iconbef">电话</a></dd>
+    <dd><a href="#" class="too-qiao iconbef">咨询</a></dd>
+    <dd><a href="javascript:;" class="too-map iconbef"  onclick="app.map('show')">地图</a></dd>
+  </dl>
+</commend>
+<section class="location" id="location">
+  <div class="map" id="map"></div>
+  <div class="address">
+    <p>办公地址： {:syscfg('cfg_oaddress')} </p>
+    <p>工厂地址： {:syscfg('cfg_faddress')} </p>
+  </div>
+  <div class="close" onclick="app.map('hide')"></div>
+  <script type="text/javascript">
+   JsReady(function(){showMap('map','{:syscfg('cfg_webname')}',{:syscfg('cfg_map')},'电话：{:syscfg('cfg_tel')}<br/>地址：{:syscfg('cfg_oaddress')}',15)}); 
+</script> 
+</section>
+<script src="/m/static/js/touchslide.1.1.js"></script> 
+<script src="/m/static/js/app.js"></script> 

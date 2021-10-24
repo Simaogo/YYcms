@@ -1,4 +1,4 @@
-<?php /*a:2:{s:49:"E:\WWW\tp6dedecms\app\admin\view\index\index.html";i:1634741506;s:5:"param";i:0;}*/ ?>
+<?php /*a:2:{s:49:"E:\WWW\tp6dedecms\app\admin\view\index\index.html";i:1634967426;s:5:"param";i:0;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -51,25 +51,25 @@
 
                 <li class="layui-nav-item feature-items">
                     <a lay-event="website" title="前台">
-                        <i class="ri-earth-line"></i>
+                        <i class="ri-earth-line"></i> 网站首页
                     </a>
                 </li>
 
                 <li class="layui-nav-item feature-items">
-                    <a lay-event="clear" title="清理标签缓存"><i class="ri-brush-3-line"></i></a>
+                    <a lay-event="clear" title="清理标签缓存"><i class="ri-brush-3-line"></i> 清理缓存</a>
                 </li>
-                <li class="layui-nav-item feature-items">
+<!--                <li class="layui-nav-item feature-items">
                     <a lay-event="github" title="Github 地址">
                         <i class="ri-github-fill"></i>
                     </a>
-                </li>
-                <li class="layui-nav-item feature-items">
+                </li>-->
+<!--                <li class="layui-nav-item feature-items">
                     <a lay-event="tag" title="便签"><i class="ri-git-repository-line"></i></a>
                 </li>
 
                 <li class="layui-nav-item feature-items">
                     <a lay-event="todo" title="待处理任务"><i class="ri-calendar-todo-line"></i></a>
-                </li>
+                </li>-->
 
                 <li class="layui-nav-item feature-items">
                     <a id="screenFull" lay-event="screenFull" title="全屏">
@@ -205,8 +205,8 @@
 
         <!-- 底部固定区域 -->
         <div class="layui-footer">
-            copyright © 2020 Y-Admin all rights reserved.
-            <ul class="tabbar">
+            copyright © 2021 YY-Admin all rights reserved.
+            <!--<ul class="tabbar">
                 <li>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                         <path fill="none" d="M0 0h24v24H0z" />
@@ -247,7 +247,7 @@
                             d="M12.414 5H21a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h7.414l2 2zM12 13a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm-4 5h8a4 4 0 1 0-8 0z" />
                     </svg>
                 </li>
-            </ul>
+            </ul>-->
 
         </div>
 
@@ -255,7 +255,9 @@
         <div class="site-mobile-shade"></div>
     </div>
     <script>
-       window.clearTuntimeUrl = '<?php echo url("index/clear"); ?>';//清除缓存URL
+       window.clearRuntimeUrl = '<?php echo url("index/clear"); ?>';//清除缓存URL
+       window.homeUrl = '<?php echo url("index/clear"); ?>';//homeURL
+       window.yyAdminPath = '/yyAdmin';//yyadmin.js URL
     </script>
     <!-- layui JS -->
     <script src="/yyAdmin/layui/layui.js"></script>

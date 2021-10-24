@@ -12,11 +12,12 @@ class Arctype extends \app\common\controller\Backend{
            $limit = input('limit') ? input('limit'):1500;
            $page = input('page');
            $page = ($page -1) * $limit;
-           $data = $ArctypeModel->field('id,reid,typename')->select();
-           $menu = $ArctypeModel->arctypeTree($data);
-
-           $count = $ArctypeModel->where('ishidden',0)->count();
-           return json(['code'=>0,'msg'=>'success','data'=>$data,'count'=>$count]);
+           $list = $ArctypeModel
+                   ->withJoin(['Channeltype'=>['typename']])
+                   ->select();
+           //$menu = $ArctypeModel->arctypeTree($list);
+           $count = $ArctypeModel->count();
+           return json(['code'=>0,'msg'=>'success','data'=>$list,'count'=>$count]);
         }
         return View::fetch();
     }
@@ -49,6 +50,26 @@ class Arctype extends \app\common\controller\Backend{
             $Channeltype = ArctypeModel::find($post['id']);
             $Channeltype->delete();
             return json(['code'=>0,'msg'=>'success']);
+        }
+    }
+    
+    /**
+     * 隐藏显示开关
+     * @return type
+     */
+    public function rowEdit(){
+        if(request()->isAjax()){
+            $post = input();
+            $name = $post['name'];
+            $data = [
+                 $name  => $post['value'],
+            ];
+            $where = ['id'=>$post['id']];
+            if(ArctypeModel::where($where)->save($data)){
+                return json(['code'=>0,'msg'=>'success']);   
+            } else {
+                return json(['code'=>0,'msg'=>'error']);   
+            }
         }
     }
 }

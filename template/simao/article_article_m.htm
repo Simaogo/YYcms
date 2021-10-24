@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+  <meta name="format-detection" content="telephone=no" />
+<title>{$yy.field.title}-{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{$yy.field.description}" />
+  <link rel="stylesheet" type="text/css" href="/m/static/css/style.css" />
+  <script src="/m/static/js/jshandler.js" type="text/javascript"></script>
+  </head>
+  <body>
+{include file="header_m"/}
+
+<section class="product-view" id="productView"><img src="{$yy.field.litpic}" title="{$yy.field.typename}" alt="{$yy.field.typename}" />
+    <h1 ig-cut>{$yy.field.typename}</h1>
+  </section>
+<section class="banner qqqq" id="banner">
+    <ul class="list">
+    <!-- <li><img src="" title="" alt="" /></li> -->
+  </ul>
+    <div class="tip"></div>
+    <script>var multigraph = $news.multigraph;</script> 
+  </section>
+<section class="product-content">
+    <div class="itit">
+    <h2 class="iconbef" ig-cut>详细介绍</h2>
+    <!-- <a href="javascript:;" ig-hide class="share" id="showBaiduShare"></a> --> 
+  </div>
+    <article ig-article> 
+		{$yy.field.body|raw}
+	</article>
+    <commend ig-link>
+    <div class="prev">{yycms:prenext get='pre'/}</div>
+    <div class="next">{yycms:prenext get='next'/}</div>
+  </commend>
+    <section class="com-order">
+    <div class="itit">
+        <div class="titc">
+        <h2 class="iconbef">在线预订</h2>
+      </div>
+      </div>
+
+	
+       <form action="{:url("template/message")}" enctype="multipart/form-data" method="post" name='formPost' id='formPost'>
+		<input type="hidden" name="action" value="post" />
+		<input type="hidden" name="diyid" value="1" />
+		<input type="hidden" name="do" value="2" />
+		<input type="hidden" name="dede_fields" value="name,text;phone,text;email,text;address,text;content,multitext;subtime,text" />
+		<input type="hidden" name="dede_fieldshash" value="1bc744423ac994aa94324130c39313d0" />
+        <ul class="content">
+        <li class="ico-name">
+            <input type="text" value="" placeholder="请输入您的姓名" name="name" maxlength="5" class="txt" null="请输入您的姓名" />
+          </li>
+        <li class="ico-phone">
+            <input type="tel" value="" placeholder="请输入电话号码" name="phone" maxlength="15" class="txt" null="请输入您的手机号码" error="请输入正确的手机号码，例如：13800008888" />
+          </li>
+        <li>
+            <textarea name="content" class="text" placeholder="请填写您的需求信息 ..." null="请填写您的需求信息 ..."></textarea>
+          </li>
+        <li>
+            <input type="submit" class="submit" value="确认提交" onclick="return app.checkForm()">
+          </li>
+      </ul>
+        <input type="hidden" id="NavigateUrl" name="NavigateUrl" value="" />
+      </form>
+    <script type='text/javascript'> JsReady(function(){ fillFormValue(); });  </script> 
+  </section>
+    <div class="com-recommend">
+    <div class="itit">
+        <div class="titc">
+        <h2 class="iconbef">相关产品</h2>
+      </div>
+      </div>
+    <section class="list-product">
+        <dl class="list clearfix">
+        {yycms:arclist typeid="2" row="4" titlelen="60" orderby='pubdate'}
+		<dd class="item"><a href="{$field.arcurl}" ig-touch>
+          <figure><img src="{$field.picname}" title="{$field.title}" alt="{$field.title}" /></figure>
+          <h3>{$field.title}</h3>
+          </a></dd>
+        {/yycms:arclist}
+      </dl>
+      </section>
+  </div>
+  </section>
+{include file="footer_m"/}
+</body>
+  </html>
+
+ 

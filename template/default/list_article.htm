@@ -1,31 +1,47 @@
-<form action="{:url("template/message")}" enctype="multipart/form-data" method="post" id="form">
-            <input type="hidden" name="action" value="post">
-            <input type="hidden" name="diyid" value="1">
-            <input type="hidden" name="do" value="2">
-          <div class="signWindow-info">
-            <div class="signWindow-input">
-              <ul>
-                <li><span><i>*</i>您的名字：</span>
-                  <input class="Name" type="" name="name" id="name">
-                </li>
-                <li><span>您的年龄：</span>
-                  <input class="Old" type="" name="nianling">
-                </li>
-                <li><span><i>*</i>您的电话：</span>
-                  <input class="Phone" type="" name="tel" id="tel">
-                </li>
-                <li><span>您的预算：</span>
-                  <input class="Old" type="" name="yusuan">
-                </li>
-                
-                <li><span>留言：</span>
-                  <textarea class="Textarea" name="content"></textarea>
-                </li>
-                <input type="hidden" name="dede_fields" value="name,text;nianling,text;tel,text;yusuan,text;content,multitext">
-<input type="hidden" name="dede_fieldshash" value="46af58021fbb07c816a0105e30ad1b72">
-              </ul>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<title>{$yy.field.typename}_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{dede:field name='description' /}" />
+<script type="text/javascript" src="/skin/js/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="/skin/css/style.css">
+<link rel="stylesheet" href="/skin/css/font-awesome.min.css">
+<script type="text/javascript" src="/skin/js/js.js"></script>
+<script type="text/javascript" src="/skin/js/superslide.js"></script>
+</head>
+<body>
+{include file="head"/}
+{include file="banner"/}
+<div class="container">
+    {include file="position"/}
+    <div class="center">
+        <div class="wrap clearfix">
+            {include file="left"/}
+            <div class="main_r fr">
+                <div class="art_list">
+                    <ul>
+					    {yycms:list pagesize="6"}
+                        <li>
+                            <div class="fl"> <a href="{$field.arcurl}"> <img src="{$field.litpic}" alt="{$field.title}" /> </a> </div>
+                            <div class="fr"> <a href="{$field.arcurl}">{$field.title}</a> <span>{$field.pubdate}</span>
+                                <p>{$field.description}...</p>
+                            </div>
+                        </li>
+						{/yycms:list}
+                    </ul>
+                </div>
+                <div class="pages">
+                    <div class="pagination"><ul>{yycms:pagelist listitem="index,end,pre,next,pageno" listsize="5"/}</ul></div>
+                </div>
             </div>
-            <a href="#">
-            <input id="submit" type="submit" value="提交留言" class="signWindow-btn">
-            </a> </div>
-        </form>
+        </div>
+    </div>
+</div>
+{include file="footer"/}
+</body>
+</html>

@@ -6,10 +6,9 @@
 </div>
 {include file="public/footer" /}
 <script>
-     layui.use(['table'], function(){
-      var table = layui.table;
-        //第一个实例
-        table.render({
+     layui.use(['tableTool'], function(){
+      var tableTool = layui.tableTool;
+        tableTool.render({
           elem: '#list'
           ,height: '800'
           ,url: url //数据接口
@@ -28,8 +27,10 @@
             ,{field: 'usertype', title: '角色', width:100,sort: true,align:'center'}
             ,{field: 'logintime', title: '登录时间', width:150,sort: true,align:'center'}
             ,{field: 'loginip', title: '登录IP', width:200,sort: true,align:'center'}
-            ,{field: '', title: '操作', width:'25%',align:'center',templet:'#operate'}
+            ,{field: '', title: '操作', width:'25%',align:'center',templet:tableTool.templet.operate}
           ]]
         });
+        tableTool.events.operate();
+        tableTool.events.toolbar();
     });
 </script>

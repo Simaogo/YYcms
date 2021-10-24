@@ -21,13 +21,9 @@
       
 {include file="public/footer" /}
 <script>
-    layui.use('table', function(){
-        var tree = layui.tree
-        ,layer = layui.layer
-        ,util = layui.util
-        ,table = layui.table
-        ,$ = layui.jquery;
-        table.render({
+    layui.use('tableTool', function(){
+        var tableTool = layui.tableTool;
+        tableTool.render({
             elem: '#list'
             ,url:url
             ,toolbar: '#toolbar' 
@@ -46,11 +42,13 @@
               ,{field:'listfields', width:'20%', title: '字段'}
                ,{field:'fieldset', width:'20%', title: '字段设置',type:'text'}
               ,{field:'isshow', width:80, title: '显示', sort: true}
-              ,{field:'', width:180, title: '操作',templet:'#operate'}
+              ,{field:'', width:180, title: '操作',templet:tableTool.templet.operate}
             ]]
             ,limit:20
             ,page: true
         })
+        tableTool.events.operate();
+        tableTool.events.toolbar();
   })
 </script>
 

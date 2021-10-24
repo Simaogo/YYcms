@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+<meta name="format-detection" content="telephone=no" />
+
+<link rel="stylesheet" type="text/css" href="/m/static/css/style.css" />
+<script src="/mstatic/js/jshandler.js" type="text/javascript"></script>
+</head>
+<body>
+{include file="header_m"/}
+<div class="itit nytit">
+  <h2 class="iconbef">{$yy.field.typename}</h2>
+  <div class="showmenu" id="showmenu">选择分类</div>
+</div>
+<nav class="menu" id="menu">
+  <dl class="list clearfix">
+    {yycms:channel type='son'}
+    <dd ><a href="list.php?tid={$field.id}" ig-cut>{$field.typename}</a></dd>
+	{/yycms:channel}
+  </dl>
+</nav>
+<section class="wrapper">
+  <article ig-article> 　
+	{$yy.field.content|raw}
+  </article>
+</section>
+{include file="footer_m"/}
+</body>
+</html>

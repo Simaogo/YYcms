@@ -24,6 +24,6 @@ class Arclist extends \think\Model{
         
     }
     public function arctype(){
-        return $this->hasOne('Arctype', 'id','typeid');
+        return $this->hasOne('Arctype', 'id','typeid' );
     }
 }

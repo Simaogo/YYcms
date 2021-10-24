@@ -1,0 +1,28 @@
+{yycms:channelartlist typeid="2" ishidden="0,1"}
+<div class="ipro wx clearfix">
+  <div class="sidebar">
+    <div class="topclass">
+      <h2 class="s">产品中心</h2>
+    </div>
+    <dl class="side-menu clearfix" id="menu">
+     {yycms:channel type='son'}
+	 <dd> <a href="{$field.typeurl}" title="{$field.typename}" > {$field.typename} </a>
+        <ul class="drop" style="display:block;">
+        </ul>
+      </dd>
+      {/yycms:channel}
+    </dl>
+    <div class="detail s"> </div>
+  </div>
+  <div class="tod">
+    <div class="iclass_tit">
+      <h1 class="s">推荐产品</h1>
+      <a href="{$field.typeurl}" class="mo">更多+</a> </div>
+    <ul class="clearfix">
+	  {yycms:arclist row="6" orderby='weight' orderway='desc'}	
+      <li><a href="{$field.arcurl}" title="{$field.title}"><img src="{$field.picname}" alt="{$field.title}" title="{$field.title}" /></a> <span><a href="{$field.arcurl}" title="{$field.title}">{$field.title}</a> </span> </li>
+    {/yycms:arclist}
+    </ul>
+  </div>
+</div>
+{/yycms:channelartlist}

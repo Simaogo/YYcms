@@ -1,4 +1,4 @@
-<?php /*a:4:{s:51:"E:\WWW\tp6dedecms\app\admin\view\arctype\index.html";i:1634791219;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1634222788;}*/ ?>
+<?php /*a:4:{s:51:"E:\WWW\tp6dedecms\app\admin\view\arctype\index.html";i:1635004909;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1634992668;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +12,9 @@
 </head>
 <body>
 
+<style>
+    .layui-table-cell{cursor: pointer;}
+</style>
 <div class="layui-row" style="margin-bottom: 50px;">
   <div class="layui-col-md12">
     <div class="layui-card">
@@ -22,7 +25,6 @@
     </div>
   </div>
 </div>
-
  <script src="/yyAdmin/layui/layui.js"></script>
 <!-- jQuery JS -->
 <script type="text/html" id="toolbar">
@@ -39,122 +41,24 @@
 </script>
 <script>
     window.formData = <?php echo isset($formData)?(json_encode($formData)):'""'; ?>,
-    window.addEditUrl = window.location.href,
-    window.url = window.location.href,         
-    window.STATIC ='__STATIC__'
-    window.ADDONS = '__ADDONS__'
-    window.PLUGINS = '/static/plugins';
-    //form公共提交
-    layui.use(['form', 'jquery','table','element'], function(){
-      var form = layui.form
-      ,layer = layui.layer
-      ,table = layui.table
-      ,$ = layui.jquery;
-       if(formData){
-            layui.form.val('list',formData);//赋值
-       }
-      //监听提交
-      form.on('submit(submit)', function(obj){
-        var data =obj.field;
-        $.post(url,data,function(res){
-            layer.msg(res.msg,{time:600},function(){
-                  parent.layui.table.reload('list');
-                  var index = parent.layer.getFrameIndex(window.name);  
-                  parent.layer.close(index);
-            })
-        })
-        return false;
-      });
-        //监听行工具事件
-       table.on('tool(list)', function(obj){
-             var data = obj.data;
-             if(obj.event === 'del'){
-                layer.confirm('真的删除么', function(index){
-                     $.post("<?php echo url(request()->controller().'/del'); ?>",data,function(res,index){
-                         if(res.code==0) layer.msg(res.msg)
-                     })
-                     obj.del();
-                     layer.close(index);
-               })
-             } else if(obj.event === 'edit'){
-                layer.open({
-                 type: 2,
-                 title: '编辑',
-                 shadeClose: true,
-                 shade: 0.2,
-                 maxmin: true, //开启最大化最小化按钮
-                 area: ['85%', '85%'],
-                 content: '<?php echo url(request()->controller()."/addEdit"); ?>?id='+data.id
-               });
-             }
-         });
-        //头工具栏事件
-        table.on('toolbar(list)', function(obj){
-          var checkStatus = table.checkStatus(obj.config.id);
-          switch(obj.event){
-            case 'add':
-              layer.open({
-                  type: 2,
-                  title: '添加',
-                  shadeClose: true,
-                  shade: 0.2,
-                  maxmin: true, //开启最大化最小化按钮
-                  area: ['85%', '85%'],
-                  content: '<?php echo url(request()->controller()."/addEdit"); ?>'
-               });
-            break; 
-            break;
-            case 'getCheckLength':
-              var data = checkStatus.data;
-              layer.msg('选中了：'+ data.length + ' 个');
-            break;
-            case 'isAll':
-              layer.msg(checkStatus.isAll ? '全选': '未全选');
-            break;
-
-            //自定义头工具栏右侧图标 - 提示
-            case 'LAYTABLE_TIPS':
-              layer.alert('这是工具栏右侧自定义的一个图标按钮');
-            break;
-          };
-        });
-
-    });
-    //上传
-    var $ =layui.$;
-    var uploadList = document.querySelectorAll("[lay-filter=\"upload\"]");
-    if (uploadList.length > 0) {
-        $.each(uploadList, function(i, v) {
-            var _parent = $(this).parents('.layui-upload')
-            var input = _parent.find('input[type="text"]');
-            var uploadInst = layui.upload.render({
-                elem: this //绑定元素
-                ,url: '<?php echo url("ajax/uploads"); ?>' //上传接口
-                ,done: function(res){
-                  input.val(res.url);
-                  layer.msg(res.msg)
-                }
-                ,error: function(){
-                  //请求异常回调
-               }
-            })
-        })
-    }
-    
+    window.url = window.location.href,//当前URL
+    window.yyadminPath ='/yyAdmin'; 
+    window.addEditUrl = '<?php echo url(request()->controller()."/addEdit"); ?>',
+    window.rowEditUrl = '<?php echo url(request()->controller()."/rowEdit"); ?>',
+    window.uploadUrl = '<?php echo url("ajax/uploads"); ?>',
+    window.delUrl = '<?php echo url(request()->controller()."/del"); ?>';
     layui.config({
-        base: "/yyAdmin/layui/lay/modules/"
+        base: yyadminPath + "/js/"
     })
 </script>
 </body>
 </html>
-
 <script>
-    
-   layui.use(['tableTreeDj','table'], function() {
+   layui.use(['tableTreeDj','table','tableTool'], function() {
         let tableTree = layui.tableTreeDj
             ,table    = layui.table
+            ,tableTool    = layui.tableTool
             ,$ = layui.$;
-
         // 分页配置
         const page = {
             elem: 'page'
@@ -167,11 +71,13 @@
 
         // 字段配置
         const cols = [[
-            {field:'id', title:'ID',width:80}
-            ,{field:'typename', title:'名称',sort:true,width:'20%'}
-            ,{field:'reid', title:'上级ID',width:100}
-            ,{field:'', width:"20%", title: '操作',templet:'#operate'}
-           
+            {type:'checkbox'}
+            ,{field:'id', title:'ID',width:80,sort:true}
+            ,{field:'typename', title:'名称',width:'50%'}
+            ,{field:'channeltype__typename', title:'所属模型',sort:true,width:120}
+            ,{field:'sortrank', title:'排序',width:100,edit:true}
+            ,{field:'ishidden', title:'显示',width:100,templet:tableTool.templet.switch}
+            ,{field:'', width:"20%", title: '操作',templet:tableTool.templet.operate} 
         ]];
         // 表格配置
         const objTable = {
@@ -187,6 +93,7 @@
             ,limit: 30
             ,cols: cols
             ,id: 'list'
+            ,skin: 'line'
             ,done:function(res, curr, count) {
 
             }
@@ -206,7 +113,7 @@
             , sort: 'asc'
             , title: 'typename'
            , keyPid: "reid" // 上级ID
-            , defaultShow: true
+            , defaultShow: false
             , showByPidCallback: (idArr) => {
                 //console.log('idArr', idArr);
             }
@@ -260,7 +167,10 @@
             objTable.where = {key:"val"}
             tableTree.reload(objTable, 'list');
         });
-
+         tableTool.events.switch ();//开关点击事件
+        tableTool.events.rowEdit ();//编辑排序     
+        tableTool.events.operate();//操作
+        tableTool.events.toolbar();//工具头事件
     });
     
 </script>

@@ -1,0 +1,55 @@
+ <div class="subleft fl">
+  	
+  	<div class="sidebar">
+      <div class="topclass">
+        <h2 class="s">产品中心</h2>
+      </div>
+      <dl class="side-menu clearfix" id="menu">
+        {yycms:channel typeid='2'}
+          <dd>
+            <a href="{$field.typeurl}" title="{$field.typename}" > {$field.typename} </a>
+            <ul class="drop" >
+              </ul>
+          </dd>
+        {/yycms:channel}
+          </dl>
+       <div class="detail s">
+      	</div>
+    </div>
+      	<div class="leftnews clearfix">
+
+		<div class="titlex">
+		<span>推荐产品</span>
+		<b>PEARL COTTON </b>
+		</div>
+  		<div class="leftnewscomt">
+			<div class="mainx" id="inewsView">
+            <dl class="listx">
+            	{yycms:arclist typeid="2" row="3" orderby='pubdate'}
+            	<dd><a href="{$field.arcurl}" title="{$field.title}"><img src="{$field.picname}" title="{$field.title}" alt="{$field.title}" /></a></dd>
+               {/yycms:arclist}
+              </dl>
+            <div class="clear"></div>
+            <div class="tipx"></div>
+        </div>
+		</div>
+
+	</div>
+  <!-- contact -->
+  <div class="leftcontact" style="margin-top:20px;">
+		
+		<div class="titlex">
+		<span>联系我们</span>
+		<b>CONTACT</b>
+		</div>
+		<div class="leftcontactcomt">
+				
+                  <strong>{:syscfg('cfg_webname')}</strong>　<br />
+电话咨询：{:syscfg('cfg_tel')}<br />
+
+工厂地址：{:syscfg('cfg_faddress')}<br />
+
+			    		</div>
+			</div>
+  
+</div>

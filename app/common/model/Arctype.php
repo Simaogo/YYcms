@@ -15,7 +15,7 @@ class Arctype extends \think\Model{
             if ($v['reid'] == $reid) {
                 $v['level']      = $level + 1;
                 $v['title']      = $v['typename'];
-                 $v['spread']     = true;
+               // $v['spread']     = true;
                 $v['children']   = self::arctypeTree($list, $v['id'], $level+1);
                 $arr[] = $v;
             }
@@ -49,6 +49,10 @@ class Arctype extends \think\Model{
         }
         return $arr;
     }
+    
+    public function Channeltype(){
+        return $this->hasOne('Channeltype', 'id','channeltype');
+    }
     public static function cateTree($cate ,$name='typename', $lefthtml = '|---- ' , $reid = 0 , $level = 0 ){
         $arr = array();
         foreach ($cate as $v){
@@ -59,16 +63,6 @@ class Arctype extends \think\Model{
                 $arr[] = $v;
                 $arr = array_merge($arr, self::cateTree($cate,$name, $lefthtml, $v['id'], $level+1));
             }
-        }
-        return $arr;
-    }
-    //栏目高亮id
-    public function artypeCurrId($id){
-        $arr = array();
-        $artype=self::find($id);
-        if($artype){
-             $arr[]=$artype->topid;
-             $arr=array_merge($arr,self::artypeCurrId($artype->topid));
         }
         return $arr;
     }

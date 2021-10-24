@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+<meta name="format-detection" content="telephone=no" />
+<title>{:syscfg('cfg_webname')}</title>
+<meta name="description" content="{:syscfg('cfg_description')}" />
+<meta name="keywords" content="{:syscfg('cfg_keywords')}" />
+<link rel="stylesheet" type="text/css" href="/m/static/css/style.css" />
+<script src="/m/static/js/jshandler.js" type="text/javascript"></script>
+</head>
+<body>
+{include file="header_m"/}
+<section class="banner" id="banner">
+  <ul class="list">
+    <li><img src="/m/static/images/20190415103922_9131.jpg" title="{:syscfg('cfg_webname')}|保护膜" alt="{:syscfg('cfg_webname')}|保护膜" /></li>
+    <li><img src="/m/static/images/20190415103927_8271.jpg" title="{:syscfg('cfg_webname')}|保护膜" alt="{:syscfg('cfg_webname')}|保护膜" /></li>
+    <li><img src="/m/static/images/20190415103932_6008.jpg" title="{:syscfg('cfg_webname')}|保护膜" alt="{:syscfg('cfg_webname')}|保护膜" /></li>
+  </ul>
+  <div class="tip"></div>
+</section>
+
+<!-- <dl class="searcher clearfix">
+    	<dd>
+            <input type="text" class="txt" value="" placeholder="请输入关键字" maxlength="10" id="SearchTxt" />
+            <input type="hidden"  value="//da76388a-0bde-4d84-b3e8-313c85f60101.html?a=1&key=d5818611-8cae-4628-9084-e388b27a032c"  id="Searchtype" />        </dd>
+        <dt><input type="submit" class="submit icon2" value="" id="SearchSubmit" /></dt>
+    </dl> -->
+<div class="floor_6_main">
+  <div class="floor_6_1">
+    <div class="title">
+      <h1 class="icon">热销产品</h1>
+      <span><a href="list.php?tid=2">更多+</a></span> </div>
+    <div class="gridlist"  id="honor">
+      <div class="honor-view">
+        <ul class="honorlist clearfix">
+          {yycms:arclist typeid="2" row="6" titlelen="60" orderby='click'}
+		  <li><a href="{$field.arcurl}" title="{$field.title}"><img src="{$field.picname}" title="{$field.title}" alt="{$field.title}"/> <span>{$field.title}</span></a></li>
+          {/yycms:arclist}
+        </ul>
+      </div>
+      <div class="honortab"> <span class="prev icon"></span>
+        <ul>
+        </ul>
+        <span class="next icon"></span> </div>
+    </div>
+  </div>
+  <!--end floor_6_1--> 
+</div>
+<section class="ipro">
+  <div class="title">
+    <h1 class="icon">推荐产品</h1>
+    <span><a href="list.php?tid=2">更多+</a></span> </div>
+  <dl class="list clearfix">
+    {yycms:arclist typeid="2" row="6" titlelen="60" orderby='pubdate'}
+	<dd ><a href="{$field.arcurl}">
+      <figure><img src="{$field.picname}" title="{$field.title}" alt="{$field.title}" /></figure>
+      <h3>{$field.title}</h3>
+      </a></dd>
+	  {/yycms:arclist}
+  </dl>
+</section>
+<div class="iadvantage clearfix">
+  <div class="w">
+    <div class="iadvantage_tit clearfix">
+      <h1>为什么要<b>选择我们</b></h1>
+      <p>Building boards choose us! Worry-free life!</p>
+      <div class="cecle">
+        <div class="zi"> <span class="icon2">环保</span><span class="icon2 span2">专业</span> <span class="icon2 span3"> 优惠</span> </div>
+      </div>
+    </div>
+    <div class="tod">
+      <ul class="iad_tod ">
+        <li class="clearfix">
+          <div class="wd clearfix"> <em>01/</em> <b>生产定制经验丰富</b>
+            <div class="zi">
+              <p class="icon2">集研发、生产、销售为一体；</p>
+              <p class="icon2">拥有标准化的厂房及较先进的生产设备；</p>
+              <p class="icon2">拥有多年EPE珍珠棉生产定制经验</p>
+              <a  class="icon2" href="list.php?tid=11">联系我们</a> </div>
+            <div class="img"> <img src="/m/static/images/img1.png" alt="" /> </div>
+          </div>
+        </li>
+        <li class="clearfix">
+          <div class="wd clearfix wd_r"> <em>02/</em> <b>机械化生产</b>
+            <div class="img img_r"> <img src="/m/static/images/img2.png" alt="" /> </div>
+            <div class="zi">
+              <p class="icon2">工厂统一机械化生产，产量大；</p>
+              <p class="icon2">能够满足大批量客户的需求；</p>
+              <p class="icon2">公司占地面积 30余亩</p>
+              <a  class="icon2" href="list.php?tid=11">联系我们</a> </div>
+          </div>
+        </li>
+        <li class="clearfix">
+          <div class="wd clearfix"> <em>03/</em> <b>厂家直销</b>
+            <div class="zi">
+              <p class="icon2">直接让利于客户 ;</p>
+              <p class="icon2">珍珠棉品种齐全；</p>
+              <p class="icon2">产品的技术含量高</p>
+              <a  class="icon2" href="list.php?tid=11">联系我们</a> </div>
+            <div class="img"> <img src="/m/static/images/img3.png" alt="" /> </div>
+          </div>
+        </li>
+        <li class="clearfix">
+          <div class="wd clearfix wd_r"> <em>04/</em> <b>免费设计及制样</b>
+            <div class="img img_r"> <img src="/m/static/images/img4.png" alt="" /> </div>
+            <div class="zi">
+              <p class="icon2">专业团队为您免费设计及制样；</p>
+              <p class="icon2">根据您的产品量身定做珍珠棉防震缓冲包装；</p>
+              <p class="icon2">欢迎咨询和实地考察</p>
+              <a  class="icon2" href="list.php?tid=11">联系我们</a> </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<section class="icase clearfix">
+  <div class="title">
+    <h1 class="icon">珍珠棉蛋托</h1>
+    <span><a href="list.php?tid=3">更多+</a></span> </div>
+  <div class="tod clearfix">
+    <ul class="clearfix">
+      <div class="kuang">
+       {yycms:arclist typeid="3" row="2" titlelen="60" orderby='pubdate' limit='0,2'}
+        <li><a href="{$field.arcurl}" ><img src="{$field.picname}" /><span><b>{$field.title}...</b></span></a></li>
+		{/yycms:arclist}
+      </div>
+      <div class="kuang1">
+       {yycms:arclist typeid="3" row="2" titlelen="60" orderby='pubdate' limit='4,1'}
+        <li><a href="{$field.arcurl}" ><img src="{$field.picname}" /><span><b>{$field.title}...</b></span></a></li>
+		{/yycms:arclist}
+      </div>
+      <div class="kuang">
+       {yycms:arclist typeid="3" row="2" titlelen="60" orderby='pubdate' limit='2,2'}
+        <li><a href="{$field.arcurl}" ><img src="{$field.picname}" /><span><b>{$field.title}...</b></span></a></li>
+		{/yycms:arclist}
+      </div>
+    </ul>
+  </div>
+</section>
+<section class="ievaluation clearfix" >
+  <div class="title">
+    <h1 class="icon">珍珠棉水果包装</h1>
+    <span><a href="list.php?tid=4">更多+</a></span> </div>
+  <div class="tod">
+    <ul>
+	{yycms:arclist typeid="4" row="4" titlelen="60" orderby='pubdate' }
+      <a href="{$field.arcurl}" title="{$field.title}" class="inews2_box"> <img src="{$field.picname}" alt="{$field.title}"/>
+      <div class="inews2_right">
+        <h2>{$field.title}</h2>
+        <h4> 好之彩是集研发、销售珍珠棉、珍珠棉包装、气泡膜...</h4>
+      </div>
+      <font class="imoreBox"><span>查看更多</span></font> </a> 
+	  	{/yycms:arclist}
+    </ul>
+  </div>
+</section>
+<section class="inews clearfix">
+  <div class="title">
+    <h1 class="icon">新闻中心</h1>
+    <span><a href="list.php?tid=8">更多+</a></span> </div>
+  <ul class="tod clearfix">
+   {yycms:arclist typeid="8" row="1" titlelen="60" orderby='pubdate' flag='p'}
+   <li class="clearfix"> <a href="{$field.arcurl}" title="{$field.title}"> <img src="{$field.picname}" />
+      <div class="link1">
+        <h3>2018年远瑞员工拓...</h3>
+      </div>
+      <div class="wd"> 为增强团队沟通协作、凝聚力和执行力，感受团队活力！2018年4月20日，长沙市远... </div>
+      </a> </li>
+    {/yycms:arclist}
+	  {yycms:arclist typeid="8" row="5" titlelen="40" orderby='pubdate' }
+	<li> <a href="{$field.arcurl}" title="{$field.title}！">
+      <div class="link">
+        <h3>{$field.title}...</h3>
+        <span>[field:pubdate function=MyDate('Y//d',@me)/]</span></div>
+      </a> </li>
+	  {/yycms:arclist}
+  </ul>
+</section>
+<div class="iqfa clearfix">
+  <div class="title">
+    <h1 class="icon">公司新闻</h1>
+    <span><a href="list.php?tid=9">更多+</a></span> </div>
+  <dl class="listx">
+     {yycms:arclist typeid="9" row="5" titlelen40 orderby='pubdate' }
+	<dd class="item">
+      <h3><i>T</i><a href="{$field.arcurl}" title="{$field.title}"> {$field.title}</a></h3>
+      <p><i>D</i> {$field.description}... </p>
+    </dd>
+    {/yycms:arclist}
+  </dl>
+</div>
+<section class="icontact">
+  <div class="title">
+    <h1>联系我们</h1>
+  </div>
+  <ul class="tod">
+    <li class="ico1"><span>单位名称：</span>{:syscfg('cfg_webname')}</li>
+    <!--    <li class="ico2"><span>联系ＱＱ：</span>{:syscfg('cfg_tel')} <a href="http://wpa.qq.com/sgrd?v=3&uin=1000000&site=qq&menu=yes">点击交谈</a></li>
+        <li class="ico3"><span>联系邮箱：</span>jwkj@hnjing.com</li>
+              <li class="ico4"><span>联系电话：</span><a href="tel:{:syscfg('cfg_tel')}" class="format400" ig-phone>{:syscfg('cfg_tel')}</a>（点击立即拨打）</li> -->
+    <li class="ico5"><span>联系手机：</span><a href="tel:{:syscfg('cfg_tel')}">{:syscfg('cfg_tel')}</a>（点击立即拨打）</li>
+  </ul>
+</section>
+{include file="footer_m"/}
+
+</body>
+</html>

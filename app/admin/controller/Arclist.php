@@ -26,10 +26,8 @@ class Arclist extends \app\common\controller\Backend{
                 $typeids = trim(array_reduce($ids, function($carry, $item){
                     return $carry . ','.$item;
                 }), ',');
-                //halt($typeids);
                 $where[]= ['typeid','in',$typeids];
             }
-            //halt($where);
             $list = ArclistModel::withJoin('arctype')
                     ->where($where)
                     ->limit($page,$limit)
@@ -62,7 +60,7 @@ class Arclist extends \app\common\controller\Backend{
         if(request()->isAjax()){
             $post = input();
             $post['pubdate'] = $post['pubdate']?strtotime($post['pubdate']):time();
-            if(!$post['litpic']&&$post['body']){ //提取内容第一张为缩略图
+            if(!$post['litpic'] && isset($post['body'])){ //提取内容第一张为缩略图
                 $post['litpic'] = $this->get_html_first_imgurl ($post['body'])? $this->get_html_first_imgurl ($post['body']):'';
             }
             if($post['litpic']){
@@ -144,6 +142,25 @@ class Arclist extends \app\common\controller\Backend{
             $addinfo = Db::name($addtable)->where('aid',$id)->delete();//del附表信息
             ArclistModel::destroy($id);
             return json(['code'=>0,'msg'=>'success']);
+        }
+    }
+    /**
+     * 隐藏显示开关
+     * @return type
+     */
+    public function rowEdit(){
+        if(request()->isAjax()){
+            $post = input();
+            $name = $post['name'];
+            $data = [
+                 $name  => $post['value'],
+            ];
+            $where = ['id'=>$post['id']];
+            if(ArclistModel::where($where)->save($data)){
+                return json(['code'=>0,'msg'=>'success']);   
+            } else {
+                return json(['code'=>0,'msg'=>'error']);   
+            }
         }
     }
     /**

@@ -89,12 +89,13 @@ class Template extends Common{
             $channeltype=$channeltypeModel->find($Arctype->channeltype);
             $table = $this->getTable($channeltype->addtable);
             $addinfo=Db::name($table)->where('aid',$aid)->find();
-            $info= array_merge($addinfo,$Archives->toArray());
-            foreach ($info as $key=>$val){
-                if($key=='litpic'){
-                     $info[$key]= explode(',', $val);
-                }
-            }
+            $info = is_array($addinfo) ? array_merge($addinfo,$Archives->toArray()):$Archives->toArray();
+            $info['body'] = isset($info['body']) ? $info['body'] :'';//兼容body 为空
+//            foreach ($info as $key=>$val){
+//                if($key=='litpic'){
+//                     $info[$key]= explode(',', $val);
+//                }
+//            }
             $template = $Arctype->temparticle;
             $view = [
                 'typeurl'     => Config::get('app.list_url') . '/tid/' . $Arctype->id,

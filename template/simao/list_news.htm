@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>{$yy.field.title}-{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{dede:field name='description' /}" />
+<link rel="stylesheet" href=" /static/css/style.css">
+<script src=" /static/js/jshandler.js" type="text/javascript"></script>
+</head>
+<body>
+{include file="head"/}
+<!--banner end-->
+<div class="submian w">
+  <div class="ne_left"></div>
+  <div class="ne_right"></div>
+  <!--left-->
+{include file="left"/}
+
+  <!--left end--> 
+  <!--right-->
+  <div class="subright fr">
+    <div class="sobtitle">
+      <p class="fl">新闻中心</p>
+      <div class="sitepath fr">当前位置：{$yy.field.position|raw} </div>
+      <i></i> </div>
+    <div class="listnews"> 
+      <!--qiehuan 1-->
+      <ul>
+	  {yycms:list row='12' pagesize='12' titlelen='60'}
+        <li> <a href="{$field.arcurl}" title="{$field.title}">
+          <p>{$field.title}</p>
+          <span>[field:pubdate function=MyDate('Y-m-d',@me)/]</span> </a> </li>
+     {/yycms:list}
+      </ul>
+      <div class="pager">{yycms:pagelist listitem='index,pre,next,pageno,end,info,' /}	
+			<div class="clear"></div></div>
+    </div>
+  </div>
+  <!--right-->
+  <div class="clear"></div>
+</div>
+<!--foot-->
+{include file="footer"/}
+</body>
+</html>

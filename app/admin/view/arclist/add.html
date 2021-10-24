@@ -164,7 +164,7 @@
                             <div class="layui-form-item layui-upload">
                                 <label class="layui-form-label">{$vo.itemname}</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="{$vo.name}" required  lay-verify="required" placeholder="请输入{$vo.itemname}" autocomplete="off" class="layui-input" value="{$vo.default}">
+                                    <input type="text" name="{$vo.name}"  placeholder="请输入{$vo.itemname}" autocomplete="off" class="layui-input" value="{$vo.default}">
                                 </div>
                                 <div class="layui-word-aux ">
                                     <button type="button" class="layui-btn layui-btn-sm" id="{$vo.name}" lay-filter="upload">
@@ -196,7 +196,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">{$vo.itemname}</label>
                             <div class="layui-input-block">
-                              <input type="text" name="{$vo.name}" required  lay-verify="required" placeholder="请输入{$vo.itemname}" autocomplete="off" class="layui-input">
+                              <input type="text" name="{$vo.name}" placeholder="请输入{$vo.itemname}" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                     {/switch}
@@ -213,25 +213,21 @@
 </div>
 </form>
 {include file="public/footer" /}
-
 <script type="text/javascript">
     var ue = UE.getEditor('container');
     ue.ready(function() {
     //设置编辑器的内容
     ue.setContent(formData.body);
-    //获取html内容，返回: <p>hello</p>
-//    var html = ue.getContent();
-//    //获取纯文本内容，返回: hello
-//    var txt = ue.getContentTxt();
 });
 </script>
 <script>
-    layui.use(['form', 'laydate','upload','util'], function(){
+    layui.use(['form', 'laydate','upload','util','formTool'], function(){
       var form = layui.form
       ,layer = layui.layer
       ,upload = layui.upload
       ,$ = layui.jquery
       ,util = layui.util
+      ,formTool = layui.formTool
       ,laydate = layui.laydate;
        laydate.render({
             elem: '#pubdate'
@@ -331,6 +327,7 @@
             }
             return false;
           });
-
+      formTool.setValue();    
+      formTool.events.submit();    
     });
 </script>

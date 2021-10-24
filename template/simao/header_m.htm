@@ -1,0 +1,16 @@
+<header class="header">
+  <div class="tag clearfix">
+    <div class="logo fl"><a href="/"><img src="/static/images/logo_20190415103129655.png" title="{:syscfg('cfg_webname')}" alt="{:syscfg('cfg_webname')}" /></a></div>
+    <a class="fr icon tel" href="tel:{:syscfg('cfg_tel')}"> <strong ig-phone class=" por">{:syscfg('cfg_tel')}</strong> </a> </div>
+</header>
+<nav class="nav">
+  <ul class="list clearfix">
+    <li><a href="/">网站首页</a></li>
+    {yycms:channel typeid='2'}
+    <li><a href="{$field.typeurl}">{$field.typename} </a></li>
+	{/yycms:channel}
+	{yycms:channel type='top'}
+    <li><a href="{$field.typeurl}">{$field.typename} </a></li>
+	{/yycms:channel}
+  </ul>
+</nav>

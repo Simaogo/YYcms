@@ -83,8 +83,8 @@ layui.define(["element", "layer"], function (exports) {
         clear: function () {
             layer.confirm("确认清空标签缓存吗?", { icon: 3, title: "提示" }, function (index) {
                 sessionStorage.setItem("tabs", null);
-                sessionStorage.setItem("currentTabId", "admin/index/home");
-                $.post(clearTuntimeUrl,{},function(){
+                sessionStorage.setItem("currentTabId", homeUrl);
+                $.post(clearRuntimeUrl,{},function(){
                     layer.close(index);
                     layer.msg("清理成功");
                 })

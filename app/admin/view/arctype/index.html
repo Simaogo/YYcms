@@ -1,4 +1,7 @@
 {include file="public/header" /}
+<style>
+    .layui-table-cell{cursor: pointer;}
+</style>
 <div class="layui-row" style="margin-bottom: 50px;">
   <div class="layui-col-md12">
     <div class="layui-card">
@@ -9,16 +12,13 @@
     </div>
   </div>
 </div>
-
 {include file="public/footer" /}
-
 <script>
-    
-   layui.use(['tableTreeDj','table'], function() {
+   layui.use(['tableTreeDj','table','tableTool'], function() {
         let tableTree = layui.tableTreeDj
             ,table    = layui.table
+            ,tableTool    = layui.tableTool
             ,$ = layui.$;
-
         // 分页配置
         const page = {
             elem: 'page'
@@ -31,11 +31,13 @@
 
         // 字段配置
         const cols = [[
-            {field:'id', title:'ID',width:80}
-            ,{field:'typename', title:'名称',sort:true,width:'20%'}
-            ,{field:'reid', title:'上级ID',width:100}
-            ,{field:'', width:"20%", title: '操作',templet:'#operate'}
-           
+            {type:'checkbox'}
+            ,{field:'id', title:'ID',width:80,sort:true}
+            ,{field:'typename', title:'名称',width:'50%'}
+            ,{field:'channeltype__typename', title:'所属模型',sort:true,width:120}
+            ,{field:'sortrank', title:'排序',width:100,edit:true}
+            ,{field:'ishidden', title:'显示',width:100,templet:tableTool.templet.switch}
+            ,{field:'', width:"20%", title: '操作',templet:tableTool.templet.operate} 
         ]];
         // 表格配置
         const objTable = {
@@ -51,6 +53,7 @@
             ,limit: 30
             ,cols: cols
             ,id: 'list'
+            ,skin: 'line'
             ,done:function(res, curr, count) {
 
             }
@@ -70,7 +73,7 @@
             , sort: 'asc'
             , title: 'typename'
            , keyPid: "reid" // 上级ID
-            , defaultShow: true
+            , defaultShow: false
             , showByPidCallback: (idArr) => {
                 //console.log('idArr', idArr);
             }
@@ -124,7 +127,10 @@
             objTable.where = {key:"val"}
             tableTree.reload(objTable, 'list');
         });
-
+         tableTool.events.switch ();//开关点击事件
+        tableTool.events.rowEdit ();//编辑排序     
+        tableTool.events.operate();//操作
+        tableTool.events.toolbar();//工具头事件
     });
     
 </script>

@@ -1,44 +1,28 @@
-
-
- {yycms:channelartlist typeid = "1,2,4"}
-        <li>
-          <dl>
-            <dt><a href="{$field.typeurl}">{$field.typename}</a></dt>
-            {yycms:channel type='son'}
-            <dd><a href="{$field.typeurl}">{$field.typename}</a></dd>
-            {/yycms:channel}
-          </dl>
-        </li>
-		{yycms:arclist row=10 orderby='pubdate'}
-
-		<li><a href="">{$field.arcurl} : {$field.title}</a></li>
-
-		{/yycms:arclist}
-       {/yycms:channelartlist} 
-	   
-	    {yycms:channelartlist typeid = "1,2,4"}
-        <li>
-          <dl>
-            <dt><a href="{$field.typeurl}">{$field.typename}</a></dt>
-            {yycms:channel type='son'}
-            <dd><a href="{$field.typeurl}">{$field.typename}</a></dd>
-            {/yycms:channel}
-          </dl>
-        </li>
-		{yycms:arclist row=10 orderby='pubdate'}
-
-		<li><a href="">{$field.arcurl} : {$field.title}</a></li>
-
-		{/yycms:arclist}
-       {/yycms:channelartlist} 
-	   
-	    
-  {yycms:arclist titlelen="80" orderby ='pubdate' typeid='37'}
-      <li><a href="{$field.arcurl}">{$field.arcurl} : {$field.title}</a></li>
-      {/yycms:arclist}
-	  
-	 
-                    <li class="sf_footer_uldiv_h5_ul_li">{yycms:type  typeid='4'}{$field.typeurl}{/yycms:type}</li>
-                    <li class="sf_footer_uldiv_h5_ul_li">{yycms:type  typeid='5'}<a href='{$field.typeurl}'>{$field.typename}</a>{/yycms:type}</li>
-                    <li class="sf_footer_uldiv_h5_ul_li">{yycms:type  typeid='6'}<a href='{$field.typeurl}'>{$field.typename}</a>{/yycms:type}</li>
-                    <li class="sf_footer_uldiv_h5_ul_li">{yycms:type  typeid='19'}<a href='{$field.typeurl}'>{$field.typename}</a>{/yycms:type}</li>
+yycms:channelartlist typeid="2"}
+<div class="ipro wx clearfix">
+  <div class="sidebar">
+    <div class="topclass">
+      <h2 class="s">产品中心</h2>
+    </div>
+    <dl class="side-menu clearfix" id="menu">
+     {yycms:channel type='son'}
+	 <dd> <a href="{$field.typeurl}" title="{$field.typename}" > {$field.typename} </a>
+        <ul class="drop" style="display:block;">
+        </ul>
+      </dd>
+      {/yycms:channel}
+    </dl>
+    <div class="detail s"> </div>
+  </div>
+  <div class="tod">
+    <div class="iclass_tit">
+      <h1 class="s">推荐产品</h1>
+      <a href="{$field.typeurl}" class="mo">更多+</a> </div>
+    <ul class="clearfix">
+	  {yycms:arclist row="6" orderby='weight' orderway='desc'}	
+      <li><a href="{$field.arcurl}" title="{$field.title}"><img src="{$field.picname}" alt="{$field.title}" title="{$field.title}" /></a> <span><a href="{$field.arcurl}" title="{$field.title}">{$field.title}</a> </span> </li>
+    {/yycms:arclist}
+    </ul>
+  </div>
+</div>
+{/yycms:channelartlist}

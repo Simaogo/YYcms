@@ -1,0 +1,81 @@
+<div class="bottom_c clearfix">
+  <div class="shadow"></div>
+  <div class="w clearfix">
+    <div class="inav_b">
+      <div class="thead">
+        <div class="tit"> 网站导航<i>NAV</i> </div>
+        <span></span><em></em> </div>
+      <ul>
+        <a href="/" title="网站首页" >网站首页</a> 
+		{yycms:channel typeid='2'}
+		<a href='{$field.typeurl}'>{$field.typename}</a> 
+		{/yycms:channel}
+		<!-- {yycms:channel type='top'}
+		<a href='{$field.typeurl}'>{$field.typename}</a> 
+		{/yycms:channel} -->
+      </ul>
+    </div>
+    <div class="ilink">
+      <div class="thead">
+        <div class="tit"> 友情链接<i>LINK</i> </div>
+        <span></span><em></em> </div>
+     {yycms:flink row='8' type='text'}{$field.link}{/yycms:flink}</div>
+    <div class="keyword">
+      <div class="thead">
+        <div class="tit"> 关键词 <i style="line-height:2; display:inline-block; padding-top:20px;;">{yycms:channel type='son' reid='2'}
+
+<a href='{$field.typeurl}'>{$field.typename}</a> 
+
+{/yycms:channel}</i> </div>
+        <span></span><em></em> </div>
+    </div>
+    <div class="ilianxi"> <b>{:syscfg('cfg_webname')}</b>
+      <div class="wd"> <strong>{:syscfg('cfg_webname')}</strong>　<br />
+        售前咨询：{:syscfg('cfg_tel')}<br />
+   <!--      销售直线：0731-86865577<br />
+        销售热线：0731-82287992<br /> -->
+        工厂地址：{:syscfg('cfg_faddress')}<br />
+
+      <div class="webcode"> 
+
+      </div>
+    </div>
+    </div>
+    <div class="webcode">
+      <div class="item"> <img src="{:syscfg('cfg_qrcode')}" /> <span>手机网站</span> </div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+<div class="footer">
+  <div class="w">
+    <div class="wd fl"> 
+      {:syscfg('cfg_powerby')} <a href="https://beian.miit.gov.cn/" target='_blank'>备案号：{:syscfg('cfg_beian')}</a>
+    </div>
+    <div class="telx fr s">
+      <p  ig-phone>{:syscfg('cfg_tel')}</p>
+    </div>
+  </div>
+</div>
+<dl class="toolbar" id="toolbar">
+
+  <dd> <i class="tell"></i>
+    <ul class="pop pop-tel">
+      <li class="o"></li>
+      <li class="icon">咨询热线</li>
+      <li class="item" ig-phone>{:syscfg('cfg_tel')}</li>
+    </ul>
+  </dd>
+  <dd> <i class="code"></i>
+    <ul class="pop pop-code">
+      <li class="o"></li>
+      <li style="width:100%;"> <img style="display:block; float:left" src="{:syscfg('cfg_qrcode')}" />
+        <h3 style="display:block; width:100%; text-align:center; float:left; ">手机二维码</h3>
+      </li>
+    </ul>
+  </dd>
+  <dd> <i id="goTop" class="top"></i> </dd>
+</dl>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"1","bdPos":"left","bdTop":"100"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/ /static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
+<script src=" /static/js/app.js"></script> 
+<script src=" /static/js/jquery.easing.min.js"></script>

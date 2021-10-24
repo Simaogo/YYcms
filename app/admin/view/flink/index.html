@@ -6,9 +6,9 @@
 </div>
 {include file="public/footer" /}
 <script>
-     layui.use(['table'], function(){
-      var table = layui.table;
-        table.render({
+     layui.use(['tableTool'], function(){
+      var tableTool = layui.tableTool;
+        tableTool.render({
           elem: '#list'
           ,height: '800'
           ,url: url //数据接口
@@ -27,8 +27,11 @@
             ,{field: 'logo', title: 'LOGO', width:100,align:'center'}
             ,{field: 'typename', title: '分类', width:100,align:'center',templet:function(d){return d.flinktype.typename}}
             ,{field: 'dtime', title: '更新时间', width:150,sort: true,align:'center'}
-            ,{field: '', title: '操作', width:'25%',align:'center',templet:'#operate'}
+            ,{field: '', title: '操作', width:'25%',align:'center',templet:tableTool.templet.operate}
           ]]
         });
+        tableTool.events.operate();
+        tableTool.events.toolbar();
     });
+    
 </script>

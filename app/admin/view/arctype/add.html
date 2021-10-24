@@ -62,22 +62,24 @@
                             <input type="radio" name="ishidden" lay-skin="primary" title="隐藏" value="1">
                       </div>
                     </div>
-                    <div class="layui-form-item">
-                  <label class="layui-form-label">栏目名称</label>
-                  <div class="layui-input-block">
-                    <input type="text" name="sortrank" lay-verify="" autocomplete="off" placeholder="请输入栏目排序" class="layui-input">
-                  </div>
                 </div>
-                </div>
-                 <div class="layui-form-item" pane="">
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="sortrank" required=""  lay-vertype="tips" placeholder="请输入排序" autocomplete="off" class="layui-input" value="50">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">请输入排序</div>
+                  </div>  
+
+                 <div class="layui-form-item layui-upload">
                     <label class="layui-form-label">栏目图片</label>
-                    <div class="layui-upload-drag" id="typeimg">
-                        <i class="layui-icon"></i>
-                        <p>点击上传，或将文件拖拽到此处</p>
-                        <div class="layui-hide" id="uploadDemoView">
-                          <hr>
-                          <img src="" alt="上传成功后渲染" style="max-width: 196px">
-                        </div>
+                    <div class="layui-input-inline">
+                        <input type="text" name="typeimg"  placeholder="请输入栏目图片" autocomplete="off" class="layui-input" value="">
+                    </div>
+                    <div class="layui-word-aux ">
+                        <button type="button" class="layui-btn layui-btn-sm" id="typeimg" lay-filter="upload">
+                            <i class="layui-icon">&#xe67c;</i>上传
+                       </button>
                     </div>
                 </div>
             </div>
@@ -157,60 +159,17 @@
 });
 </script>
 <script>
-    layui.use(['form', 'layedit', 'laydate','upload'], function(){
+    layui.use(['form','formTool'], function(){
       var form = layui.form
-      ,layer = layui.layer
-      ,layedit = layui.layedit
-      ,upload = layui.upload
+      ,formTool = layui.formTool
       ,$ = layui.jquery
       ,laydate = layui.laydate;
-
-      //创建一个编辑器
-      var editIndex = layedit.build('LAY_demo_editor');
-
-      //自定义验证规则
-      form.verify({
-        title: function(value){
-          if(value.length < 5){
-            return '标题至少得5个字符啊';
-          }
-        }
-        ,pass: [
-          /^[\S]{6,12}$/
-          ,'密码必须6到12位，且不能出现空格'
-        ]
-        ,content: function(value){
-          layedit.sync(editIndex);
-        }
-      });
-
-      //监听指定开关
-      form.on('switch(switchTest)', function(data){
-        layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-          offset: '6px'
-        });
-        layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-      });
-
-
-      
-      //表单取值
-        layui.$('#LAY-component-form-getval').on('click', function(){
-          var data = form.val('example');
-          alert(JSON.stringify(data));
-        });
        laydate.render({
             elem: '#pubdate'
             ,type: 'datetime'
        });
-       //拖拽上传
-        upload.render({
-          elem: '#litpic'
-          ,url: '{:url("common/upload/image")}' 
-          ,done: function(res){
-            layer.msg('上传成功');
-            layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', res.data.src);
-          }
-        });
+       formTool.events.submit();//form提交
+       formTool.setValue();
+       formTool.uploads();
     });
 </script>
