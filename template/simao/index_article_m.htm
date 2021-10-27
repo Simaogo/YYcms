@@ -1,31 +1,54 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html>
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
-<meta name="format-detection" content="telephone=no" />
-
-<link rel="stylesheet" type="text/css" href="/m/static/css/style.css" />
-<script src="/mstatic/js/jshandler.js" type="text/javascript"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no" name="format-detection">
+    <title>{$yy.field.title}-{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{$field.description}" />
+    <link rel="stylesheet" href="static/css/iconfont.css">
+    <link rel="stylesheet" href="static/css/slick.css">
+    <link rel="stylesheet" href="static/css/app.css">
+    <link rel="stylesheet" href="static/css/ain.css">
+    <script src="static/js/jquery-1.11.3.min.js"></script>
 </head>
+
 <body>
-{include file="header_m"/}
-<div class="itit nytit">
-  <h2 class="iconbef">{$yy.field.typename}</h2>
-  <div class="showmenu" id="showmenu">选择分类</div>
-</div>
-<nav class="menu" id="menu">
-  <dl class="list clearfix">
-    {yycms:channel type='son'}
-    <dd ><a href="list.php?tid={$field.id}" ig-cut>{$field.typename}</a></dd>
-	{/yycms:channel}
-  </dl>
-</nav>
-<section class="wrapper">
-  <article ig-article> 　
-	{$yy.field.content|raw}
-  </article>
-</section>
+    <div class="mob-wrap">
+    <!-- 头部 -->
+	{include file="header_m"/}      
+	<!-- banner -->
+	  <!-- 内页banner -->
+    
+    <div class="page-banner"></div>
+    
+
+    <!-- 主体内容 -->
+
+    <div class="page-content">
+        
+	<div class="page-sort">
+		<div class="page-sort-title">
+			<span> {$field.typename}</span>
+			<div class="page-sort-btn"><i class="iconfont icon-close"></i></div>
+		</div>
+		<ul class="first-sort">
+		 {yycms:channel type='son'}
+		  <li> <a class="first-a" href="list.php?tid={$field.id}">{$field.typename}</a> </li>
+		  {/yycms:channel}        
+	   </ul>
+	</div>
+
+	<div class="bread-crumbs"><span class="open-btn"><i class="iconfont icon-daohang"></i></span> {$field.typename}</div>
+	<div class="page-detail">
+	   {$yy.field.content|raw}
+	</div>
+
+    </div>
 {include file="footer_m"/}
 </body>
 </html>

@@ -10,7 +10,7 @@ body{background: #fff}
     height: 32px;line-height: 32px;
 }
 .layui-submit{
-    position: fixed;bottom: 30px;left:0;width:100%;background: #ffffff;z-index:9999;
+    position: fixed;bottom: 0px;left:0;width:100%;background: #ffffff;z-index:9999;height: 38px;
 }
 .iframe{
     overflow-x: hidden; overflow-y: scroll;

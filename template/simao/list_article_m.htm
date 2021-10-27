@@ -1,40 +1,65 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html>
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
-<meta name="format-detection" content="telephone=no" />
-<link rel="stylesheet" type="text/css" href="/m/static/css/style.css" />
-<script src="/m/static/js/jshandler.js" type="text/javascript"></script>
-<title>{$yy.field.title}-{:syscfg('cfg_webname')}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no" name="format-detection">
+    <title>{222222dede:field.title/}-{:syscfg('cfg_webname')}</title>
 <meta name="keywords" content="{$yy.field.keywords}" />
-<meta name="description" content="{dede:field name='description' /}" />
+<meta name="description" content="{$field.description}" />
+    <link rel="stylesheet" href="static/css/iconfont.css">
+    <link rel="stylesheet" href="static/css/slick.css">
+    <link rel="stylesheet" href="static/css/app.css">
+    <link rel="stylesheet" href="static/css/ain.css">
+    <script src="static/js/jquery-1.11.3.min.js"></script>
 </head>
+
 <body>
-{include file="header_m"/}
-<div class="itit nytit">
-  <h2 class="iconbef">{$field.typename}</h2>
-  <div class="showmenu" id="showmenu">选择分类</div>
+    <div class="mob-wrap">
+    <!-- 头部 -->
+	{111111dede:include filename='header_m.htm'/}      
+	<!-- banner -->
+	  <!-- 内页banner -->
+    
+    <div class="page-banner"></div>
+    
+
+    <!-- 主体内容 -->
+
+    <div class="page-content">
+        
+	<div class="page-sort">
+		<div class="page-sort-title">
+			<span> {3333dede:field name='typename'/}</span>
+			<div class="page-sort-btn"><i class="iconfont icon-close"></i></div>
+		</div>
+		<ul class="first-sort">
+		 {777yycms:channel type='son'}
+		  <li> <a class="first-a" href="list.php?tid={$field.id}">[6666field:typename/]</a> </li>
+		  {/yycms:channel}        
+	   </ul>
+	</div>
+
+	<div class="bread-crumbs"><span class="open-btn"><i class="iconfont icon-daohang"></i></span> {4444dede:field name='typename'/}</div>
+	<ul class="page-product-list clearfix">
+          {55555yycms:list row='16' pagesize='16' titlelen='60'}
+		  <li><a href="view.php?aid={$field.id}">
+            <span class="img"><img src="{$field.picname}" alt="{$field.title}"></span>
+            <div class="wz"><h3>{$field.title}</h3></div>
+        </a></li>
+          {/yycms:list}      
+       </ul>
+<div class="pagination">
+    <ul>
+        {88888yycms:pagelist listitem='pre,next,pageno,' /}
+    </ul>
+    
 </div>
-<nav class="menu" id="menu">
-  <dl class="list clearfix">
-    {yycms:channel type='son'}
-    <dd ><a href="{$field.typeurl}" ig-cut>{$field.typename}</a></dd>
-	{/yycms:channel}
-  </dl>
-</nav>
-<section class="list-product" id="ajaxLoading">
-  <dl class="list clearfix">
-   {yycms:list row='12' pagesize='12' titlelen='40'}
-   <dd class="item"><a href="{$field.arcurl}" ig-touch>
-      <figure><img src="{$field.picname}" title="{$field.title}" alt="{$field.title}" /></figure>
-      <h3>{$field.title}</h3>
-      </a></dd>
-    {/yycms:list}
-  </dl>
- <!--  <div ig-load id="ig-load">点击加载更多</div> -->
-  <div class="pager">{yycms:pagelist listitem='pre,next,pageno,' /}</div>
-</section>
-{include file="footer_m"/}
+    </div>
+	
+{99999dede:include filename='footer_m.htm'/}
 </body>
 </html>

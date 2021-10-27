@@ -129,6 +129,7 @@
                         if(res.url){ 
                             window.location.href = res.url;
                         }else{
+                            $('input[name="verify"]').val('');
                             $('#captcha').attr('src','{:captcha_src()}'+Math.random());
                         }
                     })

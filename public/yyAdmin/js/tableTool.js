@@ -107,11 +107,12 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                     }
                 });
             },
-            toolbar:function(url){
-                var url = url||addEditUrl;
+            toolbar:function(){
+                var addEditUrl = url||addEditUrl;
              //头工具栏事件
                 table.on('toolbar(list)', function(obj){
                   var checkStatus = table.checkStatus(obj.config.id);
+                  var postUrl = $(this).attr('lay-url');
                     switch(obj.event){
                           case 'add':
                             layer.open({
@@ -121,7 +122,7 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                                 shade: 0.2,
                                 maxmin: true, //开启最大化最小化按钮
                                 area: ['85%', '85%'],
-                                content: url
+                                content: addEditUrl
                              });
                           break; 
                           break;
@@ -132,11 +133,13 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                           case 'isAll':
                             layer.msg(checkStatus.isAll ? '全选': '未全选');
                           break;
-
-                          //自定义头工具栏右侧图标 - 提示
-                          case 'LAYTABLE_TIPS':
-                            layer.alert('这是工具栏右侧自定义的一个图标按钮');
-                          break;
+                        default:
+                            layer.confirm('真的要操作？', function(index){
+                               $.post(postUrl,data,function(res,index){
+                                   layer.msg(res.msg)
+                               })
+                               layer.close(index);
+                            })
                     };
                 })
             },

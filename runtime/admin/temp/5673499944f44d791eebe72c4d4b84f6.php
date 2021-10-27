@@ -1,4 +1,4 @@
-<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\arclist\add.html";i:1634993888;s:5:"param";s:44:"a:2:{s:2:"id";s:1:"0";s:6:"typeid";s:1:"0";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1634992668;}*/ ?>
+<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\arclist\add.html";i:1635259708;s:5:"param";s:25:"a:1:{s:2:"id";s:3:"100";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1635159586;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -182,25 +182,21 @@
                                    </button>
                                 </div>
                             </div>
-                        <?php break; case "htmltext": ?>
+                        <?php break; case "htmltext": if($vo['name']!=="body"): ?>
                         <div class="layui-form-item layui-form-text">
-                            <label class="layui-form-label">内容</label>
+                            <label class="layui-form-label"><?php echo htmlentities($vo['itemname']); ?></label>
                             <div class="layui-input-block">
                               <script id="<?php echo htmlentities($vo['name']); ?>" name="<?php echo htmlentities($vo['name']); ?>" type="text/plain" style="width:1024px;height:350px;"></script>
                               <script type="text/javascript">
-                                    var ue = UE.getEditor('<?php echo htmlentities($vo['name']); ?>');
-                                    ue.ready(function() {
+                                    var <?php echo htmlentities($vo['name']); ?> = UE.getEditor('<?php echo htmlentities($vo['name']); ?>');
+                                    <?php echo htmlentities($vo['name']); ?>.ready(function() {
                                     //设置编辑器的内容
-                                    ue.setContent(formData["<?php echo htmlentities($vo['name']); ?>"]);
-                                    //获取html内容，返回: <p>hello</p>
-                                    var html = ue.getContent();
-                                    //获取纯文本内容，返回: hello
-                                    var txt = ue.getContentTxt();
+                                    <?php echo htmlentities($vo['name']); ?>.setContent(formData["<?php echo htmlentities($vo['name']); ?>"]);
                                 });
                                 </script>
                             </div>
                         </div>
-                        <?php break; default: ?>
+                        <?php endif; break; default: ?>
                         <div class="layui-form-item">
                             <label class="layui-form-label"><?php echo htmlentities($vo['itemname']); ?></label>
                             <div class="layui-input-block">
@@ -215,9 +211,9 @@
             
           </div>
        </div>
-        <div class="layui-form-item layui-flex layui-submit" style="">
-            <button class="layui-btn" lay-submit="" lay-filter="submit" style="width:150px;margin: 0 auto;">提交保存</button>
-        </div>
+</div>
+<div class="layui-form-item layui-flex layui-submit">
+    <button class="layui-btn" lay-submit="" lay-filter="submit" style="width:120px;margin: 0 auto;">提交</button>
 </div>
 </form>
  <script src="/yyAdmin/layui/layui.js"></script>

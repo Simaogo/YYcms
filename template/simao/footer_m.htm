@@ -1,36 +1,84 @@
-<nav class="nav1">
-  <ul class="list clearfix">
-    <li><a href="/">网站首页</a></li>
-    {yycms:channel typeid='2'}
-	<li><a href='{$field.typeurl}'>{$field.typename}</a> </li>
-	{/yycms:channel}
-    {yycms:channel type='top'}
-	<li><a href='{$field.typeurl}'>{$field.typename}</a> </li>
-	{/yycms:channel}
-  </ul>
-</nav>
-<footer class="footer">
-  <div class="copyright"> {:syscfg('cfg_powerby')}</div>
-  <div class="goTop" id="goTop"><a href="javascript:;">返回顶部</a></div>
-</footer>
-<commend class="toolbar">
-  <dl class="list clearfix">
-    <dd><a href="/" class="too-home iconbef">首页</a></dd>
-    <dd><a href="tel:{:syscfg('cfg_tel')}" class="too-tel iconbef">电话</a></dd>
-    <dd><a href="#" class="too-qiao iconbef">咨询</a></dd>
-    <dd><a href="javascript:;" class="too-map iconbef"  onclick="app.map('show')">地图</a></dd>
-  </dl>
-</commend>
-<section class="location" id="location">
-  <div class="map" id="map"></div>
-  <div class="address">
-    <p>办公地址： {:syscfg('cfg_oaddress')} </p>
-    <p>工厂地址： {:syscfg('cfg_faddress')} </p>
-  </div>
-  <div class="close" onclick="app.map('hide')"></div>
-  <script type="text/javascript">
-   JsReady(function(){showMap('map','{:syscfg('cfg_webname')}',{:syscfg('cfg_map')},'电话：{:syscfg('cfg_tel')}<br/>地址：{:syscfg('cfg_oaddress')}',15)}); 
-</script> 
+        
+<div class="footbg">
+    <div class="footer">
+        <a href="/"><span class="span1">- 首页 -</span></a>
+       
+       <a href="list.php?aid=2"><span class="span2">- 产品 -</span></a>
+        <a href="tel:{:syscfg('cfg_tel')}"><span class="span3">- 电话 -</span></a>
+
+        <a href="list.php?tid=17"><span class="span4">- 留言 -</span></a>
+      
+    </div>
+    </div>
+   
+   
+   
+           <!-- 分享代码 -->
+<section id="mobile_share">
+	<h2 class="title">分享到</h2>
+	<div class="share_item">
+		<ul>
+			<li><a href="javascript:;" data-key="weibo" class="share-link share-weibo" title="分享到新浪微博"><i></i><span>新浪微博</span></a></li>
+			<li><a href="javascript:;" data-key="renren" class="share-link share-renren" title="分享到人人网"><i></i><span>人人网</span></a></li>
+			<li><a href="javascript:;" data-key="douban" class="share-link share-douban" title="分享到豆瓣"><i></i><span>豆瓣</span></a></li>
+			<li><a href="javascript:;" data-key="qweibo" class="share-link share-qweibo" title="分享到腾讯微博"><i></i><span>腾讯微博</span></a></li>
+			<li><a href="javascript:;" data-key="qzone" class="share-link share-qzone" title="分享到QQ空间"><i></i><span>QQ空间</span></a></li>
+		</ul>
+	</div>
 </section>
-<script src="/m/static/js/touchslide.1.1.js"></script> 
-<script src="/m/static/js/app.js"></script> 
+<script>
+    $(function() {
+        var shareData = {
+            weibo: {
+                title: "新浪微博",
+                urlTemplate: "http://service.weibo.com/share/share.php?url={url}&appkey=&title={title}&pic=&language=zh_cn"
+            },
+            renren: {
+                title: "人人网",
+                urlTemplate: "http://widget.renren.com/dialog/share?resourceUrl={url}&srcUrl={url}&title={title}&description="
+            },
+            douban: {
+                title: "豆瓣",
+                urlTemplate: "http://shuo.douban.com/!service/share?href={url}&name={title}"
+            },
+            qweibo: {
+                title: "腾讯微博",
+                urlTemplate: "http://share.v.t.qq.com/index.php?c=share&a=index&url={url}&title={title}"
+            },
+            qzone: {
+                title: "QQ空间",
+                urlTemplate: "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={url}&title={title}&desc=&summary=&site="
+            }
+        };
+        String.prototype.replaceAll = function(s1, s2) {
+            return this.replace(new RegExp(s1, "gm"), s2);
+        }
+        $('.share-link').on('click', function() {
+            var key = $(this).data("key");
+            // alert(key);
+            var h = shareData[key];
+            var url = h.urlTemplate;
+            var target_url = url.replaceAll('{url}', encodeURIComponent(HOME_URL));
+            var target_url = target_url.replaceAll('{title}', '快渔手机分享：' + encodeURIComponent(title));
+            location.href = target_url;
+        });
+        var share = 0;
+        $('.footer').on('click', '.share', function(e) {
+            if (share == 1) {
+                $('#mobile_share').removeClass('active')
+                share = 0;
+            } else {
+                $('#mobile_share').addClass('active')
+                share = 1;
+            }
+            event.stopPropagation();
+        });
+    })
+</script>    
+
+</div>
+
+    <!-- 底部js -->
+    <script src="static/js/slick.min.js"></script>
+    <script src="static/js/ain.js"></script>
+ 

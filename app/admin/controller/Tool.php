@@ -67,7 +67,9 @@ class Tool extends \app\common\controller\Backend{
            
             //列表页字段
             $str = preg_replace("/{dede:field\s+name='(.*)'\/}/i",'{$field.$1}',$str);
-            $str = preg_replace("/{dede:field name=\"(.*)\"\/}/i",'{$field.$1}',$str);
+            $str = preg_replace("/{dede:field\s+name=\"(.*)\"\/}/i",'{$field.$1}',$str);
+             $str = preg_replace("/{dede:field\s+name='(.*)'\s+\/}/i",'{$field.$1}',$str);
+            $str = preg_replace("/{dede:field\s+name=\"(.*)\"\s+\/}/i",'{$field.$1}',$str);
             $str = preg_replace("/{dede:field\s+name=(\w+)\/}/i",'{$field.$1}',$str);
             
             $str = preg_replace("/{dede:field.(\w+)\/}/i",'{$yy.field.$1}',$str);
@@ -76,7 +78,7 @@ class Tool extends \app\common\controller\Backend{
             //内容页字段
             $str = preg_replace('/{dede:field.(\w+)\/}/i','{$field.$1}',$str);
             $str = preg_replace('/{dede:field.(\w+)\s+\/}/i','{$field.$1}',$str);
-            $str = preg_replace('/{dede:field.(\w+)\\/}/i','{$field.$1}',$str);
+            $str = preg_replace('/{dede:field.(\w+)\/}/i','{$field.$1}',$str);
             //$str = str_replace('<script src="{$field.phpurl\'/}/count.php?view=yes&aid={dede:field name=\'id\'/}&mid={dede:field name=\'mid}" type=\'text/javascript\' language="javascript"></script>','{$info.click}',$str);
             //字段处理
             $str = preg_replace("/\[field:(\w+)\/]/i", '{$field.$1}', $str);
@@ -95,8 +97,8 @@ class Tool extends \app\common\controller\Backend{
             $str = str_replace("dede:prenext","yycms:prenext",$str);
             //搜索
             $list_url = config('app.list_url');
-            $str = preg_replace("/\/plus\/search.php/i", '{:url("template/list",["serach"=>1])}', $str);
-            $str = preg_replace("/\/plus\/diy.php/i", '{:url("template/message")}', $str);
+            $str = preg_replace("/\/plus\/search.php/i", '{:url(\'template/search\')}', $str);
+            $str = preg_replace("/\/plus\/diy.php/i", '{:url(\'template/message\')}', $str);
             //特殊字符串
             $str = preg_replace("/typeid=(\d+)\s+/i", 'typeid="$1" ', $str);
             $str = preg_replace("/typeid=(\d+)/i", 'typeid="$1" ', $str);
@@ -104,16 +106,16 @@ class Tool extends \app\common\controller\Backend{
             $str = preg_replace("/channelid=(\d*)\s/i", 'channelid="$1" ', $str);
             $str = preg_replace("/row=(\d*)\s/i", 'row="$1" ', $str);
             $str = preg_replace("/pagesize=(\d+)/i", 'pagesize="$1" ', $str);
-            $str = preg_replace("/field.content}/i", 'yy.field.content|raw}', $str);
-            $str = preg_replace("/field.body}/i", 'field.body|raw}', $str);
-            $str = preg_replace("/field.position}/i", 'yy.field.position|raw}', $str);
+            $str = preg_replace("/{(.*)field.content}/i", '{$1field.content|raw}', $str);
+            $str = preg_replace("/{\$field.body}/i", '{$yy.1field.body|raw}', $str);
+            $str = preg_replace("/{\$field.position}/i", '{$yy.field.position|raw}', $str);
             
             $str = preg_replace("/channel\s+type=(\w+)\s+/i", 'channel type="$1" ', $str);
           
             $str = preg_replace("/field.typedir}/i", 'field.typedir}', $str);
             $str = preg_replace("/field.pic}/i", 'field.picname}', $str);
             $str = preg_replace("/field.fulltitle}/i", 'field.title}', $str);
-           
+            $str = str_replace("dede:productimagelist:","yycms:productimagelist",$str);
             
             //halt($str);
            

@@ -1,4 +1,4 @@
-<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\arctype\add.html";i:1634989907;s:5:"param";s:23:"a:1:{s:2:"id";s:1:"1";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1634992668;}*/ ?>
+<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\arctype\add.html";i:1635241218;s:5:"param";s:23:"a:1:{s:2:"id";s:1:"1";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1635159586;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,10 +62,12 @@
                 <div class="layui-form-item" pane="">
                     <label class="layui-form-label">栏目属性</label>
                     <div class="layui-input-block">
-                      <input type="radio" name="ispart" lay-skin="primary" title="列表"  value="0">
-                      <input type="radio" name="ispart" lay-skin="primary" title="封面" value="1">
-                      <input type="radio" name="ispart" lay-skin="primary" title="跳转" value="2">
+                      <input type="radio" name="ispart" lay-skin="primary" title="列表"  value="0" lay-filter="redirecturl">
+                      <input type="radio" name="ispart" lay-skin="primary" title="封面" value="1" lay-filter="redirecturl">
+                      <input type="radio" name="ispart" lay-skin="primary" title="跳转" value="2" lay-filter="redirecturl">
                     </div>
+                     <div class="redirecturl layui-hide layui-col-md5"><input type="text" name="sitepath" lay-skin="primary"  value="" placeholder="请输入跳转网址,必须带上(http://或者https:// )"class="layui-input"></div>
+                 
                  </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
@@ -122,6 +124,7 @@
                       </div>
                     </div>
                 </div>
+                
                 <div class="layui-form-item">
                     <label class="layui-form-label">SEO标题</label>
                     <div class="layui-input-block">
@@ -208,6 +211,15 @@
             elem: '#pubdate'
             ,type: 'datetime'
        });
+        //跳转网址
+        form.on('radio(redirecturl)', function(obj){
+            if(obj.value == 2){　　　　　　//判断当前多选框是选中还是取消选中
+                $('.redirecturl').removeClass('layui-hide');
+            }else{
+                $('.redirecturl').addClass('layui-hide');
+            }
+            return false;
+          });
        formTool.events.submit();//form提交
        formTool.setValue();
        formTool.uploads();

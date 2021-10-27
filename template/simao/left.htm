@@ -1,55 +1,61 @@
- <div class="subleft fl">
-  	
-  	<div class="sidebar">
-      <div class="topclass">
-        <h2 class="s">产品中心</h2>
-      </div>
-      <dl class="side-menu clearfix" id="menu">
-        {yycms:channel typeid='2'}
-          <dd>
-            <a href="{$field.typeurl}" title="{$field.typename}" > {$field.typename} </a>
-            <ul class="drop" >
-              </ul>
-          </dd>
-        {/yycms:channel}
-          </dl>
-       <div class="detail s">
-      	</div>
-    </div>
-      	<div class="leftnews clearfix">
+<div class="page-wrap-left xymob-menu-click">
+      <div class="xymob-left-close-btn"><i class="icon-font icon-close"></i></div>
+      <div class="xypg-left">
+        <div class="xypg-left-box xypg-left-menu">
+          <div class="xypg-left-title">
+            <h3> {$field.typename"/}<span>{dede:field name="typenameen}</span> </h3>
+          </div>
+          <div class="xypg-left-con">
+            <ul class="xypg-left-nav">
+             {yycms:channel type='son'}
 
-		<div class="titlex">
-		<span>推荐产品</span>
-		<b>PEARL COTTON </b>
-		</div>
-  		<div class="leftnewscomt">
-			<div class="mainx" id="inewsView">
-            <dl class="listx">
-            	{yycms:arclist typeid="2" row="3" orderby='pubdate'}
-            	<dd><a href="{$field.arcurl}" title="{$field.title}"><img src="{$field.picname}" title="{$field.title}" alt="{$field.title}" /></a></dd>
-               {/yycms:arclist}
-              </dl>
-            <div class="clear"></div>
-            <div class="tipx"></div>
+              <li> <a href="{$field.typeurl}" > {$field.typename}</a>
+                <div class="first-nav-btn"></div>
+              </li>
+              {/yycms:channel}
+            </ul>
+          </div>
         </div>
-		</div>
-
-	</div>
-  <!-- contact -->
-  <div class="leftcontact" style="margin-top:20px;">
-		
-		<div class="titlex">
-		<span>联系我们</span>
-		<b>CONTACT</b>
-		</div>
-		<div class="leftcontactcomt">
-				
-                  <strong>{:syscfg('cfg_webname')}</strong>　<br />
-电话咨询：{:syscfg('cfg_tel')}<br />
-
-工厂地址：{:syscfg('cfg_faddress')}<br />
-
-			    		</div>
-			</div>
-  
-</div>
+        <div class="xypg-left-box xypg-left-news">
+          <div class="xypg-left-title">
+            <h3>新闻资讯<span>News</span></h3>
+          </div>
+          <div class="xypg-left-con">
+            <ul class="latest-news">
+			{yycms:arclist typeid="11" row="6" titlelen="60" orderby='pubdate'}
+              <li><a href="{$field.arcurl}" title="{$field.title}">{$field.title}</a></li>
+             {/yycms:arclist} 
+            </ul>
+          </div>
+        </div>
+        <div class="xypg-left-box xypg-left-keys">
+          <div class="xypg-left-title">
+            <h3>热门关键词<span>Keywords</span></h3>
+          </div>
+          <div class="xypg-left-con">
+            <ul class="hot-keys">
+            {yycms:channel typeid='2'}
+			<li><a href='{$field.typeurl}'>{$field.typename}</a> </li>
+			{/yycms:channel}
+            </ul>
+          </div>
+        </div>
+        <div class="xypg-left-box xypg-left-contact">
+          <div class="xypg-left-title">
+            <h3>联系我们<span>Contact Us</span></h3>
+          </div>
+          <div class="xypg-left-con">
+            <div class="page-wrap-contact">
+              <h4>{:syscfg('cfg_webname')}</h4>
+              <p>联 系 人：{:syscfg('cfg_linkman')}&nbsp;</p>
+              <p>联系电话：&nbsp;{:syscfg('cfg_tel')}</p>
+              <p>网&nbsp; &nbsp; &nbsp; 址：{:syscfg('cfg_basehost')}</p>
+              <p>地&nbsp; &nbsp; &nbsp;址：{:syscfg('cfg_address')}</p>
+              <p><br/>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-message-img"> {yycms:type  typeid='17'}<a href="{$field.typeurl}"><img src="/static/images/20201123083736_224.jpg" alt=""></a> {/yycms:type}</div>
+      </div>
+    </div>

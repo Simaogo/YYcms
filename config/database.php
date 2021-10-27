@@ -25,11 +25,11 @@ return [
             // 服务器地址
             'hostname'        => env('database.hostname', 'localhost'),
             // 数据库名
-            'database'        => env('database.database', 'dedecms.com'),
+            'database'        => env('database.database', 'gz_hcw_com'),
             // 用户名
-            'username'        => env('database.username', 'root'),
+            'username'        => env('database.username', 'gz_hcw_com'),
             // 密码
-            'password'        => env('database.password', '123456'),
+            'password'        => env('database.password', 'i3h6wRihkL4FhBs3'),
             // 端口
             'hostport'        => env('database.hostport', '3306'),
             // 数据库连接参数
@@ -37,7 +37,7 @@ return [
             // 数据库编码默认采用utf8
             'charset'         => env('database.charset', 'utf8'),
             // 数据库表前缀
-            'prefix'          => env('database.prefix', 'dede_'),
+            'prefix'          => env('database.prefix', 'yy_'),
 
             // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
             'deploy'          => 0,

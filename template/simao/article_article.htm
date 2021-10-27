@@ -1,115 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-<meta charset="utf-8" />
-<meta name="baidu-site-verification" content="jbfkgME9T0" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>{$yy.field.title}-{:syscfg('cfg_webname')}</title>
 <meta name="keywords" content="{$yy.field.keywords}" />
 <meta name="description" content="{$yy.field.description}" />
-<link rel="stylesheet" href=" /static/css/style.css">
-<script src=" /static/js/jshandler.js" type="text/javascript"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/static/css/app.css">
+<link rel="stylesheet" href="/static/css/ain.css">
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/app.js"></script>
+<meta name="baidu-site-verification" content="code-ggotqzrsYO" />
 </head>
 <body>
 {include file="head"/}
-<!--banner end-->
-<div class="submian w clearfix">
-  <div class="ne_left"></div>
-  <div class="ne_right"></div>
-  <!--left-->
- {include file="left"/}
-  <!--left end--> 
-  <!--right-->
-  <div class="subright fr">
-    <div class="sobtitle">
-      <p class="fl">{$yy.field.typename}</p>
-      <div class="sitepath fr">当前位置：{$yy.field.position|raw} </div>
-      <i></i> </div>
-    <div class="content" id="content">
-      <div class="product-content">
-        <div class="original2"> <img src="{$yy.field.litpic}" title="{$yy.field.title}" alt="{$yy.field.title}" /> </div>
-        <div class="product-info2">
-          <h1>{$yy.field.title}</h1>
-          <div class="clear"></div>
-          <dl class="telx">
-            <dt>全国咨询热线：</dt>
-            <dd ig-phone>{:syscfg('cfg_tel')}</dd>
-          </dl>
-        </div>
-        <div class="clear"></div>
-        <div class="article-container">
-          <div class="article-head">
-            <h2>详情介绍:</h2>
+<div class="page-banner"> <img src="/static/images/20201208150652_942.jpg" alt="{$field.typename}"> </div>
+<div class="page-position">
+  <div class="container"> 您当前的位置 ：{$field.position}
+  </div>
+</div>
+<div class="page-wrap">
+  <div class="container">
+    {include file="left"/}
+    <div class="page-wrap-right">
+      <div class="xypg-right-content"> 
+        
+        <!-- 新闻详细 -->
+        <div class="xypg-news-detail">
+          <h1 class="xypg-detail-title">{$yy.field.title}</h1>
+          <div class="xypg-detail-info-bar">
+            <div class="detail-info-time"><i class="icon-font icon-shijian"></i>{$yy.field.pubdate}</div>
+            <div class="detail-info-numbers"><i class="icon-font icon-chakan"></i><script src='{$field.phpurl'/}/count.php?view=yes&aid={dede:field name='id'/}&mid={dede:field name='mid}'type='text/javascript' language='javascrip' ></script></div>
           </div>
-          <div class="article" id="article"> {$yy.field.body|raw} </div>
-          <div class="bdshare">
-            <div class="bdsharebuttonbox bdshare-button-style0-24" data-bd-bind="1460094611815"> 
-              <!--a href="#" class="bds_more" data-cmd="more"></a--> 
-              <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a> <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a> <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a> <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a> </div>
+          <div class="xypg-detail-con">
+			{$yy.field.body}
+          </div>
+          <div class="xypg-detail-tags">
+            <div class="tags-title">
+              <h3>标签</h3>
+              <div class="baidu-share"> 
+                <!-- Baidu Button BEGIN -->
+                <div class="bshare-custom"> <a title="分享到QQ空间" class="bshare-qzone"></a> <a title="分享到新浪微博" class="bshare-sinaminiblog"></a> <a title="分享到人人网" class="bshare-renren"></a> <a title="分享到腾讯微博" class="bshare-qqmb"></a> <a title="分享到网易微博" class="bshare-neteasemb"></a> <a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a> <span class="BSHARE_COUNT bshare-share-count">0</span> </div>
+                <script type="text/javascript" charset="utf-8" src="/static/js/buttonlite.js"></script><script type="text/javascript" charset="utf-8" src="/static/js/bsharec0.js"></script> 
+                <!-- Baidu Button END --> 
+              </div>
+            </div>
+            <div class="tags-content">
+			
+			{dede:tag row='10' sort='rand'}{$field.highlight}{/dede:tag}
+			
+			</div>
+          </div>
+         
+          <div class="xypg-detail-pn">
+            <div>{yycms:prenext get='pre'/}</div>
+            <div>{yycms:prenext get='next'/}</div>
+          </div>
+        </div>
+
+        <!-- 相关产品和相关新闻 -->
+        <div class="xypg-relate">
+          <div class="relate-product">
+            <h4 class="relate-title"><span>相关产品</span></h4>
+            <div class="relate-product-slick owl-carousel owl-loaded owl-drag">
+
+                <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 859px;">
+				{yycms:arclist typeid="2" row="4" titlelen="60" orderby='pubdate'}
+				<div class="owl-item active" style="width: 200.75px; margin-right: 14px;"><a href="{$field.arcurl}" title="{$field.title}">
+                <span class="img"><img src="{$field.picname}" alt="{$field.title}"></span>
+                <p>{$field.title}</p>
+            </a></div>
+			{/yycms:arclist}
+			</div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div></div>
+          </div>
+          <div class="relate-news">
+            <h4 class="relate-title"><span>相关新闻</span></h4>
+            <ul class="clearfix relate-news-list">
+				{yycms:arclist typeid="7" row="6" titlelen="60" orderby='pubdate'}
+
+				<li><a href="{$field.arcurl}">{$field.title}</a></li>
+
+				{/yycms:arclist}
+            </ul>
           </div>
         </div>
       </div>
     </div>
-    <div class="relink">
-      <p>{yycms:prenext get='pre'/}</p>
-      <p>{yycms:prenext get='next'/}</p>
-    </div>
-    <div class="recommend-pro">
-      <div class="head">
-        <h2>相关推荐</h2>
-        {yycms:type  typeid='2'}<a href='{$field.typeurl}' class="mo">更多>></a>{/yycms:type} </div>
-      <div class="main">
-        <ul class="list">
-		{yycms:arclist typeid="2" row="4" orderby='pubdate'}
-          <li class="item">
-            <div class="img"><a href="{$field.arcurl}" title="{$field.title}" alt="{$field.title}" ><img src="{$field.picname}" title="{$field.title}" alt="{$field.title}" /></a></div>
-            <h3><a href="{$field.arcurl}" title="{$field.title}">{$field.title}</a></h3>
-          </li>
-         {/yycms:arclist}
-        </ul>
-        <div class="clear"></div>
-      </div>
-    </div>
-    <div class="recommend-form" id="recommendForm">
-      <div class="head">
-        <h2>在线留言</h2>
-      </div>
-     <form action="{:url("template/message")}" enctype="multipart/form-data" method="post" name='formPost' id='formPost'>
-		<input type="hidden" name="action" value="post" />
-		<input type="hidden" name="diyid" value="1" />
-		<input type="hidden" name="do" value="2" />
-		<input type="hidden" name="dede_fields" value="name,text;phone,text;email,text;address,text;content,multitext;subtime,text" />
-		<input type="hidden" name="dede_fieldshash" value="1bc744423ac994aa94324130c39313d0" />
-        <div class="main">
-          <div class="row-1 ico-name required">
-            <input type="text" class="txt" name="name" value="订购人" placeholder="订购人" empty="请输入您的的称呼" maxlength="5" />
-            <i class="tip">*</i> </div>
-          <div class="row-1 ico-phone required">
-            <input type="text" class="txt" name="phone" value="联系电话" placeholder="联系电话" empty="请输入您的联系电话" error="请输入正确的联系电话" maxlength="15" />
-            <i class="tip">*</i> </div>
-          <div class="row-1 ico-email">
-            <input type="text" class="txt" name="email" value="电子邮箱" placeholder="电子邮箱" error="请输入正确的电子邮箱" maxlength="30" />
-          </div>
-          <div class="row-2">
-            <textarea class="text" placeholder="请填写您的需求信息..." name="content">请填写您的需求信息...</textarea>
-          </div>
-          <!-- <div class="row-3">
-            <input type="text" class="code" name="txtImageCode" value="验证码" placeholder="验证码" empty="请输入验证码" maxlength="4" />
-            <img src=" /static/images/imageverification.aspx" onclick="ChangeImageVerificationImageUrl(this);" class="code" /> </div> -->
-          <div class="row-3">
-            <input type="submit" class="submit" value="提交" />
-            <input type="reset" class="reset" value="重置" />
-          </div>
-          <div class="clear"></div>
-        </div>
-        <input type="hidden" id="NavigateUrl" name="NavigateUrl" value="" />
-      </form>
-      <script type='text/javascript'> JsReady(function(){ fillFormValue(); });  </script> 
+    <div class="page-mob-tool">
+      <ul>
+        <li class="xymob-page-navbtn"><i class="icon-font icon-dots-horizontal"></i></li>
+        <li class="xymob-page-backtop"><i class="icon-font icon-top"></i></li>
+      </ul>
     </div>
   </div>
 </div>
-<!--right-->
-
-<div class="clear"></div>
 {include file="footer"/}
 </body>
 </html>

@@ -9,7 +9,7 @@ class Yycms extends TagLib{
      */
     protected $tags   =  [
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
-        'channel'             => ['typeid,type,order,row', 'alias' => 'iterate','close' => 1],   //typeid:栏目id|默认0,order:排序方式desc|asc|默认desc,row条数
+        'channel'             => ['typeid,type,order,row,limit', 'alias' => 'iterate','close' => 1],   //typeid:栏目id|默认0,order:排序方式desc|asc|默认desc,row条数
         'channelartlist'      => ['typeid,order,row,pagesize,ishidden', 'alias' => 'iterate','close' => 1,'level'=>3],   //typeid:栏目id|默认0,order:排序方式desc|asc|默认desc,row条数
         'arclist'             => ['typeid,channelid,order,row,flag,titlelen,limit', 'alias' => 'arclist','close' => 1],   //
         'list'                => ['order,row,flag,titlelen', 'alias' => 'list','close' => 1],   //列表页
@@ -77,19 +77,25 @@ class Yycms extends TagLib{
         }
         $order  = empty($tag['order']) ? "sortrank asc": $tag['order'];//排序
         $row    = empty($tag['row']) ? 10: $tag['row'];//条数
+        $start = 0;
+        if(!empty($tag['limit'])) {
+            $limit = explode(',', $tag['limit']);
+            $start = isset($limit[0]) ? $limit[0] : 0;
+            $row = isset($limit[1]) ? $limit[1] : 10;
+        }
         $currentstyle= empty($tag['currentstyle']) ? 'on': $tag['currentstyle'];//条数
         $list_key = md5($list_key.''.$typeid);
  
         $ArctypeModel=new \app\common\model\Arctype();
         $list = $ArctypeModel::select()->toArray();
-        $menuList = $ArctypeModel->where($where)->order($order)->limit(0,$row)->select()->toArray();
+        $menuList = $ArctypeModel->where($where)->order($order)->limit($start,$row)->select()->toArray();
         //没有下级则等同级
         if(!$menuList){
             $where = [];
             $where[] = ["ishidden","=",0];
             $ArctypeSelf = $ArctypeModel::find($reid);
             $where[] = ["reid","=",$ArctypeSelf->reid];
-            $menuList = $ArctypeModel->where($where)->order($order)->select()->toArray();
+            if($ArctypeSelf->reid) $menuList = $ArctypeModel->where($where)->order($order)->select()->toArray();
         }
         //高亮栏目
         $currid = isset($tid) ? $ArctypeModel->currIds($list,$tid):array();
@@ -102,21 +108,22 @@ class Yycms extends TagLib{
                 $where = [];
                 $where[] = ["ishidden","=",0];
                 $where[] = ["reid","=",$typeid];
-                $menuList =\app\common\model\Arctype::where($where)->select();
+                $menuList =\app\common\model\Arctype::where($where)->limit(0,'.$row.')->select();
                 //$menuList = $menuList ? $menuList->toArray():\think\facade\Cache::get("'.$list_key.'"); 
             }else{
                 $menuList = \think\facade\Cache::get("'.$list_key.'");
             }
             $currid   = \think\facade\Cache::get("currid_'.$list_key.'");
             
-            foreach($menuList as $index=>$field){
+            foreach($menuList as $key => $field){
                     $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
                     $field["currentstyle"] = in_array($field["id"],$currid)?"'.$currentstyle.'":"";//栏目显示高亮
             ';
         $parseStr.= '?>';
         $parseStr.= $content;
         $parseStr.= '<?php } 
-                   
+                    
+                   unset($typeid);
                  ?>';
         return $parseStr;
     }

@@ -61,7 +61,6 @@ class Template extends Common{
         $template = !isset($view["template"]) ? cache('template'):$view["template"];  
         $ispart = !isset($view["ispart"]) ? cache('ispart'):$view["ispart"];  
         $template  = str_replace('{style}/','', $template);
-        $template = $this->isMobleTemplate($template);
         $template = $this->templateDefault($template,$ispart,$this->view_dir_name);
         
         $yy = [ 'field' => $view];
@@ -106,7 +105,6 @@ class Template extends Common{
             cache('view_'.$aid,$view); 
         }
         $template= str_replace('{style}/','', $view['temparticle']);
-        $template = $this->isMobleTemplate($template);
         $template = $this->templateDefault($template,2,$this->view_dir_name);
         $view['imgurls'] = isset($view['imgurls']) && $view['imgurls'] ? \fun\Process::decode_imgurls($addinfo['imgurls']) :'';//解析图集字段
        // $view['imgurls'] = ['images/dfsdfsdf.jpg','fdafsjlfjsado/iiumagea.jgp'];//解析图集字段
@@ -172,21 +170,28 @@ class Template extends Common{
      * @return string
      */
     public function templateDefault($templateName,$ispart = 2,$view_dir_name){
-       $view_suffix = Config::get('view.view_suffix');
-       $isTemplate = file_exists($view_dir_name.''.$templateName);
+        $config_view_suffix = Config::get('view.view_suffix');
+        $view_suffix = '.'.$config_view_suffix; //模板后缀
+        if(isMobile()) $view_suffix = '_m.' .$config_view_suffix; //手机模板后缀加M
+        $arr = explode('.', $templateName);
+        $template = $arr[0];
+        $isTemplate = file_exists($view_dir_name.''.$template.''.$view_suffix);//检测模板是否存在
         if(!$isTemplate){
-            $arr = explode('.', $templateName);
-            if(isMobile()) $view_suffix = '_m.' .$view_suffix;
             if($ispart == 1){
-                $template = 'index_default' . $view_suffix;
+                $template_default = 'index_default';
             } else if($ispart == 0){
-                $template  = 'list_default' . $view_suffix;
+                $template_default  = 'list_default';
             } else {
-                $template  = 'article_default' . $view_suffix;
+                $template_default  = 'article_default';
             }
-            if(isMobile()) $templateName = file_exists($view_dir_name . '' .$template) ? $template : str_replace ('_m', '', $templateName);
+            if(file_exists($view_dir_name . '' .$template_default .''.$view_suffix)){ //检测默认模板是否存在
+                return $template_default .''. $view_suffix;
+            }else{
+                $template = file_exists($template .'.'. $config_view_suffix) ? $template .'.'. $config_view_suffix : $template_default .'.'.$config_view_suffix;
+                return $template;
+            }
         }
-        return $templateName;
+        return $template . '' . $view_suffix;
     }
    
     /**

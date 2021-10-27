@@ -174,23 +174,21 @@
                             </div>
                         {/case}
                         {case value="htmltext"}
+                        {if condition='$vo.name!=="body"'}
                         <div class="layui-form-item layui-form-text">
-                            <label class="layui-form-label">内容</label>
+                            <label class="layui-form-label">{$vo.itemname}</label>
                             <div class="layui-input-block">
                               <script id="{$vo.name}" name="{$vo.name}" type="text/plain" style="width:1024px;height:350px;"></script>
                               <script type="text/javascript">
-                                    var ue = UE.getEditor('{$vo.name}');
-                                    ue.ready(function() {
+                                    var {$vo.name} = UE.getEditor('{$vo.name}');
+                                    {$vo.name}.ready(function() {
                                     //设置编辑器的内容
-                                    ue.setContent(formData["{$vo.name}"]);
-                                    //获取html内容，返回: <p>hello</p>
-                                    var html = ue.getContent();
-                                    //获取纯文本内容，返回: hello
-                                    var txt = ue.getContentTxt();
+                                    {$vo.name}.setContent(formData["{$vo.name}"]);
                                 });
                                 </script>
                             </div>
                         </div>
+                        {/if}
                         {/case}
                         {default /}
                         <div class="layui-form-item">
@@ -207,9 +205,9 @@
             
           </div>
        </div>
-        <div class="layui-form-item layui-flex layui-submit" style="">
-            <button class="layui-btn" lay-submit="" lay-filter="submit" style="width:150px;margin: 0 auto;">提交保存</button>
-        </div>
+</div>
+<div class="layui-form-item layui-flex layui-submit">
+    <button class="layui-btn" lay-submit="" lay-filter="submit" style="width:120px;margin: 0 auto;">提交</button>
 </div>
 </form>
 {include file="public/footer" /}

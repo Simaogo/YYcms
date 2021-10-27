@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{$yy.field.title}-{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{$field.description}" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/app.css">
+<link rel="stylesheet" href="/static/css/ain.css">
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/app.js"></script>
+<meta name="baidu-site-verification" content="code-ggotqzrsYO" />
+</head>
+<body>
+{include file="head"/}
+<div class="page-banner"> <img src="/static/images/20201208150652_942.jpg" alt="{$field.typename}"> </div>
+<div class="page-position">
+  <div class="container"> 您当前的位置 ： {$field.position} </div>
+</div>
+<div class="page-wrap">
+  <div class="container">
+    {include file="left"/}
+    <div class="page-wrap-right">
+      <div class="xypg-right-content">
+		<div class="xypg-right-content">
+        <form action="{:url("template/message")}" method="post" class="form-horizontal" id="message-form" >
+			<input type="hidden" name="action" value="post" />
+			<input type="hidden" name="diyid" value="1" />
+			<input type="hidden" name="do" value="2" />
+			
+          <div class="form-group">
+            <label for="ptitle" class="col-sm-2 control-label"><span class="wz">产品名称</span>：</label>
+            <div class="col-sm-7">
+              <input id="ptitle" name="ptitle" type="text" class="form-control" value="" placeholder="请输入您需要询价的产品名称"/>
+            </div>
+            <div class="pull-left">
+              <div class="error-info"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label"><span class="red-star">*</span> <span class="wz">联系人</span>：</label>
+            <div class="col-sm-7">
+              <input id="name" name="name" type="text" class="form-control" placeholder="请输入您的姓名" required/>
+            </div>
+            <div class="pull-left">
+              <div class="error-info"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="contact" class="col-sm-2 control-label"><span class="red-star">*</span> <span class="wz">电话</span>：</label>
+            <div class="col-sm-7">
+              <input id="contact" name="contact" type="text" class="form-control" placeholder="请输入您的联系方式" required/>
+            </div>
+            <div class="pull-left">
+              <div class="error-info"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email" class="col-sm-2 control-label"><span class="red-star">*</span> <span class="wz">邮箱</span>：</label>
+            <div class="col-sm-7">
+              <input id="email" name="email" type="text" class="form-control"  placeholder="请输入您的邮箱地址" />
+            </div>
+            <div class="pull-left">
+              <div class="error-info"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="address" class="col-sm-2 control-label"><span class="wz">地址</span>：</label>
+            <div class="col-sm-7">
+              <input id="address" name="address" type="text" class="form-control"  placeholder="请输入您的地址" />
+            </div>
+            <div class="pull-left">
+              <div class="error-info"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="content" class="col-sm-2 control-label"><span class="red-star">*</span> <span class="wz">留言内容</span>：</label>
+            <div class="col-sm-7">
+              <textarea id="content" rows="5" name="content" class="form-control" placeholder="请输入您的留言内容" ></textarea>
+            </div>
+            <div class="pull-left">
+              <div class="error-info"></div>
+            </div>
+          </div>
+          <input type="hidden" name="dede_fields" value="ptitle,text;name,text;contact,text;email,text;address,text;content,multitext" />
+			<input type="hidden" name="dede_fieldshash" value="6978155c1135a16b2f948a8d82aec47f" />
+          <div class="form-group">
+            <div class="col-sm-2 hidden-xs"></div>
+            <div class="col-sm-2 col-xs-4">
+              <input type="submit" class="btn btn-primary form-control" name="btn" value="提交" />
+            </div>
+            <div class="col-sm-2 col-xs-4">
+              <input type="reset" class="btn btn-danger form-control" value="重置" />
+            </div>
+          </div>
+        </form>
+      </div>
+      </div>
+    </div>
+    <div class="page-mob-tool">
+      <ul>
+        <li class="xymob-page-navbtn"><i class="icon-font icon-dots-horizontal"></i></li>
+        <li class="xymob-page-backtop"><i class="icon-font icon-top"></i></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{include file="footer"/}
+</body>
+</html>

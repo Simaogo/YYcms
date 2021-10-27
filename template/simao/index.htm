@@ -1,28 +1,423 @@
-{yycms:channelartlist typeid="2" ishidden="0,1"}
-<div class="ipro wx clearfix">
-  <div class="sidebar">
-    <div class="topclass">
-      <h2 class="s">产品中心</h2>
-    </div>
-    <dl class="side-menu clearfix" id="menu">
-     {yycms:channel type='son'}
-	 <dd> <a href="{$field.typeurl}" title="{$field.typename}" > {$field.typename} </a>
-        <ul class="drop" style="display:block;">
-        </ul>
-      </dd>
-      {/yycms:channel}
-    </dl>
-    <div class="detail s"> </div>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>{:syscfg('cfg_webname')}</title>
+<meta name="description" content="{:syscfg('cfg_description')}" />
+<meta name="keywords" content="{:syscfg('cfg_keywords')}" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/jquery.validator.css">
+<link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/static/css/app.css">
+<link rel="stylesheet" href="/static/css/ain.css">
+<link rel="stylesheet" type="text/css" href="/static/css/animate.min.css" />
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/owl.carousel.min.js"></script>
+<script src="/static/js/jquery.validator.min.js"></script>
+<script src="/static/js/jquery.superslide.2.1.2.js"></script>
+<script src="/static/js/app.js"></script>
+<script type="text/javascript">if(window.location.toString().indexOf('pref=padindex') != -1){}else{if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/IDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){if(window.location.href.indexOf("?mobile")<0){try{if(/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){window.location.href="{:syscfg('cfg_mobileurl')}/index.php";}else if(/iPad/i.test(navigator.userAgent)){}else{}}catch(e){}}}}</script>
+</head>
+<body>
+{include file="head"/}
+<div class="x-banner">
+  <div class="owl-carousel hidden-sm hidden-xs">
+  {yycms:arclist typeid="21" row="5" orderby='pubdate'}
+    <div class="banner-item"><a href=""><img src="{$field.picname}" alt="{$field.title}" /></a></div>
+  {/yycms:arclist}  
   </div>
-  <div class="tod">
-    <div class="iclass_tit">
-      <h1 class="s">推荐产品</h1>
-      <a href="{$field.typeurl}" class="mo">更多+</a> </div>
-    <ul class="clearfix">
-	  {yycms:arclist row="6" orderby='weight' orderway='desc'}	
-      <li><a href="{$field.arcurl}" title="{$field.title}"><img src="{$field.picname}" alt="{$field.title}" title="{$field.title}" /></a> <span><a href="{$field.arcurl}" title="{$field.title}">{$field.title}</a> </span> </li>
-    {/yycms:arclist}
-    </ul>
+  <div class="owl-carousel visible-xs visible-sm">
+     {yycms:arclist typeid="21" row="5" orderby='pubdate'}
+    <div><a href=""><img src="{$field.picname}" alt="{$field.title}" /></a></div>
+	{/yycms:arclist} 
   </div>
 </div>
-{/yycms:channelartlist}
+<div class="search_index">
+  <div class="wd1200 clearfix">
+    <div class="hotSearch">热门搜索： 
+	{yycms:channel typeid='2'}
+	<a href='{$field.typeurl}'>{$field.typename}</a>
+	{/yycms:channel}
+	</div>
+    <form method="get" name="formsearch" id="formsearch" action="http://www.gzsgbgd.cn/search.php">
+      <input type='text' name='q' id="keyword" placeholder=" " />
+      <input type="submit" id="s_btn" value="" />
+    </form>
+  </div>
+</div>
+<div class="c1_index">
+  <div class="wd1200 clearfix">
+    <div class="ttt1 wow zoomIn">
+      <h3>产品展示</h3>
+      <p>PRODUCT CENTRE</p>
+    </div>
+    <div class="pro_wap wow zoomIn">
+      <ul class="sort_pro">
+       {yycms:channel typeid='2'}
+        <li><a href='{$field.typeurl}'>{$field.typename}</a></li>
+		{/yycms:channel}
+      </ul>
+      <div id="multipleColumn">
+        <div class="bd clearfix">
+          <div class="picList clearfix">
+		  {yycms:arclist typeid="2" row="20" orderby='pubdate'}
+            <li><a href="{$field.arcurl}" title="{$field.title}" class="img"> <img src="{$field.picname}" alt="{$field.title}" /></a>
+              <h3>{$field.title}</h3>
+            </li>
+           {/yycms:arclist}
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+    jQuery("#multipleColumn .bd li").each(function(i){ jQuery("#multipleColumn .bd li").slice(i*2,i*2+2).wrapAll("<ul></ul>");});
+    jQuery("#multipleColumn").slide({titCell:".hd ul",mainCell:".bd .picList",autoPage:true,effect:"leftMarquee",interTime:50,autoPlay:true,vis:4,});
+    
+    </script> 
+  </div>
+</div>
+
+<!-- 关于我们 -->
+<div class="c2_index">
+  <div class="wd1200 clearfix">
+    <div class="c2left wow slideInLeft">
+      <h1>about us</h1>
+      <span>{:syscfg('cfg_webname')}</span>
+  <!--    <ul class="number">-->
+		<!--{yycms:type  typeid='22'}-->
+  <!--      <li> <a href="{$field.typeurl}">-->
+  <!--        <div class="abtus"> <img src="/static/images/20201118095537_530.png"/> </div>-->
+  <!--        <h3>{$field.typename}</h3>-->
+  <!--        <span></span> </a> </li>-->
+		<!--  {/yycms:type}-->
+		<!--  {yycms:type  typeid='23'}-->
+  <!--      <li> <a href="{$field.typeurl}">-->
+  <!--        <div class="abtus"> <img src="/static/images/20201118095545_626.png"/> </div>-->
+  <!--        <h3>{$field.typename}</h3>-->
+  <!--        <span></span> </a> </li>-->
+		<!--  {/yycms:type}-->
+		<!--  {yycms:type  typeid='24'}-->
+  <!--      <li> <a href="{$field.typeurl}">-->
+  <!--        <div class="abtus"> <img src="/static/images/20201118095552_669.png"/> </div>-->
+  <!--        <h3>{$field.typename}</h3>-->
+  <!--        <span></span> </a> </li>-->
+		<!--  {/yycms:type}-->
+		<!--  {yycms:type  typeid='25'}-->
+  <!--      <li> <a href="{$field.typeurl}">-->
+  <!--        <div class="abtus"> <img src="/static/images/20201118095559_462.png"/> </div>-->
+  <!--        <h3>{$field.typename}</h3>-->
+  <!--        <span></span> </a> </li>-->
+		<!--  {/yycms:type}-->
+  <!--    </ul>-->
+  <!--    {yycms:type  typeid='1'}<a href="{$field.typeurl}" class="abbmore">查看更多+</a> {/yycms:type}-->
+      </div>
+    <div class="c2right wow slideInRight" style="padding-bottom:35px;">
+      <div class="abbtxt">
+        <p style="text-indent: 2em;">
+		{yycms:channel sql='Select content from dede_arctype where id=1'}
+{$field.content|raw}
+{/yycms:channel}...</p>
+      </div>
+   <!--   <div class="abimg">-->
+   <!--     <div class="bd">-->
+   <!--       <ul>-->
+   <!--        {yycms:arclist typeid="23" row="6" orderby='pubdate'}-->
+   <!--         <li> <a href=""><img src="{$field.picname}" alt="{$field.title}" /></a> </li>-->
+			<!--{/yycms:arclist}-->
+   <!--       </ul>-->
+   <!--     </div>-->
+   <!--     <div class="hd">-->
+   <!--       <ul>-->
+   <!--          {yycms:arclist typeid="23" row="6" orderby='pubdate'}-->
+   <!--         <li></li>-->
+			<!--{/yycms:arclist}-->
+   <!--       </ul>-->
+   <!--     </div>-->
+   <!--   </div>-->
+    </div>
+  </div>
+</div>
+<script>
+    jQuery(".abimg").slide({mainCell:".bd ul",autoPlay:true});
+</script> 
+
+<!-- ggt -->
+<div class="ggt wow slideInUp">
+  <ul class="ads">
+    <li> <a href="" class="img">
+      <div class="simg">
+        <dd><img src="/static/images/20201118101224_324.png"/></dd>
+        <dt><img src="/static/images/20201118101228_289.png"/></dt>
+      </div>
+      <div class="sright">
+        <h3> 质优价廉 </h3>
+        <span>HIGH QUALITY</span> </div>
+      </a> </li>
+    <li> <a href="" class="img">
+      <div class="simg">
+        <dd><img src="/static/images/20201118101239_139.png"/></dd>
+        <dt><img src="/static/images/20201118101241_974.png"/></dt>
+      </div>
+      <div class="sright">
+        <h3> 自产自销 </h3>
+        <span>SELF-PRODUCED</span> </div>
+      </a> </li>
+    <li> <a href="" class="img">
+      <div class="simg">
+        <dd><img src="/static/images/20201118101253_721.png"/></dd>
+        <dt><img src="/static/images/20201118101256_253.png"/></dt>
+      </div>
+      <div class="sright">
+        <h3> 服务为本 </h3>
+        <span>SERVICE-ORIENTED</span> </div>
+      </a> </li>
+    <li> <a href="" class="img">
+      <div class="simg">
+        <dd><img src="/static/images/20201118101307_894.png"/></dd>
+        <dt><img src="/static/images/20201118101312_642.png"/></dt>
+      </div>
+      <div class="sright">
+        <h3> 顾客至上 </h3>
+        <span>CUSTOMER FIRST</span> </div>
+      </a> </li>
+  </ul>
+</div>
+
+<!-- 优势 -->
+<div class="c3_index">
+  <div class="wd1200 clearfix">
+    <div class="ysttt wow slideInUp">
+      <h3>家鸿建材</h3>
+      <p><span>服务为本 / 信誉保障 / 顾客至上</span> SERVICE BASED / REPUTABLE / CUSTOMER FIRST</p>
+    </div>
+    <div class="ys_contt">
+      <div class="ys_aa wow slideInRight">
+        <h3> 环境保护 </h3>
+        <span>ENVIRONMENTAL PROTECTION</span>
+        <div class="ccx">
+          <p>我公司自成立以来主要以螺旋波纹管研发，金属波纹管涵生产为主导。 生产无毒、环境保护、挡腐蚀、性能优良的管道产品...</p>
+        </div>
+        <div class="ys_cc">
+          <h3> 一体化服务 </h3>
+          <span>INTEGRATED SERVICES</span>
+          <div class="ccx">
+            <p>公司对不同市政建筑管网工程提供研发、生产、销售、安装及工程技能等方面的一体化服务...</p>
+          </div>
+        </div>
+      </div>
+      <div class="clearboth"></div>
+      <div class="ys_bb wow slideInLeft">
+        <h3> 持续进取、诚信为本 </h3>
+        <span>CONTINUOUS IMPROVEMENT, HONESTY</span>
+        <div class="ccx">
+          <p>家鸿秉承“持续进取、诚信为本”的经营理念，致力于为用户 带来价值、为经销商带来利润、为员工带来富财...</p>
+        </div>
+      </div>
+      <div class="ys_dd">
+        <p>咨询服务热线：</p>
+        <p style="font-size: 36px; color: rgb(34, 34, 34); font-weight: bold;">13635427595</p>
+      </div>
+      <div class="ysimg1 wow slideInLeft"><img src="/static/images/20201118102628_892.png" alt=""></div>
+      <div class="ysimg2 wow slideInRight"><img src="/static/images/20201118103111_110.png" alt=""></div>
+    </div>
+  </div>
+</div>
+<div class="hengtus clearfix">
+  <div class="wd1200">
+    <div class="fl henname">
+      <dd>系统化流程服务</dd>
+      {yycms:type  typeid='17'}<a href='{$field.typeurl}'>{$field.typename}</a>{/yycms:type} </div>
+    <div class="fr henlist wow zoomIn">
+      <ul>
+        <li> <a href=""> <img src="/static/images/20201118105331_992.png"/> </a>
+          <h3>客户咨询</h3>
+        </li>
+        <li> <a href=""> <img src="/static/images/20201118105343_184.png"/> </a>
+          <h3>需求沟通</h3>
+        </li>
+        <li> <a href=""> <img src="/static/images/20201118105351_302.png"/> </a>
+          <h3>签订合同</h3>
+        </li>
+        <li> <a href=""> <img src="/static/images/20201118105359_956.png"/> </a>
+          <h3>生产交付</h3>
+        </li>
+        <li> <a href=""> <img src="/static/images/20201118105407_652.png"/> </a>
+          <h3>售后跟踪</h3>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="c4_index">
+  <div class="wd1200 clearfix">
+    <div class="ttt1 wow zoomIn">
+      <h3>工程案例</h3>
+      <p>ENGINEERING CASE </p>
+    </div>
+    <div class="c4bgs clearfix wow zoomIn"> 
+      <!-- 滚动开始 -->
+      <div id="demo">
+        <div id="indemo">
+          <div id="demo1">
+            <ul class="pro_list">
+              {yycms:arclist typeid="15" row="10" orderby='pubdate'}
+              <li><a href="{$field.arcurl}" title="{$field.title}" class="img"> <img src="{$field.picname}" alt="{$field.title}" /></a>
+                <h3>{$field.title}</h3>
+              </li>
+              {/yycms:arclist}
+			  
+            </ul>
+          </div>
+          <div id="demo2"></div>
+        </div>
+      </div>
+      <!-- 滚动结束 --> 
+    </div>
+  </div>
+</div>
+
+<!-- 新闻中心 -->
+<div class="news_index">
+  <div class="wd1200 clearfix">
+    <div class="ttt1 ttt2 wow zoomIn">
+      <h3>新闻资讯</h3>
+      <p>NEWS INFORMATION</p>
+    </div>
+    <div class="s7b clearfix wow zoomIn">
+      <div class="s7b-btn fl">
+        <ul>
+		
+          <li class="dfc" onclick="window.open('{yycms:type  typeid='12'}{$field.typeurl}{/yycms:type}','_self')">
+            <div class="s7b-btn-box">
+              <div class="s7b-btn-img"> <img src="/static/images/20201118110554_935.png" /> <img src="/static/images/20201118110557_735.png" /> </div>
+              <div class="s7b-btn-name">
+                <h3>公司新闻</h3>
+                <p>COMPANY NEWS</p>
+              </div>
+            </div>
+            <div class="s7b-btn-num">01</div>
+          </li>
+          <li class="dfc" onclick="window.open('{yycms:type  typeid='13'}{$field.typeurl}{/yycms:type}','_self')">
+            <div class="s7b-btn-box">
+              <div class="s7b-btn-img"> <img src="/static/images/20201118110641_538.png" /> <img src="/static/images/20201118110645_356.png" /> </div>
+              <div class="s7b-btn-name">
+                <h3>行业资讯</h3>
+                <p>INDUSTRY NEWS</p>
+              </div>
+            </div>
+            <div class="s7b-btn-num">02</div>
+          </li>
+          <li class="dfc" onclick="window.open('{yycms:type  typeid='14'}{$field.typeurl}{/yycms:type}','_self')">
+            <div class="s7b-btn-box">
+              <div class="s7b-btn-img"> <img src="/static/images/20201118110705_315.png" /> <img src="/static/images/20201118110709_967.png" /> </div>
+              <div class="s7b-btn-name">
+                <h3>常见问答</h3>
+                <p>Q&A</p>
+              </div>
+            </div>
+            <div class="s7b-btn-num">03</div>
+          </li>
+        </ul>
+      </div>
+      <div class="s7b-con fr">
+        <ul>
+		{yycms:arclist typeid="11" row="1" titlelen="60" orderby='pubdate' flag='p'}
+          <li class="clearfix s7b-tj">
+            <div class="fl s7b-tj-con">
+              <div class="clearfix s7b-tj-box">
+                <div class="fl s7b-tj-name"><a href="{$field.arcurl}" title="{$field.title}">{$field.title}</a></div>
+                <div class="fr s7b-tj-time">
+                  <h3> [field:pubdate function=MyDate('m-d',@me)/]</h3>
+                  <p>[field:pubdate function=MyDate('Y',@me)/]</p>
+                </div>
+              </div>
+              <div class="s7b-tj-summary">
+                <p>{$field.description}...</p>
+              </div>
+            </div>
+            <div class="fr s7b-tj-img"> <a href="{$field.arcurl}" title="{$field.title}"><img src="{$field.picname}" alt="{$field.title}"></a> </div>
+          </li>
+		  {/yycms:arclist}
+		  {yycms:arclist typeid="11" row="1" titlelen="60" orderby='pubdate'}
+          <li class="s7b-item">
+            <div class="clearfix s7b-item-box">
+              <div class="fl s7b-item-name"><a href="{$field.arcurl}" title="{$field.title}">{$field.title}</a></div>
+              <div class="fr s7b-item-time">
+                <h3>[field:pubdate function=MyDate('m-d',@me)/]</h3>
+                <p>[field:pubdate function=MyDate('Y',@me)/]</p>
+              </div>
+            </div>
+            <div class="s7b-item-summary">
+              <p>{$field.description}...</p>
+            </div>
+          </li>
+		  {/yycms:arclist}
+          <div class="s7b-more"><a href="{yycms:type  typeid='11'}{$field.typeurl}{/yycms:type}">查看更多+</a></div>
+          <li class="clearfix s7b-list">
+            {yycms:arclist typeid="11" row="6" titlelen="60" orderby='pubdate'}
+			<div class="clearfix"> <a href="{$field.arcurl}" title="{$field.title}" class="fl">{$field.title}...</a>
+              <p class="fr">[field:pubdate function=MyDate('m-d',@me)/]</p>
+            </div>
+            {/yycms:arclist}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="linkss wd1200 clearfix">友情链接： 
+{yycms:flink row='8' type='text'}{$field.link}{/yycms:flink}
+ </div>
+<div class="x-layout hidden">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3 col-sm-12">
+        <div class="x-layout-logo"><img src="/static/images/98d0e43a6b4c49288ee72bcc8f050de7.gif" alt=""></div>
+        <div class="x-layout-desc"></div>
+        <div class="x-layout-contact"> </div>
+      </div>
+      <div class="col-md-5 col-md-offset-1 col-sm-12 hidden-xs">
+        <div class="x-layout-menu clearfix">
+		{yycms:channelartlist typeid="top"}
+          <dl>
+            <dt>{$field.typename}</dt>
+           {yycms:channel type="son"}
+			<dd><a href="{$field.typeurl}">{$field.typename}</a></dd>{/yycms:channel}
+          </dl>
+          {/yycms:channelartlist}
+        </div>
+      </div>
+      <div class="col-md-2 col-md-offset-1 col-sm-12 hidden-xs">
+        <div class="x-layout-ewm"> <img src="{:syscfg('cfg_wechat_code')}" alt="{:syscfg('cfg_webname')}">
+          <p>扫码关注 了解资讯</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{include file="footer"/}
+<script src="/static/js/common.js"></script> 
+<script>
+    $(document).ready(function(){
+        // BANNER
+        $(".x-banner .owl-carousel").owlCarousel({
+            items: 1,               // 显示个数
+            loop:true,              // 是否循环
+            autoplay: true,         // 是否自动播放
+            navText: ['<i class="icon-font icon-left-arrow">', '<i class="icon-font icon-right-arrow">'], // 左右箭头
+            responsive: {
+                0: {
+                    nav: false,              // 是否显示箭头
+                },
+                990: {
+                    nav: true,
+                }
+            }
+        });
+        
+    });
+</script>
+</body>
+</html>

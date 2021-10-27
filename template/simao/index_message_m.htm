@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no" name="format-detection">
+    <title>{$yy.field.title}-{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{$field.description}" />
+    <link rel="stylesheet" href="static/css/iconfont.css">
+    <link rel="stylesheet" href="static/css/slick.css">
+    <link rel="stylesheet" href="static/css/app.css">
+    <link rel="stylesheet" href="static/css/ain.css">
+    <script src="static/js/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+    <div class="mob-wrap">
+    <!-- 头部 -->
+	{include file="header_m"/}      
+	<!-- banner -->
+	  <!-- 内页banner -->
+    
+    <div class="page-banner"></div>
+    
+
+    <!-- 主体内容 -->
+
+    <div class="page-content">
+        
+	<div class="page-sort">
+		<div class="page-sort-title">
+			<span> {$field.typename}</span>
+			<div class="page-sort-btn"><i class="iconfont icon-close"></i></div>
+		</div>
+		<div class="mob-message">
+    <form action="{:url("template/message")}" id="message" method="post" class="nice-validator n-default" novalidate="novalidate">
+        <div class="input-item" data-info="产品名称">
+            <input placeholder="请输入您需要询价的产品名称" name="ptitle" value="" type="text">
+        </div>
+        <div class="input-item" data-info="姓名">
+            <input placeholder="请输入您的姓名" name="name" type="text">
+        </div>
+        <div class="input-item" data-info="联系方式">
+            <input placeholder="请输入您的联系方式" name="contact" type="text">
+        </div>
+        <div class="input-item" data-info="邮箱">
+            <input placeholder="请输入您的邮箱" name="email" type="text">
+        </div>
+        <div class="input-item" data-info="留言内容">
+            <textarea class="content" placeholder="留言内容" name="content"></textarea>
+        </div>
+       <input type="hidden" name="action" value="post" />
+			<input type="hidden" name="diyid" value="1" />
+			<input type="hidden" name="do" value="2" />
+			<input type="hidden" name="dede_fields" value="ptitle,text;name,text;contact,text;email,text;address,text;content,multitext" />
+			<input type="hidden" name="dede_fieldshash" value="6978155c1135a16b2f948a8d82aec47f" />
+        <div class="input-btn">
+            <input type="submit" class="submit" value="提交留言">
+        </div>
+   </form>
+</div>
+	</div>
+
+	<div class="bread-crumbs"><span class="open-btn"><i class="iconfont icon-daohang"></i></span> {$field.typename}</div>
+	<div class="page-detail">
+	   {$yy.field.content|raw}
+	</div>
+
+    </div>
+{include file="footer_m"/}
+</body>
+</html>

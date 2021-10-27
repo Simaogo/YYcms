@@ -1,73 +1,34 @@
-<div class="top clearfix">
-  <div class="he_top">
-    <div class="w">
-      <div class="fl zi">欢迎来到{:syscfg('cfg_webname')}官网！</div>
-      <div class="t fr">
-        <li>{yycms:type  typeid='1'}<a href="{$field.typeurl}" title="关于好之彩">关于好之彩</a>{/yycms:type}</li>
-        <li class="addFav" id="addFavo"><a href="javascript:;">加入收藏 </a></li>
-        <li class="setHome" id="setHome"><a href="javascript:;">设为首页</a></li>
-        <li class="webMap"></li>
-      </div>
+<div id="header">
+  <div class="wd1200 clearfix">
+    <div class="wel fl wow slideInLeft">
+      <p>您好，欢迎访问贵州家鸿新型建材有限公司官网！</p>
     </div>
-  </div>
-  <div class="header w">
-    <div class="logo"> <a href="/" alt="{:syscfg('cfg_webname')}" title="{:syscfg('cfg_webname')}"><img src="/static/images/logo_20190415103129655.png"  alt="{:syscfg('cfg_webname')}" title="{:syscfg('cfg_webname')}"/></a>
-      <div class="header_g"> <span>厂家直销，产量大</span>
-        <p>专业生产珍珠棉包装材料</p>
-      </div>
-    </div>
-    <div class="fr">
-      <div class="tel s">
-        <p class="Telephone" ig-phone>{:syscfg('cfg_tel')}</p>
-      </div>
-    </div>
-    <div class="clear"></div>
+    <div class="k2 fr  wow slideInRight"> {yycms:type  typeid='11'}<a href='{$field.typeurl}'>{$field.typename}</a>{/yycms:type} | <a href="/data/sitemap/">网站地图</a> | <a href="/data/rss.xml">RSS</a>  </div>
   </div>
 </div>
-<div class=" nav">
-  <div class="w">
-    <ul>
-      <li><a href="/"  title="网站首页">网站首页</a></li>
-    {yycms:channel typeid='2' type="son"}
-	<li><a href='{$field.typeurl}'><i>{$field.typename}</i></a> </li>
-	{/yycms:channel}
-	{yycms:channelartlist}
-	 <li><a href="{$field.typeurl}" title="{$field.typename}"  class="" ><i>{$field.typename}</i></a>
-        <div class="subNav"> 
-			 {yycms:channel type="son"}
-			<a href="{$field.typeurl}" title="{$field.typename}" >{$field.typename} </a> 
-			{/yycms:channel}
-		</div>
-      </li>
-      {/yycms:channelartlist}
-    </ul>
+<div class="top_cc">
+  <div class="wd1200 clearfix">
+    <div class="logo wow slideInLeft"><a href="/"><img alt="{:syscfg('cfg_webname')}" src="{:syscfg('cfg_logourl')}" /></a></div>
+    <div class="fl tofu wow slideInLeft">
+      <p style="font-size: 24px;color: red;"><span style="color: #0058bc;">螺旋钢波纹管</span>定制生产厂家</p>
+      <p>研发/生产/销售/安装及工程技能等一体化服务</p>
+    </div>
+    <div class="top_phone  wow slideInRight"> <span>——  全国咨询服务  ——</span> <span>
+      <p style="color:red">13635427595</p>
+      </span> </div>
   </div>
 </div>
-<!--banner-->
-<div class="iban">
-  <div class="banner" id="banner">
-    <ul class="list">
-      <li class="item" style="background:url(/static/images/20190415102756_3715.jpg) center top no-repeat;"></li>
-      <li class="item" style="background:url(/static/images/20190415102803_6567.jpg) center top no-repeat;"></li>
-      <li class="item" style="background:url(/static/images/20190415102809_7876.jpg) center top no-repeat;"></li>
-    </ul>
-    <div class="clear"></div>
-  </div>
-  <div class="tip"></div>
-  <div class="search">
-    <div class="w clearfix">
-      <div class="shadow">
-        <div class="searcher" id="searcher">
-          <input type="submit" name="sub" id="SearchSubmit" class="submit  s" value="" />
-          <input type="hidden" value="{:url("template/list",["serach"=>1])}"  id="Searchtype" />
-          <input type="text" class="txt" value="请输入关键词搜索" placeholder="请输入关键词搜索" name="q" id="SearchTxt" />
-        </div>
-        <div class="skey"><span class="blue">热门关键词：</span> 
-		{yycms:channel typeid='2' type="son"}
-		<a href='{$field.typeurl}'>{$field.typename}</a>
-		{/yycms:channel}
-		</div>
-      </div>
-    </div>
-  </div>
+<div class="nav_wap">
+  <ul class="x-menu clearfix">
+    <li> <a href="/" >网站首页</a> </li>
+	{yycms:channelartlist typeid="top"}
+    <li> <a href="{$field.typeurl'/}" >{dede:field name='typename}</a>
+	 <ul class="x-sub-menu">
+		{yycms:channel type='son'}
+        <li><a href='{$field.typeurl}' title='{$field.typename}'>{$field.typename}</a></li>
+        {/yycms:channel}
+      </ul>
+    </li>
+	{/yycms:channelartlist}
+  </ul>
 </div>

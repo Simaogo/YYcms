@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 <title>搜索结果_{:syscfg('cfg_webname')}</title>
 <meta name="keywords" content="{$yy.field.keywords}" />
-<meta name="description" content="{dede:field name='description' /}" />
+<meta name="description" content="{$field.description}" />
 <script type="text/javascript" src="/skin/js/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="/skin/css/style.css">
 <link rel="stylesheet" href="/skin/css/font-awesome.min.css">
@@ -25,7 +25,7 @@
             <div class="main_r fr">
                 <div class="art_list">
                     <ul>
-					    {yycms:list pagesize=6 titlelen=100}
+					    {yycms:list pagesize="6"  titlelen=100}
                         <li>
                             <div class="fl"> <a href="{$field.arcurl}"> <img src="{$field.litpic}" alt="{$field.title}" /> </a> </div>
                             <div class="fr"> <a href="{$field.arcurl}">{$field.title}</a> <span>{$field.pubdate}</span>

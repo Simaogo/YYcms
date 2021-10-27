@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 <title>{$yy.field.typename}_{:syscfg('cfg_webname')}</title>
 <meta name="keywords" content="{$yy.field.keywords}" />
-<meta name="description" content="{dede:field name='description' /}" />
+<meta name="description" content="{$field.description}" />
 <script type="text/javascript" src="/skin/js/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="/skin/css/style.css">
 <link rel="stylesheet" href="/skin/css/font-awesome.min.css">
@@ -18,19 +18,19 @@
 {include file="head"/}
 {include file="banner"/}
 <div class="container">
-    {include file="position"/}
+    {include file="position2"/}
     <div class="center">
         <div class="wrap clearfix">
-            {include file="left"/}
+            {include file="left2"/}
             <div class="main_r fr">
-                <div class="art_list">
+                <div class="pro_list">
                     <ul>
 					    {yycms:list pagesize="6"}
                         <li>
-                            <div class="fl"> <a href="{$field.arcurl}"> <img src="{$field.litpic}" alt="{$field.title}" /> </a> </div>
-                            <div class="fr"> <a href="{$field.arcurl}">{$field.title}</a> <span>{$field.pubdate}</span>
-                                <p>{$field.description}...</p>
-                            </div>
+                            <div class="pic"> <a href="{$field.arcurl}">
+                                <div class="imgauto"> <img src="{$field.litpic}" alt="{$field.title}" /> </div>
+                                <span>{$field.title}</span> </a> </div>
+                            <div class="text"> <a href="{$field.arcurl}"> <img src="/skin/images/probg.png" alt="{$field.title}"> </a> </div>
                         </li>
 						{/yycms:list}
                     </ul>

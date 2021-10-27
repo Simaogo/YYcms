@@ -76,9 +76,17 @@ class UploadService extends AbstractService
             $Uploads = '';
             if (!$Uploads) {
                 try {
-                    $savename = \think\facade\Filesystem::disk('public')->putFile($path, $file);
-                    $path = '/' . $savename;
-                    $paths = trim($path, '/');
+
+                   $savename = \think\facade\Filesystem::disk('public')->putFile($path, $file);
+                   $path = '/' . $savename;
+                   $paths = trim($path, '/');
+//                    $savename = $_FILES["file"]['name'];
+//                    $path = 'uploads/'.date('Ymd');
+//                    \fun\helper\FileHelper::mkdirs(app()->getRootPath().$path);
+//                    if(move_uploaded_file($_FILES["file"]['tmp_name'],$path.'/'.$savename)){
+//                        $path =$path.'/'.$savename;
+//                    }
+
 //                    整合上传接口 获取视频音频长度
 //                    $analyzeFileInfo = hook('getID3Hook',['path'=>'./'.$path]);
 //                    $duration=0;
