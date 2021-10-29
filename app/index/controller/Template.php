@@ -107,7 +107,6 @@ class Template extends Common{
         $template= str_replace('{style}/','', $view['temparticle']);
         $template = $this->templateDefault($template,2,$this->view_dir_name);
         $view['imgurls'] = isset($view['imgurls']) && $view['imgurls'] ? \fun\Process::decode_imgurls($addinfo['imgurls']) :'';//解析图集字段
-       // $view['imgurls'] = ['images/dfsdfsdf.jpg','fdafsjlfjsado/iiumagea.jgp'];//解析图集字段
         $yy = [ 'field' => $view];
 
         View::assign(['yy'=>$yy]);
@@ -187,7 +186,7 @@ class Template extends Common{
             if(file_exists($view_dir_name . '' .$template_default .''.$view_suffix)){ //检测默认模板是否存在
                 return $template_default .''. $view_suffix;
             }else{
-                $template = file_exists($template .'.'. $config_view_suffix) ? $template .'.'. $config_view_suffix : $template_default .'.'.$config_view_suffix;
+                $template = file_exists($template .'.'. $config_view_suffix) ? $template_default .'.'. $config_view_suffix : $template .'.'.$config_view_suffix;
                 return $template;
             }
         }

@@ -1,4 +1,4 @@
-<?php /*a:2:{s:49:"E:\WWW\tp6dedecms\app\admin\view\index\index.html";i:1635148392;s:5:"param";i:0;}*/ ?>
+<?php /*a:2:{s:49:"E:\WWW\tp6dedecms\app\admin\view\index\index.html";i:1635422336;s:5:"param";i:0;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -147,7 +147,15 @@
                             <dd><a lay-id="<?php echo url('diyforms/index'); ?>" lay-url="<?php echo url('diyforms/index'); ?>"><cite>留言管理</cite></a></dd>
                         </dl>
                     </li>
-
+                    <li class="layui-nav-item">
+                        <a lay-id="javascript:;" lay-url="javascript:;">
+                            <i class="ri-mail-download-fill"></i>&emsp;<cite>广告管理</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-id="<?php echo url('myppttype/index'); ?>" lay-url="<?php echo url('myppttype/index'); ?>"><cite>广告分类</cite></a></dd>
+                            <dd><a lay-id="<?php echo url('myppt/index'); ?>" lay-url="<?php echo url('myppt/index'); ?>"><cite>广告列表</cite></a></dd>
+                        </dl>
+                    </li>
                     <li class="layui-nav-item">
                         <a lay-id="javascript:;" lay-url="javascript:;">
                             <i class="ri-tools-fill"></i>&emsp;<cite>工具管理</cite>

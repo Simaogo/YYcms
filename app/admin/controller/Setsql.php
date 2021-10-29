@@ -10,7 +10,7 @@ class Setsql extends \app\common\controller\Backend{
     public function index(){
         if(request()->isAjax()){
             $data = Db::query('show tables');
-            $dbName = config('database.connections.mysql.username');
+            $dbName = config('database.connections.mysql.database');
             foreach($data as $key => $val){
                 $data[$key]['tablename'] = $tableName = $val['Tables_in_'. $dbName];
             }
@@ -33,7 +33,7 @@ class Setsql extends \app\common\controller\Backend{
     public function replacePrefix(){
        if(request()->isAjax()){
             $newPrefix = 'yy';
-            $dbName = config('database.connections.mysql.username');
+            $dbName = config('database.connections.mysql.database');
             $data = Db::query('show tables');
             foreach ($data as $key => $val){
                  $tableName = $val['Tables_in_'. $dbName];
@@ -53,9 +53,9 @@ class Setsql extends \app\common\controller\Backend{
      */
     public function deleteAll(){
         if(request()->isAjax()){
-            $tableArr = ['_sysconfig','_diyforms','_mytag','_myppttype','_admin','_admintype','_archives','_arctype','_channeltype','_flink','_flinktype','_uploads','_addonarticle','_addonimages'];
+            $tableArr = ['_sysconfig','_diyforms','_mytag','_myppttype','_myppt','_admin','_admintype','_archives','_arctype','_channeltype','_flink','_flinktype','_uploads','_addonarticle','_addonimages'];
             $tables = Db::query('show tables');
-            $dbName = config('database.connections.mysql.username');
+            $dbName = config('database.connections.mysql.database');
             foreach ($tables as $key =>$val){
                 $tableName = $val['Tables_in_'. $dbName];
                 if(strpos($tableName, '_diyform') == false){ //自定义表单排除

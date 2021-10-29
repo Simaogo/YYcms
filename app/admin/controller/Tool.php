@@ -31,10 +31,10 @@ class Tool extends \app\common\controller\Backend{
             $filename = $this->view_template_path .input('filename');
             $str = file_get_contents($filename);
             //手机端标签替换
-            $str = preg_replace("/href=\"(list.php?tid=.*)\"/i", '{$field.typeurl}', $str);
-            $str = preg_replace('/href=\'(list.php?tid=.*)\'/i', '{$field.typeurl}', $str);
-            $str = preg_replace("/href=\"(view.php?aid=.*)\"/i", '{$field.arcurl}', $str);
-            $str = preg_replace('/href=\'(view.php?aid=.*)\'/i', '{$field.arcurl}', $str);
+            $str = preg_replace("/href=\"(list.php?tid=\d+)\"/i", '{$field.typeurl}', $str);
+            $str = preg_replace('/href=\'(list.php?tid=\d+)\'/i', '{$field.typeurl}', $str);
+            $str = preg_replace("/href=\"(view.php?aid=\d+)\"/i", '{$field.arcurl}', $str);
+            $str = preg_replace('/href=\'(view.php?aid=\d+)\'/i', '{$field.arcurl}', $str);
             $str = preg_replace('/\/m/i', '/', $str);
             
             //处理标签内function
@@ -107,15 +107,16 @@ class Tool extends \app\common\controller\Backend{
             $str = preg_replace("/row=(\d*)\s/i", 'row="$1" ', $str);
             $str = preg_replace("/pagesize=(\d+)/i", 'pagesize="$1" ', $str);
             $str = preg_replace("/{(.*)field.content}/i", '{$1field.content|raw}', $str);
-            $str = preg_replace("/{\$field.body}/i", '{$yy.1field.body|raw}', $str);
-            $str = preg_replace("/{\$field.position}/i", '{$yy.field.position|raw}', $str);
+            $str = preg_replace("/field.body}/i", 'yy.1field.body|raw}', $str);
+            //$str = preg_replace("/{field.position}/i", '{$yy.field.position|raw}', $str);
             
             $str = preg_replace("/channel\s+type=(\w+)\s+/i", 'channel type="$1" ', $str);
           
             $str = preg_replace("/field.typedir}/i", 'field.typedir}', $str);
             $str = preg_replace("/field.pic}/i", 'field.picname}', $str);
             $str = preg_replace("/field.fulltitle}/i", 'field.title}', $str);
-            $str = str_replace("dede:productimagelist:","yycms:productimagelist",$str);
+            $str = str_replace("dede:productimagelist","yycms:productimagelist",$str);
+            $str = str_replace("dede:myppt","yycms:myppt",$str);
             
             //halt($str);
            

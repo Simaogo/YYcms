@@ -1,0 +1,60 @@
+{include file="public/header" /}
+<form class="layui-form" action="" lay-filter="list">
+    <div class="layui-row" style="padding: 15px;margin-bottom: 35px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-block">
+              <input type="text" name="title" lay-verify="" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+     <div class="layui-inline">
+        <label class="layui-form-label">分类</label>
+        <div class="layui-input-inline">
+              <select name="typeid" lay-filter="required">
+                  {volist name="myppttype" id="vo"}
+                  <option value="{$vo.id}">{$vo.typename}</option>
+                  {/volist}
+               </select>
+        </div>
+      </div>
+   </div>
+    <div class="layui-form-item layui-upload">
+        <label class="layui-form-label">图片</label>
+        <div class="layui-input-inline">
+            <input type="text" name="pic"  placeholder="请输入图片" autocomplete="off" class="layui-input" value="">
+        </div>
+        <div class="layui-word-aux ">
+            <button type="button" class="layui-btn layui-btn-sm" id="pic" lay-filter="upload">
+                <i class="layui-icon">&#xe67c;</i>上传
+           </button>
+        </div>
+    </div>   
+   <div class="layui-form-item">
+       <label class="layui-form-label">链接</label>
+       <div class="layui-input-block">
+             <input type="text" name="url" lay-verify="" autocomplete="off" class="layui-input">
+       </div>
+   </div>    
+   <div class="layui-form-item">
+     <div class="layui-inline">
+       <label class="layui-form-label">排序</label>
+       <div class="layui-input-inline">
+             <input type="text" name="orderid" lay-verify="" autocomplete="off" class="layui-input">
+       </div>
+     </div>
+   </div>
+</div>
+<div class="layui-form-item layui-flex layui-submit">
+    <button class="layui-btn" lay-submit="" lay-filter="submit" style="width:120px;margin: 0 auto;">提交</button>
+</div>
+</form>
+{include file="public/footer" /}
+<script>
+    layui.use('formTool', function(){
+       var formTool = layui.formTool;
+       formTool.setValue();
+       formTool.events.submit();
+       formTool.uploads();
+    })
+</script>

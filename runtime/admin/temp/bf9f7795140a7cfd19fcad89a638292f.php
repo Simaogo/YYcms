@@ -1,4 +1,4 @@
-<?php /*a:2:{s:56:"E:\WWW\tp6dedecms\app\/common/view/tpl/dispatch_jump.tpl";i:1634965684;s:5:"param";s:44:"a:2:{s:2:"id";s:1:"0";s:6:"typeid";s:1:"2";}";}*/ ?>
+<?php /*a:2:{s:56:"E:\WWW\tp6dedecms\app\/common/view/tpl/dispatch_jump.tpl";i:1634965684;s:5:"param";i:0;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>

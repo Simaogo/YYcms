@@ -82,6 +82,7 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                                layer.close(index);
                             })
                     } else if(obj.event === 'edit'){
+                          var id = data.id||data.aid; 
                           layer.open({
                            type: 2,
                            title: '编辑',
@@ -89,7 +90,7 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                            shade: 0.2,
                            maxmin: true, //开启最大化最小化按钮
                            area: ['85%', '85%'],
-                           content: addEditUrl +'?id='+ data.id
+                           content: addEditUrl +'?id='+ id
                          });
                     }else if(obj.event === 'images'){
                         var list =  $(this).attr('src');
@@ -108,7 +109,7 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                 });
             },
             toolbar:function(){
-                var addEditUrl = url||addEditUrl;
+               // var addEditUrl = url||addEditUrl;
              //头工具栏事件
                 table.on('toolbar(list)', function(obj){
                   var checkStatus = table.checkStatus(obj.config.id);
