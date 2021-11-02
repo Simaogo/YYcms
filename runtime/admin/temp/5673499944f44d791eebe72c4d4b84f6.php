@@ -1,4 +1,4 @@
-<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\arclist\add.html";i:1635259708;s:5:"param";s:44:"a:2:{s:2:"id";s:1:"0";s:6:"typeid";s:1:"0";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1635159586;}*/ ?>
+<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\arclist\add.html";i:1635814530;s:5:"param";s:24:"a:1:{s:2:"id";s:2:"95";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1635159586;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,16 +72,15 @@
                         </div>
                     </div>
                 </div>
-                 <div class="layui-form-item" pane="">
+                <div class="layui-form-item layui-upload">
                     <label class="layui-form-label">缩略图</label>
-                    <div class="layui-upload-drag" id="litpic">
-                        <i class="layui-icon"></i>
-                        <p>点击上传，或将文件拖拽到此处</p>
-                        <div class="layui-hide" id="uploadDemoView">
-                          <hr>
-                          <img src="" alt="上传成功后渲染" style="max-width: 196px">
-                           <input type="hidden" name="litpic" >
-                        </div>
+                    <div class="layui-input-inline">
+                        <input type="text" name="litpic"  placeholder="请上传缩略图" autocomplete="off" class="layui-input" value="">
+                    </div>
+                    <div class="layui-word-aux ">
+                        <button type="button" class="layui-btn layui-btn-sm" id="litpic" lay-filter="upload">
+                            <i class="layui-icon">&#xe67c;</i>上传
+                       </button>
                     </div>
                 </div>
                 <?php if($channeltype==2): ?>
@@ -170,7 +169,7 @@
              <!---自定义字段start-->
             <?php if(isset($fieldset)): ?>
              <div class="layui-tab-item">
-                <?php if(is_array($fieldset) || $fieldset instanceof \think\Collection || $fieldset instanceof \think\Paginator): $i = 0; $__LIST__ = $fieldset;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if($vo['name']!=='body'): switch($vo['type']): case "imgfile": ?>
+                <?php if(is_array($fieldset) || $fieldset instanceof \think\Collection || $fieldset instanceof \think\Paginator): $i = 0; $__LIST__ = $fieldset;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if($vo['name']!=='body'): if(isset($vo['type'])): switch($vo['type']): case "imgfile": ?>
                             <div class="layui-form-item layui-upload">
                                 <label class="layui-form-label"><?php echo htmlentities($vo['itemname']); ?></label>
                                 <div class="layui-input-inline">
@@ -204,6 +203,7 @@
                             </div>
                         </div>
                     <?php endswitch; ?>
+					  <?php endif; ?>
                     <?php endif; ?>
                 <?php endforeach; endif; else: echo "" ;endif; ?>
             </div>

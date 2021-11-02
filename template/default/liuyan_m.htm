@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+<meta name="format-detection" content="telephone=no" />
+<title>{dede:field.title/}_{dede:global.cfg_webname/}</title>
+<meta name="keywords" content="{dede:field name='keywords'/}" />
+<meta name="description" content="{dede:field name='description' function='html2text(@me)'/}" />
+<link href="{dede:global.cfg_cmspath/}/m/skin/css/style.css" rel="stylesheet">
+<link href="{dede:global.cfg_cmspath/}/m/skin/css/common.css" rel="stylesheet">
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/autofontsize.min.js"></script>
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/jquery.js"></script>
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/clipboard.min.js"></script>
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/common.js"></script>
+</head>
+<body>
+{dede:include filename="header_m.htm"/} 
+<!--位置开始--> 
+{dede:include filename="left_m.htm"/} 
+<!--位置结束--> 
+<!--单页内容开始-->
+<section class="contactPage"> 
+  <!--留言表单开始-->
+  <ul class="login">
+    <form class="msgForm form_book" action="/plus/diy.php" enctype="multipart/form-data" method="post">
+      <input type="hidden" name="action" value="post" />
+      <input type="hidden" name="diyid" value="1" />
+      <input type="hidden" name="do" value="2" />
+      <li>
+        <input type="text" name="title" id="title" maxlength="20" placeholder="标题" data-rule="标题:required;" class="login_input " />
+      </li>
+	  <li>
+        <input type="text" name="name" id="name" maxlength="20" placeholder="姓名" data-rule="姓名:required;" class="login_input " />
+      </li>
+      <li>
+        <input type="text" name="tel" maxlength="20" placeholder="手机号码" data-rule="手机号码:required;mobile|tel" class="login_input" >
+      </li>
+	  <li>
+        <input type="text" name="address" maxlength="20" placeholder="联系地址" data-rule="标题:required;" class="login_input" >
+      </li>
+      <li>
+        <textarea name="content" cols="" rows="" data-rule="咨询内容:required;"  onKeyUp="strlen_verify(this,'booklen',255)" placeholder="咨询内容" class="login_textarea" ></textarea>
+      </li>
+	   <input name="liuyantime" value="" type="hidden"  id="liuyantime"  />
+      <script type="text/javascript">
+                          window.onload = function(){
+                          var nowDate = new Date();
+                          var str = nowDate.getFullYear()+"-"+(nowDate.getMonth() + 1)+"-"+nowDate.getDate()+" "+nowDate.getHours()+":"+nowDate.getMinutes()+":"+nowDate.getSeconds();
+                          document.getElementById("liuyantime").value=str;
+                          }
+      </script>
+      <input type="hidden" name="dede_fields" value="title,text;name,text;tel,text;address,text;content,multitext;liuyantime,text" />
+<input type="hidden" name="dede_fieldshash" value="100f99ba15ff2d68da09625b44005a7b" />
+      <li>
+        <input class="login_btn common_bg" type="submit" value="提   交">
+      </li>
+    </form>
+  </ul>
+  <!--留言表单结束--> 
+</section>
+<!--单页内容结束--> 
+{dede:include filename="footer_m.htm"/}
+</body>
+</html>

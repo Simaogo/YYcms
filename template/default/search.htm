@@ -1,47 +1,109 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-<title>搜索结果_{:syscfg('cfg_webname')}</title>
-<meta name="keywords" content="{$yy.field.keywords}" />
-<meta name="description" content="{$field.description}" />
-<script type="text/javascript" src="/skin/js/jquery-1.12.4.min.js"></script>
-<link rel="stylesheet" href="/skin/css/style.css">
-<link rel="stylesheet" href="/skin/css/font-awesome.min.css">
-<script type="text/javascript" src="/skin/js/js.js"></script>
-<script type="text/javascript" src="/skin/js/superslide.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>搜索页_{dede:global.cfg_webname/}</title>
+<meta name="keywords" content="{dede:field name='keywords'/}" />
+<meta name="description" content="{dede:field name='description' function='html2text(@me)'/}" />
+<link charset="utf-8" href="{dede:global.cfg_cmspath/}/skin/css/indexcss.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" type="text/javascript" src="{dede:global.cfg_cmspath/}/skin/js/indexjs.js"></script>
+<link href="{dede:global.cfg_cmspath/}/skin/css/headcss.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
-{include file="head"/}
-{include file="banner"/}
-<div class="container">
-    {include file="position3"/}
-    <div class="center">
-        <div class="wrap clearfix">
-            {include file="left2"/}
-            <div class="main_r fr">
-                <div class="art_list">
-                    <ul>
-					    {yycms:list pagesize="6"  titlelen=100}
-                        <li>
-                            <div class="fl"> <a href="{$field.arcurl}"> <img src="{$field.litpic}" alt="{$field.title}" /> </a> </div>
-                            <div class="fr"> <a href="{$field.arcurl}">{$field.title}</a> <span>{$field.pubdate}</span>
-                                <p>{$field.description}...</p>
-                            </div>
-                        </li>
-						{/yycms:list}
-                    </ul>
-                </div>
-                <div class="pages">
-                    <div class="pagination">{yycms:pagelist listitem="index,end,pre,next,pageno" listsize="5"/}</div>
-                </div>
-            </div>
+<body onload="themax();init();">
+<link charset="gb2312" href="{dede:global.cfg_cmspath/}/skin/css/headcss.css" rel="stylesheet" type="text/css" />
+<link charset="gb2312" href="{dede:global.cfg_cmspath/}/skin/css/allbag.css" rel="stylesheet" type="text/css" />
+{dede:include filename="head.htm"/}
+{dede:include filename="so.htm"/}
+<div id="bgr">
+  <div id="banner_news"></div>
+  <div id="bodycon">
+    <div id="left" style="height: 760px;">
+      <div class="list" data-scroll-reveal="enter left and move 50px over 0.5s" data-scroll-reveal-id="1"
+    style="-webkit-transform: translatex(0);transform: translatex(0);opacity: 1;-webkit-transition: -webkit-transform 0.5s ease-in-out 0s,  opacity 0.5s ease-in-out 0s;transition: transform 0.5s ease-in-out 0s, opacity 0.5s ease-in-out 0s;-webkit-perspective: 1000;-webkit-backface-visibility: hidden;"
+    data-scroll-reveal-initialized="true">
+        <div class="list_t">搜索页<br>
+          <span>Search</span></div>
+        <div class="list_kb"></div>
+        <div class="list_bg">
+          <table width="219" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+            
+            {dede:channel type='son' currentstyle=""}
+            <tr>
+              <td style="height:56px;"><a href="[field:typelink/]" title="[field:typename/]" style="line-height:56px;color:#fff;"> [field:typename/] </a></td>
+            </tr>
+            {/dede:channel}
+              </tbody>
+            
+          </table>
         </div>
+        <div class="list_kbx"></div>
+      </div>
     </div>
+    <div id="center">
+      <div id="bodycontent" class="mianbxContent" style="height:25px;width:90%;text-align:right;"> 您的位置:<a href='{dede:global.cfg_cmspath/}/'>主页</a> > 搜索 <strong>{dede:global name='keyword' function='RemoveXSS(@me)'/}</strong> 的结果 </div>
+      {dede:list pagesize ='6'}
+      <div id="bodycontent" class="pro_list_box">
+        <div class="pro_list_box_item_zdy">
+          <div class="pro_list_box_item_l_zdy"><a href="[field:arcurl/]"><img
+                                    src="[field:litpic/]"></a> </div>
+          <div class="pro_list_box_item_r_zdy"> <a href="[field:arcurl/]" title="[field:title/]">
+            <p>[field:title/]</p>
+            </a> <a href="[field:arcurl/]">
+            <div> [field:description function="cn_substr(@me,300)"/] </div>
+            </a> <a class="content_more_a_zdy" href="[field:arcurl/]"></a> </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+      {/dede:list}
+      <div id="bodycontent" class="pro_list_box">
+        <div class="clear"></div>
+      </div>
+      <style>
+                    .page {
+                        padding-bottom: 25px;
+                        margin: 10px auto 0px;
+                        width: 98%;
+                        padding-top: 10px;
+                        text-align: center;
+                    }
+    
+                    .page li {
+                        display: inline;
+                        border-right: #ccc 1px solid;
+                        padding-right: 8px ! important;
+                        padding-left: 8px;
+                        border-top: #ccc 1px solid;
+                        padding-LEFT: 8px ! important;
+                        padding-bottom: 4px ! important;
+                        margin: 2px;
+                        border-left: #ccc 1px solid;
+                        COLOR: #333;
+                        padding-top: 4px ! important;
+                        border-bottom: #ccc 1px solid;
+                        text-decoration: : none ! important
+                    }
+    
+                    .page li.thisclass {
+                        background-color: #1A1A1A;
+                        border-color: #1A1A1A;
+                        color: #fff;
+                    }
+    
+                    .page li.thisclass a {
+                        color: #fff;
+                    }
+					.page li.active a {
+                        color: #0E8C02; font-weight:bold ;
+                    }
+                </style>
+      <div class="page">{dede:pagelist listitem="index,end,pre,next,pageno" listsize="1"/} </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div id="copy"></div>
 </div>
-{include file="footer"/}
+{dede:include filename="footer.htm"/}
 </body>
 </html>

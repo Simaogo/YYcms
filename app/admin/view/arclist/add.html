@@ -59,16 +59,15 @@
                         </div>
                     </div>
                 </div>
-                 <div class="layui-form-item" pane="">
+                <div class="layui-form-item layui-upload">
                     <label class="layui-form-label">缩略图</label>
-                    <div class="layui-upload-drag" id="litpic">
-                        <i class="layui-icon"></i>
-                        <p>点击上传，或将文件拖拽到此处</p>
-                        <div class="layui-hide" id="uploadDemoView">
-                          <hr>
-                          <img src="" alt="上传成功后渲染" style="max-width: 196px">
-                           <input type="hidden" name="litpic" >
-                        </div>
+                    <div class="layui-input-inline">
+                        <input type="text" name="litpic"  placeholder="请上传缩略图" autocomplete="off" class="layui-input" value="">
+                    </div>
+                    <div class="layui-word-aux ">
+                        <button type="button" class="layui-btn layui-btn-sm" id="litpic" lay-filter="upload">
+                            <i class="layui-icon">&#xe67c;</i>上传
+                       </button>
                     </div>
                 </div>
                 {if condition="$channeltype==2"}
@@ -159,6 +158,7 @@
              <div class="layui-tab-item">
                 {volist name="fieldset" id="vo"}
                     {if condition="$vo.name!=='body'"}
+					{present name="vo.type"}
                     {switch name="vo.type"}
                         {case value="imgfile"}
                             <div class="layui-form-item layui-upload">
@@ -198,6 +198,7 @@
                             </div>
                         </div>
                     {/switch}
+					  {/present}
                     {/if}
                 {/volist}
             </div>

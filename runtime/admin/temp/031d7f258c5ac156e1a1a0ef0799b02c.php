@@ -1,4 +1,4 @@
-<?php /*a:4:{s:52:"E:\WWW\tp6dedecms\app\admin\view\myppt\add_edit.html";i:1635423761;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1635159586;}*/ ?>
+<?php /*a:4:{s:52:"E:\WWW\tp6dedecms\app\admin\view\myppt\add_edit.html";i:1635423761;s:5:"param";s:23:"a:1:{s:2:"id";s:1:"1";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1635159586;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>

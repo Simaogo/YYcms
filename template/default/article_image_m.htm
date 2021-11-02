@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+<meta name="format-detection" content="telephone=no" />
+<title>{dede:field.title/}_{dede:global.cfg_webname/}</title>
+<meta name="keywords" content="{dede:field.keywords/}" />
+<meta name="description" content="{dede:field.description function='html2text(@me)'/}"/>
+<link href="{dede:global.cfg_cmspath/}/m/skin/css/style.css" rel="stylesheet">
+<link href="{dede:global.cfg_cmspath/}/m/skin/css/common.css" rel="stylesheet">
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/autofontsize.min.js"></script>
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/jquery.js"></script>
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/clipboard.min.js"></script>
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/common.js"></script>
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/touchslide.1.1.js"></script>
+</head>
+<body>
+{dede:include filename="header_m.htm"/} 
+<!--位置开始--> 
+{dede:include filename="left_m.htm"/} 
+<!--位置结束--> 
+<!--图片内容开始-->
+<section class="content showInfo">
+  <h1 class="showtit showtit2">{dede:field.title/}</h1>
+  <!--组图开始-->
+  
+  <div class="imgtog" id="imgtog">
+    <div class="bd">
+      <ul class="list">
+        <li class="item"><a href="javascript:;"><img src="{dede:field.litpic/}" alt="{dede:field.title/}"></a></li>
+      </ul>
+    </div>
+  </div>
+  <!--组图结束--> 
+  <script type="text/javascript">
+		TouchSlide({ 
+			slideCell:"#imgtog",
+			titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+			mainCell:".bd ul", 
+			effect:"leftLoop", 
+			autoPage:true,//自动分页
+			autoPlay:true //自动播放
+		});
+</script>
+  <div class="showTab"><a class="hover">产品详情</a></div>
+  <div class="showContxt">
+    <div class="txtcon">
+      <p>{dede:field.body/}</p>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="reLink clearfix">
+    <div class="prevLink fl">{dede:prenext get='prewap'/}</div>
+    <div class="nextLink fl">{dede:prenext get='nextwap'/}</div>
+  </div>
+  
+  <!--推荐新闻开始-->
+  <div class="newsPage recomCon">
+    <div class="indexTit">{dede:type typeid='12'} <a class="more" href="list.php?tid=[field:id/]" title="[field:typename/]">更多&gt;&gt;</a>{/dede:type}
+      <h3>推荐新闻</h3>
+    </div>
+    <div class="list clearfix"> {dede:arclist typeid='12' row='3' titlelen='50' orderby='pubdate'} <a class="loop item clearfix" href="view.php?aid=[field:id/]" title="[field:title/]"><img class="img fl" src="[field:picname/]" alt="[field:title/]">
+      <h3 class="tit" >[field:title/]</h3>
+      <p>[field:description function="cn_substr(@me,60)"/]...</p>
+      <span class="time">时间：[field:pubdate function="MyDate('Y-m-d',@me)"/]</span></a> {/dede:arclist} </div>
+  </div>
+  <!--推荐新闻结束--> 
+</section>
+<!--图片内容结束--> 
+{dede:include filename="footer_m.htm"/}
+</body>
+</html>

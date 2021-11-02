@@ -10,7 +10,7 @@ class Diyforms extends \app\common\controller\Backend{
             $list = DiyformsModel::select();
             
             foreach ($list as $key => $val){
-                 $table = str_replace('dede_','' ,$val['table']);
+                 $table = trim(strstr($val['table'],'_',0),'_');
                  $data  = Db::name($table)->select()->toArray();
                  $str = '';
                  if($data){

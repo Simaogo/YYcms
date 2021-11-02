@@ -107,8 +107,8 @@ class Template extends Common{
         $template= str_replace('{style}/','', $view['temparticle']);
         $template = $this->templateDefault($template,2,$this->view_dir_name);
         $view['imgurls'] = isset($view['imgurls']) && $view['imgurls'] ? \fun\Process::decode_imgurls($addinfo['imgurls']) :'';//解析图集字段
+        if(!is_array($view['imgurls'])) $view['imgurls'] = explode(',',$view['litpic']);
         $yy = [ 'field' => $view];
-
         View::assign(['yy'=>$yy]);
         return View::fetch($this->view_dir_name .''. $template);
     }
@@ -133,7 +133,7 @@ class Template extends Common{
             if(!$diyid) $this->error ('error');
             
             $Diyforms = \app\common\model\Diyforms::where(['diyid'=>$diyid])->find();
-            $table = str_replace('dede_','' ,$Diyforms->table);
+            $table = trim(strstr($Diyforms->table,'_',0),'_');
             unset($post['action']);
             unset($post['diyid']);
             unset($post['do']);
@@ -168,7 +168,8 @@ class Template extends Common{
      * @param type $ispart
      * @return string
      */
-    public function templateDefault($templateName,$ispart = 2,$view_dir_name){
+    public function templateDefault($templateName,$ispart = 2){
+        $view_dir_name =$this->view_dir_name;
         $config_view_suffix = Config::get('view.view_suffix');
         $view_suffix = '.'.$config_view_suffix; //模板后缀
         if(isMobile()) $view_suffix = '_m.' .$config_view_suffix; //手机模板后缀加M

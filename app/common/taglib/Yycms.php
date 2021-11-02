@@ -17,10 +17,12 @@ class Yycms extends TagLib{
         'field'               => ['name,row,flag,titlelen', 'alias' => 'field','close' => 1],   //field
         'sql'                 => ['sql', 'alias' => 'sql','close' => 1],   //sql查询
         'type'                => ['typeid', 'alias' => 'sql','close' => 1],   //type查询栏目
-        'myppt'              => ['typeid,order,row', 'alias' => 'myppy','close' => 1],  //广告管理
+        'myppt'               => ['typeid,order,row', 'alias' => 'myppy','close' => 1],  //广告管理
         'flink'               => ['row,type,name', 'alias' => 'flink', 'close' => 1],  //友情链接
         'prenext'             => ['get,pagelang','alias' => 'prenext','close' => 0],  //上一篇、下一篇
+        'hotwords'            => ['get,pagelang','alias' => 'prenext','close' => 0],  //上一篇、下一篇
         'productimagelist'    => ['name,row', 'alias' => 'imagelist','close' => 1],  //解析图集
+        'tag'                 => ['name,row', 'alias' => 'tag','close' => 1],  //解析图集
     ];
     /**
      * 栏目channel 标签
@@ -94,8 +96,10 @@ class Yycms extends TagLib{
             $where = [];
             $where[] = ["ishidden","=",0];
             $ArctypeSelf = $ArctypeModel::find($reid);
-            $where[] = ["reid","=",$ArctypeSelf->reid];
-            if($ArctypeSelf->reid) $menuList = $ArctypeModel->where($where)->order($order)->select()->toArray();
+                if($ArctypeSelf){
+                $where[] = ["reid","=",$ArctypeSelf->reid];
+                if($ArctypeSelf->reid) $menuList = $ArctypeModel->where($where)->order($order)->select()->toArray();
+            }
         }
         //高亮栏目
         $currid = isset($tid) ? $ArctypeModel->currIds($list,$tid):array();
@@ -115,9 +119,9 @@ class Yycms extends TagLib{
                 $menuList = \think\facade\Cache::get("'.$list_key.'");
             }
             $currid   = \think\facade\Cache::get("currid_'.$list_key.'");
-            
+            $parentsField = isset($field) ? $field :"";
             foreach($menuList as $key => $field){
-                    $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
+                   $field["typeurl"] = $field["ispart"]==2?$field["sitepath"]:\think\facade\Config::get("app.list_url")."/tid/".$field["id"];
 					$field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);
 					$field["description"] = \fun\Process::getplaintextintrofromhtml($field["description"]);
                     $field["currentstyle"] = in_array($field["id"],$currid)?"'.$currentstyle.'":"";//栏目显示高亮
@@ -125,6 +129,7 @@ class Yycms extends TagLib{
         $parseStr.= '?>';
         $parseStr.= $content;
         $parseStr.= '<?php } 
+                $field = isset($parentsField) ? $parentsField :"";
                  ?>';
         return $parseStr;
     }
@@ -161,6 +166,15 @@ class Yycms extends TagLib{
         $where = [];
         $type   = empty($tag['type']) ? 'son' : $tag['type'];//类型
         $typeid   = empty($tag['typeid']) ? "0" : $tag['typeid'];//栏目ID
+        if(isset($tag['typeid']) && $tag['typeid']!='top'){
+            $typeAarr = explode(',', $tag['typeid']);
+            if(count($typeAarr) == 2 && ($typeAarr[1]==0 || $typeAarr[1]==$typeAarr[0]) ){
+                $tag['typeid'] = (!empty($tag['typeid']) && $typeAarr[1] == 0 ) ? $typeAarr[0] : $tag['typeid'];//栏目ID
+                $selftypeid = $typeAarr[0];
+                $row = 1;
+                $where[] = ["id","in",$selftypeid];
+            }
+        }
         if($typeid){
            if($tag['typeid']=='top'){
                $typeid = '0';
@@ -174,22 +188,17 @@ class Yycms extends TagLib{
                      $where[] = ["id","in",$typeid];
                 break;
                 case "son": //调下级
-                    $where[] = ["id","in",$typeid];
+                    if($selftypeid){
+                         $where[] = ["id","in",$typeid];
+                    } else {
+                         $where[] = ["reid","in",$typeid];
+                    }
                 break;
                 default :
                     $where[] = ["reid","in",$typeid];
             }
         } else {
             $where[] = ["reid","=",0];
-        }
-        if(isset($tag['typeid']) && $tag['typeid']!='top'){
-            $typeAarr = explode(',', $tag['typeid']);
-            if(count($typeAarr) == 2 && $typeAarr[1]==0 ){
-                $tag['typeid'] = !empty($tag['typeid']) && $typeAarr[1] == 0 ? $typeAarr[0] : $tag['typeid'];//栏目ID
-                $selftypeid = $typeAarr[0];
-                $row = 1;
-                $where[] = ["id","in",$selftypeid];
-            }
         }
         $where[] = ["ishidden","in",$ishidden];
         $menuList = $ArctypeModel->where($where)->order($order)->limit(0,$row)->select()->toArray();
@@ -202,7 +211,7 @@ class Yycms extends TagLib{
             $currid   = \think\facade\Cache::get("currid_'.$list_key.'");
             $selftypeid = '.$selftypeid.';  
             foreach($menuList as $key => $field){
-                    $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
+                    $field["typeurl"] = $field["ispart"]==2?$field["sitepath"]:\think\facade\Config::get("app.list_url")."/tid/".$field["id"];
 					$field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);
 					$field["description"] = \fun\Process::getplaintextintrofromhtml($field["description"]);
                     $field["currentstyle"] = in_array($field["id"],$currid)?"'.$currentstyle.'":"";//栏目显示高亮 
@@ -247,7 +256,6 @@ class Yycms extends TagLib{
                     if(!empty("'.$typeid.'")){
                         $typeid = "'.$typeid.'";
                     }
-                    
                     //查找下级栏目
                     $typeList = \app\common\model\Arctype::select();
                     $typeidArr =[];
@@ -280,18 +288,19 @@ class Yycms extends TagLib{
                     $arclist = \think\facade\Cache::get("'.$list_key.'",$arclist);  
                  } ';
         $parseStr.='
-            $paranField = isset($field) ? $field :"";
+            $parentsField = isset($field) ? $field :"";
             foreach($arclist as $key=>$field){
+                $field["description"] = \fun\Process::getplaintextintrofromhtml($field["description"]);
                 $field["info"]=$field["description"];
-                $field["title"] = substr($field["title"],0,'.$titlelen.');
+                $field["title"] = mb_substr($field["title"],0,'.$titlelen.');
                 $field["picname"] = $field["litpic"];//缩略图
                 $field["imgurls"] = isset($field["imgurls"])&&isset($field["imgurls"]) ? explode(",",$field["imgurls"]) :""; //图集
-                $field["arcurl"] = in_array("j",explode(",",$field["flag"])) && !empty($field["redirecturl"])?$field["redirecturl"] : \think\facade\Config::get("app.view_url")."/aid/".$field["id"];
+                $field["arcurl"] = in_array("j",explode(",",$field["flag"])) && !empty($field["redirecturl"])?$field["redirecturl"] : \think\facade\Config::get("app.view_url")."/aid/".$field["id"];//跳转
             ';
         $parseStr.='?>';
         $parseStr.=$content;
         $parseStr.=' <?php }  
-                   $field = isset($paranField) ? $paranField :""; 
+                   $field = isset($parentsField) ? $parentsField :""; 
                 ?>';
         return $parseStr;
     }
@@ -326,9 +335,10 @@ class Yycms extends TagLib{
             $parseStr .= '$list = \think\facade\Cache::get("'.$search_key.'");';
             $parseStr.=' 
                         foreach($list as $key =>$field) {
-                            $field["title"] = substr($field["title"],0,'.$titlelen.');
+                            $field["title"] = mb_substr($field["title"],0,'.$titlelen.');
                             $field["arcurl"] = in_array("j",explode(",",$field["flag"])) && !empty($field["redirecturl"])?$field["redirecturl"] : \think\facade\Config::get("app.view_url")."/aid/".$field["id"];
                             $field["picname"] = $field["litpic"];//缩略图
+                            $field["arcurl"] = in_array("j",explode(",",$field["flag"])) && !empty($field["redirecturl"])?$field["redirecturl"] : \think\facade\Config::get("app.view_url")."/aid/".$field["id"];//跳转
                        ';
 
             $parseStr.='?>';
@@ -378,7 +388,7 @@ class Yycms extends TagLib{
         $parseStr .= '$list = \think\facade\Cache::get("'.$list_key.'");';
         $parseStr.=' 
                     foreach($list as $key =>$field) {
-                        $field["title"] = substr($field["title"],0,'.$titlelen.');
+                        $field["title"] = mb_substr($field["title"],0,'.$titlelen.');
                         $field["arcurl"] = in_array("j",explode(",",$field["flag"])) && !empty($field["redirecturl"])?$field["redirecturl"] : \think\facade\Config::get("app.view_url")."/aid/".$field["id"];
                         $field["picname"] = $field["litpic"];//缩略图
                         $field["imgurls"] = isset($field["imgurls"])&&isset($field["imgurls"]) ? explode(",",$field["imgurls"]) :""; //图集
@@ -498,7 +508,13 @@ class Yycms extends TagLib{
         return $parse;
     }
     public function tagField($tag,$content){
-        return '';
+        return $content;
+    }
+    public function tagHotwords($tag,$content){
+        return $content;
+    }
+    public function tagTag($tag,$content){
+        return $content;
     }
     public function tagType($tag,$content){
         $typeid = empty($tag['typeid']) ? 0 : $tag['typeid'];

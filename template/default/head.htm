@@ -1,93 +1,80 @@
-<div class="iet">
-    <p>您的浏览器版本过低，为保证更佳的浏览体验，<a href="https://www.imooc.com/static/html/browser.html">请点击更新高版本浏览器</a></p>
-    <span class="closed">以后再说<i>X</i></span> </div>
-<script type="text/javascript">
-        $('.closed').click(function(){
-            $('.iet').hide();
-        })
-    </script>
-<div class="header">
-    <div class="toptext">
-        <div class="center clearfix">
-            <p>欢迎访问贵州和诚纬企业管理有限公司网站！</p>
-            <!--  <span>
-                    <a href="javascript:;"><img src="/skin/images/china.png" alt="图片名"><i>中文</i></a>
-                    <a href="javascript:;"><img src="/skin/images/english.png" alt="图片名"><i>English</i></a>
-                </span> -->
-        </div>
-    </div>
-    <div class="center">
-        <div class="head_top clearfix">
-            <div class="logo fl"> <a href="/"><img src="/skin/images/logo.jpg"></a>
-                <p> <span>多年<i>认证咨询专家</i>贵州和诚纬企业管理</span><br/>
-                    <small>IOS认证\AAA信用评价\知识产权认证\商品售后认证\产品认证</small> </p>
-            </div>
-            <div class="fr"> <img src="/skin/images/yw4.gif" alt="图片名">
-                <p>全国订购热线：<br/>
-                    <span>{:syscfg('cfg_tel')}</span>
-                    <span>{:syscfg('cfg_phone')}</span>
-                    </p>
-            </div>
-        </div>
-    </div>
-    <div class="nav" id="nav">
-        <div class="center">
-            <ul id="pc_nav">
-                <li><a {dede:field name='typeid' runphp='yes'}if(@me == "") @me = "class='active'";else @me = "";{/dede:field} href="/">网站首页</a></li>
-				{yycms:channel type="top" currentstyle="active"}
-                <li><a href='{$field.typeurl}' >{$field.typename}</a></li>
-				{/yycms:channel}
-            </ul>
-        </div>
-    </div>
-    <script type="text/javascript">
-            $("#pc_nav a").each(function(){
-                if ($(this)[0].href == String(window.location) && $(this).attr('href')!="") {
-                    $(this).addClass("active");
-                }
-            });
-        </script>
-    <script type="text/javascript">
-            $(document).ready(function() {
-                var navOffset=$("#nav").offset().top;
-                $(window).scroll(function(){
-                    var scrollPos=$(window).scrollTop();
-                    if(scrollPos >=navOffset){
-                        $("#nav").addClass("fixed");
-                        $("#navi").addClass("full");
-                    }else{
-                        $("#nav").removeClass("fixed");
-                        $("#navi").removeClass("full");
-                    }
-                });
-            });
-        </script>
+<div id="head_box">
+  <div id="head">
+    <div id="head_left">{dede:global.cfg_gg/}</div>
+    <div id="head_right"><a href="{dede:global.cfg_cmspath/}/">返回首页</a> | {dede:type typeid='2'}<a
+        href="[field:typelink /]">[field:typename /]</a> | {/dede:type}{dede:type typeid='14'}<a
+        href="[field:typelink /]">[field:typename /]</a> | {/dede:type}{dede:type typeid='11'}<a
+        href="[field:typelink /]">[field:typename /]</a>{/dede:type}</div>
+  </div>
 </div>
-<div class="m_header">
-    <div class="m_head_content">
-        <div class="m_head_logo"> <a href="/"><img src="/skin/images/logo-m.png"></a> </div>
-        <div class="language">
-            <!-- <span>
-                    <a href="javascript:;"><img src="/skin/images/china.png" alt="图片名"><i>中文</i></a>
-                    <a href="javascript:;"><img src="/skin/images/english.png" alt="图片名"><i>English</i></a>
-                </span>-->
-        </div>
-        <div class="menu" id="menu"><i class="fa fa-list-ul"></i></div>
-    </div>
-    <div class="app_menu" id="app_menu">
-        <ul>
-            <li><a href="/"><span>网站首页</span></a></li>
-			{yycms:channel type="top" currentstyle="active"}
-            <li><a href='{$field.typeurl}' ><span>{$field.typename} ={$field.currentstyle}</span></a></li>
-			{/yycms:channel}        </ul>
-        <script type="text/javascript">
-                $("#menu").on('click', function (event) {
-                    if($("#app_menu").css("display")=="none"){
-                        $("#app_menu").slideDown(600);
-                    }else{
-                        $("#app_menu").slideUp(600);
-                    }
-                });
-            </script>
-    </div>
+<!--top-->
+<div id="top">
+  <div id="top_logo"><a href="{dede:global.cfg_cmspath/}/"><img src="{dede:global.cfg_cmspath/}/skin/images/logo.jpg" alt="{dede:global.cfg_webname/}"></a> </div>
+  <div id="top_name">
+    <div id="top_name1">德州宏瑞土工材料有限公司</div>
+    <div id="top_name2">Dezhou Hongrui geotechnical materials Co., Ltd</div>
+  </div>
+  <!--<div id="top_img"></div>
+  <div id="top_gg">
+    <div id="top_gg1"><span>土工膜</span> 土工布</div>
+    <div id="top_gg1"><span>复合土工膜</span> 膨润土防水毯</div>
+  </div>-->
+  <div id="tel"> <span>客户统一服务热线</span>
+    <p>{dede:global.cfg_tel/}<br>
+    </p>
+  </div>
 </div>
+<!--导航 nav--> 
+<script src="{dede:global.cfg_cmspath/}/skin/js/2.2.4jquery.js"></script>
+<div id="nav">
+  <div class="nav_o"></div>
+  <div id="navW">
+    <ul>
+      <input type="hidden" value="{dede:field name='id'/}" id="tid" />
+      <li id="t0"><strong></strong><a href="{dede:global.cfg_cmspath/}/">网站首页</a><span></span></li>
+      <div class="nav_line"></div>
+      {dede:channel type='top' row='8' currentstyle=""}
+      <li id="t[field:id/]"><strong></strong><a
+          href="[field:typelink/]">[field:typename/]</a><span></span></li>
+      {/dede:channel}
+    </ul>
+  </div>
+  <div class="nav_u"></div>
+</div>
+<script>
+    $(function(){
+        var tid=$("#tid").val();
+        if(tid==""){
+            $("#t0").addClass("a_nav");
+        }else{
+            $("#t"+tid).addClass("a_nav");
+        }
+    })
+</script><script type="text/javascript">
+  // JavaScript Document
+  var curUrl = location.pathname.substr(1);
+  if (curUrl.indexOf("company") > -1) {
+    document.getElementById('aa1').className = " a_nav";
+  };
+  if (curUrl.indexOf("products") > -1) {
+    document.getElementById('aa2').className = " a_nav";
+  };
+  if (curUrl.indexOf("132964") > -1) {
+    document.getElementById('aa3').className = " a_nav";
+  };
+  if (curUrl.indexOf("146470") > -1) {
+    document.getElementById('aa4').className = " a_nav";
+  };
+  if (curUrl.indexOf("132981") > -1) {
+    document.getElementById('aa5').className = " a_nav";
+  };
+  if (curUrl.indexOf("132983") > -1) {
+    document.getElementById('aa6').className = " a_nav";
+  };
+  if (curUrl.indexOf("feedback") > -1) {
+    document.getElementById('aa7').className = " a_nav";
+  };
+  if (curUrl.indexOf("132982") > -1) {
+    document.getElementById('aa8').className = " a_nav";
+  };
+</script>

@@ -1,9 +1,24 @@
-<div class="main_l fl">
-    <h3>{$field.typenameen}</h3>
-    <i></i> <span>{$field.typename}</span>
-    <ul class="page_menu">
-	    {yycms:channel type="son" currentstyle="active"}
-        <li><a href='{$field.typeurl}'>{$field.typename}</a></li>
-        {/yycms:channel}
-    </ul>
+<div id="left" style="height: 760px;">
+  <div class="list" data-scroll-reveal="enter left and move 50px over 0.5s" data-scroll-reveal-id="1"
+    style="-webkit-transform: translatex(0);transform: translatex(0);opacity: 1;-webkit-transition: -webkit-transform 0.5s ease-in-out 0s,  opacity 0.5s ease-in-out 0s;transition: transform 0.5s ease-in-out 0s, opacity 0.5s ease-in-out 0s;-webkit-perspective: 1000;-webkit-backface-visibility: hidden;"
+    data-scroll-reveal-initialized="true">
+    <div class="list_t">{dede:field name='typeid' function="GetTopTypename(@me)"/}<br><span>{dede:field name='typeid' function="GetTopTypenameen(@me)"/}</span></div>
+    <div class="list_kb"></div>
+    <div class="list_bg">
+      <table width="219" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+         {dede:channel type='son' currentstyle=""}
+          <tr>
+            <td style="height:56px;">
+              <a href="[field:typelink/]" title="[field:typename/]" style="line-height:56px;color:#fff;">
+                [field:typename/]
+              </a>
+            </td>
+          </tr>
+          {/dede:channel}          
+        </tbody>
+      </table>
+    </div>
+    <div class="list_kbx"></div>
+  </div>
 </div>

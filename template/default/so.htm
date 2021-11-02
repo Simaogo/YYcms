@@ -1,0 +1,45 @@
+<div class="search_bgd">
+  <div class="search_bg">
+    <div class="search">
+      <div class="search_l">
+        <div class="search_l_txt">
+          <span>一直专注土工合成材料领域</span><br>
+厂家直销，免费邮递样品
+        </div>
+      </div>
+      <div class="search_cen">
+        <form action="/plus/search.php" target="_blank">
+          <div class="search_cen_txt">
+            <div id="search-bg"><input type="search" name="q" id="infoname"
+                style=" height:26px; line-height:29px; padding-left:8px; border:none; outline: none"
+                placeholder="请输入关键字" size="25"></div>
+            <input type="hidden" name="pagesize" value="5" />
+            <div id="search-i">
+              <button type="submit" style="background: url({dede:global.cfg_cmspath/}/skin/images/search.jpg) no-repeat;
+              height: 100%; width: 100%; border: 0;"></button>
+            </div>
+          </div>
+          <div id="search-text">热门搜索： {dede:hotwords  num=6  subday=365 maxlength=20/} </div>
+          <script>
+            document.onreadystatechange = loadFromCookie;
+
+            function loadFromCookie() {
+              if (document.readyState == "complete") {
+                var reg = /key_word=([^;]+)/img;
+                var mc = reg.exec(document.cookie);
+                if (mc && mc.length >= 1) document.getElementById("infoname").value = decodeURIComponent(mc[1]);
+              }
+            }
+          </script>
+        </form>
+      </div>
+      <div class="search_r">
+        <div class="search_r_img"><img src="{dede:global.cfg_cmspath/}/skin/images/shili.png" alt="{dede:global.cfg_webname/}"></div>
+        <div class="search_r_txt">实力商家<br>
+          品质保证
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="search_bo"></div>
+</div>

@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+<meta name="format-detection" content="telephone=no" />
+<title>{dede:field.title/}_{dede:global.cfg_webname/}</title>
+<meta name="keywords" content="{dede:field name='keywords'/}" />
+<meta name="description" content="{dede:field name='description' function='html2text(@me)'/}" />
+<link href="{dede:global.cfg_cmspath/}/m/skin/css/style.css" rel="stylesheet">
+<link href="{dede:global.cfg_cmspath/}/m/skin/css/common.css" rel="stylesheet">
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/autofontsize.min.js"></script>
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/jquery.js"></script>
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/clipboard.min.js"></script>
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/common.js"></script>
+</head>
+<body>
+{dede:include filename="header_m.htm"/} 
+<!--位置开始--> 
+{dede:include filename="left_m.htm"/} 
+<!--位置结束--> 
+<!--文章列表开始-->
+<section class="content newsPage">
+  <div class="list-loop list clearfix"> {dede:list pagesize ='5'} <a class="loop item clearfix" href="view.php?aid=[field:id/]" title="[field:title/]"><img class="img fl" src="[field:picname/]" alt="[field:title/]">
+    <h3 class="tit" >[field:title/]</h3>
+    <p>[field:description function="cn_substr(@me,80)"/]...</p>
+    <span class="time">时间：[field:pubdate function="MyDate('Y-m-d',@me)"/]</span></a> {/dede:list} </div>
+  <div class="pglist"> {dede:pagelist listitem="index,end,pre,next,pageno" listsize="1"/} </div>
+</section>
+<!--文章列表结束--> 
+{dede:include filename="footer_m.htm"/}
+</body>
+</html>

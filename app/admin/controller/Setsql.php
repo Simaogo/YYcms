@@ -44,6 +44,7 @@ class Setsql extends \app\common\controller\Backend{
             }
             //修改数据库配置
            // setConfig(root_path().'config/database.php', 'prefix', $newPrefix);
+           
             return json(['code'=>0,'msg'=>'success']);
         }
             
@@ -54,11 +55,26 @@ class Setsql extends \app\common\controller\Backend{
     public function deleteAll(){
         if(request()->isAjax()){
             $tableArr = ['_sysconfig','_diyforms','_mytag','_myppttype','_myppt','_admin','_admintype','_archives','_arctype','_channeltype','_flink','_flinktype','_uploads','_addonarticle','_addonimages'];
+            //模型表单
+            $addtable =\app\common\model\Channeltype::field('addtable')->select()->toArray();
+            $addtable = trim(array_reduce($addtable, function($carry, $item){
+                    return $carry.','.$item['addtable'];
+                }), ',');
+            $addtable = explode(',',$addtable);  
+            //自定义表单
+            $diyform = \app\common\model\Diyforms::field('table')->select();
+            $diyforms = [];
+            if($diyform){
+                 $diyforms = trim(array_reduce($diyform->toArray(), function($carry, $item){
+                    return $carry.','.$item['table'];
+                }), ',');
+                $diyforms = explode(',',$diyforms);
+            }
             $tables = Db::query('show tables');
             $dbName = config('database.connections.mysql.database');
             foreach ($tables as $key =>$val){
                 $tableName = $val['Tables_in_'. $dbName];
-                if(strpos($tableName, '_diyform') == false){ //自定义表单排除
+                if(!in_array($tableName,$diyforms) && !in_array($tableName,$addtable)){ //自定义表单和模型附表 排除
                     $tablestr = strstr($tableName,'_');
                     if(!in_array($tablestr, $tableArr)){
                            $sql = 'DROP TABLE `'.$tableName .'`';

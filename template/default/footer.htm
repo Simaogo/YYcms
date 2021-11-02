@@ -1,62 +1,74 @@
-<div class="footer">
-    <div class="center">
-        <div class="foot clearfix">
-            <div class="foot_contact fl">
-                <h3>联系我们</h3>
-                <span><strong>{:syscfg('cfg_tel')}</strong>Sale Hotline</span>
-                <p>{:syscfg('cfg_add')}</p>
-                <p>邮箱：{:syscfg('cfg_email')}</p>
-                <p>电话：{:syscfg('cfg_phone')}</p>
-                <p>传真：{:syscfg('cfg_fax')}</p>
-                <a href="{yycms:type typeid="7" }{$field.typeurl}{/yycms:type}">了解更多</a> </div>
-            <div class="foot_ewm fl">
-                <p>"精益求精，诚信为本"</p>
-                <div class="ewm_text"> <img src="/skin/images/weixin.jpg" /> <span>微信公众号</span> </div>
-                <!--<div class="ewm_text"> <img src="/skin/images/.jpg" /> <span>移动端网站</span> </div>-->
-            </div>
-            <div class="foot_nav fl">
-                <ul>
-                    <h3>网站导航</h3>
-					{yycms:channel type=top}
-                    <li><a href="{$field.typeurl}">{$field.typename}</a></li>
-					{/yycms:channel}
-                </ul>
-            </div>
+<div class="footer_d">
+  <div class="footer_dW">
+    <div class="footer_d_l">
+      <div class="footer_d_m">公司简介</div>
+      <div class="footer_d_line"></div>
+      <div class="footer_d_ld">
+        <table width="96%" border="0" cellpadding="0" cellspacing="0">
+          <tbody>
+          
+          {dede:channelartlist typeid='1,9,10,11,14,0'}
+          <tr>
+            <td height="30"><a href="{dede:field name='typeurl'/}" style="color:#0;;font-weight:1"
+										title="{dede:field name='typename'/}">{dede:field name='typename'/} </a></td>
+          </tr>
+          {/dede:channelartlist}
+          </tbody>
+          
+        </table>
+      </div>
+    </div>
+    {dede:channelartlist typeid='2,8,0'}
+    <div class="footer_d_l">
+      <div class="footer_d_m">{dede:field name='typename'/}</div>
+      <div class="footer_d_line"></div>
+      <div class="footer_d_ld">
+        <div class="footer_d_ld_a">
+          <table width="200" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+            
+            {dede:channel type='son' noself='yes'}
+            <tr>
+              <td style="height:30px;"><a href="[field:typelink/]" title="[field:typename/]"
+										style="line-height:30px;color:#999;"> [field:typename/] </a></td>
+            </tr>
+            {/dede:channel}
+            </tbody>
+            
+          </table>
         </div>
+      </div>
     </div>
-</div>
-<div class="copyright">
-    <div class="center">
-        <p>
-        <p>{:syscfg('cfg_powerby')} 备案号：<a href="http://beian.miit.gov.cn/"  target="_blank" rel="nofollow">{:syscfg('cfg_beian')}</a> <a href="/sitemap.html">网站地图</a></p>
-        </p>
+    {/dede:channelartlist}
+    <div class="footer_d_i">
+      <div class="footer_d_m">联系我们</div>
+      <div class="footer_d_line"></div>
+      <div class="footer_d_id"> 电　话：{dede:global.cfg_tel/}<br>
+        手　机：{dede:global.cfg_phone/}<br>
+        联系人：{dede:global.cfg_lxr/}<br>
+      地址：{dede:global.cfg_add/}<br>
+        网　址：<a href="{dede:global.cfg_cmspath/}">www.dzhrxcl.cn</a> </div>
     </div>
-</div>
-<div class="kefu" id="kefu">
-    <p> <img src="/skin/images/ff.png" alt="图片名"> <span>客服</span> </p>
-    <div class="float_img">
-        <div class="qq" id="qq"> <span>在线客服</span> <a href="http://wpa.qq.com/sgrd?v=3&uin={:syscfg('cfg_qq')}&site=qq&menu=yes;">客服一号</a> <a href="http://wpa.qq.com/sgrd?v=3&uin={:syscfg('cfg_qq')}&site=qq&menu=yes">客服二号</a> <a href="http://wpa.qq.com/sgrd?v=3&uin={:syscfg('cfg_qq')}&site=qq&menu=yes">客服三号</a> </div>
+    <div class="footer_d_r">
+      <div class="footer_d_m">网站二维码</div>
+      <div class="footer_d_line"></div>
+      <div class="footer_d_rd">
+        <div class="footer_d_rd_l"><img src="{dede:global.cfg_cmspath/}/skin/images/weixin.jpg"/> 手机网站</div>
+        <div class="footer_d_rd_l footer_d_rd_r"><img src="{dede:global.cfg_cmspath/}/skin/images/weixin.jpg"/>微信</div>
+      </div>
     </div>
+  </div>
 </div>
-<script type="text/javascript">
-        $(function () {
-            $('.imgauto img').imgAuto();
-        })
-    </script>
-<script type="text/javascript">
-        var browser=navigator.appName
-        var b_version=navigator.appVersion
-        var version=b_version.split(";");
-        var trim_Version=version[1].replace(/[ ]/g,"");
-        if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE6.0") {
-            $('.iet').show();
-        }else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE7.0") {
-            $('.iet').show();
-        }else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE8.0") {
-            $('.iet').show();
-        }else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE9.0") {
-            $('.iet').hide();
-        } else {
-            $('.iet').hide();
-        }
-    </script>
+<div class="copy">
+  <div class="copyW"> {dede:global.cfg_powerby/}  ICP备案：<a href="https://beian.miit.gov.cn/#/Integrated/recordQuery" target="_blank"
+			rel="nofollow">{dede:global.cfg_beian/}</a> </div>
+</div>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?578ff8d331d7406c29094003df7fd4cf";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>

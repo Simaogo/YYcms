@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+<meta name="format-detection" content="telephone=no" />
+<title>{dede:field.title/}_{dede:global.cfg_webname/}</title>
+<meta name="keywords" content="{dede:field name='keywords'/}" />
+<meta name="description" content="{dede:field name='description' function='html2text(@me)'/}" />
+<link href="{dede:global.cfg_cmspath/}/m/skin/css/style.css" rel="stylesheet">
+<link href="{dede:global.cfg_cmspath/}/m/skin/css/common.css" rel="stylesheet">
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/autoFontsize.min.js"></script>
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/jquery.js"></script>
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/clipboard.min.js"></script>
+<script src="{dede:global.cfg_cmspath/}/m/skin/js/common.js"></script>
+</head>
+<body>
+{dede:include filename="header_m.htm"/} 
+<!--位置开始--> 
+{dede:include filename="left_m.htm"/} 
+<!--位置结束--> 
+<!--单页内容开始-->
+<section class="content showInfo">
+  <div class="contxt">
+    <p>{dede:field.content/}</p>
+    <!--地图开始--> 
+    <script type="text/javascript" src="{dede:global.cfg_cmspath/}/m/skin/js/d5572a34feee44769604d3616fc95c1a.js"></script>
+    <style type="text/css">
+#allmap {width: 100%;height: 6.2rem; margin-top: .2rem;}
+#allmap b{color: #CC5522;font-weight: bold;}
+#allmap img{max-width: none;}
+</style>
+    <div id="allmap"></div>
+    <script type="text/javascript">
+	  var map = new BMap.Map("allmap");
+	  map.centerAndZoom(new BMap.Point({dede:global.cfg_zuobiao/}), 18);
+	  var marker1 = new BMap.Marker(new BMap.Point({dede:global.cfg_zuobiao/}));  // 创建标注
+	  map.addOverlay(marker1);              // 将标注添加到地图中
+	  //marker1.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画				
+	  //创建信息窗口 
+	  var infoWindow1 = new BMap.InfoWindow("<b>{dede:global.cfg_webname/}</b><br>电话：{dede:global.cfg_tel/}<br>地址：{dede:global.cfg_add/}");
+	  marker1.openInfoWindow(infoWindow1);
+	  //marker1.addEventListener("click", function(){this.openInfoWindow(infoWindow1);});	
+	  //向地图中添加缩放控件
+ var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+ map.addControl(ctrl_nav);
+      //向地图中添加缩略图控件
+ var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
+ map.addControl(ctrl_ove);
+      //向地图中添加比例尺控件
+ var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+ map.addControl(ctrl_sca);
+ 
+ map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+        map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+        map.enableKeyboard();//启用键盘上下左右键移动地				
+</script> 
+    <!--地图结束--></div>
+</section>
+<!--单页内容结束--> 
+{dede:include filename="footer_m.htm"/}
+</body>
+</html>

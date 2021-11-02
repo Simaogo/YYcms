@@ -19,7 +19,7 @@ class Myppttype extends Backend{
         if(request()->isAjax()){
             $post = input();
             if($id){
-                $where = ['aid'=>$id];
+                $where = ['id'=>$id];
                 unset($post['id']);
                 MyppttypeModel::where($where)->update($post);
             } else {
