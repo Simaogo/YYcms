@@ -1,4 +1,4 @@
-<?php /*a:4:{s:52:"E:\WWW\tp6dedecms\app\admin\view\diyforms\index.html";i:1634994682;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1635159586;}*/ ?>
+<?php /*a:4:{s:52:"E:\WWW\tp6dedecms\app\admin\view\diyforms\index.html";i:1635936494;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1635936494;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1635936494;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>

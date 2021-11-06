@@ -4,49 +4,49 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
 <meta name="format-detection" content="telephone=no" />
-<title>{dede:field.title/}_{dede:global.cfg_webname/}</title>
-<meta name="keywords" content="{dede:field.keywords/}" />
-<meta name="description" content="{dede:field.description function='html2text(@me)'/}"/>
-<link href="{dede:global.cfg_cmspath/}/m/skin/css/style.css" rel="stylesheet">
-<link href="{dede:global.cfg_cmspath/}/m/skin/css/common.css" rel="stylesheet">
-<script src="{dede:global.cfg_cmspath/}/m/skin/js/autofontsize.min.js"></script>
-<script src="{dede:global.cfg_cmspath/}/m/skin/js/jquery.js"></script>
-<script src="{dede:global.cfg_cmspath/}/m/skin/js/clipboard.min.js"></script>
-<script src="{dede:global.cfg_cmspath/}/m/skin/js/common.js"></script>
+<title>{$yy.field.title}_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{$yy.field.description}"/>
+<link href="/m/skin/css/style.css" rel="stylesheet">
+<link href="/m/skin/css/common.css" rel="stylesheet">
+<script src="/m/skin/js/autofontsize.min.js"></script>
+<script src="/m/skin/js/jquery.js"></script>
+<script src="/m/skin/js/clipboard.min.js"></script>
+<script src="/m/skin/js/common.js"></script>
 </head>
 <body>
-{dede:include filename="header_m.htm"/} 
+{include file="header_m"/} 
 <!--位置开始--> 
-{dede:include filename="left_m.htm"/} 
+{include file="left_m"/} 
 <!--位置结束--> 
 <!--文章内容开始-->
 <section class="content showInfo">
   <div class="showTit">
-    <h1>{dede:field.title/}</h1>
-    <p class="mark">发布日期：{dede:field.pubdate function="MyDate('Y-m-d H:i',@me)"/}　浏览次数：<i id="hits"><script src="{dede:field name='phpurl'/}/count.php?view=yes&aid={dede:field name='id'/}&mid={dede:field name='mid'/}" type='text/javascript' language="javascript"></script></i></p>
+    <h1>{$yy.field.title}</h1>
+    <p class="mark">发布日期：{$yy.field.pubdate}　浏览次数：<i id="hits">{$yy.field.click}</i></p>
   </div>
   <div class="contxt">
-    <p>{dede:field.body/}</p>
+    <p>{$yy.field.body|raw}</p>
   </div>
   <div class="clearfix"></div>
   <div class="reLink clearfix">
-    <div class="prevLink fl">{dede:prenext get='prewap'/}</div>
-    <div class="nextLink fl">{dede:prenext get='nextwap'/}</div>
+    <div class="prevLink fl">{yycms:prenext get='prewap'/}</div>
+    <div class="nextLink fl">{yycms:prenext get='nextwap'/}</div>
   </div>
   
   <!--推荐新闻开始-->
   <div class="newsPage recomCon">
-    <div class="indexTit">{dede:type typeid='12'} <a class="more" href="list.php?tid=[field:id/]" title="[field:typename/]">更多&gt;&gt;</a>{/dede:type}
+    <div class="indexTit">{yycms:type typeid='12'} <a class="more" href="{$field.typeurl}" title="{$field.typename}">更多&gt;&gt;</a>{/yycms:type}
       <h3>推荐新闻</h3>
     </div>
-    <div class="list clearfix"> {dede:arclist typeid='12' row='3' titlelen='50' orderby='pubdate'} <a class="loop item clearfix" href="view.php?aid=[field:id/]" title="[field:title/]"><img class="img fl" src="[field:picname/]" alt="[field:title/]">
-      <h3 class="tit" >[field:title/]</h3>
-      <p>[field:description function="cn_substr(@me,60)"/]...</p>
-      <span class="time">时间：[field:pubdate function="MyDate('Y-m-d',@me)"/]</span></a> {/dede:arclist} </div>
+    <div class="list clearfix"> {yycms:arclist typeid='12' row='3' titlelen='50' orderby='pubdate'} <a class="loop item clearfix" href="{$field.arcurl}" title="{$field.title}"><img class="img fl" src="{$field.picname}" alt="{$field.title}">
+      <h3 class="tit" >{$field.title}</h3>
+      <p>{$field.description}...</p>
+      <span class="time">时间：{$field.pubdate}</span></a> {/yycms:arclist} </div>
   </div>
   <!--推荐新闻结束--> 
 </section>
 <!--文章内容结束--> 
-{dede:include filename="footer_m.htm"/}
+{include file="footer_m"/}
 </body>
 </html>

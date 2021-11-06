@@ -1,6 +1,6 @@
 <section class="cateList"> <span class="goBack iconbef" id="goBack"></span>
-  <h3>{dede:field name='typename'/}<s class="icon"></s></h3>
+  <h3>{$field.typename}<s class="icon"></s></h3>
   <!--栏目分类开始-->
-  <div class="box"> {dede:channel type='son' currentstyle="<a href='list.php?tid=~id~' class='on'>~typename~</a>"} <a  href="list.php?tid=[field:id/]" title="[field:typename/]">[field:typename/]</a> {/dede:channel} </div>
+  <div class="box"> {yycms:channel type='son' currentstyle="active"} <a  href="{$field.typeurl}" title="{$field.typename}">{$field.typename}</a> {/yycms:channel} </div>
   <!--栏目分类结束--> 
 </section>

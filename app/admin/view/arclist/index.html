@@ -72,7 +72,7 @@
               ,{field:'', width:120, title: '栏目', sort: true,templet:function(d){return d.arctype.typename}}
               ,{field:'litpic', width:120, title: '缩略图', sort: true,templet:tableTool.templet.images}
               ,{field:'weight', width:80, title: '排序', sort: true,edit:true}
-              ,{field:'pubdate', width:180,title: '更新时间'}
+              ,{field:'pubdate', width:180,title: '更新时间',sort: true,}
               ,{field:'arcrank', width:120, title: '预览权限', sort: true,templet:tableTool.templet.switch}
               ,{field:'', width:180, title: '操作',templet:tableTool.templet.operate}
             ]]
@@ -103,27 +103,29 @@
                     content: '{:url(request()->controller()."/addEdit")}?id='+id+'&typeid='+ typeid
                 });
               break;
-              case 'getCheckData':
+              case 'delAll':
                 var data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
-              break;
-              case 'getCheckLength':
-                var data = checkStatus.data;
-                layer.msg('选中了：'+ data.length + ' 个');
-              break;
-              case 'isAll':
-                layer.msg(checkStatus.isAll ? '全选': '未全选');
-              break;
-
-              //自定义头工具栏右侧图标 - 提示
-              case 'LAYTABLE_TIPS':
-                layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                var len = data.length;
+                var ids = [];
+                for(var i = 0; i < len; i++){
+                    ids.push(data[i].id);
+                }
+                layer.confirm('确定删除选中？', function(index){
+                   $.post(delAllUrl,{ids:ids},function(res,index){
+                       layer.msg(res.msg,{time:350},function(){
+                           layer.close(index);
+                           window.location.reload();
+                       })
+                   })
+                   return false;
+                })
               break;
             };
           });
         tableTool.events.switch ();//开关点击事件
         tableTool.events.rowEdit ();//编辑排序     
         tableTool.events.operate();//操作
+        
      
   })
 </script>

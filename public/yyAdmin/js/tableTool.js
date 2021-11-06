@@ -70,6 +70,22 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                 
               return false;
             },
+            //返回当前和选择ids
+//            childrenIds:function(data){
+//               var strIds = data['id'];
+//                var childrens = data['children'];
+//               if(childrens){
+//                    var len = childrens.length;
+//                    for(var i = 0; i < len; i++){  
+//                        strIds = strIds + ',' + childrens[i]["id"];
+//                        if(childrens[i]['children']) {
+//                            strIds = strIds + this.childrenIds(childrens[i]['children']);
+//                        }
+//
+//                    }
+//               }
+//               return strIds;
+//            },
             operate:function(){
                 table.on('tool(list)', function(obj){
                     var data = obj.data;
@@ -82,7 +98,7 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                                layer.close(index);
                             })
                     } else if(obj.event === 'edit'){
-                          var id = data.id||data.aid; 
+                          var id = data.id||data.aid|data.rank; 
                           layer.open({
                            type: 2,
                            title: '编辑',
@@ -127,9 +143,24 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                              });
                           break; 
                           break;
-                          case 'getCheckLength':
+                          case 'delAll':
                             var data = checkStatus.data;
-                            layer.msg('选中了：'+ data.length + ' 个');
+                            console.log(checkStatus.data);
+                            var len = data.length;
+                            var ids = [];
+                            for(var i = 0; i < len; i++){
+                                ids.push(data[i].id);
+                            }
+                            layer.confirm('确定删除选中？', function(index){
+                               $.post(delAllUrl,{ids:ids},function(res,index){
+                                   layer.msg(res.msg,{time:350},function(){
+                                       layer.close(index);
+                                       window.location.reload();
+                                   })
+                               })
+                               return false;
+                            })
+
                           break;
                           case 'isAll':
                             layer.msg(checkStatus.isAll ? '全选': '未全选');

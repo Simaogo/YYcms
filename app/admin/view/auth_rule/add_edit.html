@@ -1,0 +1,97 @@
+{include file="public/header" /}
+<form class="layui-form" action="" lay-filter="list">
+    <div class="layui-row layui-form-list">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">权限上级</label>
+              <div class="layui-input-inline">
+                <select name="reid" lay-verify="required">
+                  <option value="0">顶级</option>
+                  {volist name="authRuleList" id="vo"}
+                   <option value="{$vo.id}"> {$vo.lefthtml|raw} {$vo.title}</option>
+                  {/volist}
+                </select>
+              </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+     
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+              <input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="名称" class="layui-input">
+            </div>
+        
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">Url</label>
+              <div class="layui-input-inline">
+                    <input type="text" name="href" lay-verify="required" autocomplete="off" placeholder="控制器/方法" class="layui-input">
+              </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">图标</label>
+              <div class="layui-input-inline">
+                    <input type="text" name="icon" lay-verify="required" autocomplete="off" placeholder="图标" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux"><a href="https://remixicon.com/" target="_blank">图标地址https://remixicon.com</a></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">是否菜单</label>
+              <div class="layui-input-inline">
+                    <input type="radio" name="menu_status" lay-skin="primary" title="启用" value="1" checked>
+                    <input type="radio" name="menu_status" lay-skin="primary" title="隐藏" value="0">
+              </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">状态</label>
+              <div class="layui-input-inline">
+                    <input type="radio" name="status" lay-skin="primary" title="启用" value="1" checked>
+                    <input type="radio" name="status" lay-skin="primary" title="关闭" value="0">
+              </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">排序</label>
+              <div class="layui-input-inline">
+                    <input type="text" name="sort" lay-skin="primary" title="排序" value="1" class="layui-input">
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-flex layui-submit">
+        <button class="layui-btn layui-btn-sm layui-submit-btn" lay-submit="" lay-filter="submit">提交</button>
+    </div>
+</form>
+{include file="public/footer" /}
+<script>
+    layui.use(['form','formTool'], function(){
+      var form = layui.form
+      ,formTool = layui.formTool
+      ,$ = layui.jquery
+      ,laydate = layui.laydate;
+       laydate.render({
+            elem: '#pubdate'
+            ,type: 'datetime'
+       });
+        //跳转网址
+        form.on('radio(redirecturl)', function(obj){
+            if(obj.value == 2){　　　　　　//判断当前多选框是选中还是取消选中
+                $('.redirecturl').removeClass('layui-hide');
+            }else{
+                $('.redirecturl').addClass('layui-hide');
+            }
+            return false;
+          });
+       formTool.events.submit();//form提交
+       formTool.setValue();
+       formTool.uploads();
+    });
+</script>

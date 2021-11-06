@@ -34,8 +34,8 @@ return [
     'app_trace' =>  true,
     
     'version' => '1.0.1',
-    'list_url' => '/index/template/list',
-    'view_url' => '/index/template/view',
+    'list_url' => '/list',
+    'view_url' => '/view',
     'app_map' => [
         'chinaadmin' => 'admin', // 把admin应用映射为chinaadmin 修改默认admin登录配置
      ],

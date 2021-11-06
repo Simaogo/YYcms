@@ -4,26 +4,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
 <meta name="format-detection" content="telephone=no" />
-<title>{dede:field.title/}_{dede:global.cfg_webname/}</title>
-<meta name="keywords" content="{dede:field name='keywords'/}" />
-<meta name="description" content="{dede:field name='description' function='html2text(@me)'/}" />
-<link href="{dede:global.cfg_cmspath/}/m/skin/css/style.css" rel="stylesheet">
-<link href="{dede:global.cfg_cmspath/}/m/skin/css/common.css" rel="stylesheet">
-<script src="{dede:global.cfg_cmspath/}/m/skin/js/autofontsize.min.js"></script>
-<script src="{dede:global.cfg_cmspath/}/m/skin/js/jquery.js"></script>
-<script src="{dede:global.cfg_cmspath/}/m/skin/js/clipboard.min.js"></script>
-<script src="{dede:global.cfg_cmspath/}/m/skin/js/common.js"></script>
+<title>{$yy.field.title}_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{$yy.field.description}" />
+<link href="/m/skin/css/style.css" rel="stylesheet">
+<link href="/m/skin/css/common.css" rel="stylesheet">
+<script src="/m/skin/js/autofontsize.min.js"></script>
+<script src="/m/skin/js/jquery.js"></script>
+<script src="/m/skin/js/clipboard.min.js"></script>
+<script src="/m/skin/js/common.js"></script>
 </head>
 <body>
-{dede:include filename="header_m.htm"/} 
+{include file="header_m"/} 
 <!--位置开始--> 
-{dede:include filename="left_m.htm"/} 
+{include file="left_m"/} 
 <!--位置结束--> 
 <!--单页内容开始-->
 <section class="content showInfo">
-  <div class="contxt"> {dede:field.content/} </div>
+  <div class="contxt"> {$yy.field.content|raw} </div>
 </section>
 <!--单页内容结束--> 
-{dede:include filename="footer_m.htm"/}
+{include file="footer_m"/}
 </body>
 </html>

@@ -198,7 +198,7 @@
                             </div>
                         </div>
                     {/switch}
-					  {/present}
+		{/present}
                     {/if}
                 {/volist}
             </div>
@@ -207,8 +207,8 @@
           </div>
        </div>
 </div>
-<div class="layui-form-item layui-flex layui-submit">
-    <button class="layui-btn" lay-submit="" lay-filter="submit" style="width:120px;margin: 0 auto;">提交</button>
+<div class="layui-flex layui-submit">
+    <button class="layui-btn layui-btn-sm layui-submit-btn" lay-submit="" lay-filter="submit">提交</button>
 </div>
 </form>
 {include file="public/footer" /}
@@ -231,6 +231,7 @@
        laydate.render({
             elem: '#pubdate'
             ,type: 'datetime'
+            ,value: new Date()
        });
        if(formData){
             //flag 选中

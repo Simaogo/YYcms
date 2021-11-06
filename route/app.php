@@ -13,7 +13,7 @@ use think\facade\Route;
 Route::get('/admin', function () {
     return 'hello,ThinkPHP6!';
 });
-Route::rule('list', 'index/template/list','*');
+//Route::rule('list', 'index/template/list','*');
 //Route::get('view', '\app\index\controller\Template@view');
 //Route::rule('list','index/Template/list','*');
 

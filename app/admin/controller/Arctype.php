@@ -6,6 +6,12 @@ use app\common\model\Arctype as ArctypeModel;
 use app\common\model\Channeltype as ChanneltypeModel;
 
 class Arctype extends \app\common\controller\Backend{
+    public $model;
+    
+    public function __construct(){
+        $this->model = new ArctypeModel();
+    }
+    
     public function index(){
         if(request()->isAjax()){
            $ArctypeModel = new ArctypeModel();
@@ -21,12 +27,27 @@ class Arctype extends \app\common\controller\Backend{
         }
         return View::fetch();
     }
+    
     public function addEdit(){
         $id = input('id');
         if(request()->isAjax()){
            $post = input(); 
            if($id){
                $res = ArctypeModel::update($post);
+               //修改子级模板风格
+               if(isset($post['ischild']) && $post['ischild']=='on'){
+                    $template = [
+                        'tempindex' =>$post['tempindex'],
+                        'templist' =>$post['templist'],
+                        'temparticle' =>$post['temparticle'],
+                    ];
+                   $menuList = ArctypeModel::select();
+                   $childIds = ArctypeModel::childrenIds($menuList,$id);
+                   $typeids = trim(array_reduce($childIds, function($carry, $item){
+                        return $carry . ','.$item;
+                    }), ',');
+                   ArctypeModel::where('id','in',$typeids)->update($template);
+                }
            } else {
               $res = ArctypeModel::insert($post);
            } 
@@ -44,6 +65,7 @@ class Arctype extends \app\common\controller\Backend{
         View::assign($view);
         return View::fetch('add');
     }
+    
     public function del(){
         if(request()->isAjax()){
             $post = input();

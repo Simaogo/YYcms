@@ -7,9 +7,13 @@ use app\common\model\Channeltype as ChanneltypeModel;
 use think\facade\View;
 use think\facade\Db;
 class Arclist extends \app\common\controller\Backend{
+    public $model;
+    public function __construct(){
+        $this->model = new ArclistModel();
+    }
     public function index(){
         if(request()->isAjax()){
-            $ArclistModel = new ArclistModel();
+            $ArclistModel = $this->model;
             $limit = input('limit') ? input('limit'):15;
             $page = input('page') ? input('page'):1;
             $page = ($page -1) * $limit;
@@ -110,6 +114,7 @@ class Arclist extends \app\common\controller\Backend{
                 $addinfo['imgurls'] = \fun\Process::decode_imgurls($addinfo['imgurls']);//解析图集字段
             }
             $view['formData'] = $addinfo ? array_merge($maininfo->toArray(), $addinfo) : $maininfo;//合并
+            $view['formData']['pubdate'] = date('Y-m-d H:i:s');//当前时间
         }
         $view['typeid'] = input('typeid');
         if(input('typeid')) { //添加

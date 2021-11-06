@@ -1,4 +1,4 @@
-<?php /*a:4:{s:51:"E:\WWW\tp6dedecms\app\admin\view\arclist\index.html";i:1635006278;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1635159586;}*/ ?>
+<?php /*a:4:{s:51:"E:\WWW\tp6dedecms\app\admin\view\arclist\index.html";i:1636187394;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1635936494;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636185197;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,14 +49,13 @@
 <script type="text/html" id="toolbar">
   <div class="layui-btn-container">
     <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">删除</button>
   </div>
 </script>
 <script type="text/html" id="operate">
   <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>
 </script>
 <script>
     window.formData = <?php echo isset($formData)?(json_encode($formData)):'""'; ?>,
@@ -66,6 +65,7 @@
     window.rowEditUrl = '<?php echo url(request()->controller()."/rowEdit"); ?>',
     window.uploadUrl = '<?php echo url("ajax/uploads"); ?>',
     window.delUrl = '<?php echo url(request()->controller()."/del"); ?>';
+    window.delAllUrl = '<?php echo url(request()->controller()."/delAll"); ?>';
     layui.config({
         base: yyadminPath + "/js/"
     })
@@ -112,7 +112,7 @@
               ,{field:'', width:120, title: '栏目', sort: true,templet:function(d){return d.arctype.typename}}
               ,{field:'litpic', width:120, title: '缩略图', sort: true,templet:tableTool.templet.images}
               ,{field:'weight', width:80, title: '排序', sort: true,edit:true}
-              ,{field:'pubdate', width:180,title: '更新时间'}
+              ,{field:'pubdate', width:180,title: '更新时间',sort: true,}
               ,{field:'arcrank', width:120, title: '预览权限', sort: true,templet:tableTool.templet.switch}
               ,{field:'', width:180, title: '操作',templet:tableTool.templet.operate}
             ]]
@@ -143,27 +143,29 @@
                     content: '<?php echo url(request()->controller()."/addEdit"); ?>?id='+id+'&typeid='+ typeid
                 });
               break;
-              case 'getCheckData':
+              case 'delAll':
                 var data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
-              break;
-              case 'getCheckLength':
-                var data = checkStatus.data;
-                layer.msg('选中了：'+ data.length + ' 个');
-              break;
-              case 'isAll':
-                layer.msg(checkStatus.isAll ? '全选': '未全选');
-              break;
-
-              //自定义头工具栏右侧图标 - 提示
-              case 'LAYTABLE_TIPS':
-                layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                var len = data.length;
+                var ids = [];
+                for(var i = 0; i < len; i++){
+                    ids.push(data[i].id);
+                }
+                layer.confirm('确定删除选中？', function(index){
+                   $.post(delAllUrl,{ids:ids},function(res,index){
+                       layer.msg(res.msg,{time:350},function(){
+                           layer.close(index);
+                           window.location.reload();
+                       })
+                   })
+                   return false;
+                })
               break;
             };
           });
         tableTool.events.switch ();//开关点击事件
         tableTool.events.rowEdit ();//编辑排序     
         tableTool.events.operate();//操作
+        
      
   })
 </script>

@@ -1,11 +1,11 @@
 <!--顶部开始-->
 
 <header id="top_main" class="header">
-  <div id="top" class="clearfix"><a class="logo" href="{dede:global.cfg_cmspath/}/m" title="{dede:global.cfg_webname/}"> <img src="{dede:global.cfg_cmspath/}/m/skin/images/logo.png" alt="{dede:global.cfg_webname/}"></a>
+  <div id="top" class="clearfix"><a class="logo" href="/m" title="{:syscfg('cfg_webname')}"> <img src="/m/skin/images/logo.png" alt="{:syscfg('cfg_webname')}"></a>
     <div class="topsearch" id="topsearch"><span class="btn_search icon"></span></div>
     <!--搜索栏开始-->
     <div class="tsearch hidden" id="tsearch">
-      <form role="search" action="/plus/search.php">
+      <form role="search" action="{:url('template/search')}">
         <input type="hidden" name="mobile" value="1" />
         <input type="hidden" name="kwtype" value="0" />
         <input class="txt" type="text" name="q" value="请输入关键字" onFocus="if(this.value==defaultValue)this.value=''" onBlur="if(this.value=='')this.value=defaultValue">
@@ -25,12 +25,12 @@
 <nav class="subNav trans" id="subNav">
   <div class="subNavCon trans">
     <ul class="clearfix">
-      <li><a href="{dede:global.cfg_cmspath/}/m"  title="网站首页">网站首页</a></li>
-      {dede:channel type='top' currentstyle="
+      <li><a href="/m"  title="网站首页">网站首页</a></li>
+      {yycms:channel type='top' currentstyle="
       <li><a href='list.php?tid=~id~'>~typename~</a></li>
       "}
-      <li><a href="list.php?tid=[field:id/]" title="[field:typename/]">[field:typename/]</a></li>
-      {/dede:channel}
+      <li><a href="{$field.typeurl}" title="{$field.typename}">{$field.typename}</a></li>
+      {/yycms:channel}
     </ul>
   </div>
 </nav>

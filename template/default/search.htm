@@ -3,18 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>搜索页_{dede:global.cfg_webname/}</title>
-<meta name="keywords" content="{dede:field name='keywords'/}" />
-<meta name="description" content="{dede:field name='description' function='html2text(@me)'/}" />
-<link charset="utf-8" href="{dede:global.cfg_cmspath/}/skin/css/indexcss.css" rel="stylesheet" type="text/css" />
-<script language="JavaScript" type="text/javascript" src="{dede:global.cfg_cmspath/}/skin/js/indexjs.js"></script>
-<link href="{dede:global.cfg_cmspath/}/skin/css/headcss.css" rel="stylesheet" type="text/css" />
+<title>搜索页_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{$yy.field.description}" />
+<link charset="utf-8" href="/skin/css/indexcss.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" type="text/javascript" src="/skin/js/indexjs.js"></script>
+<link href="/skin/css/headcss.css" rel="stylesheet" type="text/css" />
 </head>
 <body onload="themax();init();">
-<link charset="gb2312" href="{dede:global.cfg_cmspath/}/skin/css/headcss.css" rel="stylesheet" type="text/css" />
-<link charset="gb2312" href="{dede:global.cfg_cmspath/}/skin/css/allbag.css" rel="stylesheet" type="text/css" />
-{dede:include filename="head.htm"/}
-{dede:include filename="so.htm"/}
+<link charset="gb2312" href="/skin/css/headcss.css" rel="stylesheet" type="text/css" />
+<link charset="gb2312" href="/skin/css/allbag.css" rel="stylesheet" type="text/css" />
+{include file="head"/}
+{include file="so"/}
 <div id="bgr">
   <div id="banner_news"></div>
   <div id="bodycon">
@@ -29,11 +29,11 @@
           <table width="219" border="0" cellspacing="0" cellpadding="0">
             <tbody>
             
-            {dede:channel type='son' currentstyle=""}
+            {yycms:channel type='son' currentstyle="active"}
             <tr>
-              <td style="height:56px;"><a href="[field:typelink/]" title="[field:typename/]" style="line-height:56px;color:#fff;"> [field:typename/] </a></td>
+              <td style="height:56px;"><a href="{$field.typeurl}" title="{$field.typename}" style="line-height:56px;color:#fff;"> {$field.typename} </a></td>
             </tr>
-            {/dede:channel}
+            {/yycms:channel}
               </tbody>
             
           </table>
@@ -42,21 +42,21 @@
       </div>
     </div>
     <div id="center">
-      <div id="bodycontent" class="mianbxContent" style="height:25px;width:90%;text-align:right;"> 您的位置:<a href='{dede:global.cfg_cmspath/}/'>主页</a> > 搜索 <strong>{dede:global name='keyword' function='RemoveXSS(@me)'/}</strong> 的结果 </div>
-      {dede:list pagesize ='6'}
+      <div id="bodycontent" class="mianbxContent" style="height:25px;width:90%;text-align:right;"> 您的位置:<a href='/'>主页</a> > 搜索 <strong>{:input('q')}</strong> 的结果 </div>
+      {yycms:list pagesize ='6'}
       <div id="bodycontent" class="pro_list_box">
         <div class="pro_list_box_item_zdy">
-          <div class="pro_list_box_item_l_zdy"><a href="[field:arcurl/]"><img
-                                    src="[field:litpic/]"></a> </div>
-          <div class="pro_list_box_item_r_zdy"> <a href="[field:arcurl/]" title="[field:title/]">
-            <p>[field:title/]</p>
-            </a> <a href="[field:arcurl/]">
-            <div> [field:description function="cn_substr(@me,300)"/] </div>
-            </a> <a class="content_more_a_zdy" href="[field:arcurl/]"></a> </div>
+          <div class="pro_list_box_item_l_zdy"><a href="{$field.arcurl}"><img
+                                    src="{$field.litpic}"></a> </div>
+          <div class="pro_list_box_item_r_zdy"> <a href="{$field.arcurl}" title="{$field.title}">
+            <p>{$field.title}</p>
+            </a> <a href="{$field.arcurl}">
+            <div> {$field.description} </div>
+            </a> <a class="content_more_a_zdy" href="{$field.arcurl}"></a> </div>
         </div>
         <div class="clear"></div>
       </div>
-      {/dede:list}
+      {/yycms:list}
       <div id="bodycontent" class="pro_list_box">
         <div class="clear"></div>
       </div>
@@ -98,12 +98,12 @@
                         color: #0E8C02; font-weight:bold ;
                     }
                 </style>
-      <div class="page">{dede:pagelist listitem="index,end,pre,next,pageno" listsize="1"/} </div>
+      <div class="page">{yycms:pagelist listitem="index,end,pre,next,pageno" listsize="1"/} </div>
     </div>
     <div class="clear"></div>
   </div>
   <div id="copy"></div>
 </div>
-{dede:include filename="footer.htm"/}
+{include file="footer"/}
 </body>
 </html>

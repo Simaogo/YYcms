@@ -1,6 +1,6 @@
 {include file="public/header" /}
 <form class="layui-form" action="" lay-filter="list">
-<div class="layui-row" style="padding: 15px 0 50px 0">
+<div class="layui-row layui-form-list" style="margin-bottom: 50px">
     <div class="layui-col-md12">
         <div class="layui-tab" lay-filter="config">
           <ul class="layui-tab-title">
@@ -14,12 +14,14 @@
                {volist name="group" id="vo"}
                {switch name="$vo.type" }
                     {case value="string" }
+                        {if condition='$vo.varname!="cfg_cmspath"'}
                         <div class="layui-form-item">
                             <label class="layui-form-label">{$vo.info}</label>
                             <div class="layui-input-block">
                               <input type="text" name="{$vo.varname}"  autocomplete="off" placeholder="请输入{$vo.info}" class="layui-input" value="{$vo.value}">
                             </div>
                         </div>
+                       {/if}
                     {/case}
                     {case value="number" }
                         <div class="layui-form-item">
@@ -56,8 +58,8 @@
         </div>
     </div>
 </div> 
- <div class="layui-form-item layui-flex layui-submit" style="margin-bottom: 50px;">
-    <button class="layui-btn" lay-submit="" lay-filter="submit" style="width:150px;margin: 0 auto;">提交保存</button>
+ <div class="layui-flex layui-submit" style="margin-bottom: 43px;">
+    <button class="layui-btn layui-btn-sm layui-submit-btn" lay-submit="" lay-filter="submit">提交</button>
 </div>   
 </form>
 {include file="public/footer" /}

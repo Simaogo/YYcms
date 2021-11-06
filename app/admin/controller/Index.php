@@ -79,7 +79,6 @@ class Index extends \app\common\controller\Backend
                 setConfig($rootPath . '/config/app.php','version',$filename);
                 return json(['code'=>0,'msg'=>'success']);
             } else {
-                sleep(3);
                 return json(['code'=>0,'msg'=>'已经是最新版本!!!!']);
             }   
         }

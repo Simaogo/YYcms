@@ -146,6 +146,17 @@ class Template extends Common{
             }
         }
     }
+    public function siteMap(){
+         $template = 'sitemap';
+        if(isMobile()){
+            $template = 'sitemap_m';
+            if(!file_exists(Config::get('view.view_path').''.$template .'.'.Config::get('view.view_suffix'))){
+                $template = 'sitemap';
+            }
+        }
+        $template .=  '.'. Config::get('view.view_suffix');
+        return View::fetch(Config::get('view.view_path') .''.$template);
+    }
     /**
      * 手机模板加 _m 结尾
      * @param string $templateName

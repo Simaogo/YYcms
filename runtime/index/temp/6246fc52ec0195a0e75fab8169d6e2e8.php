@@ -1,4 +1,4 @@
-<?php /*a:4:{s:29:"../template/default/index.htm";i:1635526718;s:5:"param";i:0;s:28:"../template/default/head.htm";i:1635526717;s:30:"../template/default/footer.htm";i:1635526717;}*/ ?>
+<?php /*a:4:{s:29:"../template/default/index.htm";i:1636108171;s:5:"param";i:0;s:28:"../template/default/head.htm";i:1636108171;s:30:"../template/default/footer.htm";i:1636108171;}*/ ?>
 <!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -70,7 +70,6 @@
                 $where = [];
                 $where[] = ["ishidden","=",0];
                 $where[] = ["reid","=",$pid];
-                
                 $menuList =\app\common\model\Arctype::where($where)->limit(0,8)->select();
                
             }else{
@@ -183,7 +182,7 @@
               height: 100%; width: 100%; border: 0;"></button>
           </div>
           </div>
-        <div id="search-text">热门搜索： {dede:hotwords  num=6  subday=365 maxlength=20/} </div>
+        <div id="search-text">热门搜索： {yycms:hotwords  num=6  subday=365 maxlength=20/} </div>
         <script>
             document.onreadystatechange = loadFromCookie;
 
@@ -209,10 +208,12 @@
 <?php 
             $menuList = \think\facade\Cache::get("71c4557892051e19176d63dcf941d5e9");
             $currid   = \think\facade\Cache::get("currid_71c4557892051e19176d63dcf941d5e9");
-            $selftypeid = 2;  
+            $selftypeid = 0;  
+			$ArctypeModel=new \app\common\model\Arctype();
             foreach($menuList as $key => $field){
                     $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
 					$field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);
+					$field["ischild"] = $ArctypeModel::where(["reid"=>$field["id"]])->find() ? 1 : 0;
 					$field["description"] = \fun\Process::getplaintextintrofromhtml($field["description"]);
                     $field["currentstyle"] = in_array($field["id"],$currid)?"on":"";//栏目显示高亮 
                     $pid = $field["id"];//嵌套标签typeid传值    
@@ -235,7 +236,6 @@
                 $where = [];
                 $where[] = ["ishidden","=",0];
                 $where[] = ["reid","=",$pid];
-                
                 $menuList =\app\common\model\Arctype::where($where)->limit(0,12)->select();
                
             }else{
@@ -299,7 +299,7 @@
                         ->join("dede_addonarticle add"," arc.id=add.aid","left")
                         ->where($where)
                         ->where($whereRaw)
-                        ->order("arc.sortrank asc")
+                        ->order("arc.weight desc,pubdate desc")
                         ->limit(0,12)
                         ->select()
                         ->toArray();
@@ -394,7 +394,7 @@
                         ->join("dede_addonarticle add"," arc.id=add.aid","left")
                         ->where($where)
                         ->where($whereRaw)
-                        ->order("arc.sortrank asc")
+                        ->order("arc.weight desc,pubdate desc")
                         ->limit(0,4)
                         ->select()
                         ->toArray();
@@ -424,10 +424,12 @@
 <?php 
             $menuList = \think\facade\Cache::get("f367f007c9b92bb77d995bda8c9afe37");
             $currid   = \think\facade\Cache::get("currid_f367f007c9b92bb77d995bda8c9afe37");
-            $selftypeid = 8;  
+            $selftypeid = 0;  
+			$ArctypeModel=new \app\common\model\Arctype();
             foreach($menuList as $key => $field){
                     $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
 					$field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);
+					$field["ischild"] = $ArctypeModel::where(["reid"=>$field["id"]])->find() ? 1 : 0;
 					$field["description"] = \fun\Process::getplaintextintrofromhtml($field["description"]);
                     $field["currentstyle"] = in_array($field["id"],$currid)?"on":"";//栏目显示高亮 
                     $pid = $field["id"];//嵌套标签typeid传值    
@@ -453,7 +455,6 @@
                 $where = [];
                 $where[] = ["ishidden","=",0];
                 $where[] = ["reid","=",$pid];
-                
                 $menuList =\app\common\model\Arctype::where($where)->limit(0,7)->select();
                
             }else{
@@ -485,7 +486,6 @@
                 $where = [];
                 $where[] = ["ishidden","=",0];
                 $where[] = ["reid","=",$pid];
-                
                 $menuList =\app\common\model\Arctype::where($where)->limit(0,5)->select();
                
             }else{
@@ -548,7 +548,7 @@
                         ->join("dede_addonarticle add"," arc.id=add.aid","left")
                         ->where($where)
                         ->where($whereRaw)
-                        ->order("arc.sortrank asc")
+                        ->order("arc.weight desc,pubdate desc")
                         ->limit(0,6)
                         ->select()
                         ->toArray();
@@ -696,10 +696,12 @@
 <?php 
             $menuList = \think\facade\Cache::get("404f724f43946f31892f5968f8426f11");
             $currid   = \think\facade\Cache::get("currid_404f724f43946f31892f5968f8426f11");
-            $selftypeid = 1;  
+            $selftypeid = 0;  
+			$ArctypeModel=new \app\common\model\Arctype();
             foreach($menuList as $key => $field){
                     $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
 					$field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);
+					$field["ischild"] = $ArctypeModel::where(["reid"=>$field["id"]])->find() ? 1 : 0;
 					$field["description"] = \fun\Process::getplaintextintrofromhtml($field["description"]);
                     $field["currentstyle"] = in_array($field["id"],$currid)?"on":"";//栏目显示高亮 
                     $pid = $field["id"];//嵌套标签typeid传值    
@@ -721,7 +723,6 @@
                 $where = [];
                 $where[] = ["ishidden","=",0];
                 $where[] = ["reid","=",$pid];
-                
                 $menuList =\app\common\model\Arctype::where($where)->limit(0,10)->select();
                
             }else{
@@ -761,7 +762,6 @@
                 $where = [];
                 $where[] = ["ishidden","=",0];
                 $where[] = ["reid","=",$pid];
-                
                 $menuList =\app\common\model\Arctype::where($where)->limit(0,10)->select();
                
             }else{
@@ -819,7 +819,7 @@
                         ->join("dede_addonarticle add"," arc.id=add.aid","left")
                         ->where($where)
                         ->where($whereRaw)
-                        ->order("arc.sortrank asc")
+                        ->order("arc.weight desc,pubdate desc")
                         ->limit(0,4)
                         ->select()
                         ->toArray();
@@ -855,9 +855,11 @@
             $menuList = \think\facade\Cache::get("594a841d9203851543076d9b93330889");
             $currid   = \think\facade\Cache::get("currid_594a841d9203851543076d9b93330889");
             $selftypeid = 0;  
+			$ArctypeModel=new \app\common\model\Arctype();
             foreach($menuList as $key => $field){
                     $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
 					$field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);
+					$field["ischild"] = $ArctypeModel::where(["reid"=>$field["id"]])->find() ? 1 : 0;
 					$field["description"] = \fun\Process::getplaintextintrofromhtml($field["description"]);
                     $field["currentstyle"] = in_array($field["id"],$currid)?"on":"";//栏目显示高亮 
                     $pid = $field["id"];//嵌套标签typeid传值    
@@ -902,7 +904,7 @@
                         ->join("dede_addonarticle add"," arc.id=add.aid","left")
                         ->where($where)
                         ->where($whereRaw)
-                        ->order("arc.sortrank asc")
+                        ->order("arc.weight desc,pubdate desc")
                         ->limit(0,4)
                         ->select()
                         ->toArray();
@@ -1038,9 +1040,11 @@
             $menuList = \think\facade\Cache::get("1e3809ab47ce9ed38c773fd619abaabb");
             $currid   = \think\facade\Cache::get("currid_1e3809ab47ce9ed38c773fd619abaabb");
             $selftypeid = 0;  
+			$ArctypeModel=new \app\common\model\Arctype();
             foreach($menuList as $key => $field){
                     $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
 					$field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);
+					$field["ischild"] = $ArctypeModel::where(["reid"=>$field["id"]])->find() ? 1 : 0;
 					$field["description"] = \fun\Process::getplaintextintrofromhtml($field["description"]);
                     $field["currentstyle"] = in_array($field["id"],$currid)?"on":"";//栏目显示高亮 
                     $pid = $field["id"];//嵌套标签typeid传值    
@@ -1060,9 +1064,11 @@
             $menuList = \think\facade\Cache::get("e56489a0220bd67e1f65b69eaeb27772");
             $currid   = \think\facade\Cache::get("currid_e56489a0220bd67e1f65b69eaeb27772");
             $selftypeid = 0;  
+			$ArctypeModel=new \app\common\model\Arctype();
             foreach($menuList as $key => $field){
                     $field["typeurl"] = \think\facade\Config::get("app.list_url")."/tid/".$field["id"];
 					$field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);
+					$field["ischild"] = $ArctypeModel::where(["reid"=>$field["id"]])->find() ? 1 : 0;
 					$field["description"] = \fun\Process::getplaintextintrofromhtml($field["description"]);
                     $field["currentstyle"] = in_array($field["id"],$currid)?"on":"";//栏目显示高亮 
                     $pid = $field["id"];//嵌套标签typeid传值    
@@ -1081,7 +1087,6 @@
                 $where = [];
                 $where[] = ["ishidden","=",0];
                 $where[] = ["reid","=",$pid];
-                
                 $menuList =\app\common\model\Arctype::where($where)->limit(0,10)->select();
                
             }else{

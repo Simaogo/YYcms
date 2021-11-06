@@ -4,24 +4,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
 <meta name="format-detection" content="telephone=no" />
-<title>搜索页_{dede:global.cfg_webname/}</title>
-<meta name="keywords" content="{dede:field name='keywords'/}" />
-<meta name="description" content="{dede:field name='description' function='html2text(@me)'/}" />
-<link href="{dede:global.cfg_cmspath/}/m/skin/css/style.css" rel="stylesheet">
-<link href="{dede:global.cfg_cmspath/}/m/skin/css/common.css" rel="stylesheet">
-<script src="{dede:global.cfg_cmspath/}/m/skin/js/autofontsize.min.js"></script>
-<script src="{dede:global.cfg_cmspath/}/m/skin/js/jquery.js"></script>
-<script src="{dede:global.cfg_cmspath/}/m/skin/js/clipboard.min.js"></script>
-<script src="{dede:global.cfg_cmspath/}/m/skin/js/common.js"></script>
+<title>搜索页_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{$yy.field.description}" />
+<link href="/m/skin/css/style.css" rel="stylesheet">
+<link href="/m/skin/css/common.css" rel="stylesheet">
+<script src="/m/skin/js/autofontsize.min.js"></script>
+<script src="/m/skin/js/jquery.js"></script>
+<script src="/m/skin/js/clipboard.min.js"></script>
+<script src="/m/skin/js/common.js"></script>
 </head>
 <body>
 <!--顶部开始-->
 <header id="top_main" class="header">
-  <div id="top" class="clearfix"><a class="logo" href="/m/index.php" title="{dede:global.cfg_webname/}"> <img src="{dede:global.cfg_cmspath/}/m/skin/images/logo.png" alt="{dede:global.cfg_webname/}"></a>
+  <div id="top" class="clearfix"><a class="logo" href="/m/index.php" title="{:syscfg('cfg_webname')}"> <img src="/m/skin/images/logo.png" alt="{:syscfg('cfg_webname')}"></a>
     <div class="topsearch" id="topsearch"><span class="btn_search icon"></span></div>
     <!--搜索栏开始-->
     <div class="tsearch hidden" id="tsearch">
-      <form role="search" action="{dede:global.cfg_cmsurl/}/plus/search.php">
+      <form role="search" action="{:syscfg('cfg_cmsurl')}{:url('template/search')}">
         <input type="hidden" name="mobile" value="1" />
         <input type="hidden" name="kwtype" value="0" />
         <input class="txt" type="text" name="q" value="请输入关键字" onFocus="if(this.value==defaultValue)this.value=''" onBlur="if(this.value=='')this.value=defaultValue">
@@ -42,11 +42,11 @@
   <div class="subNavCon trans">
     <ul class="clearfix">
       <li><a href="/m/index.php"  title="网站首页">网站首页</a></li>
-      {dede:channel type='top' currentstyle="
+      {yycms:channel type='top' currentstyle="
       <li><a href='/m/list.php?tid=~id~'>~typename~</a></li>
       "}
-      <li><a href="/m/list.php?tid=[field:id/]" title="[field:typename/]">[field:typename/]</a></li>
-      {/dede:channel}
+      <li><a href="/m/list.php?tid={$field.id}" title="{$field.typename}">{$field.typename}</a></li>
+      {/yycms:channel}
     </ul>
   </div>
 </nav>
@@ -55,18 +55,18 @@
 <section class="cateList"> <span class="goBack iconbef" id="goBack"></span>
   <h3>搜索页<s class="icon"></s></h3>
   <!--栏目分类开始-->
-  <div class="box"> {dede:channel type='son' currentstyle="<a href='/m/list.php?tid=~id~' class='on'>~typename~</a>"} <a  href="/m/list.php?tid=[field:id/]" title="[field:typename/]">[field:typename/]</a> {/dede:channel} </div>
+  <div class="box"> {yycms:channel type='son' currentstyle="active"} <a  href="/m/list.php?tid={$field.id}" title="{$field.typename}">{$field.typename}</a> {/yycms:channel} </div>
   <!--栏目分类结束--> 
 </section>
 
 <!--位置结束--> 
 <!--文章列表开始-->
 <section class="content newsPage">
-  <div class="list-loop list clearfix"> {dede:list pagesize ='5'} <a class="loop item clearfix" href="/m/view.php?aid=[field:id/]" title="[field:title/]"><img class="img fl" src="[field:picname/]" alt="[field:title/]">
-    <h3 class="tit" >[field:title/]</h3>
-    <p>[field:description function="cn_substr(@me,80)"/]...</p>
-    <span class="time">时间：[field:pubdate function="MyDate('Y-m-d',@me)"/]</span></a> {/dede:list} </div>
-  <div class="pglist"> {dede:pagelist listitem="index,end,pre,next,pageno" listsize="1"/} </div>
+  <div class="list-loop list clearfix"> {yycms:list pagesize ='5'} <a class="loop item clearfix" href="/m/view.php?aid={$field.id}" title="{$field.title}"><img class="img fl" src="{$field.picname}" alt="{$field.title}">
+    <h3 class="tit" >{$field.title}</h3>
+    <p>{$field.description}...</p>
+    <span class="time">时间：{$field.pubdate}</span></a> {/yycms:list} </div>
+  <div class="pglist"> {yycms:pagelist listitem="index,end,pre,next,pageno" listsize="1"/} </div>
 </section>
 <!--文章列表结束-->
 <div id="returntop" class="icon hidden"></div>
@@ -74,8 +74,8 @@
 <footer id="footer_main"> 
   <!--版权开始-->
   <div id="copyright">
-    <p>{dede:global.cfg_powerby/}</p>
-    <p>备案号：<a href="http://www.miitbeian.gov.cn/"  target="_blank" title="{dede:global.cfg_beian/}">{dede:global.cfg_beian/}</a> </p>
+    <p>{:syscfg('cfg_powerby')}</p>
+    <p>备案号：<a href="http://www.miitbeian.gov.cn/"  target="_blank" title="{:syscfg('cfg_beian')}">{:syscfg('cfg_beian')}</a> </p>
   </div>
   <!--版权结束--> 
 </footer>
@@ -85,24 +85,24 @@
 <section id="toolbar">
   <ul class="list clearfix">
     <li><a href="/m/index.php" title="网站首页"><s class="icon"></s><span>网站首页</span></a></li>
-    <li><a href="tel:{dede:global.cfg_tel/}" title="电话咨询"><s class="icon"></s><span>电话咨询</span></a></li>
+    <li><a href="tel:{:syscfg('cfg_tel')}" title="电话咨询"><s class="icon"></s><span>电话咨询</span></a></li>
     <li><a onClick="dkcf()" title="微信"><s class="icon"></s><span>微信</span></a></li>
-    {dede:type typeid='22'}
-    <li><a href="/m/list.php?tid=[field:id/]" title="[field:typename/]"><s class="icon"></s><span>[field:typename/]</span></a></li>
-    {/dede:type}
+    {yycms:type typeid='22'}
+    <li><a href="/m/list.php?tid={$field.id}" title="{$field.typename}"><s class="icon"></s><span>{$field.typename}</span></a></li>
+    {/yycms:type}
   </ul>
 </section>
 <!--底部图标结束-->
 
 <div id="wxnr">
-  <div class="nrdf"> <i onClick="gbcf()">X</i><img src="{dede:global.cfg_cmspath/}/m/skin/images/erweima.png" alt="{dede:global.cfg_webname/}"/>
+  <div class="nrdf"> <i onClick="gbcf()">X</i><img src="/m/skin/images/erweima.png" alt="{:syscfg('cfg_webname')}"/>
     <p>截屏，微信识别二维码</p>
-    <p>微信号：<span id="btn" data-clipboard-text="{dede:global.cfg_weixin/}">{dede:global.cfg_weixin/}</span></p>
+    <p>微信号：<span id="btn" data-clipboard-text="{:syscfg('cfg_weixin')}">{:syscfg('cfg_weixin')}</span></p>
     <p>（点击微信号复制，添加好友）</p>
     <p><a href="weixin://"><span class="wx">&nbsp;&nbsp;打开微信</span></a></p>
   </div>
 </div>
 <div id="weixin">微信号已复制，请打开微信添加咨询详情！</div>
-<script type="text/javascript" src="{dede:global.cfg_cmspath/}/m/skin/js/app.js" ></script>
+<script type="text/javascript" src="/m/skin/js/app.js" ></script>
 </body>
 </html>

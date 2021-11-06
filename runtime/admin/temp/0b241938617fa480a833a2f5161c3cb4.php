@@ -1,4 +1,4 @@
-<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\myppt\index.html";i:1635422577;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1634202730;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1635159586;}*/ ?>
+<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\myppt\index.html";i:1635936494;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1635936494;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636184596;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,8 +22,7 @@
 <script type="text/html" id="toolbar">
   <div class="layui-btn-container">
     <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">删除</button>
   </div>
 </script>
 <script type="text/html" id="operate">
