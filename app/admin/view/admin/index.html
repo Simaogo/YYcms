@@ -1,9 +1,5 @@
 {include file="public/header" /}
-<div class="layui-row">
-    <div class="layui-col-md12" style="padding: 15px;">
-        <table id="list" lay-filter="list"></table>
-    </div>
-</div>
+{include file="public/table" /}
 {include file="public/footer" /}
 <script>
      layui.use(['tableTool'], function(){
@@ -23,11 +19,11 @@
             {type:'checkbox'}      
             ,{field: 'id', title: 'ID', width:80, sort: true}
             ,{field: 'userid', title: '用户名', width:100,sort: true,align:'center'}
-            ,{field: 'username', title: '姓名', width:100,sort: true,align:'center'}
-            ,{field: 'usertype', title: '角色', width:100,sort: true,align:'center'}
-            ,{field: 'logintime', title: '登录时间', width:150,sort: true,align:'center'}
+            ,{field: 'admintype__typename', title: '角色', width:100,sort: true,align:'center'}
+            ,{field: 'uname', title: '昵称', width:100,sort: true,align:'center'}
+            ,{field: 'logintime', title: '登录时间', width:200,sort: true,align:'center'}
             ,{field: 'loginip', title: '登录IP', width:200,sort: true,align:'center'}
-            ,{field: '', title: '操作', width:'25%',align:'center',templet:tableTool.templet.operate}
+            ,{field: '', title: '操作', width:120,align:'center',templet:tableTool.templet.operate}
           ]]
         });
         tableTool.events.operate();

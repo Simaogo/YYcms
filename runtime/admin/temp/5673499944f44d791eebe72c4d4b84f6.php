@@ -1,4 +1,4 @@
-<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\arclist\add.html";i:1635936494;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1635936494;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636185197;}*/ ?>
+<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\arclist\add.html";i:1636282581;s:5:"param";s:23:"a:1:{s:2:"id";s:1:"1";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636280202;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636293469;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,13 +10,13 @@
     <!-- 公共样式 -->
     <link rel="stylesheet" href="/yyAdmin/css/common.css">
 </head>
-<body>
+<body style="padding-left: 5px;">
 
 <script type="text/javascript" src="/yyAdmin/plugins/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" src="/yyAdmin/plugins/ueditor/ueditor.all.js"></script>
-<form class="layui-form" action="" lay-filter="list">
-    <div class="layui-row" style="padding: 15px;margin-bottom: 35px">
-        <div class="layui-tab">
+<form class="layui-form layui-tab-form" action="" lay-filter="list">
+    <div class="layui-row">
+        <div class="layui-tab ">
           <ul class="layui-tab-title">
             <li class="layui-this">常规信息</li>
             <li>高级参数</li>
@@ -224,20 +224,16 @@
     <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">删除</button>
   </div>
 </script>
-<script type="text/html" id="operate">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>
-</script>
+
 <script>
     window.formData = <?php echo isset($formData)?(json_encode($formData)):'""'; ?>,
     window.url = window.location.href,//当前URL
     window.yyadminPath ='/yyAdmin'; 
-    window.addEditUrl = '<?php echo url(request()->controller()."/addEdit"); ?>',
-    window.rowEditUrl = '<?php echo url(request()->controller()."/rowEdit"); ?>',
+    window.addEditUrl = '<?php echo url(lcfirst(request()->controller())."/addEdit"); ?>',
+    window.rowEditUrl = '<?php echo url(lcfirst(request()->controller())."/rowEdit"); ?>',
     window.uploadUrl = '<?php echo url("ajax/uploads"); ?>',
-    window.delUrl = '<?php echo url(request()->controller()."/del"); ?>';
-    window.delAllUrl = '<?php echo url(request()->controller()."/delAll"); ?>';
+    window.delUrl = '<?php echo url(lcfirst(request()->controller())."/del"); ?>';
+    window.delAllUrl = '<?php echo url(lcfirst(request()->controller())."/delAll"); ?>';
     layui.config({
         base: yyadminPath + "/js/"
     })

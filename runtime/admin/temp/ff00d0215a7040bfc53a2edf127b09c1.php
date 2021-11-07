@@ -1,4 +1,4 @@
-<?php /*a:4:{s:52:"E:\WWW\tp6dedecms\app\admin\view\flink\add_edit.html";i:1635936494;s:5:"param";s:23:"a:1:{s:2:"id";s:1:"2";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1635936494;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636185197;}*/ ?>
+<?php /*a:4:{s:52:"E:\WWW\tp6dedecms\app\admin\view\flink\add_edit.html";i:1635936494;s:5:"param";s:23:"a:1:{s:2:"id";s:1:"2";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636280202;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636293469;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +10,7 @@
     <!-- 公共样式 -->
     <link rel="stylesheet" href="/yyAdmin/css/common.css">
 </head>
-<body>
+<body style="padding-left: 5px;">
 
 <form class="layui-form" action="" lay-filter="list">
     <div class="layui-row layui-form-list">
@@ -80,20 +80,16 @@
     <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">删除</button>
   </div>
 </script>
-<script type="text/html" id="operate">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>
-</script>
+
 <script>
     window.formData = <?php echo isset($formData)?(json_encode($formData)):'""'; ?>,
     window.url = window.location.href,//当前URL
     window.yyadminPath ='/yyAdmin'; 
-    window.addEditUrl = '<?php echo url(request()->controller()."/addEdit"); ?>',
-    window.rowEditUrl = '<?php echo url(request()->controller()."/rowEdit"); ?>',
+    window.addEditUrl = '<?php echo url(lcfirst(request()->controller())."/addEdit"); ?>',
+    window.rowEditUrl = '<?php echo url(lcfirst(request()->controller())."/rowEdit"); ?>',
     window.uploadUrl = '<?php echo url("ajax/uploads"); ?>',
-    window.delUrl = '<?php echo url(request()->controller()."/del"); ?>';
-    window.delAllUrl = '<?php echo url(request()->controller()."/delAll"); ?>';
+    window.delUrl = '<?php echo url(lcfirst(request()->controller())."/del"); ?>';
+    window.delAllUrl = '<?php echo url(lcfirst(request()->controller())."/delAll"); ?>';
     layui.config({
         base: yyadminPath + "/js/"
     })

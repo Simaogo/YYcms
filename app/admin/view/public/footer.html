@@ -6,20 +6,16 @@
     <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">删除</button>
   </div>
 </script>
-<script type="text/html" id="operate">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>
-</script>
+
 <script>
     window.formData = {:isset($formData)?(json_encode($formData)):'""'},
     window.url = window.location.href,//当前URL
     window.yyadminPath ='__YYADMIN__'; 
-    window.addEditUrl = '{:url(request()->controller()."/addEdit")}',
-    window.rowEditUrl = '{:url(request()->controller()."/rowEdit")}',
+    window.addEditUrl = '{:url(lcfirst(request()->controller())."/addEdit")}',
+    window.rowEditUrl = '{:url(lcfirst(request()->controller())."/rowEdit")}',
     window.uploadUrl = '{:url("ajax/uploads")}',
-    window.delUrl = '{:url(request()->controller()."/del")}';
-    window.delAllUrl = '{:url(request()->controller()."/delAll")}';
+    window.delUrl = '{:url(lcfirst(request()->controller())."/del")}';
+    window.delAllUrl = '{:url(lcfirst(request()->controller())."/delAll")}';
     layui.config({
         base: yyadminPath + "/js/"
     })

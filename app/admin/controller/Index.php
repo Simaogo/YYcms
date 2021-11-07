@@ -88,5 +88,25 @@ class Index extends \app\common\controller\Backend
             \fun\helper\FileHelper::delDir(root_path().'runtime');
              return json(['code'=>0,'msg'=>'success']);
         }
-    } 
+    }
+    
+    /**
+     * 修改密码
+     */
+    public function editPassword(){
+        if(request()->isAjax()){
+            $post = input();
+            if($post['pwd']){
+                if($post['pwd'] != $post['pwdreplace']){
+                   return json(['code'=>1,'msg'=>'两次输入密码不一致!']);
+                }
+                $data = [];
+                $data['pwd'] = substr(md5($post['pwd']), 5, 20);
+                $data['id'] = session('admin')['id'];
+                \app\admin\model\Admin::update($data);
+            }
+           return json(['code'=>0,'msg'=>'success']); 
+        }
+        return View::fetch(); 
+    }
 }

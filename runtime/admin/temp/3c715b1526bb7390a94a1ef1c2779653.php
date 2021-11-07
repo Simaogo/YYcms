@@ -1,4 +1,4 @@
-<?php /*a:4:{s:53:"E:\WWW\tp6dedecms\app\admin\view\auth_rule\index.html";i:1636108856;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1635936494;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636185197;}*/ ?>
+<?php /*a:5:{s:53:"E:\WWW\tp6dedecms\app\admin\view\auth_rule\index.html";i:1636290703;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636280202;s:50:"E:\WWW\tp6dedecms\app\admin\view\public\table.html";i:1636281698;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636293469;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,21 +10,17 @@
     <!-- 公共样式 -->
     <link rel="stylesheet" href="/yyAdmin/css/common.css">
 </head>
-<body>
+<body style="padding-left: 5px;">
 
 <style>
     .layui-table-cell{cursor: pointer;}
 </style>
-<div class="layui-row" style="margin-bottom: 50px;">
-  <div class="layui-col-md12">
-    <div class="layui-card">
-      <div class="layui-card-header">权限管理</div>
-      <div class="layui-card-body">
-          <table class="layui-table layui-form" id="list" lay-filter="list"></table>
-      </div>
+<div class="layui-row">
+    <div class="layui-col-md12 layui-card">
+        <table class="layui-hide" id="list" lay-filter="list"></table>
     </div>
-  </div>
 </div>
+
  <script src="/yyAdmin/layui/layui.js"></script>
 <!-- jQuery JS -->
 <script type="text/html" id="toolbar">
@@ -33,20 +29,16 @@
     <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">删除</button>
   </div>
 </script>
-<script type="text/html" id="operate">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>
-</script>
+
 <script>
     window.formData = <?php echo isset($formData)?(json_encode($formData)):'""'; ?>,
     window.url = window.location.href,//当前URL
     window.yyadminPath ='/yyAdmin'; 
-    window.addEditUrl = '<?php echo url(request()->controller()."/addEdit"); ?>',
-    window.rowEditUrl = '<?php echo url(request()->controller()."/rowEdit"); ?>',
+    window.addEditUrl = '<?php echo url(lcfirst(request()->controller())."/addEdit"); ?>',
+    window.rowEditUrl = '<?php echo url(lcfirst(request()->controller())."/rowEdit"); ?>',
     window.uploadUrl = '<?php echo url("ajax/uploads"); ?>',
-    window.delUrl = '<?php echo url(request()->controller()."/del"); ?>';
-    window.delAllUrl = '<?php echo url(request()->controller()."/delAll"); ?>';
+    window.delUrl = '<?php echo url(lcfirst(request()->controller())."/del"); ?>';
+    window.delAllUrl = '<?php echo url(lcfirst(request()->controller())."/delAll"); ?>';
     layui.config({
         base: yyadminPath + "/js/"
     })
@@ -73,10 +65,13 @@
         const cols = [[
             {type:'checkbox'}
             ,{field:'id', title:'ID',width:80,sort:true}
-            ,{field:'title', title:'名称',width:'50%'}
+            ,{field:'title', title:'名称',width:350}
+            ,{field:'href', title:'操作方法',width:150,edit:true}
+            
             ,{field:'sort', title:'排序',width:100,edit:true}
-            ,{field:'menu_status', title:'显示',width:100,templet:tableTool.templet.switch}
-            ,{field:'', width:"20%", title: '操作',templet:tableTool.templet.operate} 
+            ,{field:'menu_status', title:'菜单显示',width:100,templet:tableTool.templet.switch}
+            ,{field:'status', title:'状态',width:100,templet:tableTool.templet.switch}
+            ,{field:'', width:180, title: '操作',templet:tableTool.templet.operate} 
         ]];
         // 表格配置
         const objTable = {

@@ -110,7 +110,34 @@
                             <i class="ri-home-8-line"></i>&emsp;<cite>首页</cite>
                         </a>
                     </li>
-
+                    <li class="layui-nav-item">
+                        <a lay-id="javascript:;" lay-url="javascript:;">
+                             <i class="ri-settings-4-line"></i>&emsp;<cite>系统管理</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a lay-id="{:url('config/index')}" lay-url="{:url('config/index')}">
+                                    <cite>系统设置</cite>
+                                </a>
+                            </dd>
+                            <dd>
+                                <a lay-id="{:url('adminLog/index')}" lay-url="{:url('adminLog/index')}">
+                                    <cite>管理员日志</cite>
+                                </a>
+                            </dd>
+                            <dd>
+                                <a lay-id="#" lay-url="#">
+                                    <cite>配置</cite>
+                                </a>
+                            </dd>
+                            <dd>
+                                <a lay-id="#" lay-url="#">
+                                    <cite>配置组</cite>
+                                </a>
+                            </dd>
+                            
+                        </dl>
+                    </li>
                     <li class="layui-nav-item">
                         <a lay-id="javascript:;" lay-url="javascript:;">
                             <i class="ri-shield-keyhole-line"></i>&emsp;<cite>权限管理</cite>
@@ -164,16 +191,7 @@
                             <dd><a lay-id="{:url('setsql/index')}" lay-url="{:url('setsql/index')}"><cite>数据库操作</cite></a></dd>
                          </dl>
                     </li>
-                    <li class="layui-nav-item">
-                        <a lay-id="{:url('config/index')}" lay-url="{:url('config/index')}">
-                            <i class="ri-settings-4-line"></i>&emsp;<cite>网站设置</cite>
-                        </a>
-                    </li>
-<!--                    <li class="layui-nav-item">
-                        <a lay-id="https://remixicon.com/" lay-url="https://remixicon.com/">
-                            <i class="ri-remixicon-line"></i>&emsp;<cite>图标</cite>
-                        </a>
-                    </li>-->
+                    
                 </ul>
 
 <!--                <div id="message">
@@ -267,6 +285,7 @@
     </div>
     <script>
        window.clearRuntimeUrl = '{:url("index/clear")}';//清除缓存URL
+       window.editPasswordUrl = '{:url("index/editPassword")}';//修改密码
        window.homeUrl = '{:url("index/clear")}';//homeURL
        window.yyAdminPath = '__YYADMIN__';//yyadmin.js URL
     </script>

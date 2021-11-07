@@ -1,4 +1,4 @@
-<?php /*a:2:{s:49:"E:\WWW\tp6dedecms\app\admin\view\index\index.html";i:1635936494;s:5:"param";i:0;}*/ ?>
+<?php /*a:2:{s:49:"E:\WWW\tp6dedecms\app\admin\view\index\index.html";i:1636285911;s:5:"param";i:0;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -111,7 +111,34 @@
                             <i class="ri-home-8-line"></i>&emsp;<cite>首页</cite>
                         </a>
                     </li>
-
+                    <li class="layui-nav-item">
+                        <a lay-id="javascript:;" lay-url="javascript:;">
+                             <i class="ri-settings-4-line"></i>&emsp;<cite>系统管理</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a lay-id="<?php echo url('config/index'); ?>" lay-url="<?php echo url('config/index'); ?>">
+                                    <cite>系统设置</cite>
+                                </a>
+                            </dd>
+                            <dd>
+                                <a lay-id="<?php echo url('adminLog/index'); ?>" lay-url="<?php echo url('adminLog/index'); ?>">
+                                    <cite>管理员日志</cite>
+                                </a>
+                            </dd>
+                            <dd>
+                                <a lay-id="#" lay-url="#">
+                                    <cite>配置</cite>
+                                </a>
+                            </dd>
+                            <dd>
+                                <a lay-id="#" lay-url="#">
+                                    <cite>配置组</cite>
+                                </a>
+                            </dd>
+                            
+                        </dl>
+                    </li>
                     <li class="layui-nav-item">
                         <a lay-id="javascript:;" lay-url="javascript:;">
                             <i class="ri-shield-keyhole-line"></i>&emsp;<cite>权限管理</cite>
@@ -165,16 +192,7 @@
                             <dd><a lay-id="<?php echo url('setsql/index'); ?>" lay-url="<?php echo url('setsql/index'); ?>"><cite>数据库操作</cite></a></dd>
                          </dl>
                     </li>
-                    <li class="layui-nav-item">
-                        <a lay-id="<?php echo url('config/index'); ?>" lay-url="<?php echo url('config/index'); ?>">
-                            <i class="ri-settings-4-line"></i>&emsp;<cite>网站设置</cite>
-                        </a>
-                    </li>
-<!--                    <li class="layui-nav-item">
-                        <a lay-id="https://remixicon.com/" lay-url="https://remixicon.com/">
-                            <i class="ri-remixicon-line"></i>&emsp;<cite>图标</cite>
-                        </a>
-                    </li>-->
+                    
                 </ul>
 
 <!--                <div id="message">
@@ -268,6 +286,7 @@
     </div>
     <script>
        window.clearRuntimeUrl = '<?php echo url("index/clear"); ?>';//清除缓存URL
+       window.editPasswordUrl = '<?php echo url("index/editPassword"); ?>';//修改密码
        window.homeUrl = '<?php echo url("index/clear"); ?>';//homeURL
        window.yyAdminPath = '/yyAdmin';//yyadmin.js URL
     </script>

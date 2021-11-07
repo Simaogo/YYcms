@@ -5,7 +5,7 @@
             <div class="layui-inline">
               <label class="layui-form-label">权限上级</label>
               <div class="layui-input-inline">
-                <select name="reid" lay-verify="required">
+                <select name="pid" lay-verify="required">
                   <option value="0">顶级</option>
                   {volist name="authRuleList" id="vo"}
                    <option value="{$vo.id}"> {$vo.lefthtml|raw} {$vo.title}</option>
@@ -30,13 +30,11 @@
               </div>
             </div>
         </div>
+
         <div class="layui-form-item">
-            <div class="layui-inline">
-              <label class="layui-form-label">图标</label>
-              <div class="layui-input-inline">
-                    <input type="text" name="icon" lay-verify="required" autocomplete="off" placeholder="图标" class="layui-input">
-              </div>
-              <div class="layui-form-mid layui-word-aux"><a href="https://remixicon.com/" target="_blank">图标地址https://remixicon.com</a></div>
+            <label for="" class="layui-form-label">图标：</label>
+            <div class="layui-input-inline">
+                <input type="text" id="iconHhysFa" lay-filter="" class="hide" name="icon" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -72,15 +70,39 @@
 </form>
 {include file="public/footer" /}
 <script>
-    layui.use(['form','formTool'], function(){
+    
+    layui.use(['form','formTool','iconHhysFa'], function(){
       var form = layui.form
       ,formTool = layui.formTool
       ,$ = layui.jquery
+      ,iconHhysFa = layui.iconHhysFa
       ,laydate = layui.laydate;
        laydate.render({
             elem: '#pubdate'
             ,type: 'datetime'
        });
+       //图标选择器
+        iconHhysFa.render({
+            // 选择器，推荐使用input
+            elem: '#iconHhysFa',
+            // 数据类型：fontClass/awesome，推荐使用fontClass
+            type: 'fontClass',
+            // 是否开启搜索：true/false，默认true
+            search: true,
+            // 是否开启分页：true/false，默认true
+            page: true,
+            // 每页显示数量，默认12
+            limit: 12,
+            url: '',
+            // 点击回调
+            click: function(data) {
+                console.log(data);
+            },
+            // 渲染成功后的回调
+            success: function(d) {
+                console.log(d);
+            }
+        });
         //跳转网址
         form.on('radio(redirecturl)', function(obj){
             if(obj.value == 2){　　　　　　//判断当前多选框是选中还是取消选中

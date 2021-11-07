@@ -1,24 +1,5 @@
 {include file="public/header" /}
-<div class="layui-row" style='background: #f2f2f2;'>
-    <div class="layui-col-md12">
-      <div class="layui-card">
-        <div class="layui-card-header">模型管理</div>
-        <div class="layui-card-body">
-            <form class="layui-form" action="">
-                <div class="layui-form-item">
-                  <div class="layui-flex">
-                        <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题关键词搜索" autocomplete="off" class="layui-input layui-col-md3" style='max-width: 350px;margin-right:5px;'>
-                        <button type="button" class="layui-btn layui-btn-sm">搜索</button>
-                  </div>
-                </div>
-            </form>
-            <table class="layui-hide" id="list" lay-filter="list"></table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-      
+{include file="public/table"/}     
 {include file="public/footer" /}
 <script>
     layui.use('tableTool', function(){

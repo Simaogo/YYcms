@@ -1,18 +1,10 @@
+
 {include file="public/header" /}
+{include file="public/table" /}
+{include file="public/footer" /}
 <style>
     .layui-table-cell{cursor: pointer;}
 </style>
-<div class="layui-row" style="margin-bottom: 50px;">
-  <div class="layui-col-md12">
-    <div class="layui-card">
-      <div class="layui-card-header">栏目管理</div>
-      <div class="layui-card-body">
-          <table class="layui-table layui-form" id="list" lay-filter="list"></table>
-      </div>
-    </div>
-  </div>
-</div>
-{include file="public/footer" /}
 <script>
    layui.use(['tableTreeDj','table','tableTool'], function() {
         let tableTree = layui.tableTreeDj
@@ -33,11 +25,12 @@
         const cols = [[
             {type:'checkbox'}
             ,{field:'id', title:'ID',width:80,sort:true}
-            ,{field:'typename', title:'名称',width:'50%'}
-            ,{field:'channeltype__typename', title:'所属模型',sort:true,width:120}
-            ,{field:'sortrank', title:'排序',width:100,edit:true}
-            ,{field:'ishidden', title:'显示',width:100,templet:tableTool.templet.switch}
-            ,{field:'', width:"20%", title: '操作',templet:tableTool.templet.operate} 
+            ,{field:'typename', title:'名称',width:'45%'}
+            ,{field:'channeltype__typename', title:'所属模型',sort:true,width:120,align:'center'}
+            ,{field:'ispart', title:'属性',sort:true,width:120,align:'center',templet:tableTool.templet.ispart}
+            ,{field:'sortrank', title:'排序',width:100,edit:true,align:'center'}
+            ,{field:'ishidden', title:'显示',width:100,templet:tableTool.templet.switch,align:'center'}
+            ,{field:'', width:150, title: '操作',templet:tableTool.templet.operate,operate:['link'],link:'/list/tid'}
         ]];
         // 表格配置
         const objTable = {

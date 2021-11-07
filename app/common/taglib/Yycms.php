@@ -95,10 +95,11 @@ class Yycms extends TagLib{
             $where[] = ["ishidden","=",0];
             $ArctypeSelf = $ArctypeModel::find($reid);
             if($ArctypeSelf){
-                $where[] = ["reid","=",$ArctypeSelf->reid];
-                $menuList = $ArctypeModel->where($where)->order($order)->select()->toArray();
+                if($ArctypeSelf->reid){
+                    $where[] = ["reid","=",$ArctypeSelf->reid];
+                    $menuList = $ArctypeModel->where($where)->order($order)->select()->toArray();
+                }
             }    
-            
         }
         //高亮栏目
         $currid = isset($tid) ? $ArctypeModel->currIds($list,$tid):array();
@@ -137,7 +138,6 @@ class Yycms extends TagLib{
      * @return string
      */
     public function tagChannelartlist($tag, $content){
-       
        $order  = empty($tag['order']) ? "sortrank asc": $tag['order'];//排序
        $row    = empty($tag['row']) ? 10: $tag['row'];//条数 
        $type = empty($tag['type']) ? 'top' : $tag['type'];//类型
@@ -400,7 +400,7 @@ class Yycms extends TagLib{
     * @return string
     */
     public function tagPagelist($tag,$content){
-		$page = empty(input('page')) ? 1 :input('page');
+	$page = empty(input('page')) ? 1 :input('page');
         if(input('q')){
             $keyword = trim(input('q'),' ');
             $page_key = md5($keyword).'_page_'.$page;
@@ -453,7 +453,7 @@ class Yycms extends TagLib{
      */
      public function tagPrenext ($tag,$content){
         $getparam = $tag["get"];
-		$lang = empty($tag['pagelang']) ? 'zh' : $tag['pagelang'];
+	$lang = empty($tag['pagelang']) ? 'zh' : $tag['pagelang'];
         if(!$getparam) return '';
         $parse = '<?php ';
         $parse .= '$aid = input("aid");
@@ -519,7 +519,6 @@ class Yycms extends TagLib{
         $parse .= $content;
         $parse .= '<?php ?>';
         return $parse;
-      
     }
     public function tagSql($tag,$content){
         if(empty($tag['sql'])) return '';

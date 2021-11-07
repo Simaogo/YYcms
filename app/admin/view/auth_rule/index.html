@@ -2,16 +2,7 @@
 <style>
     .layui-table-cell{cursor: pointer;}
 </style>
-<div class="layui-row" style="margin-bottom: 50px;">
-  <div class="layui-col-md12">
-    <div class="layui-card">
-      <div class="layui-card-header">权限管理</div>
-      <div class="layui-card-body">
-          <table class="layui-table layui-form" id="list" lay-filter="list"></table>
-      </div>
-    </div>
-  </div>
-</div>
+{include file="public/table"/}
 {include file="public/footer" /}
 <script>
    layui.use(['tableTreeDj','table','tableTool'], function() {
@@ -33,10 +24,13 @@
         const cols = [[
             {type:'checkbox'}
             ,{field:'id', title:'ID',width:80,sort:true}
-            ,{field:'title', title:'名称',width:'50%'}
+            ,{field:'title', title:'名称',width:350}
+            ,{field:'href', title:'操作方法',width:150,edit:true}
+            
             ,{field:'sort', title:'排序',width:100,edit:true}
-            ,{field:'menu_status', title:'显示',width:100,templet:tableTool.templet.switch}
-            ,{field:'', width:"20%", title: '操作',templet:tableTool.templet.operate} 
+            ,{field:'menu_status', title:'菜单显示',width:100,templet:tableTool.templet.switch}
+            ,{field:'status', title:'状态',width:100,templet:tableTool.templet.switch}
+            ,{field:'', width:180, title: '操作',templet:tableTool.templet.operate} 
         ]];
         // 表格配置
         const objTable = {

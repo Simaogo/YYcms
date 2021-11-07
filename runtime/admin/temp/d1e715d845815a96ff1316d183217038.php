@@ -1,4 +1,4 @@
-<?php /*a:5:{s:49:"E:\WWW\tp6dedecms\app\admin\view\admin\index.html";i:1636283524;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636280202;s:50:"E:\WWW\tp6dedecms\app\admin\view\public\table.html";i:1636281698;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636293469;}*/ ?>
+<?php /*a:5:{s:53:"E:\WWW\tp6dedecms\app\admin\view\admin_log\index.html";i:1636295755;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636280202;s:50:"E:\WWW\tp6dedecms\app\admin\view\public\table.html";i:1636281698;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636293469;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,9 +47,8 @@
       var tableTool = layui.tableTool;
         tableTool.render({
           elem: '#list'
-          ,height: '800'
           ,url: url //数据接口
-          ,page: false //开启分页
+          ,page: true //开启分页
            ,toolbar: '#toolbar' 
            ,defaultToolbar: ['filter', 'exports', 'print', {
               title: '提示'
@@ -58,14 +57,23 @@
             }]
           ,cols: [[ //表头
             {type:'checkbox'}      
-            ,{field: 'id', title: 'ID', width:80, sort: true}
-            ,{field: 'userid', title: '用户名', width:100,sort: true,align:'center'}
-            ,{field: 'admintype__typename', title: '角色', width:100,sort: true,align:'center'}
-            ,{field: 'uname', title: '昵称', width:100,sort: true,align:'center'}
-            ,{field: 'logintime', title: '登录时间', width:200,sort: true,align:'center'}
-            ,{field: 'loginip', title: '登录IP', width:200,sort: true,align:'center'}
+            ,{field: 'id', title: 'ID', width:60, sort: true}
+            ,{field:'username', title:'用户',width:100,edit:true}
+            ,{field: 'title', title:'标题', width:100,sort: true,align:'center'}
+            ,{field: 'url', title: 'url', width:250,sort: true,align:'center'}
+            ,{field: 'method', title: 'method', width:120,sort: true,align:'center'}
+            ,{field: 'ip', title: 'ip', width:150,sort: true,align:'center'}
+            ,{field: '', title: '数据', width:200,sort: true,align:'center',templet:function(d){
+                    if(d.post_data && d.post_data!='[]'){
+                        return d.post_data;
+                    }else{
+                        return d.get_data;
+                    }
+            }}
+            ,{field: 'create_time', title: '操作时间', width:250,sort: true,align:'center'}
             ,{field: '', title: '操作', width:120,align:'center',templet:tableTool.templet.operate}
           ]]
+        ,limit:15
         });
         tableTool.events.operate();
         tableTool.events.toolbar();

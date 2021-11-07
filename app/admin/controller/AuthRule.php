@@ -37,6 +37,7 @@ class AuthRule extends \app\common\controller\Backend{
         $authRuleList = $this->model::select();
         $authRuleList = $authRuleList ? $authRuleList->toArray() : '';
         $view['authRuleList'] = $this->model::authRuleTree($authRuleList);
+       
         $view['title'] ='编辑';
         View::assign($view);
         return View::fetch();

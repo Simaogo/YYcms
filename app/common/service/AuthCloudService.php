@@ -14,9 +14,9 @@ class AuthCloudService extends AbstractService
 {
     // 请求的数据
     //服务器地址
-    public $api_domain = 'https://www.funadmin.com/';
-    public $appid = 'funadmin';
-    public $appsecret = '6087ed6cd51e4860ff596cee0635d8d8';
+    public $api_domain = '';
+    public $appid = '';
+    public $appsecret = '';
     // 接口
     public $api_url = 'api/v1.token/accessToken';
     public $expire = 3600*24*7;

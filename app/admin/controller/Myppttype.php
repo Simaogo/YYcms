@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Myppttype as MyppttypeModel;
+use app\common\model\Myppttype as MyppttypeModel;
 use app\common\controller\Backend;
 use think\facade\View;
 use think\facade\Session;

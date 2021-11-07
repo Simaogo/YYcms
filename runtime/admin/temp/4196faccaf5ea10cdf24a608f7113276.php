@@ -1,4 +1,4 @@
-<?php /*a:4:{s:51:"E:\WWW\tp6dedecms\app\admin\view\arclist\index.html";i:1636187394;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1635936494;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636185197;}*/ ?>
+<?php /*a:4:{s:51:"E:\WWW\tp6dedecms\app\admin\view\arclist\index.html";i:1636294248;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636280202;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636293469;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,10 +10,13 @@
     <!-- 公共样式 -->
     <link rel="stylesheet" href="/yyAdmin/css/common.css">
 </head>
-<body>
+<body style="padding-left: 5px;">
 
-<div class="layui-row" style='background: #f2f2f2;padding: 15px'>
-  <div class="layui-row layui-col-space15">
+<style>
+    body{background: #eee;}
+</style>
+<div class="layui-row">
+  <div class="layui-col-space8" style="padding-top:5px;">
     <div class="layui-col-md2">
       <div class="layui-card">
         <div class="layui-card-header">栏目列表</div>
@@ -52,20 +55,16 @@
     <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">删除</button>
   </div>
 </script>
-<script type="text/html" id="operate">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>
-</script>
+
 <script>
     window.formData = <?php echo isset($formData)?(json_encode($formData)):'""'; ?>,
     window.url = window.location.href,//当前URL
     window.yyadminPath ='/yyAdmin'; 
-    window.addEditUrl = '<?php echo url(request()->controller()."/addEdit"); ?>',
-    window.rowEditUrl = '<?php echo url(request()->controller()."/rowEdit"); ?>',
+    window.addEditUrl = '<?php echo url(lcfirst(request()->controller())."/addEdit"); ?>',
+    window.rowEditUrl = '<?php echo url(lcfirst(request()->controller())."/rowEdit"); ?>',
     window.uploadUrl = '<?php echo url("ajax/uploads"); ?>',
-    window.delUrl = '<?php echo url(request()->controller()."/del"); ?>';
-    window.delAllUrl = '<?php echo url(request()->controller()."/delAll"); ?>';
+    window.delUrl = '<?php echo url(lcfirst(request()->controller())."/del"); ?>';
+    window.delAllUrl = '<?php echo url(lcfirst(request()->controller())."/delAll"); ?>';
     layui.config({
         base: yyadminPath + "/js/"
     })
@@ -108,13 +107,13 @@
             ,cols: [[
               {type:'checkbox'}
               ,{field:'id', width:80, title: 'ID', sort: true}
-              ,{field:'title', width:'30%', title: '标题'}
+              ,{field:'title', width:'30%', title: '标题',templet:tableTool.templet.title}
               ,{field:'', width:120, title: '栏目', sort: true,templet:function(d){return d.arctype.typename}}
               ,{field:'litpic', width:120, title: '缩略图', sort: true,templet:tableTool.templet.images}
               ,{field:'weight', width:80, title: '排序', sort: true,edit:true}
-              ,{field:'pubdate', width:180,title: '更新时间',sort: true,}
+              ,{field:'pubdate', width:180,title: '更新时间',sort: true}
               ,{field:'arcrank', width:120, title: '预览权限', sort: true,templet:tableTool.templet.switch}
-              ,{field:'', width:180, title: '操作',templet:tableTool.templet.operate}
+              ,{field:'', width:180, title: '操作',templet:tableTool.templet.operate,operate:['link'],link: '/view/aid/' }//link+id
             ]]
             ,limit:20
             ,page: true
@@ -140,7 +139,7 @@
                     shade: 0.2,
                     maxmin: true, //开启最大化最小化按钮
                     area: ['85%', '85%'],
-                    content: '<?php echo url(request()->controller()."/addEdit"); ?>?id='+id+'&typeid='+ typeid
+                    content: '<?php echo url("arclist/addEdit"); ?>?id='+id+'&typeid='+ typeid
                 });
               break;
               case 'delAll':
@@ -165,8 +164,6 @@
         tableTool.events.switch ();//开关点击事件
         tableTool.events.rowEdit ();//编辑排序     
         tableTool.events.operate();//操作
-        
-     
   })
 </script>
 

@@ -1,16 +1,11 @@
 {include file="public/header" /}
-<div class="layui-row">
-    <div class="layui-col-md12" style="padding: 15px;">
-        <table id="list" lay-filter="list"></table>
-    </div>
-</div>
+{include file="public/table"/}
 {include file="public/footer" /}
 <script type="text/html" id="replaceprefix">
   <div class="layui-btn-container">
     <button class="layui-btn layui-btn-sm" lay-event="replaceprefix" lay-url="{:url('setsql/importYysql')}">导入数据库</button>
     <button class="layui-btn layui-btn-sm" lay-event="replaceprefix" lay-url="{:url('setsql/replacePrefix')}">表前缀修改</button>
     <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="deletetable" lay-url="{:url('setsql/deleteTable')}">删除</button>
-    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="deleteAll" lay-url="{:url('setsql/deleteAll')}">一键删除多余</button>
   </div>
 </script>
 <script>

@@ -1,4 +1,4 @@
-<?php /*a:4:{s:50:"E:\WWW\tp6dedecms\app\admin\view\config\index.html";i:1635936494;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1635936494;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1635936494;}*/ ?>
+<?php /*a:4:{s:50:"E:\WWW\tp6dedecms\app\admin\view\config\index.html";i:1636281298;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636280202;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636293469;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,10 +10,10 @@
     <!-- 公共样式 -->
     <link rel="stylesheet" href="/yyAdmin/css/common.css">
 </head>
-<body>
+<body style="padding-left: 5px;">
 
-<form class="layui-form" action="" lay-filter="list">
-<div class="layui-row layui-form-list" style="margin-bottom: 50px">
+<form class="layui-form layui-tab-form" action="" lay-filter="list">
+<div class="layui-row" style="margin-bottom: 50px">
     <div class="layui-col-md12">
         <div class="layui-tab" lay-filter="config">
           <ul class="layui-tab-title">
@@ -63,7 +63,7 @@
         </div>
     </div>
 </div> 
- <div class="layui-flex layui-submit" style="margin-bottom: 43px;">
+ <div class="layui-flex layui-submit" style="margin-bottom: 33px;">
     <button class="layui-btn layui-btn-sm layui-submit-btn" lay-submit="" lay-filter="submit">提交</button>
 </div>   
 </form>
@@ -72,23 +72,19 @@
 <script type="text/html" id="toolbar">
   <div class="layui-btn-container">
     <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">删除</button>
   </div>
 </script>
-<script type="text/html" id="operate">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</script>
+
 <script>
     window.formData = <?php echo isset($formData)?(json_encode($formData)):'""'; ?>,
     window.url = window.location.href,//当前URL
     window.yyadminPath ='/yyAdmin'; 
-    window.addEditUrl = '<?php echo url(request()->controller()."/addEdit"); ?>',
-    window.rowEditUrl = '<?php echo url(request()->controller()."/rowEdit"); ?>',
+    window.addEditUrl = '<?php echo url(lcfirst(request()->controller())."/addEdit"); ?>',
+    window.rowEditUrl = '<?php echo url(lcfirst(request()->controller())."/rowEdit"); ?>',
     window.uploadUrl = '<?php echo url("ajax/uploads"); ?>',
-    window.delUrl = '<?php echo url(request()->controller()."/del"); ?>';
+    window.delUrl = '<?php echo url(lcfirst(request()->controller())."/del"); ?>';
+    window.delAllUrl = '<?php echo url(lcfirst(request()->controller())."/delAll"); ?>';
     layui.config({
         base: yyadminPath + "/js/"
     })

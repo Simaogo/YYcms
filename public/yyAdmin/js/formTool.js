@@ -43,13 +43,16 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                 form.on('submit(submit)', function(obj){
                   var data =obj.field;
                   if(!data.file) delete data.file;
-                  console.log(data);
                   $.post(url,data,function(res){
-                      layer.msg(res.msg,{time:600},function(){
+                      if(res.code==0){
+                        layer.msg(res.msg,{time:600},function(){
                             parent.layui.table.reload('list');
                             var index = parent.layer.getFrameIndex(window.name);  
                             parent.layer.close(index);
-                      })
+                        })
+                      }else{
+                            layer.msg(res.msg);
+                      }
                   })
                   return false;
                 });

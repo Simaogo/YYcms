@@ -21,7 +21,6 @@ class Arctype extends \app\common\controller\Backend{
            $list = $ArctypeModel
                    ->withJoin(['Channeltype'=>['typename']])
                    ->select();
-           //$menu = $ArctypeModel->arctypeTree($list);
            $count = $ArctypeModel->count();
            return json(['code'=>0,'msg'=>'success','data'=>$list,'count'=>$count]);
         }

@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Channeltype as ChanneltypeModel;
+use app\common\model\Channeltype as ChanneltypeModel;
 use think\facade\View;
 class Channeltype extends \app\common\controller\Backend{
     public function index(){

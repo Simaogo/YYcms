@@ -24,10 +24,10 @@ class Backend extends \app\BaseController{
        $admin = Session::get('admin');
        $authRule = \app\admin\model\Admintype::where('rank',$admin['usertype'])->value('purviews');
        $controller = request()->controller();
-       if($authRule!='admin_AllowAll' && $controller !='Index' && $controller !='Login'){
+       if(trim($authRule,' ') != 'admin_AllowAll' && $controller != 'Index' && $controller !='Login'){
            $authRule = explode(',', $authRule);
            $href = str_replace('.html','',request()->pathinfo());
-            $authRuleId = \app\admin\model\AuthRule::where('href',$href)->value('id');
+           $authRuleId = \app\admin\model\AuthRule::where('href',$href)->value('id');
             if(!in_array($authRuleId, $authRule)){
                 $this->error('没有权限操作', url('index/home'));
             }
@@ -54,6 +54,13 @@ class Backend extends \app\BaseController{
         }
     }
     
+    public function del(){
+        if(request()->isAjax()){
+            $id = input('id');
+            $this->model::where('id',$id)->delete();
+            return json(['code'=>0,'msg'=>'success']);
+        }
+    }
     public function delAll(){
         if(request()->isAjax()){
             $ids = input('ids');

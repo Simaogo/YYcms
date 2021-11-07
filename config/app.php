@@ -21,7 +21,6 @@ return [
     'domain_bind'      => [],
     // 禁止URL访问的应用列表（自动多应用模式有效）
     'deny_app_list'    => ['common'],
-
     // 异常页面的模板文件
     'exception_tmpl'   => app()->getThinkPath() . 'tpl/think_exception.tpl',
     'dispatch_success_tmpl' => \think\facade\App::getAppPath(). '/common/view/tpl/dispatch_jump.tpl',
@@ -32,6 +31,8 @@ return [
     'show_error_msg'   => true,
     
     'app_trace' =>  true,
+    
+    'url_convert' => false,
     
     'version' => '1.0.1',
     'list_url' => '/list',

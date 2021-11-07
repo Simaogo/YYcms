@@ -23,6 +23,9 @@ class Login extends \app\BaseController{
             if($Admin){
                 if($Admin->pwd !== $pwd)  return json(['code'=>0,'msg'=>'密码错误']);
                  Session::set('admin',$Admin);
+                 $Admin->loginip = \fun\helper\IpHelper::ip();
+                 $Admin->logintime = time();
+                 $Admin->save();
                  return json(['code'=>1,'msg'=>'登录成功','url'=>url('index/index')->build()]);
             } else {
                  return json(['code'=>0,'msg'=>'用户不存在']);

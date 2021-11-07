@@ -61,7 +61,7 @@ class Arclist extends \app\common\controller\Backend{
      */
     public function addEdit(){
         $id = input('id');
-        if(request()->isAjax()){
+        if(request()->isAjax()){ 
             $post = input();
             $post['pubdate'] = $post['pubdate']?strtotime($post['pubdate']):time();
             if(!$post['litpic'] && isset($post['body'])){ //提取内容第一张为缩略图
@@ -95,14 +95,15 @@ class Arclist extends \app\common\controller\Backend{
             } else {
                $data['mainData']['description'] = isset($data['mainData']['description']) && empty($data['mainData']['description']) ? \fun\Process::getplaintextintrofromhtml($data['addtableData']['body']) :$data['mainData']['description'];
                //兼容id自增
-               $last = ArclistModel::order('id desc')->limit(1)->select();
-               $data['mainData']['id'] =($last[0]->id)+1;
+               $last = ArclistModel::order('id desc')->limit(1)->find();
+               $data['mainData']['id'] = $last ? ($last->id)+1 : 1;
                $Arclist = ArclistModel::create($data['mainData']); 
                $data['addtableData']['aid'] = $Arclist->id;
                Db::name($table)->insert($data['addtableData']);
             }
             return json(['code'=>0,'msg'=>'success']);
         }
+        //添加编辑
         $view = [];
         if($id){
             $maininfo = ArclistModel::find($id);
@@ -146,6 +147,19 @@ class Arclist extends \app\common\controller\Backend{
             $addtable = $this->getTable($channel->addtable);
             $addinfo = Db::name($addtable)->where('aid',$id)->delete();//del附表信息
             ArclistModel::destroy($id);
+            return json(['code'=>0,'msg'=>'success']);
+        }
+    }
+    public function delAll(){
+        if(request()->isAjax()){
+            $ids =input('ids');
+            foreach ($ids as $id){
+                $maininfo = ArclistModel::find($id);
+                $channel = ChanneltypeModel::find($maininfo['channel']);//模型
+                $addtable = $this->getTable($channel->addtable);
+                $addinfo = Db::name($addtable)->where('aid',$id)->delete();//del附表信息
+                ArclistModel::destroy($id);
+            }
             return json(['code'=>0,'msg'=>'success']);
         }
     }

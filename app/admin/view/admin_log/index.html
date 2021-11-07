@@ -1,0 +1,40 @@
+{include file="public/header" /}
+{include file="public/table" /}
+{include file="public/footer" /}
+<script>
+     layui.use(['tableTool'], function(){
+      var tableTool = layui.tableTool;
+        tableTool.render({
+          elem: '#list'
+          ,url: url //数据接口
+          ,page: true //开启分页
+           ,toolbar: '#toolbar' 
+           ,defaultToolbar: ['filter', 'exports', 'print', {
+              title: '提示'
+              ,layEvent: 'LAYTABLE_TIPS'
+              ,icon: 'layui-icon-tips'
+            }]
+          ,cols: [[ //表头
+            {type:'checkbox'}      
+            ,{field: 'id', title: 'ID', width:60, sort: true}
+            ,{field:'username', title:'用户',width:100,edit:true}
+            ,{field: 'title', title:'标题', width:100,sort: true,align:'center'}
+            ,{field: 'url', title: 'url', width:250,sort: true,align:'center'}
+            ,{field: 'method', title: 'method', width:120,sort: true,align:'center'}
+            ,{field: 'ip', title: 'ip', width:150,sort: true,align:'center'}
+            ,{field: '', title: '数据', width:200,sort: true,align:'center',templet:function(d){
+                    if(d.post_data && d.post_data!='[]'){
+                        return d.post_data;
+                    }else{
+                        return d.get_data;
+                    }
+            }}
+            ,{field: 'create_time', title: '操作时间', width:250,sort: true,align:'center'}
+            ,{field: '', title: '操作', width:120,align:'center',templet:tableTool.templet.operate}
+          ]]
+        ,limit:15
+        });
+        tableTool.events.operate();
+        tableTool.events.toolbar();
+    });
+</script>

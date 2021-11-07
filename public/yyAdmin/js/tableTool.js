@@ -8,16 +8,32 @@ layui.define(["element", "layer",'table','form'], function (exports) {
             table.render(config)
         },
         templet:{
+            title:function(d){
+                 var field = d.LAY_COL.field,
+                 html ='<a  href="javascript:;" lay-event="edit" >'+d[field]+'</a>';
+                return html;
+            },
             switch: function (d) {
-                var field = d.LAY_COL.field,
+                var config = d.LAY_COL,
+                field = config.field,
                 checked = d[field] == 0 ? 'checked = checked':'',
                 html ='<input type="checkbox" name="'+d.LAY_COL.field+'" lay-skin="switch" lay-filter="switch" lay-text="开启|关闭" ' + checked + ' lay-id="'+ d.id+'">';
                 return html;
             },
             operate: function (d) {
-                var html ='<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>\n\
-                           <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>\n\
-                           <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
+               var config = d.LAY_COL,
+               html = '';
+               if(config.operate){
+                   var operate = config.operate,
+                   len = operate.length;
+                    for (var i = 0; i<len; i++){
+                         if(operate[i] =='link'){ //配置link链接
+                            html = html+ '<a class="layui-btn layui-btn-xs" lay-event="link" target="_blank" href="'+ config.link + d.id+'"><i class="layui-icon layui-icon layui-icon-link"></i></a>' ;
+                         }
+                    }  
+                }
+                html = html+'<a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon layui-icon-edit"></i></a>\n\
+                       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i></a>';
                 return html;
             },
             images:function(d){
@@ -25,6 +41,17 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                 src = d[field] || yyadminPath +'/images/image.gif',
                 html = '<img src="'+ src +'" style="height:20px;cursor: pointer;" lay-event="images" lay-url="">';
                 return html;
+            },
+           ispart: function(d){
+                var ispart;
+                if(d.ispart == 0){
+                    ispart = '列表';
+                }else if(d.ispart == 1){
+                    ispart = '封面';
+                }else{
+                    ispart = '跳转';
+                }
+                return ispart;
             }
         },
         events:{

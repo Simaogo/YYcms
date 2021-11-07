@@ -2,12 +2,15 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Myppttype as MyppttypeModel;
+use app\common\model\Myppttype as MyppttypeModel;
 use app\common\model\Myppt as MypptModel;
 use app\common\controller\Backend;
 use think\facade\View;
 use think\facade\Session;
 class Myppt extends Backend{
+    public function __construct(){
+        $this->model = new MypptModel();
+    }
     public function index(){
         if(request()->isAjax()){
             $data = MypptModel::select()->toArray();         
@@ -41,8 +44,9 @@ class Myppt extends Backend{
      public function del(){
         if(request()->isAjax()){
             $id = input('id');
-            Myppt::where('id',$id)->delete();
+            $this->model::where('aid',$id)->delete();
             return json(['code'=>0,'msg'=>'success']);
         }
     }
+    
 }

@@ -59,10 +59,11 @@ class Template extends Common{
         }
         //模板
         $template = !isset($view["template"]) ? cache('template'):$view["template"];  
+        
         $ispart = !isset($view["ispart"]) ? cache('ispart'):$view["ispart"];  
         $template  = str_replace('{style}/','', $template);
         $template = $this->templateDefault($template,$ispart,$this->view_dir_name);
-        
+        //halt($template);
         $yy = [ 'field' => $view];
         View::assign(['yy'=>$yy]);
         return View::fetch($this->view_dir_name .''.$template);

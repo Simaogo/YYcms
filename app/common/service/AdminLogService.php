@@ -4,9 +4,9 @@
  */
 namespace app\common\service;
 
-use app\backend\controller\auth\Admin;
-use app\backend\model\AdminLog;
-use app\backend\model\AuthRule;
+use app\admin\controller\Admin;
+use app\admin\model\AdminLog;
+use app\admin\model\AuthRule;
 use think\App;
 use think\facade\Request;
 use think\facade\Session;
@@ -48,22 +48,21 @@ class AdminLogService extends AbstractService
         self::$agent =Request::server('HTTP_USER_AGENT');
         self::$module =  app('http')->getName();
         self::$admin_id   = Session::get('admin.id',0);
-        self::$username   = Session::get('admin.username','Unknown');
+        self::$username   = Session::get('admin.userid','Unknown');
     }
     public function save()
     {
-
         $url        = (Request::baseUrl());
         $content    = Request::param();
         self::$controller = Request::controller();
         self::$action = Request::action();
         if (strpos($url, 'enlang') !== false && Request::isAjax()) {
             self::$title = '[切换语言]';
-        }elseif (strpos($url, 'ajax/clearData') !== false && Request::isAjax()) {
+        }elseif (strpos($url, 'index/clear') !== false && Request::isAjax()) {
             self::$title = '[清楚缓存]';
         }elseif (strpos($url, 'login/index') !== false && Request::isAjax()) {
             self::$title = '[登录成功]';
-            self::$username = json_decode(self::$post_data,true)['username'];
+            self::$username = json_decode(self::$post_data,true)['userid'];
         }else{
             //权限
             $auth = AuthRule::column('href','id');
@@ -78,7 +77,7 @@ class AdminLogService extends AbstractService
             }
         }
         //插入数据
-        if (!empty(self::$title) and $content) {
+        if (!empty(self::$title)) {
             AdminLog::create([
                 'title'       => self::$title ? self::$title : '',
                 'admin_id'    => self::$admin_id,

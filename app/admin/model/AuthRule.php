@@ -14,8 +14,8 @@ class AuthRule extends \think\model{
                  $v['level']      = $level + 1;
                  $v['spread']     = true;
                  $v['lefthtml']   = $level ? str_repeat($lefthtml,$level):"";
-                 $v['children']   = $arr = array_merge($arr, self::authRuleTree($list, $lefthtml, $v['id'], $level+1));
-                 $arr[] = $v;
+                 $arr[]           = $v;
+                 $arr             = array_merge($arr, self::authRuleTree($list, $lefthtml, $v['id'], $level+1));
              }
          }
          return $arr;

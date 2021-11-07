@@ -194,11 +194,10 @@ layui.define(["element", "layer"], function (exports) {
                 type: 2,
                 title: '🔑 修改密码',
                 closeBtn: 1,
-                // resize:false,
                 scrollbar: false,
-                area: ['470px', '342px'],
+                area: ['350px', '300px'],
                 shadeClose: true,
-                content: '/admin/admin/addEdit'
+                content: editPasswordUrl
             });
         },
         buildBreadcrumb: function (obj, isLast, html) {
