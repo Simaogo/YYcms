@@ -1,4 +1,4 @@
-<?php /*a:2:{s:49:"E:\WWW\tp6dedecms\app\admin\view\index\index.html";i:1636285911;s:5:"param";i:0;}*/ ?>
+<?php /*a:2:{s:49:"E:\WWW\tp6dedecms\app\admin\view\index\index.html";i:1636453158;s:5:"param";i:0;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -118,7 +118,7 @@
                         <dl class="layui-nav-child">
                             <dd>
                                 <a lay-id="<?php echo url('config/index'); ?>" lay-url="<?php echo url('config/index'); ?>">
-                                    <cite>系统设置</cite>
+                                    <cite>网站设置</cite>
                                 </a>
                             </dd>
                             <dd>
@@ -188,7 +188,7 @@
                             <i class="ri-tools-fill"></i>&emsp;<cite>工具管理</cite>
                         </a>
                          <dl class="layui-nav-child">
-                            <dd><a lay-id="<?php echo url('tool/index'); ?>" lay-url="<?php echo url('tool/index'); ?>"><cite>替换内容</cite></a></dd>
+                            <dd><a lay-id="<?php echo url('tool/index'); ?>" lay-url="<?php echo url('tool/index'); ?>"><cite>模板管理</cite></a></dd>
                             <dd><a lay-id="<?php echo url('setsql/index'); ?>" lay-url="<?php echo url('setsql/index'); ?>"><cite>数据库操作</cite></a></dd>
                          </dl>
                     </li>

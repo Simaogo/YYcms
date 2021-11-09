@@ -50,8 +50,8 @@ class Template extends Common{
             }
             $view = array_merge($typeinfo,$view);
             $view['title']  = $Arctype->typename;
-            $view['typeurl'] = Config::get('app.list_url') . '/tid/' . $Arctype->id;
-            $view['position'] = '<a href="/">首页</a>' . syscfg('cfg_list_symbol') .$Arctype->typename;
+            $view['typeurl'] = url("template/list",["tid"=>$Arctype->id])->build();
+            $view['position'] = '<a href="/">首页</a> '. syscfg('cfg_list_symbol') .' <a href = "'. $view['typeurl'] .'">'. $Arctype->typename.'</a>';
             cache('view_list_'.$typeid,$view);
         }
         if(request()->isPost()){//ajax 加载
@@ -59,11 +59,9 @@ class Template extends Common{
         }
         //模板
         $template = !isset($view["template"]) ? cache('template'):$view["template"];  
-        
         $ispart = !isset($view["ispart"]) ? cache('ispart'):$view["ispart"];  
         $template  = str_replace('{style}/','', $template);
         $template = $this->templateDefault($template,$ispart,$this->view_dir_name);
-        //halt($template);
         $yy = [ 'field' => $view];
         View::assign(['yy'=>$yy]);
         return View::fetch($this->view_dir_name .''.$template);
@@ -77,10 +75,8 @@ class Template extends Common{
         $aid=input('aid');
         $ArchivesModel= new \app\common\model\Arclist();
         $Archives=$ArchivesModel->find($aid);
-        //点击率++
-        $Archives->click=($Archives->click)+1;
-        $Archives->save();
-        $view = cache('view+'.$aid);
+        $view = cache('view_'.$aid);
+
         if(!$view){
             $ArctypeModel = new \app\common\model\Arctype();
             $Arctype = $ArctypeModel->find($Archives->typeid);
@@ -97,20 +93,25 @@ class Template extends Common{
 //                }
 //            }
             $template = $Arctype->temparticle;
+			$typeurl = url("template/list",["tid"=>$Arctype->id])->build();
             $view = [
-                'typeurl'     => Config::get('app.list_url') . '/tid/' . $Arctype->id,
-                'position'    => '<a href="/">首页</a> '. syscfg('cfg_list_symbol') .''. $Arctype->typename
+                'typeurl'     => $typeurl ,
+                'position'    => '<a href="/">首页</a> '. syscfg('cfg_list_symbol') .' <a href = "'. $typeurl .'">'. $Arctype->typename.'</a>'
             ];
             $view = array_merge($typeinfo,$view);
             $view = array_merge($view,$info);
+            
+            $view['imgurls'] = isset($view['imgurls']) && $view['imgurls'] ? \fun\Process::decode_imgurls($addinfo['imgurls']) :'';//解析图集字段
+            if(!is_array($view['imgurls'])) $view['imgurls'] = explode(',',$view['litpic']);
             cache('view_'.$aid,$view); 
-        }
+        }	
         $template= str_replace('{style}/','', $view['temparticle']);
         $template = $this->templateDefault($template,2,$this->view_dir_name);
-        $view['imgurls'] = isset($view['imgurls']) && $view['imgurls'] ? \fun\Process::decode_imgurls($addinfo['imgurls']) :'';//解析图集字段
-        if(!is_array($view['imgurls'])) $view['imgurls'] = explode(',',$view['litpic']);
         $yy = [ 'field' => $view];
         View::assign(['yy'=>$yy]);
+	//点击率++
+        $Archives->click=($Archives->click)+1;
+        $Archives->save();
         return View::fetch($this->view_dir_name .''. $template);
     }
     public function search(){
@@ -199,8 +200,12 @@ class Template extends Common{
             if(file_exists($view_dir_name . '' .$template_default .''.$view_suffix)){ //检测默认模板是否存在
                 return $template_default .''. $view_suffix;
             }else{
-                $template = file_exists($template .'.'. $config_view_suffix) ? $template_default .'.'. $config_view_suffix : $template .'.'.$config_view_suffix;
-                return $template;
+                //手机默认模板不存在,重新判断PC模板是否存在
+                if(file_exists($view_dir_name . $template .'.'. $config_view_suffix)) { 
+                   return $template .'.'. $config_view_suffix;
+                }else{
+                   return  $template_default .'.'.$config_view_suffix;
+                }
             }
         }
         return $template . '' . $view_suffix;

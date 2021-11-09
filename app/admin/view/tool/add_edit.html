@@ -1,15 +1,53 @@
 {include file="public/header" /}
-<pre class="layui-code" lay-skin="notepad">
-    {$filecont}
-</pre>
-<script>
-layui.use('code', function(){
-  
-  layui.code({
-      title: 'JavaScript'
-      ,encode: true
-      ,skin: 'notepad' 
-  });
-});
-</script>
+ <link rel="stylesheet" href="__YYADMIN__/plugins/codemirror-5.63.3/lib/codemirror.css">
+ <link rel="stylesheet" href="__YYADMIN__/plugins/codemirror-5.63.3/theme/monokai.css">
+ <script src="__YYADMIN__/plugins/codemirror-5.63.3/lib/codemirror.js"></script>
+<script src="__YYADMIN__/plugins/codemirror-5.63.3/addon/edit/matchbrackets.js"></script>
+<script src="__YYADMIN__/plugins/codemirror-5.63.3/addon/selection/active-line.js"></script>
+<script src="__YYADMIN__/plugins/codemirror-5.63.3/keymap/sublime.js"></script>
+<script src="__YYADMIN__/plugins/codemirror-5.63.3/mode/javascript/javascript.js"></script>
+<script src="__YYADMIN__/plugins/codemirror-5.63.3/mode/htmlembedded/htmlembedded.js"></script>
+<style>
+    .CodeMirror {
+      overscroll-y: scroll !important;
+      height: auto !important;
+      min-height: 600px
+    }
+</style>
+<form class="layui-form" action="" lay-filter="list" style="margin:0">
+    <div class="layui-row">
+        <div class="layui-block">
+            <textarea type="text" id = "filecontent" name="filecontent" lay-verify="" autocomplete="off" class="layui-textarea" width="100%" style="display:none">{$filecontent}</textarea>
+        </div>
+</div>
+<div class="layui-flex layui-submit">
+    <button class="layui-btn layui-btn-sm layui-submit-btn" lay-submit="" lay-filter="submit">保存</button>
+</div>
+</form>
 {include file="public/footer" /}
+
+<script>
+   var extraKeys = {'Ctrl-Q': 'autocomplete','Ctrl-S':function(){
+           var data = {filecontent:editor.getValue()}
+          layui.$.post(url,data,function(res){
+              layui.layer.msg(res.msg);
+          });
+          return false;
+   }}
+   var editor = CodeMirror.fromTextArea(document.getElementById("filecontent"), {
+        mode: 'javascript', //设置编译器编程语言关联内容，需要引入mode/javascript/javascript.js
+        lineNumbers: true, //显示行号
+        smartIndent: true, //自动缩进是否开启
+        indentUnit: 2, //缩进单位
+        theme: 'monokai', //设置主题
+        styleActiveLine: true, //设置光标所在行高亮，需要引入addon/selection/active-line.js
+        keyMap: 'sublime', // 快捷键，default使用默认快捷键，除此之外包括emacs，sublime，vim快捷键，使用需引入工具,keymap/sublime.js
+        extraKeys:extraKeys //设置快捷键
+     });
+    editor.save();
+    layui.use(['formTool','jquery'], function(){
+       var formTool = layui.formTool,
+       $ = layui.jquery;
+      formTool.events.submit();
+    })
+</script>

@@ -26,6 +26,11 @@ class Tool extends \app\common\controller\Backend{
        }
        return View::fetch();
     }
+    
+    /**
+     * 标签替换
+     * @return type
+     */
     public function replaceTag(){
         if(request()->isAjax()){
             $filename = $this->view_template_path .input('filename');
@@ -157,6 +162,10 @@ class Tool extends \app\common\controller\Backend{
         }
     }
     
+    /**
+     * 内容替换
+     * @return type
+     */
     public function replaceContent(){
         if(request()->isAjax()){
             $filename = $this->view_template_path .input('filename');
@@ -170,10 +179,31 @@ class Tool extends \app\common\controller\Backend{
             return json(['code'=>0,'msg'=>'success','data'=>$filename,'progress'=>input('page').'/'.input('count')]);
         }
     }
+    /**
+     * 编辑
+     * @return type
+     */
     public function addEdit(){
         $filename = $this->view_template_path .input('filename');
+        if(request()->isAjax()){
+             $filename = fopen($filename, "w") or die("Unable to open file!");
+             fwrite($filename, input('filecontent'));
+             return json(['code'=>0,'msg'=>'success']);
+        }
         $str = file_get_contents($filename);
-        View::assign('filecont',$str);
+        View::assign('filecontent',$str);
         return View::fetch();
+    }
+   
+    /**
+     * del
+     * @return type
+     */
+    public function del(){
+        if(request()->isAjax()){
+             $filename = $this->view_template_path .input('filename');
+             unlink($filename);
+             return json(['code'=>0,'msg'=>'success','data'=>$filename,'progress'=>input('page').'/'.input('count'),'page'=>input('page')]);
+        }
     }
 }

@@ -23,10 +23,9 @@ return [
     // 标签库标签结束标记
     'taglib_end'    => '}',
     //模板路径
-    'view_path'=> '../template/'.syscfg("cfg_df_style").'/',
-    
+    'view_path'=> root_path().'/template/'.syscfg("cfg_df_style").'/',
    'tpl_replace_string' => [
-        '__STATIC__' => '/static/admin',
+        '__STATIC__' => '/static',
         '__PUBLIC__'     => '/',
         '__PLUGINS__'     => '/static/plugins',
         '__CDN__'     => '',

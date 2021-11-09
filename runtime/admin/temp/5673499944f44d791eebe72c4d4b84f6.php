@@ -1,4 +1,4 @@
-<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\arclist\add.html";i:1636282581;s:5:"param";s:23:"a:1:{s:2:"id";s:1:"1";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636280202;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636293469;}*/ ?>
+<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\arclist\add.html";i:1636282581;s:5:"param";s:45:"a:2:{s:2:"id";s:1:"0";s:6:"typeid";s:2:"27";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636280202;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636293469;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>

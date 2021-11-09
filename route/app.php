@@ -9,9 +9,7 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 use think\facade\Route;
-#Route::get('list', '\app\index\controller\Template@list');
-#Route::get('view', '\app\index\controller\Template@view');
-Route::get('/admin', function () {
+Route::rule('/admin', function () {
     return 'hello,ThinkPHP6!';
 });
 

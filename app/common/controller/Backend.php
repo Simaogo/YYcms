@@ -21,17 +21,23 @@ class Backend extends \app\BaseController{
             $this->error('登录超时!', url('login/index'));
         }
         //初始化权限
-       $admin = Session::get('admin');
-       $authRule = \app\admin\model\Admintype::where('rank',$admin['usertype'])->value('purviews');
-       $controller = request()->controller();
-       if(trim($authRule,' ') != 'admin_AllowAll' && $controller != 'Index' && $controller !='Login'){
-           $authRule = explode(',', $authRule);
-           $href = str_replace('.html','',request()->pathinfo());
-           $authRuleId = \app\admin\model\AuthRule::where('href',$href)->value('id');
-            if(!in_array($authRuleId, $authRule)){
-                $this->error('没有权限操作', url('index/home'));
-            }
+        $admin = Session::get('admin');
+        if($admin->userid != 'admin'){
+        $authRule = \app\admin\model\Admintype::where('rank',$admin['usertype'])->value('purviews');
+        $controller = request()->controller();
+      
+        if(trim($authRule,' ') != 'admin_AllowAll' && $controller != 'Index' && $controller !='Login'){
+            dump($authRule);
+            $authRule = explode(',', $authRule);
+            
+            $href = str_replace('.html','',request()->pathinfo());
+            $authRuleId = \app\admin\model\AuthRule::where('href',$href)->value('id');
            
+             if(!in_array($authRuleId, $authRule)){
+                 $this->error('没有权限操作', url('index/home'));
+             }
+
+        }
        }
     }
     /**

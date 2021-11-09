@@ -30,3 +30,4 @@ layui-form {padding-bottom: 50px;}
 .layui-upload-list li i{background:none;cursor:pointer;position: absolute;top:0;right:0}
 .layui-upload-list li img{float: left;height: 120px;}
 .layui-table, .layui-table-view{margin-top: 5px;}
+.layui-card:last-child{margin-bottom: 35px;}

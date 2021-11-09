@@ -1,4 +1,4 @@
-<?php /*a:4:{s:51:"E:\WWW\tp6dedecms\app\admin\view\arclist\index.html";i:1636294248;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636280202;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636293469;}*/ ?>
+<?php /*a:4:{s:51:"E:\WWW\tp6dedecms\app\admin\view\arclist\index.html";i:1636348944;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636280202;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636293469;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -113,7 +113,7 @@
               ,{field:'weight', width:80, title: '排序', sort: true,edit:true}
               ,{field:'pubdate', width:180,title: '更新时间',sort: true}
               ,{field:'arcrank', width:120, title: '预览权限', sort: true,templet:tableTool.templet.switch}
-              ,{field:'', width:180, title: '操作',templet:tableTool.templet.operate,operate:['link'],link: '/view/aid/' }//link+id
+              ,{field:'', width:180, title: '操作',templet:tableTool.templet.operate,operate:['link'],link: '/html/view-' }//link+id
             ]]
             ,limit:20
             ,page: true

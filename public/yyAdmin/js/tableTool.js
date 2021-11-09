@@ -15,9 +15,10 @@ layui.define(["element", "layer",'table','form'], function (exports) {
             },
             switch: function (d) {
                 var config = d.LAY_COL,
-                field = config.field,
-                checked = d[field] == 0 ? 'checked = checked':'',
-                html ='<input type="checkbox" name="'+d.LAY_COL.field+'" lay-skin="switch" lay-filter="switch" lay-text="开启|关闭" ' + checked + ' lay-id="'+ d.id+'">';
+                field = config.field;
+                var checked = config['checked']||0;
+                checked = d[field] ==  checked ? 'checked = checked':'';
+                var html ='<input type="checkbox" name="'+d.LAY_COL.field+'" lay-skin="switch" lay-filter="switch" lay-text="开启|关闭" ' + checked + ' lay-id="'+ d.id+'">';
                 return html;
             },
             operate: function (d) {
@@ -125,15 +126,16 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                                layer.close(index);
                             })
                     } else if(obj.event === 'edit'){
-                          var id = data.id||data.aid|data.rank; 
+                          var id = data.id||data.aid||data.rank;
+                          var title = data.filename ? '编辑 ' + data.filename:'编辑';
                           layer.open({
                            type: 2,
-                           title: '编辑',
+                           title: title,
                            shadeClose: true,
                            shade: 0.2,
                            maxmin: true, //开启最大化最小化按钮
                            area: ['85%', '85%'],
-                           content: addEditUrl +'?id='+ id
+                           content: addEditUrl +'?id='+ id +'&filename='+ data.filename //兼容filename
                          });
                     }else if(obj.event === 'images'){
                         var list =  $(this).attr('src');

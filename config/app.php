@@ -34,11 +34,12 @@ return [
     
     'url_convert' => false,
     
-    'version' => '1.0.1',
-    'list_url' => '/list',
-    'view_url' => '/view',
+    //版本号
+    'version' => '1.0.3',
+
     'app_map' => [
         'chinaadmin' => 'admin', // 把admin应用映射为chinaadmin 修改默认admin登录配置
+        'html' => 'index'
      ],
     
 ];

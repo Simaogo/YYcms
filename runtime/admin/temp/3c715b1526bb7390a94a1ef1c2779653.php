@@ -1,4 +1,4 @@
-<?php /*a:5:{s:53:"E:\WWW\tp6dedecms\app\admin\view\auth_rule\index.html";i:1636290703;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636280202;s:50:"E:\WWW\tp6dedecms\app\admin\view\public\table.html";i:1636281698;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636293469;}*/ ?>
+<?php /*a:5:{s:53:"E:\WWW\tp6dedecms\app\admin\view\auth_rule\index.html";i:1636355309;s:5:"param";i:0;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636280202;s:50:"E:\WWW\tp6dedecms\app\admin\view\public\table.html";i:1636281698;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636293469;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,8 +69,8 @@
             ,{field:'href', title:'操作方法',width:150,edit:true}
             
             ,{field:'sort', title:'排序',width:100,edit:true}
-            ,{field:'menu_status', title:'菜单显示',width:100,templet:tableTool.templet.switch}
-            ,{field:'status', title:'状态',width:100,templet:tableTool.templet.switch}
+            ,{field:'menu_status', title:'菜单显示',width:100,templet:tableTool.templet.switch,checked:1}
+            ,{field:'status', title:'状态',width:100,templet:tableTool.templet.switch,checked:1}
             ,{field:'', width:180, title: '操作',templet:tableTool.templet.operate} 
         ]];
         // 表格配置

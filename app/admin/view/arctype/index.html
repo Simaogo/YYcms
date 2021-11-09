@@ -30,7 +30,7 @@
             ,{field:'ispart', title:'属性',sort:true,width:120,align:'center',templet:tableTool.templet.ispart}
             ,{field:'sortrank', title:'排序',width:100,edit:true,align:'center'}
             ,{field:'ishidden', title:'显示',width:100,templet:tableTool.templet.switch,align:'center'}
-            ,{field:'', width:150, title: '操作',templet:tableTool.templet.operate,operate:['link'],link:'/list/tid'}
+            ,{field:'', width:150, title: '操作',templet:tableTool.templet.operate,operate:['link'],link:'/html/list-'}
         ]];
         // 表格配置
         const objTable = {
@@ -120,7 +120,7 @@
             objTable.where = {key:"val"}
             tableTree.reload(objTable, 'list');
         });
-         tableTool.events.switch ();//开关点击事件
+        tableTool.events.switch ();//开关点击事件
         tableTool.events.rowEdit ();//编辑排序     
         tableTool.events.operate();//操作
         tableTool.events.toolbar();//工具头事件
