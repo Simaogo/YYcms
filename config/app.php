@@ -28,14 +28,14 @@ return [
     // 错误显示信息,非调试模式有效
     'error_message'    => '页面错误！请稍后再试～',
     // 显示错误信息
-    'show_error_msg'   => true,
+    'show_error_msg'   => false,
     
-    'app_trace' =>  true,
+    'app_trace' =>  false,
     
     'url_convert' => false,
     
     //版本号
-    'version' => '1.0.3',
+    'version' => '1.0.8',
 
     'app_map' => [
         'chinaadmin' => 'admin', // 把admin应用映射为chinaadmin 修改默认admin登录配置

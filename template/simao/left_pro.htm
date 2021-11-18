@@ -1,0 +1,13 @@
+<div class="clear pro-menu">
+	<div class="p-left w50">
+		<div class="list-title"><h2>{$yy.field.typename}</h2></div>
+		<div class="list-desc">{$yy.field.description}</div>
+	</div>
+	<div class="p-right child-menu w50">
+		<ul>
+			{yycms:channel type='son' currentstyle ='active'}
+			<li class="fl {$field.currentstyle}"><a href="{$field.typeurl}">{$field.typename}</a></li>
+			{/yycms:channel}
+		</ul>
+	</div>
+</div>

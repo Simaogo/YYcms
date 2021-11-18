@@ -10,19 +10,18 @@
                 body {
                     background: url(__YYADMIN__/images/admin-bg.jpg) 0% 0% / cover no-repeat;
                     min-height: 650px;
+                    position: relative;
                 }
               .login-main{
-                  width: 420px;
+                  width: 430px;
                   height: 320px;
                   min-height: 320px;  
                   max-height: 320px;  
                   position: absolute;   
-                  top: -250px;  
-                  left: 0;  
-                  bottom: 0;  
-                  right: 0;  
-                  margin: auto;  
-                  padding: 20px;  
+                  top: 50%;  
+                  left: 50%;   
+                  margin: 200px -180px;  
+                  padding: 25px;  
                   z-index: 130;  
                   border-radius: 8px;  
                   background-color: #fff;  
@@ -39,27 +38,23 @@
  
             .layui-input{
                 border-radius: 5px;
-                width: 300px;
+                width: 280px;
                 height: 40px;
                 font-size: 15px;
             }
-            .layui-form-item{
-                margin-left: -20px;
-            }
             #logoid{ 
-                margin-top: -16px;
-                  padding-left:150px; 
-                  padding-bottom: 15px;
+                
             }
+            .layui-form-label{width:50px;}
+            .layui-flex{width: 190px;}
             .layui-btn{
-                margin-left: -50px;
                 border-radius: 5px;
-                width: 350px;
+                width: 100%;
                 height: 40px;
                 font-size: 15px;
             }
             .verity{
-                width: 120px;
+                width: 150px;
             }
             .font-set{
                 font-size: 13px;
@@ -72,49 +67,45 @@
  
         </style>
     </head>
-    <body>
-        
-            
-                <div class="container">
-                    <div class="layui-row">
-                        <form class="layui-form" action="" method="post">
-                        <div class="layui-col-md9 login-main">
-                            <div class="layui-form-item" style="text-align:center">
-                                <h2 style='paddding:15px;font-size: 20px;'>后台登录</h2>       
-                            </div>
-                          <div class="layui-form-item">
-                            <label class="layui-form-label">用户名</label>
-                            <div class="layui-input-block">
-                              <input type="text" name="userid" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input" value='admin'>
-                            </div>
-                          </div>
-                          <div class="layui-form-item">
-                            <label class="layui-form-label">密   码</label>
-                            <div class="layui-input-inline">
-                              <input type="password" name="pwd" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input" value ="admin">
-                            </div>
-                            <!-- <div class="layui-form-mid layui-word-aux">辅助文字</div> -->
-                          </div>
-                           <div class="layui-form-item">
-                            <label class="layui-form-label">验证码</label>
-                            <div class="layui-input-inline">
-                                <div class ="layui-flex">
-                                    <input type="text" name="verify" required  lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input verity" value="">
-                                    <img  style="height: 38px;margin-left:5px;cursor: pointer" onclick="this.src='{:captcha_src()}?'+Math.random()" src="{:captcha_src()}" alt="captcha" id="captcha">
-                                </div>
-                            </div>
-
-                          </div>
-                          <div class="layui-form-item">
-                            <div class="layui-input-block">
-                              <button class="layui-btn" lay-submit lay-filter="login">登陆</button>         
-                            </div>
-                          </div>
-                        </div>
-                      </form>
-    
+    <body> 
+        <div class="layui-container">
+            <div class="layui-row">
+                <form class="login-form layui-form" action="" method="post">
+                <div class="layui-col-md6 login-main">
+                    <div class="layui-form-item" style="text-align:center">
+                        <h2 style='paddding:25px;font-size: 20px;'>后台登录</h2>       
                     </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="userid" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input" value='admin'>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">密   码</label>
+                    <div class="layui-input-inline">
+                      <input type="password" name="pwd" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input" value ="admin">
+                    </div>
+                    <!-- <div class="layui-form-mid layui-word-aux">辅助文字</div> -->
+                  </div>
+                   <div class="layui-form-item">
+                    <label class="layui-form-label">验证码</label>
+                    <div class="layui-input-inline">
+                        <div class ="layui-flex">
+                            <input type="text" name="verify" required  lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input verity" value="">
+                            <img  style="height: 38px;margin-left:5px;cursor: pointer" onclick="this.src='{:captcha_src()}?'+Math.random()" src="{:captcha_src()}" alt="captcha" id="captcha">
+                        </div>
+                    </div>
+
+                  </div>
+                  <div class="layui-form-item" style="margin: 5px auto;text-align: center;padding:0 25px">
+                    <button class="layui-btn" lay-submit lay-filter="login">登陆</button>         
+                  </div>
                 </div>
+              </form>
+
+            </div>
+        </div>
         <script type="text/javascript" src="__YYADMIN__/layui/layui.js"></script>
         <script>
             layui.use(['form', 'layedit', 'laydate'], function(){

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>{$yy.field.title}_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{$yy.field.description}" />
+    <link rel="stylesheet" href="/skin/css/main.css"/>
+    <link rel="stylesheet" href="/skin/css/media.css"/>
+    <link rel="stylesheet" href="/skin/css/swiper-3.4.2.min.css"/>
+    <script src="/skin/js/jquery-2.1.1.js"></script>
+    <script src="/skin/js/swiper-3.4.2.min.js"></script>
+    <script src="/skin/js/fastclick.js"></script>
+    <!--[if IE]>
+    <script src="/skin/js/html5shiv.min.js"></script>
+    <script src="/skin/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/skin/js/main.js"></script>
+</head>
+<body>
+{include file="head"/}
+<script type="text/javascript">
+    var img1='<meta content="telephone=no" name="format-detection">';
+    $('head').append(img1);
+</script><div class="ditu">
+	<div id="container">
+	</div>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=gs0ZjBjw4GO673KUlMpPcnj23V2QpRfw"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+	<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css"/>
+	<script type="text/javascript">
+		var ww=290;
+		var hh=105;
+		if($(window).width()<751){
+			ww=200;
+			hh=70;
+		}
+		var map = new BMap.Map('container');
+		var poi = new BMap.Point({:syscfg('cfg_zuobiao')});
+		map.centerAndZoom(poi, 14);
+		map.enableScrollWheelZoom();
+		var content = '<div style="margin:0;line-height:20px;padding:2px;">' +
+						'' +
+						'地址：{:syscfg('cfg_add')}	<br/>电话：{:syscfg('cfg_tel')}<br/>手机号：{:syscfg('cfg_phone')}<br/>QQ号码：{:syscfg('cfg_qq')}' + '</div>';
+		var searchInfoWindow = null;
+		searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+			title: " {:syscfg('cfg_gsmc')}  ",      //标题
+			width: ww,             //宽度
+			height: hh,              //高度
+			panel: "panel",         //检索结果面板
+			enableAutoPan: true,     //自动平移
+			searchTypes: [
+					BMAPLIB_TAB_SEARCH,   //周边检索
+					BMAPLIB_TAB_TO_HERE,  //到这里去
+					BMAPLIB_TAB_FROM_HERE //从这里出发
+			]
+		});
+		var marker = new BMap.Marker(poi); //创建marker对象
+		marker.enableDragging(); //marker可拖拽
+		marker.addEventListener("click", function (e) {
+			searchInfoWindow.open(marker);
+		})
+		searchInfoWindow.open(marker);
+		map.addOverlay(marker); //在地图中添加marker
+	</script>
+</div>
+<div class="ditu-bot">
+	<div class="w1388">
+		<div class="map-lxwm">
+			<div class="lxwm-tou">
+				<b>{$field.typename}</b><span>{$field.typenameen}</span>
+			</div>
+			<div class="contact-bot clear">
+				{$yy.field.content|raw}
+			</div>
+		</div>
+	</div>
+</div>
+  {include file="footer"/}
+</body>
+<script src="/skin/js/countup.js"></script>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>{$yy.field.title}_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{$yy.field.description}" />
+    <link rel="stylesheet" href="/skin/css/main.css"/>
+    <link rel="stylesheet" href="/skin/css/media.css"/>
+    <link rel="stylesheet" href="/skin/css/swiper-3.4.2.min.css"/>
+    <script src="/skin/js/jquery-2.1.1.js"></script>
+    <script src="/skin/js/swiper-3.4.2.min.js"></script>
+    <script src="/skin/js/fastclick.js"></script>
+    <!--[if IE]>
+    <script src="/skin/js/html5shiv.min.js"></script>
+    <script src="/skin/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/skin/js/main.js"></script>
+</head>
+<body>
+{include file="head"/}
+<div class="ban img100">
+    <div class="pc-show"><img src="/skin/images/banner-ny.jpg"/></div>
+    <div class="phone-show"><img src="/skin/images/banner-ny-wap.jpg"/></div>
+</div>
+<div class="position">
+    <div class="w1388">
+        <div class="gk-title">
+            <h2><i><img src="/skin/images/h2-1.png"/></i>{$yy.field.typename}</h2>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var img1='<meta content="telephone=no" name="format-detection">';
+    $('head').append(img1);
+</script><div class="contentbox">
+    <div class="w1388 relative">
+        {include file="left"/}        <div class="box-right">
+            <div class="title2 clear">
+                <h4 class="fl"><img src="/skin/images/about-icon.png"/>{$field.typename}</h4>
+                <span class="fr">{$field.typenameen}</span>
+            </div>
+			<div class="pc-slide">
+				<div class="view history-top">
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+							{yycms:list pagesize ='99' orderby='id' orderway='asc'}
+							<div class="swiper-slide">
+								<div class="history-year">
+									<div class="table">
+										<div class="table-cell">
+											<img src="{$field.litpic}" alt="{$field.title}"/>
+										</div>
+									</div>
+								</div>
+								<div class="history-con">
+									<div class="table">
+										<div class="table-cell">
+											<div class="history-txt">
+												<p>
+											{$field.description}…
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{/yycms:list}
+
+						</div>
+					</div>
+				</div>
+				<div class="history-bot relative">
+					<div class="preview relative">
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+							{yycms:list pagesize ='99' orderby='id' orderway='asc'}
+							<div class="swiper-slide [field:global name=autoindex runphp="yes"]if(@me==1)@me="active-nav";else @me="";[/field:global]">
+									<div class="his-dots">
+									</div>
+									<div class="his-line">
+									</div>
+									<div class="his-nian">
+										{$field.title}
+									</div>
+								</div>
+								{/yycms:list}
+
+							</div>
+						</div>
+					</div>
+					<div class="his-btn">
+						<a class="arrow-left" href="javascript:;"></a>
+						<a class="arrow-right" href="javascript:;"></a>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+  {include file="footer"/}
+</body>
+<script src="/skin/js/countup.js"></script>
+<script>
+    var viewSwiper = new Swiper('.view .swiper-container', {
+        effect : 'fade',
+        fade: {
+            crossFade: true
+        },
+        onSlideChangeStart: function() {
+            updateNavPosition()
+        }
+    });
+    $('.view .arrow-left,.history-bot .arrow-left').on('click', function(e) {
+        e.preventDefault();
+        if (viewSwiper.activeIndex == 0) {
+            viewSwiper.slideTo(viewSwiper.slides.length - 1, 1000);
+            return
+        }
+        viewSwiper.slidePrev()
+    });
+    $('.view .arrow-right,.history-bot .arrow-right').on('click', function(e) {
+        e.preventDefault();
+        if (viewSwiper.activeIndex == viewSwiper.slides.length - 1) {
+            viewSwiper.slideTo(0, 1000);
+            return
+        }
+        viewSwiper.slideNext()
+    });
+    var previewSwiper = new Swiper('.preview .swiper-container', {
+        slidesPerView: 'auto',
+        allowTouchMove: false,
+        onTap: function() {
+            viewSwiper.slideTo(previewSwiper.clickedIndex)
+        }
+    });
+    function updateNavPosition() {
+        $('.preview .active-nav').removeClass('active-nav');
+        var activeNav = $('.preview .swiper-slide').eq(viewSwiper.activeIndex).addClass('active-nav');
+        if (!activeNav.hasClass('swiper-slide-visible')) {
+            if (activeNav.index() > previewSwiper.activeIndex) {
+                var thumbsPerNav = Math.floor(previewSwiper.width / activeNav.width()) - 1;
+                previewSwiper.slideTo(activeNav.index() - thumbsPerNav)
+            } else {
+                previewSwiper.slideTo(activeNav.index())
+            }
+        }
+    }
+</script>
+</html>

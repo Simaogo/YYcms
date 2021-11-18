@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>搜索页_{:syscfg('cfg_webname')}</title>
+<meta name="keywords" content="{$yy.field.keywords}" />
+<meta name="description" content="{$yy.field.description}" />
+    <link rel="stylesheet" href="/skin/css/main.css"/>
+    <link rel="stylesheet" href="/skin/css/media.css"/>
+    <link rel="stylesheet" href="/skin/css/swiper-3.4.2.min.css"/>
+    <script src="/skin/js/jquery-2.1.1.js"></script>
+    <script src="/skin/js/swiper-3.4.2.min.js"></script>
+    <script src="/skin/js/fastclick.js"></script>
+    <!--[if IE]>
+    <script src="/skin/js/html5shiv.min.js"></script>
+    <script src="/skin/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/skin/js/main.js"></script>
+</head>
+<body>
+{include file="head"/}
+<div class="ban img100">
+    <div class="pc-show"><img src="/skin/images/banner-ny.jpg"/></div>
+    <div class="phone-show"><img src="/skin/images/banner-ny-wap.jpg"/></div>
+</div>
+<div class="position">
+    <div class="w1388">
+        <div class="gk-title">
+            <h2><i><img src="/skin/images/h2-1.png"/></i>搜索页</h2>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var img1='<meta content="telephone=no" name="format-detection">';
+    $('head').append(img1);
+</script><div class="contentbox">
+    <div class="w1388 relative">
+        {include file="left"/}        <div class="box-right">
+            <div class="title2 clear">
+                <h4 class="fl"><img src="/skin/images/new-icon.png"/>搜索页</h4>
+               <div class="fr ny-title-r"><a href='/'>主页</a> > 搜索 <strong>{:input('q')}</strong> 的结果</div>
+            </div>
+				<ul class="xw-list clear margin-t50">
+				{yycms:list pagesize ='10'}<li class="imgscale">
+					<a class="relative" href="{$field.arcurl}">
+					<div class="img100">
+						<img src="{$field.litpic}"/>
+					</div>
+					<div class="xw-con">
+						<div class="table">
+							<div class="table-cell">
+								<div class="xw-txt">
+									<h4>{$field.title}</h4>
+									<span>{$field.pubdate}</span>
+									<p>
+									{$field.description}...
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					</a>
+					</li>{/yycms:list}
+				</ul>
+			<div class="page text-center margin-top50">
+			     {yycms:pagelist listitem="index,end,pre,next,pageno" listsize="1"/}
+
+			</div>
+        </div>
+    </div>
+</div>
+  {include file="footer"/}
+</body>
+<script src="/skin/js/countup.js"></script>
+</html>

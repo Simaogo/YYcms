@@ -1,0 +1,4 @@
+<?php
+//000000000000
+ exit();?>
+a:1:{i:0;a:32:{s:2:"id";i:2;s:4:"reid";i:0;s:5:"topid";i:0;s:8:"sortrank";i:50;s:8:"typename";s:12:"产品中心";s:7:"typedir";s:0:"";s:9:"isdefault";i:0;s:11:"defaultname";s:10:"index.html";s:6:"issend";i:0;s:11:"channeltype";i:2;s:7:"maxpage";i:-1;s:6:"ispart";i:0;s:6:"corank";i:0;s:9:"tempindex";s:17:"index_article.htm";s:8:"templist";s:14:"list_image.htm";s:11:"temparticle";s:17:"article_image.htm";s:8:"namerule";s:0:"";s:9:"namerule2";s:0:"";s:7:"modname";s:0:"";s:11:"description";s:123:"本公司拥有完整、科学的质量管理体系。我们的诚信、实力和产品质量获得业界的广泛认可。";s:8:"keywords";s:0:"";s:8:"seotitle";s:0:"";s:8:"moresite";i:0;s:8:"sitepath";s:0:"";s:7:"siteurl";s:0:"";s:8:"ishidden";i:0;s:5:"cross";i:0;s:7:"crossid";N;s:7:"content";N;s:10:"smalltypes";N;s:10:"typenameen";s:0:"";s:7:"typeimg";s:28:"/skin/images/list-banner.jpg";}}

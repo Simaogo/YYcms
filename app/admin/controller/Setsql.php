@@ -21,7 +21,7 @@ class Setsql extends \app\common\controller\Backend{
     
     public function importYysql(){
         if(request()->isAjax()){
-            $sqlFile = root_path().'yyadmin.sql'; //导入YYADMIN数据库
+            $sqlFile = root_path().'upgrade.sql'; //导入YYADMIN数据库
             importSqlData($sqlFile);
             return json(['code'=>0,'msg'=>'success']);
         }
@@ -54,7 +54,24 @@ class Setsql extends \app\common\controller\Backend{
      */
     public function deleteAll(){
         if(request()->isAjax()){
-            $tableArr = ['_sysconfig','_diyforms','_mytag','_myppttype','_myppt','_admin','_admintype','_archives','_arctype','_channeltype','_flink','_flinktype','_uploads','_addonarticle','_addonimages'];
+            $tableArr = [
+                '_sysconfig',
+                '_diyforms',
+                '_mytag',
+                '_myppttype',
+                '_myppt',
+                '_admin',
+                '_admintype',
+                '_archives',
+                '_arctype',
+                '_channeltype',
+                '_flink',
+                '_flinktype',
+                '_uploads',
+                '_addonarticle',
+                '_admin_log',
+                '_auth_rule'
+                ];
             //模型表单
             $addtable =\app\common\model\Channeltype::field('addtable')->select()->toArray();
             $addtable = trim(array_reduce($addtable, function($carry, $item){

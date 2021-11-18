@@ -274,7 +274,7 @@ if (!function_exists('timeAgo')) {
                     continue;
                 $sqlLine .= $line;
                 if (substr(trim($line), -1, 1) == ';' and $line != 'COMMIT;') {
-                    $sqlLine = str_ireplace('fun_', config('database.connections.mysql.prefix'), $sqlLine);
+                    $sqlLine = str_ireplace('yy_', config('database.connections.mysql.prefix'), $sqlLine);
                     $sqlLine = str_ireplace('__PREFIX__', config('database.connections.mysql.prefix'), $sqlLine);
                     $sqlLine = str_ireplace('INSERT INTO ', 'INSERT IGNORE INTO ', $sqlLine);
                     try {

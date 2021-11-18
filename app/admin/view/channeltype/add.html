@@ -35,6 +35,13 @@
               </div>
             </div>
           </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">图集开启</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="isimage" lay-skin="primary" title="启用" value="1" >
+                <input type="radio" name="isimage" lay-skin="primary" title="关闭" value="0" checked>
+          </div>
+         </div>
          <div class="layui-form-item">
             <label class="layui-form-label">字段</label>
             <div class="layui-input-block">
@@ -44,9 +51,10 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">字段设置</label>
             <div class="layui-input-block">
-              <textarea placeholder="请输入字段设置" class="layui-textarea" name="fieldset"></textarea>
+              <textarea placeholder='请输入字段设置格式如下(json_encode之后的格式)：[{"name":"name","type":"varchar","itemname":"姓名"},{"name":"tel","type":"char","itemname":"电话"},{"name":"content","type":"text","itemname":"内容"}]' class="layui-textarea" name="fieldset"></textarea>
             </div>
-          </div>
+         </div>
+        
     </div>
     <div class="layui-flex layui-submit">
         <button class="layui-btn layui-btn-sm layui-submit-btn" lay-submit="" lay-filter="submit">提交</button>

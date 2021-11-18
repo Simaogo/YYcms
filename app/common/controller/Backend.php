@@ -5,6 +5,7 @@ namespace app\common\controller;
 use think\facade\Session;
 use think\App;
 use app\common\controller\Jump;
+use think\facade\Db;
 class Backend extends \app\BaseController{
     
     use Jump;
@@ -77,5 +78,49 @@ class Backend extends \app\BaseController{
                 return json(['code'=>0,'msg'=>'error']);
             } 
         }
+    }
+    
+    /**
+     * 检测数据表是否在字段,没有则添加字段
+     * @param type $table 表名
+     * @param type $field 字段名
+     * @param type $type  类型
+     * @param type $default  默认值
+     * @param type $length  长度
+     */
+    public function isHasField($tableName, $field, $type ='VARCHAR', $length = 10, $default ='NULL'){
+         $prefix = \think\facade\Config::get('database.connections.mysql.prefix');
+         $table = $prefix .'' .str_replace($prefix,'', $tableName); //统一表前缀
+         $result = Db::query('show tables like "'.$table.'"');
+         if(!$result){
+            $sql ='CREATE TABLE IF NOT EXISTS `'.$table.'`(
+               `id` INT UNSIGNED AUTO_INCREMENT,
+               `create_time` INT(10) NOT NULL,
+               `'.$field.'` '.$type.'('.$length.') '.$default.',
+               `update_time` INT(10) NOT NULL,
+               PRIMARY KEY ( `id` )
+            )ENGINE = InnoDB DEFAULT CHARSET=utf8;';
+            Db::query($sql);
+         }else{
+            $sql = 'show full columns from `'.$table.'`';
+            $tableParam = Db::query($sql);
+            $fieldsetStr = trim(array_reduce($tableParam, function($carry, $item){
+                  return $carry . ','.$item['Field'];
+             }), ',');
+            $fieldset = explode(',',$fieldsetStr);
+            if(!in_array($field, $fieldset)){
+                $sql = 'ALTER TABLE '.$table.' ADD '.$field.' '.$type.'('.$length.')';
+            } else {
+                 $sql = 'ALTER TABLE '.$table.' modify column '.$field.' '.$type.'('.$length.')';  //修改类型
+            }
+            Db::query($sql);
+//            if($type != 'text'){
+//                $sql = 'alter table '.$table.' alter column '.$field.' drop default';
+//                Db::query($sql);
+//                $sql = 'ALTER TABLE '.$table.' alter column '.$field.' set default "'.$default.'"';  //设置默认
+//                Db::query($sql);
+//            }
+        }
+        return  true;
     }
 }

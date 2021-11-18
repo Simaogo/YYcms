@@ -36,7 +36,7 @@ return [
             // 数据库编码默认采用utf8
             'charset'         => env('database.charset', 'utf8'),
             // 数据库表前缀
-            'prefix'          => env('database.prefix', 'dede_'),
+            'prefix'          => env('database.prefix', 'yy_'),
 
             // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
             'deploy'          => 0,
@@ -51,7 +51,7 @@ return [
             // 是否需要断线重连
             'break_reconnect' => false,
             // 监听SQL
-            'trigger_sql'     => env('app_debug', true),
+            'trigger_sql'     => env('app_debug', false),
             // 开启字段缓存
             'fields_cache'    => false,
         ],

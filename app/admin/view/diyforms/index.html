@@ -17,16 +17,17 @@
             }]
           ,cols: [[ //表头
             {type:'checkbox'}      
-            ,{field: 'rank', title: 'ID', width:80, sort: true}
-            ,{field: 'name', title: '在线留言', width:100,sort: true,align:'center'}
-            ,{field: 'posttemplate', title: 'posttemplate', width:150,sort: true,align:'center'}
-            ,{field: 'viewtemplate', title: 'viewtemplate', width:150,sort: true,align:'center'}
-            ,{field: 'listtemplate', title: 'listtemplate', width:150,sort: true,align:'center'}
+            ,{field: 'diyid', title: 'ID', width:80, sort: true}
+            ,{field: 'name', title: '名称', width:100,sort: true,align:'center'}
+//            ,{field: 'posttemplate', title: 'posttemplate', width:150,sort: true,align:'center'}
+//            ,{field: 'viewtemplate', title: 'viewtemplate', width:150,sort: true,align:'center'}
+//            ,{field: 'listtemplate', title: 'listtemplate', width:150,sort: true,align:'center'}
             ,{field: 'table', title: '数据库表名', width:150,sort: true,align:'center'}
-            ,{field: 'data', title: '数据列表', width:'25%',sort: true,align:'center'}
-            ,{field: '', title: '操作', width:'25%',align:'center',templet:tableTool.templet.operate}
+            ,{field: 'data', title: '数据列表', width:450,sort: true,align:'center'}
+            ,{field: '', title: '操作', width:150,align:'center',templet:tableTool.templet.operate,operate:['table'],url:'{:url("diyforms/diyData")}'}
           ]]
         });
         tableTool.events.operate();//操作事件
+        tableTool.events.toolbar();//工具条事件
     });
 </script>

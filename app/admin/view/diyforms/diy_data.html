@@ -1,0 +1,32 @@
+{include file="public/header" /}
+<style>
+    .layui-table-cell{height:auto;}
+</style>
+{include file="public/table"/}
+{include file="public/footer" /}
+<script>
+     layui.use(['tableTool'], function(){
+      var tableTool = layui.tableTool;
+        tableTool.render({
+          elem: '#list'
+          ,height: '800'
+          ,url: url //数据接口
+          ,page: false //开启分页
+           ,toolbar: '#toolbar' 
+           ,defaultToolbar: ['filter', 'exports', 'print', {
+              title: '提示'
+              ,layEvent: 'LAYTABLE_TIPS'
+              ,icon: 'layui-icon-tips'
+            }]
+          ,cols: [[ //表头
+            {type:'checkbox'}      
+            ,{field: 'id', title: 'ID', width:80, sort: true}
+            ,{field: 'data', title: '数据列表', width:450,sort: true,align:'left'}
+            ,{field: 'create_time', title: '创建时间', width:180,sort: true,align:'center'}
+            ,{field: '', title: '操作', width:150,align:'center',templet:tableTool.templet.operate}
+          ]]
+        });
+       // tableTool.events.operate();//操作事件
+       // tableTool.events.toolbar();//工具条事件
+    });
+</script>

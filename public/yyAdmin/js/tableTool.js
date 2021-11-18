@@ -31,6 +31,9 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                          if(operate[i] =='link'){ //配置link链接
                             html = html+ '<a class="layui-btn layui-btn-xs" lay-event="link" target="_blank" href="'+ config.link + d.id+'"><i class="layui-icon layui-icon layui-icon-link"></i></a>' ;
                          }
+                         if(operate[i] =='table'){ //数据表格
+                            html = html+ '<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="table" lay-url="'+config.url+'"><i class="layui-icon layui-icon layui-icon-group"></i></a>' ;
+                         }
                     }  
                 }
                 html = html+'<a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon layui-icon-edit"></i></a>\n\
@@ -126,8 +129,9 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                                layer.close(index);
                             })
                     } else if(obj.event === 'edit'){
-                          var id = data.id||data.aid||data.rank;
+                          var id = data.id||data.aid||data.rank||data.diyid;
                           var title = data.filename ? '编辑 ' + data.filename:'编辑';
+                          var filename = data.filename ? '&filename='+ data.filename:'';
                           layer.open({
                            type: 2,
                            title: title,
@@ -135,7 +139,7 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                            shade: 0.2,
                            maxmin: true, //开启最大化最小化按钮
                            area: ['85%', '85%'],
-                           content: addEditUrl +'?id='+ id +'&filename='+ data.filename //兼容filename
+                           content: addEditUrl +'?id='+ id + filename //兼容filename
                          });
                     }else if(obj.event === 'images'){
                         var list =  $(this).attr('src');
@@ -150,6 +154,20 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                             ,anim: 5 
                       });
                       return false;
+                    }else{
+                        var id = data.id||data.aid||data.rank||data.diyid;
+                        var toUrl = $(this).attr('lay-url');
+                          var title = '列表';
+                          var filename = data.filename ? '&filename='+ data.filename:'';
+                          layer.open({
+                           type: 2,
+                           title: title,
+                           shadeClose: true,
+                           shade: 0.2,
+                           maxmin: true, //开启最大化最小化按钮
+                           area: ['85%', '85%'],
+                           content: toUrl+'?id='+id //
+                         });
                     }
                 });
             },
@@ -174,7 +192,6 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                           break;
                           case 'delAll':
                             var data = checkStatus.data;
-                            console.log(checkStatus.data);
                             var len = data.length;
                             var ids = [];
                             for(var i = 0; i < len; i++){

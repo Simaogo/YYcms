@@ -51,17 +51,16 @@ class Template extends Common{
             $view = array_merge($typeinfo,$view);
             $view['title']  = $Arctype->typename;
             $view['typeurl'] = url("template/list",["tid"=>$Arctype->id])->build();
-            $view['position'] = '<a href="/">首页</a> '. syscfg('cfg_list_symbol') .' <a href = "'. $view['typeurl'] .'">'. $Arctype->typename.'</a>';
+            $view['position'] = $Arctype->position($Arctype::select(),$Arctype->id);
+            $view["ispart"] = $Arctype->ispart;
             cache('view_list_'.$typeid,$view);
         }
         if(request()->isPost()){//ajax 加载
              return json(['list'=>$view['list'],'page'=>$pagesize/$row]);
         }
         //模板
-        $template = !isset($view["template"]) ? cache('template'):$view["template"];  
-        $ispart = !isset($view["ispart"]) ? cache('ispart'):$view["ispart"];  
-        $template  = str_replace('{style}/','', $template);
-        $template = $this->templateDefault($template,$ispart,$this->view_dir_name);
+        $template  = str_replace('{style}/','', $view["template"]);
+        $template = $this->templateDefault($template,$view['ispart'],$this->view_dir_name);
         $yy = [ 'field' => $view];
         View::assign(['yy'=>$yy]);
         return View::fetch($this->view_dir_name .''.$template);
@@ -76,7 +75,6 @@ class Template extends Common{
         $ArchivesModel= new \app\common\model\Arclist();
         $Archives=$ArchivesModel->find($aid);
         $view = cache('view_'.$aid);
-
         if(!$view){
             $ArctypeModel = new \app\common\model\Arctype();
             $Arctype = $ArctypeModel->find($Archives->typeid);
@@ -84,25 +82,19 @@ class Template extends Common{
             $channeltypeModel = new \app\common\model\Channeltype();
             $channeltype=$channeltypeModel->find($Arctype->channeltype);
             $table = $this->getTable($channeltype->addtable);
-            $addinfo=Db::name($table)->where('aid',$aid)->find();
+            $addinfo = Db::name($table)->where('aid',$aid)->find();
             $info = is_array($addinfo) ? array_merge($addinfo,$Archives->toArray()):$Archives->toArray();
             $info['body'] = isset($info['body']) ? $info['body'] :'';//兼容body 为空
-//            foreach ($info as $key=>$val){
-//                if($key=='litpic'){
-//                     $info[$key]= explode(',', $val);
-//                }
-//            }
             $template = $Arctype->temparticle;
-			$typeurl = url("template/list",["tid"=>$Arctype->id])->build();
+            $typeurl = url("template/list",["tid"=>$Arctype->id])->build();
             $view = [
                 'typeurl'     => $typeurl ,
-                'position'    => '<a href="/">首页</a> '. syscfg('cfg_list_symbol') .' <a href = "'. $typeurl .'">'. $Arctype->typename.'</a>'
+                'position'    => $Arctype->position($ArctypeModel::select(),$Arctype->id)
             ];
             $view = array_merge($typeinfo,$view);
             $view = array_merge($view,$info);
-            
-            $view['imgurls'] = isset($view['imgurls']) && $view['imgurls'] ? \fun\Process::decode_imgurls($addinfo['imgurls']) :'';//解析图集字段
-            if(!is_array($view['imgurls'])) $view['imgurls'] = explode(',',$view['litpic']);
+            $view['imgurls'] = isset($view['imgurls']) && $view['imgurls'] ? \fun\Process::decode_imgurls($addinfo['imgurls']) :explode(',',$view['litpic']);//解析图集字段
+            if(!is_array($view['imgurls'])) $view['imgurls'] = explode(',',$view['imgurls']);
             cache('view_'.$aid,$view); 
         }	
         $template= str_replace('{style}/','', $view['temparticle']);
@@ -111,7 +103,7 @@ class Template extends Common{
         View::assign(['yy'=>$yy]);
 	//点击率++
         $Archives->click=($Archives->click)+1;
-        $Archives->save();
+         $Archives->isAutoWriteTimestamp(false)->save();
         return View::fetch($this->view_dir_name .''. $template);
     }
     public function search(){
@@ -130,18 +122,24 @@ class Template extends Common{
     public function message(){
         if(request()->isPost()){
             $post = input();
-            
             $diyid = $post['diyid'];
             if(!$diyid) $this->error ('error');
-            
             $Diyforms = \app\common\model\Diyforms::where(['diyid'=>$diyid])->find();
-            $table = trim(strstr($Diyforms->table,'_',0),'_');
-            unset($post['action']);
-            unset($post['diyid']);
-            unset($post['do']);
-            unset($post['dede_fields']);
-            unset($post['dede_fieldshash']);
-            if(Db::name($table)->save($post)){
+            $prefix = \think\facade\Config::get('database.connections.mysql.prefix');
+            $table = str_replace($prefix,'', $Diyforms->table);
+            $sql = 'show full columns from `'.$prefix.''.$table.'`';
+            $tableParam = Db::query($sql);
+            $data = [];
+            foreach ($tableParam as $key =>$val){
+                $name = $val['Field'];
+                if($name == 'create_time'){
+                    $data[$name] = time();
+                } else {
+                    $data[$name] = isset($post[$name]) && $post[$name] ? $post[$name] :'';
+                }
+            }
+            unset($data['id']);
+            if(Db::name($table)->save($data)){
                 $this->success('提交成功');
             } else {
                 $this->error('提交失败');
@@ -149,7 +147,7 @@ class Template extends Common{
         }
     }
     public function siteMap(){
-         $template = 'sitemap';
+        $template = 'sitemap';
         if(isMobile()){
             $template = 'sitemap_m';
             if(!file_exists(Config::get('view.view_path').''.$template .'.'.Config::get('view.view_suffix'))){

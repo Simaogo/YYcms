@@ -67,18 +67,19 @@ class Arclist extends \app\common\controller\Backend{
             if(!$post['litpic'] && isset($post['body'])){ //提取内容第一张为缩略图
                 $post['litpic'] = $this->get_html_first_imgurl ($post['body'])? $this->get_html_first_imgurl ($post['body']):'';
             }
+			
             if($post['litpic']){
-                if(isset($post['flag'])&&$post['flag']){
-                    $post['flag'] = array_search('p',$post['flag']) == false ? array_push($post['flag'],'p'):$post['flag'];
+                if(isset($post['flag']) && $post['flag']){
+                    $post['flag'][] ='p';
                 } else {
-                    $post['flag'] =['p'];
+                    $post['flag'] ='p';
                 }
             }
             $post['click'] = isset($post['click']) && empty($post['click']) ? rand(50, 500):$post['click'];
             unset($post['tags']);////////////等完善!!!!
             unset($post['file']);
             //flag字段降维
-            if(isset($post['flag'])&&$post['flag']){
+            if(isset($post['flag']) && is_array($post['flag'])){
                 $post['flag'] = trim(array_reduce($post['flag'], function($carry, $item){
                     return $carry . ','.$item;
                 }), ',');
@@ -128,7 +129,7 @@ class Arclist extends \app\common\controller\Backend{
             $channeltype = 1;
 	}
         $Channel = ChanneltypeModel::find($channeltype);//模型
-        $view['fieldset'] = $Channel->fieldset ?$this->decodeFileset($Channel->fieldset):'';//自定义字段
+        $view['fieldset'] = $Channel->fieldset && preg_match('/<field/i', $Channel->fieldset) ? $this->decodeFileset($Channel->fieldset):json_decode($Channel->fieldset,true);//自定义字段
         $menu = ArctypeModel::select()->toArray();
         $view['arctypeList'] =ArctypeModel::cateTree($menu);
         $view['channeltype'] = $channeltype;//模型ID

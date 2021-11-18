@@ -1,0 +1,55 @@
+<div class="header">
+    <div class="head-top bg15 pc-show">
+        <div class="w1388 clear">
+            <div class="fl">{:syscfg('cfg_gg')}</div>
+            <div class="fr hotLine"><span class="span1">全国咨询热线：</span><span class="span2">{:syscfg('cfg_tel')}</span></div>
+        </div>
+    </div>
+    <div class="head-mid">
+        <div class="head-con">
+            <div class="w1388 relative clear">
+                <h1 class="logo"><a href="/"><img src="/skin/images/logo.png" alt=""/></a></h1>
+                <div class="menu-box fr">
+                    <div class="top-search">
+                        <div class="search-btn"></div>
+                        <div class="search-nr">
+                            <div class="search-nr-wap">
+                                <div class="search-close"></div>
+                                <form method="get" action="{:url('template/search')}">
+								      <input type="hidden" name="kwtype" value="0" />
+                                    <input class="text" name="q" type="text" placeholder="search"/>
+                                    <input class="sbmit" type="submit" value=""/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="clear menu-box-ul">
+                        <li {if condition="!isset($yy)"} class="active" {/if} ><a class="nav-yi" href="/">网站首页</a></li>
+                        {yycms:channelartlist row='9' typeid='top' currentstyle="active"}
+			<li class="{$field.currentstyle}">
+                            <a class="nav-yi" href="{$field.typeurl}">{$field.typename}</a>
+                            {if condition="$field.ischild"}
+                              <div class="nav-er-box relative">
+                                  <div class="nav-tap">
+                                        {yycms:channel type='son' noself='yes'}
+                                         <div class="nav-er-list">
+                                          <a class="nav-er" href="{$field.typeurl}">{$field.typename}</a>
+                                         </div>
+                                        {/yycms:channel}
+                                        </div>
+                                     </div>
+                               {/if}
+                         </li>
+                         {/yycms:channelartlist} 
+                     </ul>
+                </div>
+                <!--<a class="language" href="#">EN</a>-->
+            </div>
+        </div>
+    </div>
+    <div id="menu-handler" class="menu-handler">
+        <span class="burger burger-1 trans"></span>
+        <span class="burger burger-2 trans-fast"></span>
+        <span class="burger burger-3 trans"></span>
+    </div>
+</div>

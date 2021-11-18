@@ -66,4 +66,34 @@ class Arctype extends \think\Model{
         }
         return $arr;
     }
+    /**
+     * 当前位置
+     * @param type $list
+     * @param type $typeid
+     * @param type $entypeid
+     * @return type
+     */
+    public function position($list, $typeid, $entypeid = 0){
+        $enHomeUrl = url("template/list",["tid"=>$typeid])->build();
+        $home= $entypeid ? '<a href ="'.$enHomeUrl.'">Home</a>':'<a href="/">首页</a>';
+        $position = $this->parentsPosition($list, $typeid);
+        $position = $entypeid ? $enHomeUrl . $position :$home . $position;
+        return $position;
+    }
+    /**
+     * 上级位置递归
+     * @param type $list
+     * @param type $typeid
+     * @return string
+     */
+    public function parentsPosition($list, $typeid){
+        $position = '';
+        foreach ($list as $v){
+            if($v['id'] == $typeid){
+                $position .= self::parentsPosition($list, $v['reid']);
+                $position .=  syscfg('cfg_list_symbol') .'<a href ="'.url("template/list",["tid"=>$typeid]).'">'.$v['typename'].'</a> ';
+            }
+        }
+        return $position;
+    }
 }

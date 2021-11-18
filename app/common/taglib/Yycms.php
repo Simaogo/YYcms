@@ -128,6 +128,7 @@ class Yycms extends TagLib{
         $parseStr.= '?>';
         $parseStr.= $content;
         $parseStr.= '<?php } 
+                    unset($field);
                  ?>';
         return $parseStr;
     }
@@ -155,6 +156,7 @@ class Yycms extends TagLib{
             $Arclist= \app\common\model\Arclist::find($aid);
             $tid = $aid ? $Arclist->typeid :0;
         }
+        $list_key .= $tid;
         //高亮栏目ID
         $currentstyle = empty($tag['currentstyle']) ? 'on': $tag['currentstyle'];//条数
         
@@ -220,8 +222,10 @@ class Yycms extends TagLib{
             ';
         $parseStr.= '?>';
         $parseStr.= $content;
-        $parseStr.='<?php  unset($pid); };
-        ?>';
+        $parseStr.='<?php  unset($pid); 
+                         } 
+                        unset($field);
+                     ?>';
         
         return $parseStr;
     }
@@ -230,6 +234,7 @@ class Yycms extends TagLib{
         $titlelen = empty($tag['titlelen']) ? 120: intval($tag['titlelen'])*2;//标题长度
         $typeid = empty($tag['typeid']) ?  0 : $tag['typeid'];//栏目ID
         $orderby = empty($tag['orderby']) ? "weight desc,pubdate desc": $tag['orderby'] .' desc';//排序兼容orderby
+        if($orderby =='hot desc') $orderby ='click desc';
         $order =  !empty($tag['order']) && empty($tag["orderby"]) ? $tag['order']: $orderby;//排序
         $limit = empty($tag['row']) ? 15: $tag['row'];//条数
         $page = 0;
@@ -271,9 +276,7 @@ class Yycms extends TagLib{
                                     return $carry . ",".$item;
                                 }), ",");
                         }
-                        
                         if($typeid) $where[]=["arc.typeid","in",$typeid];
-
                     }
                     $whereRaw = "";
                     if(!empty("'.$flag.'")){
@@ -282,16 +285,19 @@ class Yycms extends TagLib{
                     $arclist=\think\facade\Db::name("archives")
                         ->alias("arc")
                         ->join("'.$Channeltype->addtable.' add"," arc.id=add.aid","left")
+                        ->join("arctype m","arc.typeid = m.id","left")    
                         ->where($where)
                         ->where($whereRaw)
                         ->order("arc.'.$order.'")
+                        ->field("arc.*,add.*,m.typename")
                         ->limit('.$page.','.$limit.')
+                            
                         ->select()
                         ->toArray();
                     $arclist = \think\facade\Cache::get("'.$list_key.'",$arclist);  
                  } ';
         $parseStr.='
-            $paranField = isset($field) ? $field :"";
+            $parentsField = isset($field) ? $field :"";
             foreach($arclist as $key=>$field){
                 $field["info"]=$field["description"];
                 $field["title"] = mb_substr($field["title"],0,'.$titlelen.');
@@ -299,11 +305,12 @@ class Yycms extends TagLib{
                 $field["picname"] = $field["litpic"];//缩略图
                 $field["imgurls"] = isset($field["imgurls"])&&isset($field["imgurls"]) ? explode(",",$field["imgurls"]) :""; //图集
                 $field["arcurl"] = in_array("j",explode(",",$field["flag"])) && !empty($field["redirecturl"]) ? $field["redirecturl"] : \think\facade\Route::buildUrl("view",["aid"=>$field["id"]]);
-            ';
+                $field["typeurl"] =  url("template/list",["tid"=>$field["id"]]);
+                ';
         $parseStr.='?>';
         $parseStr.=$content;
-        $parseStr.=' <?php }  
-                   $field = isset($paranField) ? $paranField :""; 
+        $parseStr.=' <?php }
+                   $field = isset($parentsField) ? $parentsField :""; 
                 ?>';
         return $parseStr;
     }
@@ -375,21 +382,24 @@ class Yycms extends TagLib{
         $list = \think\facade\Db::name("archives")
                             ->alias("arc")
                             ->join($Channeltype->addtable." add"," arc.id=add.aid","left")
+                            ->join("arctype m","arc.typeid = m.id",'left')  
                             ->where($where)
                             ->order($order)
+                            ->field('arc.*,add.*,m.typename')
                             ->limit(($page-1)*$pagesize,$pagesize)
                             ->select();
         $page = \think\facade\Db::name("archives") ->alias("arc")
                             ->where($where)
                             ->order($order)
                             ->limit(($page-1)*$pagesize,$pagesize) ->paginate(['list_rows'=>$pagesize])->render();
-		$list = $list ? $list ->toArray(): array();
+	$list = $list ? $list ->toArray(): array();
         \think\facade\Cache::set($list_key,$list);
         \think\facade\Cache::set($page_key,$page);
         $parseStr = '<?php ';
         $parseStr .= '$list = \think\facade\Cache::get("'.$list_key.'");';
         $parseStr.=' 
                     foreach($list as $key =>$field) {
+                        $field["typeurl"] =  url("template/list",["tid"=>$field["id"]]);
                         $field["title"] = substr($field["title"],0,'.$titlelen.');
                         $field["arcurl"] = in_array("j",explode(",",$field["flag"])) && !empty($field["redirecturl"]) ? $field["redirecturl"] : \think\facade\Route::buildUrl("view",["aid"=>$field["id"]]);
                         $field["litpic"] = $field["litpic"] ?$field["litpic"] :"__STATIC__/images/images.jpg";

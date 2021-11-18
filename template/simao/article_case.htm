@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>{$yy.field.title}_{:syscfg('cfg_webname')}</title>
+	<meta name="keywords" content="{$yy.field.keywords}" />
+	<meta name="description" content="{$yy.field.description}" />
+    <link rel="stylesheet" href="/skin/css/main.css"/>
+    <link rel="stylesheet" href="/skin/css/media.css"/>
+    <link rel="stylesheet" href="/skin/css/swiper-3.4.2.min.css"/>
+    <script src="/skin/js/jquery-2.1.1.js"></script>
+    <script src="/skin/js/swiper-3.4.2.min.js"></script>
+    <script src="/skin/js/fastclick.js"></script>
+    <!--[if IE]>
+    <script src="/skin/js/html5shiv.min.js"></script>
+    <script src="/skin/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/skin/js/main.js"></script>
+</head>
+<body>
+{include file="head"/}
+<div class="ban img100">
+    <div class="pc-show"><img src="{$yy.field.typeimg}"/></div>
+    <div class="phone-show"><img src="{$yy.field.typeimg}"/></div>
+</div>
+<div class="position">
+    <div class="w1240">
+        <div class="gk-title">
+            <h2><i><img src="/skin/images/h2-2.png"/></i>{$yy.field.typename}</h2>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var img1='<meta content="telephone=no" name="format-detection">';
+    $('head').append(img1);
+</script>
+<div class="contentbox">
+    <div class="w1240 relative">
+        <div class="brief-nav">
+			<div class="brief-nav-con">
+				<ul>
+				{yycms:channel type='son' currentstyle="
+				<li class='active'><i class='zksq actives'></i><a class='left-yi' href='~typeurl~'><div style='position: relative;z-index: 6;'>~typename~</div></a></li>
+						"}
+				 <li><i class="zksq"></i><a class="left-yi" href="{$field.typeurl}"><div style="position: relative;z-index: 6;">{$field.typename}</div></a></li>	    	
+						{/yycms:channel}
+				</ul>
+			</div>
+		</div>    		
+		<div class="box-right">
+			<div class="margin-0">
+				<div class="alxq-title text-center">
+					<h1>{$yy.field.title}</h1>
+					<span>时间：{$yy.field.pubdate}</span> <span>点击率：{$yy.field.click}</span>
+				</div>
+			   <div class="line"></div>
+			   <div class="edibox margin-t15">{$yy.field.body|raw}</div>
+				<div class="xwfy clear">
+					<div class="fl xwfy-a">
+					   {yycms:prenext get='pre'/}
+					</div>
+					<div class="fr xwfy-a">
+					{yycms:prenext get='next'/}
+					</div>
+				</div>
+			</div>
+			<div class="margin-t50 proxq-b">
+				<ul class="ul">
+					<li class="active"><a href="javascript:;">产品详情</a></li>
+					<li><a href="javascript:;">参数</a></li>
+					<li><a href="javascript:;">2D/3D/PDF文件下载</a></li>
+				</ul>
+			</div>
+			<div class="poroxq-b-con  margin-t15">
+				<div class="cs-page" style="display:block">
+				{$yy.field.pro|raw}
+				</div>
+				<div class="cs-page">
+				{$yy.field.param|raw}
+				</div>
+				<div class="cs-page">
+				{$yy.field.download|raw}
+				</div>
+			</div>
+
+
+		</div>
+</div>
+  {include file="footer"/}
+</body>
+<script src="/skin/js/countup.js"></script>
+<script>
+$(function(){
+	$('.ul li').click(function(){
+		$(this).addClass('active').siblings().removeClass('active');
+		var index = $(this).index();
+		$(".cs-page").eq(index).fadeIn().siblings().hide();
+	})
+})
+</script>
+</html>

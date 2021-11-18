@@ -15,6 +15,14 @@ class Channeltype extends \app\common\controller\Backend{
     public function addEdit(){
         if(request()->isAjax()){
             $post = input();
+            //判断是否要创建附表字段
+            if($post['fieldset'] && !preg_match('/<field/i', $post['fieldset'])){
+                $fieldset = json_decode($post['fieldset'],true);
+                $table = $post['addtable'];
+                foreach ($fieldset as $key => $val ){
+                   $this->isHasField($table, $val['name'],$val['type']);
+                }
+            }
             if(ChanneltypeModel::find($post['id'])){
                 ChanneltypeModel::update($post);
             } else {

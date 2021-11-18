@@ -39,6 +39,7 @@ class Arctype extends \app\common\controller\Backend{
                         'tempindex' =>$post['tempindex'],
                         'templist' =>$post['templist'],
                         'temparticle' =>$post['temparticle'],
+                        'channeltype' =>$post['channeltype'],
                     ];
                    $menuList = ArctypeModel::select();
                    $childIds = ArctypeModel::childrenIds($menuList,$id);

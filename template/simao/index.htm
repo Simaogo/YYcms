@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ <title>{:syscfg('cfg_webname')}</title>
+<meta name="description" content="{:syscfg('cfg_description')}" />
+<meta name="keywords" content="{:syscfg('cfg_keywords')}" />
+    <link rel="stylesheet" href="/skin/css/main.css"/>
+    <link rel="stylesheet" href="/skin/css/media.css"/>
+    <link rel="stylesheet" href="/skin/css/swiper-3.4.2.min.css"/>
+    <script src="/skin/js/jquery-2.1.1.js"></script>
+    <script src="/skin/js/swiper-3.4.2.min.js"></script>
+    <script src="/skin/js/fastclick.js"></script>
+    <!--[if IE]>
+    <script src="/skin/js/html5shiv.min.js"></script>
+    <script src="/skin/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/skin/js/main.js"></script>
+</head>
+<body>
+{include file="head"/}
+<!--banner-->
+<script type="text/javascript">
+    var img1='<meta content="telephone=no" name="format-detection">';
+    $('head').append(img1);
+</script><div class="banner img100">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+        {yycms:myppt typeid='1'}
+		<div class="swiper-slide">
+			<div class="pc-show"><img src="{$field.picname}"/></div>
+			<div class="phone-show"><img src="{$field.picname}"/></div>
+            </div>
+			{/yycms:myppt}
+		</div>
+        <div class="pagination1 pagination-style"></div>
+        <div class="swiper-btn-style swiper-btn1">
+            <div class="swiper-btn-left"></div>
+            <div class="swiper-btn-right"></div>
+        </div>
+    </div>
+</div>
+<!--优势-->
+{yycms:channelartlist typeid='1,1'}
+<div class="index-a margin-t60">
+    <div class="w1388">
+		<div class="title title1 text-center">
+			<h3>为什么选择我们</h3>
+			<p>    本公司拥有完整、科学的质量管理体系。我们的诚信、实力和产品质量获得业界的广泛认可。</p>
+			<i></i>
+		   
+		</div>
+        <ul class="clear">
+     
+		   <li>     
+				<div class="table">
+					<div class="table-cell">
+						<div class="index-a-title">
+							<h3>98%</h3>
+							<p>顾客好评</p>
+						</div>
+				
+					</div>
+				</div>
+            </li>
+			<li>     
+				<div class="table">
+					<div class="table-cell">
+						<div class="index-a-title">
+							<h3>500+</h3>
+							<p>合作经销商</p>
+						</div>
+				
+					</div>
+				</div>
+            </li>
+			<li>     
+				<div class="table">
+					<div class="table-cell">
+						<div class="index-a-title">
+							<h3>9818 <b style="font-size:14px">项</b></h3>
+							<p>国家专利</p>
+						</div>
+				
+					</div>
+				</div>
+            </li>
+			<li>     
+				<div class="table">
+					<div class="table-cell">
+						<div class="index-a-title">
+							<h3>1500+</h3>
+							<p>优质客户群</p>
+						</div>
+				
+					</div>
+				</div>
+            </li>
+			
+        </ul>
+    </div>
+</div>
+{/yycms:channelartlist}
+<!--产品-->
+{yycms:channelartlist typeid='2,2'}
+<div class="pro f7 margin-t60">
+	<div class="w1240">
+		<div class="title title1 text-center">
+            <h3>{$field.typename}</h3>
+			<p>{$field.description}</p>
+            <i></i>
+        </div>
+		<div class="tab-btn">
+		{yycms:channel type='son' noself='yes'}
+		<a class='active' href="javascript:;">{$field.typename}</a>
+		{/yycms:channel} 			 
+		</div>
+		<div class="tabs">
+		   <div class="tabpage ">
+			<ul class="index-pro index-pro clear margin-t50 ">
+			{yycms:arclist typeid='' row='4' titlelen='60' orderby='pubdate'}
+			
+			<li class="imgscale">
+				<a href="{$field.arcurl}">
+					{if condition="!isMobile() && ($key==0||$key==2)"}
+					<div class="pro-list-bot relative">
+						<b>{$field.title}</b>
+					    <h5>{$field.description|mb_substr=0,45}…</h5>
+						<div class="border"></div>
+					</div>
+					<div class="img100"><img src="{$field.litpic}"/></div>
+					{else /}
+					<div class="img100"><img src="{$field.litpic}"/></div>
+					<div class="pro-list-bot relative">
+						<b>{$field.title}</b>
+					    <h5>{$field.description|mb_substr=0,45}…</h5>
+						<div class="border"></div>
+					</div>
+					
+					{/if}
+				</a>
+			</li>
+			{/yycms:arclist}
+			 </ul>
+			</div>
+		 </div>
+	</div>
+</div>
+{/yycms:channelartlist}	
+
+<!--案例-->
+ {yycms:channelartlist typeid='3,3'}
+<div class="margin-t60">
+    <div class="w1240">
+	      <div class="title1 text-center">
+           
+			<h3>{$field.typename}</h3>
+            <i></i>
+            <p>{$field.description}</p>
+			
+        </div>
+        <div class="tab-btn">
+			{yycms:channel typeid='2' noself='yes'}
+			<a class='active' href="javascript:;">{$field.typename}</a>
+			{/yycms:channel} 			 
+		</div>
+        <div class="tabs margin-t50">
+        <div class="tabpage active">
+                    <ul class="anli-list clear">
+                    {yycms:arclist typeid='' row='3' titlelen='60' orderby='pubdate'}
+					<li>
+                            <a  class="relative" href="{$field.arcurl}">
+                                <div class="img100"><img src="{$field.litpic}"/></div>
+                                <div class="anli-con">
+                                   <div class="table">
+                                    <div class="table-cell">
+                                        <h4>{$field.title}</h4>
+                                        <i></i>
+                                    </div>
+                                </div>
+                                </div>
+                            </a>
+                        </li>
+						{/yycms:arclist}
+						 </ul>
+                </div>
+	</div>
+    </div>
+</div>
+{/yycms:channelartlist}	
+<!--about-->
+ {yycms:channelartlist typeid='1,1'}
+<div class="margin-t60 f7">
+	<div class="w1240">
+		<div class="title title1 text-center">
+            <h3>{$field.typename}</h3>
+			<p>{$field.description}</p>
+            <i></i>
+            
+        </div>
+        <div class="about">
+			 <div class="about-txt">
+				<h1>{$field.typename}</h1>
+				<h3>About us</h3>
+				<p></p>
+				<div class="cont"> {$field.content|raw}…</div>
+			</div>
+			
+			
+        </div>
+    </div>
+	
+</div>
+{/yycms:channelartlist}
+<!--新闻-->
+{yycms:channelartlist typeid='4,4'}
+<div class="margin-t60">
+    <div class="w1240">
+	      <div class="title1 text-center">
+            <h3>{$field.typename}</h3>
+            <i></i>
+            <p>{$field.description}</p>
+        </div>
+        <ul class="xw-list clear">
+        {yycms:arclist typeid='' row='8' titlelen='60' orderby='pubdate'}
+		<li class="imgscale">
+                <a class="relative" href="{$field.arcurl}">
+                    <div class="img100"><img src="{$field.litpic}"/></div>
+                    <div class="xw-con">
+                        <div class="table">
+                            <div class="table-cell">
+                                <div class="xw-txt">
+                                    <h4>{$field.title}</h4>
+                                   
+                                    <p>{$field.description}…</p>
+									 <span>{$field.pubdate|date='Y/m/d'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+			{/yycms:arclist}
+			        </ul>
+    </div>
+</div>
+{/yycms:channelartlist}
+<!--合作品牌-->
+<div class="margin-t60">
+	<div class="cptd-box pc-show" >
+	  <div class="container">
+		<div class="title title1 text-center">
+			<h3>合作伙伴</h3>
+			<i></i>
+			<p>    本公司拥有完整、科学的质量管理体系。我们的诚信、实力和产品质量获得业界的广泛认可。</p>
+		</div>
+		<ul class="yunu-pinzhi clear">
+			 {yycms:myppt typeid='3' row='8' }
+			 <li > <a href="{$field.url}" class="imgscale"><div class="img-center img100"><img src="{$field.pic}" alt="" ></div></a> </li>
+			{/yycms:myppt}
+			<div class="clear"></div>
+		</ul>
+	  </div>
+	</div>
+</div>
+
+ {include file="footer"/}
+</body>
+<script>
+    var banner = new Swiper('.banner .swiper-container', {
+        autoplay: 6000,//可选选项，自动滑动
+        speed:600,
+        loop:true,
+        autoplayDisableOnInteraction : false,
+        pagination : '.pagination1',
+        paginationClickable :true,
+        prevButton:'.swiper-btn1 .swiper-btn-left',
+        nextButton:'.swiper-btn1 .swiper-btn-right'
+    });
+    $('.ppgs-l').click(function(){
+        $(this).find('.img100').hide();
+        $(this).find('video')[0].play();
+    });
+    $('.kp-big-bot').click(function(){
+        $(this).parent().addClass('active').find('video')[0].play();
+    });
+    $('.tab-btn a').click(function(){
+        var index=$(this).index();
+        $(this).addClass('active').siblings().removeClass('active');
+        $(this).parent().siblings('.tabs').find('.tabpage').eq(index).addClass('active').siblings().removeClass('active');
+    });
+</script>
+</html>
