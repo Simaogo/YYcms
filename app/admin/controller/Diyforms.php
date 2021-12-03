@@ -12,7 +12,7 @@ class Diyforms extends \app\common\controller\Backend{
             $list = DiyformsModel::select();
             $prefix = Config::get('database.connections.mysql.prefix');
             foreach ($list as $key => $val){
-                 $table = str_replace($prefix,'',$val['table']);
+                 $table = replacePrefix($val['table']);
                  $data  = Db::name($table)->select()->toArray();
                  $str = '';
                  if($data){
@@ -69,17 +69,29 @@ class Diyforms extends \app\common\controller\Backend{
     public function diyData(){
         if(request()->isAjax()){
             $diyforms= DiyformsModel::where(['diyid'=>input('id')])->find();
-            $fieldset = json_decode($diyforms ->fieldset,true);
-            $list = Db::name($diyforms->table)->select()->toArray();
+            $table = replacePrefix($diyforms->table);
+            $fieldset = $diyforms ->fieldset;
+            $list = Db::name(replacePrefix($diyforms->table))->select()->toArray();
+            if(!$fieldset){
+                 $prefix = Config::get('database.connections.mysql.prefix');
+                 $sql = 'show full columns from `'.$prefix .$table.'`';
+                 $tableParam = Db::query($sql);
+                 $fieldset = [];
+                 foreach ($tableParam as $key => $val){
+                     $fieldset[$key]['name'] = $val['Field'];
+                     $fieldset[$key]['itemname'] = '';
+                 }
+            }
             foreach($list as $key => $val){
                 $str = '';
                 foreach($fieldset as $k => $v){
                    $name = $v['name'];
-                   $str .= $v['itemname'] .':'.$val[$name].'<br/>';
+                   if(isset($val[$name])) $str .= $v['itemname'] .':'.$val[$name].'<br/>';
                 }
-                $list[$key]['create_time'] = date('Y-m-d H:i:s',$val['create_time']);
+                $list[$key]['create_time'] = isset($val['create_time']) ? date('Y-m-d H:i:s',$val['create_time']):'';
                 $list[$key]['data'] = $str;
             }
+            
             return json(['code'=>0,'msg'=>'success','data'=>$list,'count'=>200]);
         }
          return View::fetch();

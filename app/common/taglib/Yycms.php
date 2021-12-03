@@ -21,6 +21,7 @@ class Yycms extends TagLib{
         'flink'               => ['row,type,name', 'alias' => 'flink', 'close' => 1],  //友情链接
         'prenext'             => ['get,pagelang','alias' => 'prenext','close' => 0],  //上一篇、下一篇
         'productimagelist'    => ['name,row', 'alias' => 'imagelist','close' => 1],  //解析图集
+        'taglist'             => ['name,row', 'alias' => 'taglist','close' => 1],  //解析标签
     ];
     /**
      * 栏目channel 标签
@@ -118,7 +119,7 @@ class Yycms extends TagLib{
                 $menuList = \think\facade\Cache::get("'.$list_key.'");
             }
             $currid   = \think\facade\Cache::get("currid_'.$list_key.'");
-            
+            $parentsField = isset($field) ? $field :"";
             foreach($menuList as $key => $field){
                    $field["typeurl"] = $field["ispart"]== 2 && $field["sitepath"] ?$field["sitepath"] : \think\facade\Route::buildUrl("list",["tid"=>$field["id"]]);
                    $field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);
@@ -128,7 +129,8 @@ class Yycms extends TagLib{
         $parseStr.= '?>';
         $parseStr.= $content;
         $parseStr.= '<?php } 
-                    unset($field);
+                   $field = isset($parentsField) ? $parentsField :""; 
+                   
                  ?>';
         return $parseStr;
     }
@@ -539,6 +541,22 @@ class Yycms extends TagLib{
         $parse .= $content;
         $parse .= '<?php ?>';
         return $parse;
+    }
+    
+    public function tagTaglist($tag,$content){
+
+        $parseStr = '<?php ';
+        $parseStr .= '$list = [];';
+        $parseStr .= 'foreach ($list as $key =>$field){
+                $field["link"] = "";
+                $field["tag"] = ""; 
+                ';     
+        $parseStr .=' ?>';
+        $parseStr .= $content;
+        $parseStr .=' <?php }  
+                  ?>';
+        return $parseStr;
+        
     }
     public function tagSql($tag,$content){
         if(empty($tag['sql'])) return '';

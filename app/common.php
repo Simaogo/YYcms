@@ -301,4 +301,15 @@ if (!function_exists('timeAgo')) {
             $config = preg_replace("/'{$key}'.*?=>.*?'.*?'/", "'{$key}' => '{$value}'", $config);
             return file_put_contents($configFile, $config); // 写入配置文件
         }
-    }   
+    }
+    /**
+     * 替换数据库表前缀
+     */
+    if (!function_exists('replacePrefix')) {
+        function replacePrefix($table)
+        {
+             $table = str_replace('dede_','',$table);
+             $table = str_replace('yy_','',$table);
+             return $table;
+        }
+    } 

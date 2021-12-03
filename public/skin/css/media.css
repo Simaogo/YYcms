@@ -340,6 +340,15 @@ body {
 .news-list-con .xw-txt .fl,.news-list-con .xw-txt .fr{
 	float:none;
 }
+.box-prolists ul.products-list ,.box-prolists .tab ul,.box-prolists .tab .title {
+	width:100%;
+}
+.box-prolists ul.products-list li,.box-prolists .tab ul li {width:50%}
+.box-prolists .tab .title {height:auto;}
+.item-line ul li{
+	margin-top:15px;
+}
+.margin-t50{padding-top:0}
 }
  @media (max-width:750px) {
 .price b {

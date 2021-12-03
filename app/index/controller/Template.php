@@ -15,14 +15,6 @@ class Template extends Common{
         $this->view_dir_name = Config::get('view.view_path');
     }
     /**
-     * 首页
-     * @return type
-     */
-//    public function index(){
-//        $template = 'index.htm';
-//        return View::fetch($this->view_dir_name .''.$template);
-//    }
-    /**
      * 列表页
      * @return string
      */
@@ -81,7 +73,7 @@ class Template extends Common{
             $typeinfo = $Arctype->toArray();
             $channeltypeModel = new \app\common\model\Channeltype();
             $channeltype=$channeltypeModel->find($Arctype->channeltype);
-            $table = $this->getTable($channeltype->addtable);
+            $table = replacePrefix($channeltype->addtable);
             $addinfo = Db::name($table)->where('aid',$aid)->find();
             $info = is_array($addinfo) ? array_merge($addinfo,$Archives->toArray()):$Archives->toArray();
             $info['body'] = isset($info['body']) ? $info['body'] :'';//兼容body 为空
@@ -126,7 +118,7 @@ class Template extends Common{
             if(!$diyid) $this->error ('error');
             $Diyforms = \app\common\model\Diyforms::where(['diyid'=>$diyid])->find();
             $prefix = \think\facade\Config::get('database.connections.mysql.prefix');
-            $table = str_replace($prefix,'', $Diyforms->table);
+            $table = replacePrefix($Diyforms->table);
             $sql = 'show full columns from `'.$prefix.''.$table.'`';
             $tableParam = Db::query($sql);
             $data = [];
@@ -207,16 +199,5 @@ class Template extends Common{
             }
         }
         return $template . '' . $view_suffix;
-    }
-   
-    /**
-     * 数据表名称
-     * @param type $table
-     * @return type string
-     */
-    public function getTable($table){
-        $prefix = config('database.connections.mysql.prefix'); //数据库前缀
-        $table = str_replace($prefix, '', $table);//替换表名称前缀
-        return $table;
     }
 }

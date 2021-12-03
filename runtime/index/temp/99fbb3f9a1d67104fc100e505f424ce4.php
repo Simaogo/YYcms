@@ -1,4 +1,4 @@
-<?php /*a:4:{s:43:"E:\WWW\tp6dedecms\/template/simao/index.htm";i:1637112631;s:5:"param";i:0;s:42:"E:\WWW\tp6dedecms\/template/simao/head.htm";i:1637113246;s:44:"E:\WWW\tp6dedecms\/template/simao/footer.htm";i:1637056096;}*/ ?>
+<?php /*a:4:{s:43:"E:\WWW\tp6dedecms\/template/simao/index.htm";i:1637221200;s:5:"param";i:0;s:42:"E:\WWW\tp6dedecms\/template/simao/head.htm";i:1637113246;s:44:"E:\WWW\tp6dedecms\/template/simao/footer.htm";i:1637221276;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -78,7 +78,7 @@
                 $menuList = \think\facade\Cache::get("1aa5a28e21cef8fd018395c76961644d");
             }
             $currid   = \think\facade\Cache::get("currid_1aa5a28e21cef8fd018395c76961644d");
-            
+            $parentsField = isset($field) ? $field :"";
             foreach($menuList as $key => $field){
                    $field["typeurl"] = $field["ispart"]== 2 && $field["sitepath"] ?$field["sitepath"] : \think\facade\Route::buildUrl("list",["tid"=>$field["id"]]);
                    $field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);
@@ -89,7 +89,7 @@
                                           <a class="nav-er" href="<?php echo htmlentities($field['typeurl']); ?>"><?php echo htmlentities($field['typename']); ?></a>
                                          </div>
                                         <?php } 
-                    unset($field);
+                   $field = isset($parentsField) ? $parentsField :""; 
                  ?>
                                         </div>
                                      </div>
@@ -242,7 +242,7 @@
             <i></i>
         </div>
 		<div class="tab-btn">
-		<?php 
+		<!-- <?php 
            
             if(isset($pid) && empty("0")){
                 $where = [];
@@ -254,7 +254,7 @@
                 $menuList = \think\facade\Cache::get("1aa5a28e21cef8fd018395c76961644d");
             }
             $currid   = \think\facade\Cache::get("currid_1aa5a28e21cef8fd018395c76961644d");
-            
+            $parentsField = isset($field) ? $field :"";
             foreach($menuList as $key => $field){
                    $field["typeurl"] = $field["ispart"]== 2 && $field["sitepath"] ?$field["sitepath"] : \think\facade\Route::buildUrl("list",["tid"=>$field["id"]]);
                    $field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);
@@ -263,8 +263,8 @@
             ?>
 		<a class='active' href="javascript:;"><?php echo htmlentities($field['typename']); ?></a>
 		<?php } 
-                    unset($field);
-                 ?> 			 
+                   $field = isset($parentsField) ? $parentsField :""; 
+                 ?>  -->			 
 		</div>
 		<div class="tabs">
 		   <div class="tabpage ">
@@ -383,7 +383,7 @@
 			
         </div>
         <div class="tab-btn">
-			<?php 
+			<!-- <?php 
            
             if(isset($pid) && empty("2")){
                 $where = [];
@@ -395,7 +395,7 @@
                 $menuList = \think\facade\Cache::get("93c403bf678acbb3248340ceac3a7b72");
             }
             $currid   = \think\facade\Cache::get("currid_93c403bf678acbb3248340ceac3a7b72");
-            
+            $parentsField = isset($field) ? $field :"";
             foreach($menuList as $key => $field){
                    $field["typeurl"] = $field["ispart"]== 2 && $field["sitepath"] ?$field["sitepath"] : \think\facade\Route::buildUrl("list",["tid"=>$field["id"]]);
                    $field["content"] = \fun\Process::getplaintextintrofromhtml($field["content"]);
@@ -404,8 +404,8 @@
             ?>
 			<a class='active' href="javascript:;"><?php echo htmlentities($field['typename']); ?></a>
 			<?php } 
-                    unset($field);
-                 ?> 			 
+                   $field = isset($parentsField) ? $parentsField :""; 
+                 ?> 	 -->		 
 		</div>
         <div class="tabs margin-t50">
         <div class="tabpage active">
@@ -692,21 +692,24 @@
 					</div>
 				</div>
              </div>
+
 			 <div class="fl col">
                 <div class="message">
 					<h3>CONTACT INFORMATION</h3>
                     <h5>联系我们</h5>
 					<div class='line'></div>
-					
-                    <div>
-						<textarea class="InputText form-control" id="" name="item_30" maxlength="255" placeholder="请输入留言内容" data-required="true" tit="留言内容"></textarea>
-					</div>
-					 <div>
-						<input name="captchas" class="InputText form-control" type="input" data-required="true" value="" placeholder="请输入验证码" maxlength="5" tit=" 验证码" data-error=" 验证码错误或已失效">
-					  </div>
-					 <div>
-						<button type="button" class="btn btn-primary submitPC p_submit" data-ename="提交按钮">提交</button>
-					 </div>
+					<form method="POST" enctype="multipart/form-data" action="<?php echo url('template/message'); ?>" onsubmit="return bottomkForm();">
+						<input name="diyid" class="reset" value="1" type="hidden">
+						<div>
+							<textarea class="InputText form-control" id="" name="content" maxlength="255" placeholder="请输入留言内容" data-required="true" tit="留言内容"></textarea>
+						</div>
+						 <div>
+							<input name="captchas" class="InputText form-control" name="tel" type="input" data-required="true" value="" placeholder="请输入电话" maxlength="5" tit=" 请输入电话" >
+						  </div>
+						 <div>
+							<button type="subimt" class="btn btn-primary submitPC p_submit" data-ename="提交按钮">提交</button>
+						 </div>
+					 </form>
                 </div>
             </div>
         </div>
@@ -737,7 +740,7 @@
             </a>
         </div>
         <div class="fu-list  clear">
-            <div class="weixin-code"><img src="/skin/images/code.jpg" alt=""></div>
+            <div class="weixin-code"><img src="/skin/images/erweima.png" alt=""></div>
             <div class="fu-icon fr"><img src="/skin/images/r-wx.png" alt=""/></div>
         </div>
         <div class="fu-list clear">
@@ -757,6 +760,21 @@
     </div>
 </div>
 <script src="/skin/js/wow.min.js"></script>
+<script>
+	function bottomkForm(){
+		var name = $('input[name="content"]').val();
+		var tel = $('input[name="tel"]').val();
+		if(!name){
+			alert("内容不能为空");
+			return false;
+		}
+		if(!tel){
+			alert("电话不能为空");
+			return false;
+		}
+		
+	}
+</script>
 </body>
 <script>
     var banner = new Swiper('.banner .swiper-container', {

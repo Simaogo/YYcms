@@ -59,11 +59,9 @@
                   <span class="field-validation-valid text-danger"></span> </div>
               </div>
               <div class="btn-area">
-                <input name="submit" value="提交" class="btn-submit" type="submit">
+                <input name="submit" value="提交" class="btn-submit" type="submit" >
                 <input name="reset" class="reset" value="重置" type="reset">
               </div>
-             <script type="text/javascript">
-			 </script> 
 			 </form>
              </div>
 		  </div>
@@ -72,5 +70,20 @@
 </div>
   {include file="footer"/}
 </body>
+<script>
+	function checkForm(){
+		var name = $('input[name="name"]').val();
+		var tel = $('input[name="tel"]').val();
+		if(!name){
+			alert("姓名不能为空");
+			return false;
+		}
+		if(!tel){
+			alert("电话不能为空");
+			return false;
+		}
+		
+	}
+</script>
 <script src="/skin/js/countup.js"></script>
 </html>

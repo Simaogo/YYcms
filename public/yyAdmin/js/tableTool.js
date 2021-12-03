@@ -154,7 +154,7 @@ layui.define(["element", "layer",'table','form'], function (exports) {
                             ,anim: 5 
                       });
                       return false;
-                    }else{
+                    }else if(obj.event === 'table'){
                         var id = data.id||data.aid||data.rank||data.diyid;
                         var toUrl = $(this).attr('lay-url');
                           var title = '列表';

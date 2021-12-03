@@ -1,13 +1,26 @@
-{include file="public/header" /}
-<script type="text/javascript" src="__YYADMIN__/plugins/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" src="__YYADMIN__/plugins/ueditor/ueditor.all.js"></script>
+<?php /*a:4:{s:49:"E:\WWW\tp6dedecms\app\admin\view\arclist\add.html";i:1637637016;s:5:"param";s:25:"a:1:{s:2:"id";s:3:"108";}";s:51:"E:\WWW\tp6dedecms\app\admin\view\public\header.html";i:1636799328;s:51:"E:\WWW\tp6dedecms\app\admin\view\public\footer.html";i:1636799328;}*/ ?>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>页面管理</title>
+      <!-- layui样式 -->
+    <link rel="stylesheet" href="/yyAdmin/layui/css/layui.css">
+    <!-- 公共样式 -->
+    <link rel="stylesheet" href="/yyAdmin/css/common.css">
+</head>
+<body style="padding-left: 5px;">
+
+<script type="text/javascript" src="/yyAdmin/plugins/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/yyAdmin/plugins/ueditor/ueditor.all.js"></script>
 <form class="layui-form layui-tab-form" action="" lay-filter="list">
     <div class="layui-row">
         <div class="layui-tab ">
           <ul class="layui-tab-title">
             <li class="layui-this">常规信息</li>
             <li>高级参数</li>
-            {present name="fieldset"}<li>自定义</li>{/present}
+            <?php if(isset($fieldset)): ?><li>自定义</li><?php endif; ?>
           </ul>
           <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
@@ -17,10 +30,10 @@
                       <div class="layui-input-inline">
                         <select name="typeid" lay-verify="required">
                            <option value=""> 请选择</option> 
-                          {volist name="arctypeList" id="vo"}
-                           <option value="{$vo.id}" {if condition="$channeltype!==$vo.channeltype"}  disabled="disabled" {/if} {if condition="$typeid==$vo.id"} selected {/if}> 
-                                   {$vo.lefthtml} {$vo.typename}</option>
-                          {/volist}
+                          <?php if(is_array($arctypeList) || $arctypeList instanceof \think\Collection || $arctypeList instanceof \think\Paginator): $i = 0; $__LIST__ = $arctypeList;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                           <option value="<?php echo htmlentities($vo['id']); ?>" <?php if($channeltype!==$vo['channeltype']): ?>  disabled="disabled" <?php endif; if($typeid==$vo['id']): ?> selected <?php endif; ?>> 
+                                   <?php echo htmlentities($vo['lefthtml']); ?> <?php echo htmlentities($vo['typename']); ?></option>
+                          <?php endforeach; endif; else: echo "" ;endif; ?>
                         </select>
                       </div>
                     </div>
@@ -70,7 +83,7 @@
                        </button>
                     </div>
                 </div>
-                {if condition="$channeltype==2"}
+                <?php if($channeltype==2): ?>
                  <div class="layui-form-item">
                     <label class="layui-form-label">图集</label>
                      <div class="layui-input-block">
@@ -85,7 +98,7 @@
                          </div>
                      </div>
                 </div>
-                {/if}
+                <?php endif; ?>
                 <div class="layui-form-item">
                     <div class="layui-inline">
                       <label class="layui-form-label">文章来源</label>
@@ -154,56 +167,48 @@
 
              </div>
              <!---自定义字段start-->
-            {present name="fieldset"}
+            <?php if(isset($fieldset)): ?>
              <div class="layui-tab-item">
-                {volist name="fieldset" id="vo"}
-                    {if condition="$vo.name!=='body'"}
-		    {present name="vo.type"}
-                    {switch name="vo.type"}
-                        {case value="imgfile"}
+                <?php if(is_array($fieldset) || $fieldset instanceof \think\Collection || $fieldset instanceof \think\Paginator): $i = 0; $__LIST__ = $fieldset;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if($vo['name']!=='body'): if(isset($vo['type'])): switch($vo['type']): case "imgfile": ?>
                             <div class="layui-form-item layui-upload">
-                                <label class="layui-form-label">{$vo.itemname}</label>
+                                <label class="layui-form-label"><?php echo htmlentities($vo['itemname']); ?></label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="{$vo.name}"  placeholder="请输入{$vo.itemname}" autocomplete="off" class="layui-input" value="{$vo.default}">
+                                    <input type="text" name="<?php echo htmlentities($vo['name']); ?>"  placeholder="请输入<?php echo htmlentities($vo['itemname']); ?>" autocomplete="off" class="layui-input" value="<?php echo htmlentities($vo['default']); ?>">
                                 </div>
                                 <div class="layui-word-aux ">
-                                    <button type="button" class="layui-btn layui-btn-sm" id="{$vo.name}" lay-filter="upload">
+                                    <button type="button" class="layui-btn layui-btn-sm" id="<?php echo htmlentities($vo['name']); ?>" lay-filter="upload">
                                         <i class="layui-icon">&#xe67c;</i>上传
                                    </button>
                                 </div>
                             </div>
-                        {/case}
-                        {case value="htmltext||text"}
-                        {if condition='$vo.name!=="body"'}
+                        <?php break; case "htmltext":case "":case "text": if($vo['name']!=="body"): ?>
                         <div class="layui-form-item layui-form-text">
-                            <label class="layui-form-label">{$vo.itemname}</label>
+                            <label class="layui-form-label"><?php echo htmlentities($vo['itemname']); ?></label>
                             <div class="layui-input-block">
-                              <script id="{$vo.name}" name="{$vo.name}" type="text/plain" style="width:1024px;height:350px;"></script>
+                              <script id="<?php echo htmlentities($vo['name']); ?>" name="<?php echo htmlentities($vo['name']); ?>" type="text/plain" style="width:1024px;height:350px;"></script>
                               <script type="text/javascript">
-                                    var {$vo.name} = UE.getEditor('{$vo.name}');
-                                    {$vo.name}.ready(function() {
+                                    var <?php echo htmlentities($vo['name']); ?> = UE.getEditor('<?php echo htmlentities($vo['name']); ?>');
+                                    <?php echo htmlentities($vo['name']); ?>.ready(function() {
                                     //设置编辑器的内容
-                                    {$vo.name}.setContent(formData["{$vo.name}"]);
+                                    <?php echo htmlentities($vo['name']); ?>.setContent(formData["<?php echo htmlentities($vo['name']); ?>"]);
                                   
                                 });
                                 </script>
                             </div>
                         </div>
-                        {/if}
-                        {/case}
-                        {default /}
+                        <?php endif; break; default: ?>
                         <div class="layui-form-item">
-                            <label class="layui-form-label">{$vo.itemname}</label>
+                            <label class="layui-form-label"><?php echo htmlentities($vo['itemname']); ?></label>
                             <div class="layui-input-block">
-                              <input type="text" name="{$vo.name}" placeholder="请输入{$vo.itemname}" autocomplete="off" class="layui-input">
+                              <input type="text" name="<?php echo htmlentities($vo['name']); ?>" placeholder="请输入<?php echo htmlentities($vo['itemname']); ?>" autocomplete="off" class="layui-input">
                             </div>
                         </div>
-                    {/switch}
-		{/present}
-                    {/if}
-                {/volist}
+                    <?php endswitch; ?>
+		<?php endif; ?>
+                    <?php endif; ?>
+                <?php endforeach; endif; else: echo "" ;endif; ?>
             </div>
-            {/present}
+            <?php endif; ?>
             
           </div>
        </div>
@@ -212,7 +217,30 @@
     <button class="layui-btn layui-btn-sm layui-submit-btn" lay-submit="" lay-filter="submit">提交</button>
 </div>
 </form>
-{include file="public/footer" /}
+ <script src="/yyAdmin/layui/layui.js"></script>
+<!-- jQuery JS -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">删除</button>
+  </div>
+</script>
+
+<script>
+    window.formData = <?php echo isset($formData)?(json_encode($formData)):'""'; ?>,
+    window.url = window.location.href,//当前URL
+    window.yyadminPath ='/yyAdmin'; 
+    window.addEditUrl = '<?php echo url(lcfirst(request()->controller())."/addEdit"); ?>',
+    window.rowEditUrl = '<?php echo url(lcfirst(request()->controller())."/rowEdit"); ?>',
+    window.uploadUrl = '<?php echo url("ajax/uploads"); ?>',
+    window.delUrl = '<?php echo url(lcfirst(request()->controller())."/del"); ?>';
+    window.delAllUrl = '<?php echo url(lcfirst(request()->controller())."/delAll"); ?>';
+    layui.config({
+        base: yyadminPath + "/js/"
+    })
+</script>
+</body>
+</html>
 <script type="text/javascript">
     var ue = UE.getEditor('container');
     ue.ready(function() {
@@ -251,7 +279,7 @@
        //缩略图
        upload.render({
           elem: '#litpic'
-          ,url: '{:url("ajax/uploads")}'
+          ,url: '<?php echo url("ajax/uploads"); ?>'
           ,done: function(res){
             layer.msg('上传成功');
             layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', res.url);
@@ -265,7 +293,7 @@
        //图集上传
         upload.render({
           elem: '#multiple_img_upload'
-          ,url: '{:url("ajax/uploads")}'
+          ,url: '<?php echo url("ajax/uploads"); ?>'
           ,multiple: true
           ,before:function(imgs){
               

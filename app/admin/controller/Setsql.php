@@ -43,8 +43,6 @@ class Setsql extends \app\common\controller\Backend{
                  $res = Db::query($replaceSql);
             }
             //修改数据库配置
-           // setConfig(root_path().'config/database.php', 'prefix', $newPrefix);
-           
             return json(['code'=>0,'msg'=>'success']);
         }
             
